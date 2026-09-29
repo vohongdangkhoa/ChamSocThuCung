@@ -28,6 +28,10 @@ namespace PetNoVaApi.Data
         public DbSet<UserAccount> UserAccounts { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<PasswordResetChallenge> PasswordResetChallenges { get; set; }
+        public DbSet<NhatKyThaoTac> AuditLogs { get; set; }
+        public DbSet<DanhMucDichVu> ServiceCategories { get; set; }
+        public DbSet<HinhThucChamSoc> CareTypes { get; set; }
+        public DbSet<LichSuHoSo> ClinicalRevisions { get; set; }
 
         /// <summary>Cấu hình precision, index và quan hệ không mô tả đủ bằng attribute.</summary>
         protected override void OnModelCreating(ModelBuilder modelBuilder)

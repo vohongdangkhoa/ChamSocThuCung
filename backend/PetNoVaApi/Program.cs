@@ -13,16 +13,22 @@ builder.Logging.AddConsole();
 builder.Logging.AddDebug();
 
 // Đăng ký REST controller và Swagger/OpenAPI phục vụ kiểm thử API.
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<KiemTraQuyen>();
+    options.Filters.Add<TraLoiCamTruyCap>();
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Cho phép Flutter Web/mobile gọi API trong môi trường phát triển.
+// Chỉ cho phép các địa chỉ website đã cấu hình.
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFlutterApp", policy =>
+    options.AddPolicy("PetNovaWeb", policy =>
     {
-        policy.AllowAnyOrigin()
+        var origins = builder.Configuration.GetSection("Web:AllowedOrigins").Get<string[]>()
+            ?? (builder.Environment.IsDevelopment() ? ["http://localhost:5173", "http://127.0.0.1:5173"] : []);
+        if (origins.Length > 0) policy.WithOrigins(origins)
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
@@ -80,6 +86,7 @@ var app = builder.Build();
 // Bổ sung cột/bảng mới theo cách idempotent trước khi API nhận request.
 await MediaSchemaInitializer.InitializeAsync(app.Services);
 await PasswordResetSchemaInitializer.InitializeAsync(app.Services);
+await KhoiTaoNghiepVu.InitializeAsync(app.Services);
 
 if (app.Environment.IsDevelopment())
 {
@@ -88,10 +95,18 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-// Tạm tắt dòng này để Flutter Web gọi HTTP không bị lỗi HTTPS local
-// app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHsts();
+    app.UseHttpsRedirection();
+}
+app.UseExceptionHandler(handler => handler.Run(async context =>
+{
+    context.Response.StatusCode = 500;
+    await context.Response.WriteAsJsonAsync(new { message = "Không thể xử lý yêu cầu. Vui lòng thử lại hoặc liên hệ quản trị viên." });
+}));
 
-app.UseCors("AllowFlutterApp");
+app.UseCors("PetNovaWeb");
 
 app.UseRateLimiter();
 

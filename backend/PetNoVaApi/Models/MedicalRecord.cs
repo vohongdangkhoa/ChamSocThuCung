@@ -21,9 +21,29 @@ namespace PetNoVaApi.Models
 
         public string? note { get; set; }
 
+        [MaxLength(2000)]
+        public string? prescription { get; set; }
+
+        public DateTime? followUpDate { get; set; }
+
+        [Column(TypeName = "decimal(6,2)")]
+        public decimal? weight { get; set; }
+
         // Khóa ngoại xác định thú cưng được khám và nhân viên lập bệnh án.
         public string petId { get; set; } = string.Empty;
 
         public string staffId { get; set; } = string.Empty;
+    }
+
+    [Table("PETNOVA_CLINICAL_REVISION")]
+    public class LichSuHoSo
+    {
+        [Key] public long id { get; set; }
+        [MaxLength(32)] public string entityType { get; set; } = string.Empty;
+        [MaxLength(32)] public string entityId { get; set; } = string.Empty;
+        public string oldData { get; set; } = string.Empty;
+        [MaxLength(500)] public string reason { get; set; } = string.Empty;
+        [MaxLength(32)] public string userId { get; set; } = string.Empty;
+        public DateTime createdAt { get; set; }
     }
 }

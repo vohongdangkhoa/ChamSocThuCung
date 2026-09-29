@@ -13,6 +13,7 @@ namespace PetNoVaApi.Models
         public string petId { get; set; } = string.Empty;
 
         public string userId { get; set; } = string.Empty;
+        public bool isArchived { get; set; }
 
         // Nhóm thông tin nhận dạng cơ bản hiển thị trong hồ sơ.
         public string petName { get; set; } = string.Empty;
