@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { EmailAuthProvider, reauthenticateWithCredential, reload, updatePassword, verifyBeforeUpdateEmail } from 'firebase/auth';
-import { auth } from './firebase';
-import { api, formatError } from './api';
-import { firebaseErrorMessage } from './auth';
+import { auth } from './cau-hinh-firebase';
+import { api, formatError } from './giao-tiep-api';
+import { firebaseErrorMessage } from './xac-thuc';
 import './cai-dat-tai-khoan.css';
 
 const TEN_VAI_TRO = { CUSTOMER: 'Khách hàng', STAFF: 'Nhân viên', VET: 'Bác sĩ thú y', ADMIN: 'Quản trị viên' };

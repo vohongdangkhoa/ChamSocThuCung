@@ -76,7 +76,7 @@ IF OBJECT_ID(N'dbo.PASSWORD_RESET_CHALLENGE', N'U') IS NULL
 BEGIN
     CREATE TABLE [dbo].[PASSWORD_RESET_CHALLENGE]
     (
-        -- challengeId được Flutter gửi qua ba bước nhưng không phải secret.
+        -- challengeId được website gửi qua ba bước nhưng không phải secret.
         [challengeId] UNIQUEIDENTIFIER NOT NULL
             CONSTRAINT [PK_PASSWORD_RESET_CHALLENGE] PRIMARY KEY,
         [userId] NVARCHAR(50) NOT NULL,

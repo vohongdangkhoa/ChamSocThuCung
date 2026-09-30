@@ -23,6 +23,10 @@ namespace PetNoVaApi.Models
 
         // Khóa ngoại nối giao dịch với lịch hẹn cần thanh toán.
         public string bookingId { get; set; } = string.Empty;
+        public string? refundReason { get; set; }
+        public string? refundReference { get; set; }
+        public DateTime? refundedAt { get; set; }
+        public string? refundedBy { get; set; }
 
     }
 }

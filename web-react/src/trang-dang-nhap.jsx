@@ -4,8 +4,8 @@ import {
   errorMessage,
   requestPasswordResetOtp,
   verifyPasswordResetOtp,
-} from './api';
-import { useAuth } from './auth';
+} from './giao-tiep-api';
+import { useAuth } from './xac-thuc';
 
 const emptyReset = {
   phone: '',
@@ -49,7 +49,7 @@ function FormMessage({ error, notice }) {
 
 /**
  * Login, customer registration, and the three-step PetNoVa OTP recovery
- * journey. It deliberately uses local state rather than a router so App.jsx
+ * journey. It deliberately uses local state rather than a router so ung-dung.jsx
  * can render it directly whenever Firebase has no signed-in user.
  */
 export function AuthPages() {

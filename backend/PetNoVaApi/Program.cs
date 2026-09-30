@@ -59,6 +59,7 @@ builder.Services.AddHttpClient<ICloudinaryMediaService, CloudinaryMediaService>(
 builder.Services.AddScoped<IPasswordResetService, PasswordResetService>();
 builder.Services.AddSingleton<IPasswordResetEmailSender, SmtpEmailSender>();
 builder.Services.AddSingleton<IFirebasePasswordManager, FirebasePasswordManager>();
+builder.Services.AddHostedService<NhacLichTuDong>();
 
 // Giới hạn request reset mật khẩu theo IP để giảm spam và dò OTP.
 builder.Services.AddRateLimiter(options =>

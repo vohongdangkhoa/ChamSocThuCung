@@ -34,5 +34,7 @@ namespace PetNoVaApi.Models
 
         // Mốc hệ thống tạo lịch, dùng để sắp xếp lịch mới nhất.
         public DateTime createdAt { get; set; }
+        public string? requestId { get; set; }
+        public int durationMinutes { get; set; } = 30;
     }
 }

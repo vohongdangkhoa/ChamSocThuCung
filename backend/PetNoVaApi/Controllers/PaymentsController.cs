@@ -5,6 +5,7 @@ using PayOS.Models.V2.PaymentRequests;
 using PayOS.Models.Webhooks;
 using PetNoVaApi.Data;
 using PetNoVaApi.Models;
+using PetNoVaApi.Services;
 
 namespace PetNoVaApi.Controllers
 {
@@ -15,6 +16,14 @@ namespace PetNoVaApi.Controllers
     {
         private readonly PetNoVaDbContext _context;
         private readonly IConfiguration _configuration;
+        private UserAccount Current => PhienNguoiDung.Get(HttpContext);
+        private IQueryable<Payment> Visible => Current.role switch
+        {
+            "CUSTOMER" => _context.Payments.Where(p => _context.Bookings.Any(b => b.bookingId == p.bookingId && b.userId == Current.userId)),
+            "VET" => _context.Payments.Where(p => _context.Bookings.Any(b => b.bookingId == p.bookingId &&
+                _context.Staffs.Any(s => s.staffId == b.staffId && s.userId == Current.userId))),
+            _ => _context.Payments
+        };
 
         /// <summary>Nhận DbContext và cấu hình PayOS qua dependency injection.</summary>
         public PaymentsController(PetNoVaDbContext context, IConfiguration configuration)
@@ -73,7 +82,7 @@ namespace PetNoVaApi.Controllers
         /// <returns>HTTP 200 cùng danh sách PAYMENT.</returns>
         public async Task<ActionResult<IEnumerable<Payment>>> GetPayments()
         {
-            return await _context.Payments.ToListAsync();
+            return await Visible.AsNoTracking().ToListAsync();
         }
 
         [HttpGet("{id}")]
@@ -81,7 +90,7 @@ namespace PetNoVaApi.Controllers
         /// <returns>HTTP 200 kèm Payment hoặc 404.</returns>
         public async Task<ActionResult<Payment>> GetPayment(string id)
         {
-            var payment = await _context.Payments.FindAsync(id);
+            var payment = await Visible.AsNoTracking().FirstOrDefaultAsync(p => p.paymentId == id);
 
             if (payment == null)
             {
@@ -97,56 +106,48 @@ namespace PetNoVaApi.Controllers
         public async Task<ActionResult<IEnumerable<Payment>>> GetPaymentsByBooking(string bookingId)
         {
             // WHERE bookingId giúp màn hình lịch chỉ hiển thị giao dịch của đúng booking.
-            return await _context.Payments
+            return await Visible.AsNoTracking()
                 .Where(payment => payment.bookingId == bookingId)
                 .ToListAsync();
         }
 
         [HttpPost]
         /// <summary>Tạo giao dịch chờ thanh toán và sinh mã phía server.</summary>
-        /// <param name="payment">bookingId, phương thức và số tiền từ Flutter.</param>
+        /// <param name="payment">bookingId, phương thức và số tiền từ website.</param>
         /// <returns>201 khi tạo; 400 nếu tiền không dương hoặc booking không tồn tại.</returns>
-        public async Task<ActionResult<Payment>> CreatePayment(Payment payment)
+        public ActionResult<Payment> CreatePayment(Payment payment)
         {
-            if (payment.amount <= 0)
+            // Lịch mới tạo thanh toán cùng một giao dịch ở BookingsController.
+            // Không cho client tùy ý tạo dòng tiền hoặc sửa amount.
+            return Conflict("Thanh toán được tạo tự động khi đặt lịch. Dùng chức năng thử lại nếu giao dịch thất bại.");
+        }
+
+        [HttpPost("{id}/retry")]
+        public async Task<IActionResult> RetryPayment(string id)
+        {
+            var old = await Visible.FirstOrDefaultAsync(p => p.paymentId == id);
+            if (old is null) return NotFound();
+            var booking = await _context.Bookings.FirstOrDefaultAsync(b => b.bookingId == old.bookingId);
+            if (booking is null || booking.status is "CANCELLED" or "COMPLETED") return Conflict("Lịch không còn được thanh toán.");
+            if (old.status != "FAILED") return Conflict("Chỉ thử lại giao dịch đã thất bại.");
+            if (await _context.Payments.AnyAsync(p => p.bookingId == old.bookingId && (p.status == "PENDING" || p.status == "PAID")))
+                return Conflict("Lịch đã có giao dịch đang chờ hoặc đã thanh toán.");
+            var payment = new Payment
             {
-                return BadRequest("Số tiền thanh toán phải lớn hơn 0.");
-            }
-
-            // Xác minh khóa cha trước để tránh lỗi foreign key khó hiểu khi SaveChanges.
-            var bookingExists = await _context.Bookings
-                .AnyAsync(booking => booking.bookingId == payment.bookingId);
-            if (!bookingExists)
-            {
-                return BadRequest("Không tìm thấy booking của thanh toán.");
-            }
-
-            var count = await _context.Payments.CountAsync();
-
-            payment.paymentId = "PM" + (count + 1).ToString("D3");
-
-            // Client không được tự đánh dấu PAID; trạng thái chỉ đổi qua xác nhận/PayOS.
-            payment.status = "PENDING";
-            payment.method = payment.method.Trim().ToUpper();
-            payment.paymentDate = null;
-
-            _context.Payments.Add(payment);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(
-                nameof(GetPayment),
-                new { id = payment.paymentId },
-                payment
-            );
+                paymentId = await MaDinhDanh.NextAsync(_context, "PAYMENT", "paymentId", "PM"),
+                bookingId = old.bookingId, amount = booking.totalAmount, method = old.method, status = "PENDING"
+            };
+            _context.Payments.Add(payment); await _context.SaveChangesAsync();
+            return CreatedAtAction(nameof(GetPayment), new { id = payment.paymentId }, payment);
         }
 
         [HttpPost("{id}/payos-link")]
-        /// <summary>Ký yêu cầu PayOS và trả checkout URL cho Flutter mở trình duyệt.</summary>
+        /// <summary>Ký yêu cầu PayOS và trả checkout URL cho website mở trình duyệt.</summary>
         /// <param name="id">paymentId của giao dịch BANK_TRANSFER đang PENDING.</param>
         /// <returns>200 với URL/QR; 400 trạng thái sai; 404 không có; 502 PayOS lỗi; 503 thiếu secret.</returns>
         public async Task<IActionResult> CreatePayOSPaymentLink(string id)
         {
-            var payment = await _context.Payments.FindAsync(id);
+            var payment = await Visible.FirstOrDefaultAsync(p => p.paymentId == id);
 
             if (payment == null)
             {
@@ -159,9 +160,9 @@ namespace PetNoVaApi.Controllers
                 return BadRequest("Chỉ thanh toán chuyển khoản mới dùng PayOS.");
             }
 
-            if (payment.status.Trim().ToUpper() == "PAID")
+            if (payment.status != "PENDING" || !await _context.Bookings.AnyAsync(b => b.bookingId == payment.bookingId && b.status != "CANCELLED"))
             {
-                return BadRequest("Thanh toán này đã hoàn tất.");
+                return BadRequest("Giao dịch không còn chờ thanh toán. Hãy làm mới trang hoặc thử lại.");
             }
 
             if (!TryGetOrderCode(payment.paymentId, out var orderCode))
@@ -198,7 +199,7 @@ namespace PetNoVaApi.Controllers
                     }
                 );
 
-                // Chỉ trả các trường Flutter cần để mở checkout và hiển thị thông tin chuyển khoản.
+                // Chỉ trả các trường website cần để mở checkout và hiển thị thông tin chuyển khoản.
                 return Ok(new
                 {
                     link.CheckoutUrl,
@@ -230,11 +231,14 @@ namespace PetNoVaApi.Controllers
         /// <returns>200 với Payment mới nhất; 400/404; hoặc 502 nếu không gọi được PayOS.</returns>
         public async Task<IActionResult> SyncPayOSPayment(string id)
         {
-            var payment = await _context.Payments.FindAsync(id);
+            var payment = await Visible.FirstOrDefaultAsync(p => p.paymentId == id);
             if (payment == null)
             {
                 return NotFound("Không tìm thấy thanh toán.");
             }
+
+            if (payment.method != "BANK_TRANSFER" || payment.status == "REFUNDED")
+                return Conflict("Giao dịch không còn có thể đồng bộ PayOS.");
 
             if (!TryGetOrderCode(payment.paymentId, out var orderCode))
             {
@@ -248,12 +252,12 @@ namespace PetNoVaApi.Controllers
                 var payOSStatus = PaymentLinkStatusConverter.ToSerializedString(link.Status);
 
                 // Chỉ cập nhật khi trạng thái thay đổi để tránh tạo trùng thông báo thanh toán.
-                if (payOSStatus == "PAID" && payment.status.Trim().ToUpper() != "PAID")
+                if (payOSStatus == "PAID" && payment.status is "PENDING" or "FAILED")
                 {
                     await ApplyPaidStatus(payment);
                     await _context.SaveChangesAsync();
                 }
-                else if (payOSStatus is "CANCELLED" or "EXPIRED" or "FAILED")
+                else if ((payOSStatus is "CANCELLED" or "EXPIRED" or "FAILED") && payment.status == "PENDING")
                 {
                     payment.status = "FAILED";
                     payment.paymentDate = DateTime.Now;
@@ -292,7 +296,7 @@ namespace PetNoVaApi.Controllers
                 // Kiểm tra cả mã thành công và số tiền trước khi ghi PAID, chống webhook sai đơn/sai tiền.
                 if (verified.Code == "00" &&
                     verified.Amount == decimal.ToInt64(payment.amount) &&
-                    payment.status.Trim().ToUpper() != "PAID")
+                    payment.status is "PENDING" or "FAILED")
                 {
                     await ApplyPaidStatus(payment);
                     await _context.SaveChangesAsync();
@@ -308,17 +312,19 @@ namespace PetNoVaApi.Controllers
 
         [HttpGet("payos/return")]
         /// <summary>Trang chữ đơn giản PayOS chuyển người dùng về sau khi thanh toán thành công.</summary>
-        public ContentResult PayOSReturn() => Content(
-            "Thanh toán thành công. Bạn có thể quay lại ứng dụng PetNoVa và bấm Kiểm tra trạng thái.",
-            "text/plain; charset=utf-8"
-        );
+        public IActionResult PayOSReturn() => PaymentReturn("return");
 
         [HttpGet("payos/cancel")]
         /// <summary>Trang chữ đơn giản PayOS chuyển về khi người dùng hủy checkout.</summary>
-        public ContentResult PayOSCancel() => Content(
-            "Bạn đã hủy thanh toán. Có thể quay lại PetNoVa để thử lại.",
-            "text/plain; charset=utf-8"
-        );
+        public IActionResult PayOSCancel() => PaymentReturn("cancel");
+
+        private IActionResult PaymentReturn(string state)
+        {
+            var web = _configuration["Web:PublicBaseUrl"];
+            if (string.IsNullOrWhiteSpace(web))
+                return Content("Quay lại website PetNoVa và kiểm tra trạng thái thanh toán. Chỉ dữ liệu PayOS được xác minh mới có hiệu lực.", "text/plain; charset=utf-8");
+            return Redirect(web.TrimEnd('/') + "/#payments?payos=" + state);
+        }
 
         [HttpPut("{id}/confirm")]
         /// <summary>Xác nhận thanh toán thủ công, chỉ dùng cho tiền mặt.</summary>
@@ -333,9 +339,9 @@ namespace PetNoVaApi.Controllers
                 return NotFound();
             }
 
-            if (payment.status.Trim().ToUpper() == "PAID")
+            if (payment.status != "PENDING")
             {
-                return BadRequest("Thanh toán này đã được xác nhận trước đó.");
+                return Conflict("Giao dịch không còn chờ xác nhận.");
             }
 
             if (payment.method.Trim().ToUpper() != "CASH")
@@ -365,6 +371,7 @@ namespace PetNoVaApi.Controllers
                 return NotFound();
             }
 
+            if (payment.status != "PENDING") return Conflict("Chỉ giao dịch đang chờ mới có thể đánh dấu thất bại.");
             payment.status = "FAILED";
             payment.paymentDate = DateTime.Now;
 
@@ -375,7 +382,7 @@ namespace PetNoVaApi.Controllers
         [HttpPut("{id}/refund")]
         /// <summary>Đánh dấu giao dịch đã hoàn tiền và ghi thời điểm xử lý.</summary>
         /// <returns>204 khi lưu hoặc 404 nếu paymentId không tồn tại.</returns>
-        public async Task<IActionResult> RefundPayment(string id)
+        public async Task<IActionResult> RefundPayment(string id, [FromBody] HoanTienRequest request)
         {
             var payment = await _context.Payments.FindAsync(id);
 
@@ -384,8 +391,24 @@ namespace PetNoVaApi.Controllers
                 return NotFound();
             }
 
+            if (payment.status != "PAID") return Conflict("Chỉ giao dịch đã thanh toán mới có thể ghi nhận hoàn tiền.");
+            if (string.IsNullOrWhiteSpace(request.reason) || request.reason.Length > 500 ||
+                string.IsNullOrWhiteSpace(request.reference) || request.reference.Length > 200)
+                return BadRequest("Cần lý do và mã tham chiếu việc hoàn tiền thực tế.");
+            // API này chỉ ghi nhận giao dịch đã hoàn ngoài hệ thống; không gọi ngân hàng/PayOS chuyển tiền.
             payment.status = "REFUNDED";
-            payment.paymentDate = DateTime.Now;
+            payment.refundReason = request.reason.Trim(); payment.refundReference = request.reference.Trim();
+            payment.refundedAt = DateTime.UtcNow; payment.refundedBy = Current.userId;
+
+            _context.Notifications.Add(new Notification
+            {
+                notificationId = await MaDinhDanh.NextAsync(_context, "NOTIFICATION", "notificationId", "N"),
+                userId = await _context.Bookings.Where(b => b.bookingId == payment.bookingId)
+                    .Select(b => b.userId).FirstAsync(),
+                title = "Đã ghi nhận hoàn tiền", message = "PetNoVa đã ghi nhận khoản hoàn tiền cho lịch hẹn của bạn.",
+                notificationType = "PAYMENT", relatedType = "BOOKING", relatedId = payment.bookingId,
+                isRead = false, createdAt = DateTime.Now
+            });
 
             await _context.SaveChangesAsync();
 
@@ -401,12 +424,15 @@ namespace PetNoVaApi.Controllers
             payment.paymentDate = DateTime.Now;
 
             // Tra userId qua BOOKING để gửi thông báo đúng chủ giao dịch.
-            var notificationCount = await _context.Notifications.CountAsync();
+            var booking = await _context.Bookings.AsNoTracking()
+                .Where(item => item.bookingId == payment.bookingId)
+                .Select(item => new { item.userId, item.status }).FirstAsync();
+            var cancelled = booking.status == "CANCELLED";
             _context.Notifications.Add(new Notification
             {
-                notificationId = "N" + (notificationCount + 1).ToString("D3"),
-                title = "Thanh toán thành công",
-                message = "Dịch vụ của bạn đã được thanh toán thành công.",
+                notificationId = await MaDinhDanh.NextAsync(_context, "NOTIFICATION", "notificationId", "N"),
+                title = cancelled ? "Thanh toán sau khi hủy lịch" : "Thanh toán thành công",
+                message = cancelled ? "Giao dịch đến sau khi lịch hủy. Vui lòng liên hệ PetNoVa để hoàn tiền." : "Dịch vụ của bạn đã được thanh toán thành công.",
                 notificationType = "PAYMENT",
                 isRead = false,
                 createdAt = DateTime.Now,
@@ -414,11 +440,14 @@ namespace PetNoVaApi.Controllers
                 // liên kết thông báo theo nghiệp vụ BOOKING, không nhận PAYMENT.
                 relatedId = payment.bookingId,
                 relatedType = "BOOKING",
-                userId = await _context.Bookings
-                    .Where(booking => booking.bookingId == payment.bookingId)
-                    .Select(booking => booking.userId)
-                    .FirstAsync()
+                userId = booking.userId
             });
         }
+    }
+
+    public sealed class HoanTienRequest
+    {
+        public string reason { get; set; } = "";
+        public string reference { get; set; } = "";
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PetNoVaApi.Data;
 using PetNoVaApi.Models;
+using PetNoVaApi.Services;
 
 namespace PetNoVaApi.Controllers
 {
@@ -11,6 +12,20 @@ namespace PetNoVaApi.Controllers
     public class BookingDetailsController : ControllerBase
     {
         private readonly PetNoVaDbContext _context;
+        private IQueryable<BookingDetail> Visible
+        {
+            get
+            {
+                var user = PhienNguoiDung.Get(HttpContext);
+                return user.role switch
+                {
+                    "CUSTOMER" => _context.BookingDetails.Where(d => _context.Bookings.Any(b => b.bookingId == d.bookingId && b.userId == user.userId)),
+                    "VET" => _context.BookingDetails.Where(d => _context.Bookings.Any(b => b.bookingId == d.bookingId &&
+                        _context.Staffs.Any(s => s.staffId == b.staffId && s.userId == user.userId))),
+                    _ => _context.BookingDetails
+                };
+            }
+        }
 
         /// <summary>Nhận DbContext để thao tác bảng BOOKING_DETAIL.</summary>
         public BookingDetailsController(PetNoVaDbContext context)
@@ -23,7 +38,7 @@ namespace PetNoVaApi.Controllers
         /// <returns>HTTP 200 cùng mọi dòng dịch vụ trong BOOKING_DETAIL.</returns>
         public async Task<ActionResult<IEnumerable<BookingDetail>>> GetBookingDetails()
         {
-            return await _context.BookingDetails.ToListAsync();
+            return await Visible.AsNoTracking().ToListAsync();
         }
 
         [HttpGet("booking/{bookingId}")]
@@ -33,7 +48,7 @@ namespace PetNoVaApi.Controllers
         public async Task<ActionResult<IEnumerable<BookingDetail>>> GetBookingDetailsByBooking(string bookingId)
         {
             // Where được dịch thành SQL, nên chỉ các dòng thuộc lịch được tải về API.
-            return await _context.BookingDetails
+            return await Visible.AsNoTracking()
                 .Where(detail => detail.bookingId == bookingId)
                 .ToListAsync();
         }
@@ -42,21 +57,9 @@ namespace PetNoVaApi.Controllers
         /// <summary>Sinh mã, lưu chi tiết dịch vụ và trả HTTP 201.</summary>
         /// <param name="detail">Dòng gồm bookingId, serviceId, số lượng và đơn giá.</param>
         /// <returns>HTTP 201 với chi tiết vừa ghi và route xem chi tiết theo lịch.</returns>
-        public async Task<ActionResult<BookingDetail>> CreateBookingDetail(BookingDetail detail)
+        public ActionResult<BookingDetail> CreateBookingDetail(BookingDetail detail)
         {
-            // Mã BDxxx được backend tạo để client không phải biết quy tắc khóa chính.
-            var count = await _context.BookingDetails.CountAsync();
-
-            detail.detailId = "BD" + (count + 1).ToString("D3");
-
-            _context.BookingDetails.Add(detail);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(
-                nameof(GetBookingDetailsByBooking),
-                new { bookingId = detail.bookingId },
-                detail
-            );
+            return Conflict("Chi tiết dịch vụ được tạo tự động và tính giá tại server khi đặt lịch.");
         }
     }
 }

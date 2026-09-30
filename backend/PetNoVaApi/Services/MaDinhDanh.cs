@@ -12,8 +12,8 @@ public static class MaDinhDanh
     [ ("USER_ACCOUNT","userId","U"), ("STAFF","staffId","ST"), ("PET","petId","P"),
       ("BOOKING","bookingId","B"), ("BOOKING_DETAIL","detailId","BD"), ("PAYMENT","paymentId","PM"),
       ("NOTIFICATION","notificationId","N"), ("MEDICAL_RECORD","recordId","MR"),
-      ("VACCINATION","vaccinationId","V"), ("SERVICE_PACKAGE","serviceId","SV"),
-      ("SERVICE_CATEGORY","categoryId","DM") ];
+      ("VACCINATION","vaccinationId","VC"), ("SERVICE_PACKAGE","serviceId","SV"),
+      ("SERVICE_CATEGORY","categoryId","SC") ];
 
     public static async Task<string> NextAsync(PetNoVaDbContext db, string table, string column, string prefix,
         CancellationToken ct = default)

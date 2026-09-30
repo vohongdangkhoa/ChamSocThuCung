@@ -14,14 +14,14 @@ import {
   signOut,
   updateProfile,
 } from 'firebase/auth';
-import { auth } from './firebase';
+import { auth } from './cau-hinh-firebase';
 import {
   UserAccountNotFoundError,
   createUserAccount,
   getUserAccountByEmail,
   getUserAccountByFirebaseUid,
   normaliseUserAccount,
-} from './api';
+} from './giao-tiep-api';
 
 const AuthContext = createContext(null);
 export const PETNOVA_ROLES = Object.freeze(['CUSTOMER', 'STAFF', 'VET', 'ADMIN']);
@@ -311,7 +311,7 @@ export function useAuth() {
 
 /**
  * Optional small gate for pages that want to render a dedicated fallback.
- * App.jsx may also decide routing itself from useAuth().
+ * ung-dung.jsx may also decide routing itself from useAuth().
  */
 export function AuthGate({ children, loadingFallback = null, signedOutFallback = null }) {
   const { loading, user } = useAuth();

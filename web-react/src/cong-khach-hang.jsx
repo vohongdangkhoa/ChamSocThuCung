@@ -1,5 +1,8 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { api, formatError } from './api';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { api, formatError } from './giao-tiep-api';
+import { CaiDatTaiKhoan } from './cai-dat-tai-khoan';
+import { DatLichForm, DoiLichForm, LichSuThanhToan, NhacNhoTrinhDuyet } from './lich-hen-khach-hang';
+import './khach-hang.css';
 
 const CARE_TYPES = {
   CT001: 'Đến trung tâm',
@@ -10,6 +13,7 @@ const NAV_ITEMS = [
   ['overview', '⌂', 'Tổng quan'],
   ['pets', '♧', 'Thú cưng'],
   ['bookings', '◷', 'Đặt lịch'],
+  ['payments', '₫', 'Thanh toán'],
   ['health', '✚', 'Hồ sơ sức khỏe'],
   ['notifications', '♢', 'Thông báo'],
   ['profile', '◉', 'Tài khoản'],
@@ -220,7 +224,7 @@ function DetailItem({ label, children }) {
 /** Customer home, appointments, pets, health history, notifications and profile. */
 export function CustomerPortal({ user, onLogout }) {
   const [customer, setCustomer] = useState(user);
-  const [activeView, setActiveView] = useState('overview');
+  const [activeView, setActiveView] = useState(() => window.location.hash.slice(1).split('?')[0] || 'overview');
   const [pets, setPets] = useState([]);
   const [bookings, setBookings] = useState([]);
   const [services, setServices] = useState([]);
@@ -237,6 +241,7 @@ export function CustomerPortal({ user, onLogout }) {
   const [toast, setToast] = useState(null);
   const [petModal, setPetModal] = useState(null);
   const [bookingDetailId, setBookingDetailId] = useState('');
+  const payosReturnHandled = useRef(false);
 
   const userId = String(customer?.userId || '');
 
@@ -342,10 +347,16 @@ export function CustomerPortal({ user, onLogout }) {
 
   useEffect(() => { void refreshData(); }, [refreshData]);
   useEffect(() => {
+    const sync = () => setActiveView(window.location.hash.slice(1).split('?')[0] || 'overview');
+    window.addEventListener('hashchange', sync);
+    return () => window.removeEventListener('hashchange', sync);
+  }, []);
+  useEffect(() => {
     if (activeView === 'health') void loadHealthData(selectedPetId);
   }, [activeView, loadHealthData, selectedPetId]);
 
   const navigate = useCallback((view) => {
+    window.location.hash = view;
     setActiveView(view);
     if (view === 'health' && selectedPetId) void loadHealthData(selectedPetId);
   }, [loadHealthData, selectedPetId]);
@@ -388,44 +399,31 @@ export function CustomerPortal({ user, onLogout }) {
     }
   }, [notify, refreshData, selectedPetId, userId]);
 
-  const createBooking = useCallback(async (form) => {
-    const service = serviceById[form.serviceId];
-    if (!service) {
-      notify('Gói dịch vụ không còn khả dụng. Vui lòng chọn lại.', 'error');
-      return false;
-    }
-    setActionBusy('booking');
-    let createdBooking = null;
+  const archivePet = useCallback(async (pet) => {
+    if (!window.confirm(`Lưu trữ hồ sơ ${pet.petName}? Lịch sử khám và thanh toán vẫn được giữ lại.`)) return;
     try {
-      createdBooking = await api.post('/api/Bookings', {
-        bookingId: '',
-        bookingDate: `${form.bookingDate}T00:00:00`,
-        bookingTime: `${formatTime(form.bookingTime)}:00`,
-        totalAmount: Number(service.price) || 0,
-        status: 'PENDING',
-        note: form.note.trim(),
-        userId,
+      await api.put(`/api/Pets/${encodeURIComponent(pet.petId)}/archive`);
+      await refreshData({ quiet: true });
+      notify(`Đã lưu trữ hồ sơ ${pet.petName}.`);
+    } catch (error) { notify(errorText(error, 'Không thể lưu trữ thú cưng.'), 'error'); }
+  }, [notify, refreshData]);
+
+  const createBooking = useCallback(async (form) => {
+    if (!form.serviceIds?.length) return false;
+    setActionBusy('booking');
+    try {
+      const createdBooking = await api.post('/api/Bookings', {
+        bookingDate: form.bookingDate,
+        bookingTime: form.bookingTime,
+        note: form.note.trim().slice(0, 255),
         petId: form.petId,
-        staffId: null,
+        staffId: form.staffId || null,
         careTypeId: form.careTypeId,
-        createdAt: new Date().toISOString(),
+        serviceIds: form.serviceIds,
+        paymentMethod: form.paymentMethod,
+        requestId: form.requestId,
       });
       const bookingId = itemId(createdBooking, 'bookingId');
-      await api.post('/api/BookingDetails', {
-        detailId: '',
-        quantity: 1,
-        price: Number(service.price) || 0,
-        bookingId,
-        serviceId: itemId(service, 'serviceId'),
-      });
-      await api.post('/api/Payments', {
-        paymentId: '',
-        method: form.paymentMethod,
-        amount: Number(service.price) || 0,
-        status: 'PENDING',
-        paymentDate: null,
-        bookingId,
-      });
       await refreshData({ quiet: true });
       setBookingDetailId(bookingId);
       notify(form.paymentMethod === 'BANK_TRANSFER'
@@ -433,15 +431,38 @@ export function CustomerPortal({ user, onLogout }) {
         : 'Đặt lịch thành công. Vui lòng thanh toán tiền mặt tại quầy.');
       return true;
     } catch (error) {
-      const partial = createdBooking
-        ? 'Lịch hẹn đã được tạo nhưng chưa hoàn tất dữ liệu thanh toán. Vui lòng liên hệ PetNoVa.'
-        : 'Không thể tạo lịch hẹn.';
-      notify(errorText(error, partial), 'error');
+      notify(errorText(error, 'Không thể tạo lịch hẹn.'), 'error');
       return false;
     } finally {
       setActionBusy('');
     }
-  }, [notify, refreshData, serviceById, userId]);
+  }, [notify, refreshData]);
+
+  const rescheduleBooking = useCallback(async (booking, form) => {
+    setActionBusy(`reschedule-${booking.bookingId}`);
+    try {
+      await api.put(`/api/Bookings/${encodeURIComponent(booking.bookingId)}/reschedule`, {
+        bookingDate: form.bookingDate, bookingTime: form.bookingTime,
+        staffId: form.staffId || null, note: form.note.slice(0, 255),
+      });
+      await refreshData({ quiet: true });
+      notify('Đã cập nhật ngày giờ lịch hẹn.');
+      return true;
+    } catch (error) {
+      notify(errorText(error, 'Không thể đổi lịch hẹn.'), 'error');
+      return false;
+    } finally { setActionBusy(''); }
+  }, [notify, refreshData]);
+
+  const retryPayment = useCallback(async (payment) => {
+    setActionBusy(`retry-${payment.paymentId}`);
+    try {
+      await api.post(`/api/Payments/${encodeURIComponent(payment.paymentId)}/retry`);
+      await refreshData({ quiet: true });
+      notify('Đã tạo giao dịch mới. Bạn có thể thanh toán lại.');
+    } catch (error) { notify(errorText(error, 'Không thể tạo lại giao dịch.'), 'error'); }
+    finally { setActionBusy(''); }
+  }, [notify, refreshData]);
 
   const cancelBooking = useCallback(async (booking) => {
     const bookingId = itemId(booking, 'bookingId');
@@ -482,6 +503,14 @@ export function CustomerPortal({ user, onLogout }) {
       setActionBusy('');
     }
   }, [notify]);
+
+  useEffect(() => {
+    if (!window.location.hash.includes('payos=') || payosReturnHandled.current || isLoading) return;
+    const pending = Object.values(payments).flat().filter((item) => item.method === 'BANK_TRANSFER' && ['PENDING', 'FAILED'].includes(item.status));
+    payosReturnHandled.current = true;
+    if (pending.length) void Promise.allSettled(pending.map((item) => syncPayOS(item)));
+    window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}#payments`);
+  }, [isLoading, payments, syncPayOS]);
 
   const markNotificationRead = useCallback(async (notice) => {
     if (notice.isRead) return;
@@ -556,28 +585,20 @@ export function CustomerPortal({ user, onLogout }) {
     );
     switch (activeView) {
       case 'pets':
-        return <PetsPage pets={pets} onAdd={() => setPetModal({ pet: null })} onEdit={(pet) => setPetModal({ pet })} onViewHealth={(pet) => { setSelectedPetId(itemId(pet, 'petId')); navigate('health'); }} />;
+        return <PetsPage pets={pets} onAdd={() => setPetModal({ pet: null })} onEdit={(pet) => setPetModal({ pet })} onViewHealth={(pet) => { setSelectedPetId(itemId(pet, 'petId')); navigate('health'); }} onArchive={archivePet} />;
       case 'bookings':
-        return <BookingsPage
-          pets={pets}
-          bookings={bookings}
-          services={services}
-          details={bookingDetails}
-          payments={payments}
-          petById={petById}
-          serviceById={serviceById}
-          submitting={actionBusy === 'booking'}
-          onSubmit={createBooking}
-          onOpenBooking={setBookingDetailId}
-          onCancel={cancelBooking}
-          busyId={actionBusy}
-        />;
+        return <section><PageHeading eyebrow="Dịch vụ PetNoVa" title="Đặt lịch chăm sóc" description="Chọn dịch vụ và khung giờ phù hợp cho bé." />
+          <DatLichForm pets={pets} services={services} submitting={actionBusy === 'booking'} onSubmit={createBooking} />
+          <section className="booking-history"><div className="panel-heading"><h2>Lịch hẹn của bạn</h2><span className="muted small">{bookings.length} cuộc hẹn</span></div>{bookings.length ? <div className="appointment-list">{bookings.map((booking) => <BookingCard key={booking.bookingId} booking={booking} pet={petById[booking.petId]} details={bookingDetails[booking.bookingId] || []} payments={payments[booking.bookingId] || []} serviceById={serviceById} busy={actionBusy === `cancel-${booking.bookingId}`} onOpen={() => setBookingDetailId(booking.bookingId)} onCancel={() => cancelBooking(booking)} />)}</div> : <div className="panel"><EmptyState icon="◷">Bạn chưa có lịch hẹn nào.</EmptyState></div>}</section>
+        </section>;
+      case 'payments':
+        return <LichSuThanhToan payments={payments} bookings={bookings} pets={pets} details={bookingDetails} serviceById={serviceById} user={customer} onOpenBooking={setBookingDetailId} />;
       case 'health':
         return <HealthPage pets={pets} selectedPetId={selectedPetId} onSelectPet={setSelectedPetId} records={healthRecords} vaccinations={vaccinations} loading={healthLoading} />;
       case 'notifications':
-        return <NotificationsPage notifications={notifications} unreadCount={unreadCount} onOpen={openNotification} onMarkAll={markAllNotificationsRead} busy={actionBusy === 'notifications'} />;
+        return <><NhacNhoTrinhDuyet userId={userId} notifications={notifications} onOpen={openNotification} /><NotificationsPage notifications={notifications} unreadCount={unreadCount} onOpen={openNotification} onMarkAll={markAllNotificationsRead} busy={actionBusy === 'notifications'} /></>;
       case 'profile':
-        return <ProfilePage user={customer} busy={actionBusy} onSave={saveProfile} onUploadAvatar={uploadAvatar} onLogout={onLogout} />;
+        return <CaiDatTaiKhoan user={customer} onUpdated={setCustomer} onLogout={onLogout} />;
       case 'overview':
       default:
         return <OverviewPage
@@ -639,6 +660,8 @@ export function CustomerPortal({ user, onLogout }) {
         onClose={() => setBookingDetailId('')}
         onCancel={cancelBooking}
         onSync={syncPayOS}
+        onRetry={retryPayment}
+        onReschedule={rescheduleBooking}
         onMessage={notify}
       />}
     </div>
@@ -688,13 +711,13 @@ function StatCard({ icon, label, value, hint }) {
   return <article className="card stat-card"><span className="stat-icon" aria-hidden="true">{icon}</span><span className="stat-label">{label}</span><strong className="stat-number">{value}</strong><span className="muted small">{hint}</span></article>;
 }
 
-function PetsPage({ pets, onAdd, onEdit, onViewHealth }) {
+function PetsPage({ pets, onAdd, onEdit, onViewHealth, onArchive }) {
   return (
     <section>
       <PageHeading eyebrow="Hồ sơ thú cưng" title="Những người bạn nhỏ" description="Lưu lại các thông tin cần thiết để PetNoVa chăm sóc bé tốt hơn." actions={<button className="button button-primary" onClick={onAdd}>＋ Thêm thú cưng</button>} />
       {pets.length ? <div className="pet-grid">{pets.map((pet) => {
         const petId = itemId(pet, 'petId');
-        return <article className="pet-card" key={petId}><PetImage pet={pet} /><div className="pet-card-body"><div className="pet-card-title"><div><h3>{pet.petName}</h3><p>{pet.species} · {pet.breed || 'Chưa cập nhật giống'}</p></div><StatusBadge status={pet.healthStatus || 'ACTIVE'} /></div><div className="pet-meta"><span className="badge">{pet.gender || 'Chưa rõ giới tính'}</span><span className="badge">{Number(pet.weight) ? `${pet.weight} kg` : 'Chưa có cân nặng'}</span></div><div className="action-buttons"><button type="button" className="button button-secondary button-small" onClick={() => onEdit(pet)}>Chỉnh sửa</button><button type="button" className="button button-ghost button-small" onClick={() => onViewHealth(pet)}>Sức khỏe</button></div></div></article>;
+        return <article className="pet-card" key={petId}><PetImage pet={pet} /><div className="pet-card-body"><div className="pet-card-title"><div><h3>{pet.petName}</h3><p>{pet.species} · {pet.breed || 'Chưa cập nhật giống'}</p></div><StatusBadge status={pet.healthStatus || 'ACTIVE'} /></div><div className="pet-meta"><span className="badge">{pet.gender || 'Chưa rõ giới tính'}</span><span className="badge">{Number(pet.weight) ? `${pet.weight} kg` : 'Chưa có cân nặng'}</span></div><div className="action-buttons"><button type="button" className="button button-secondary button-small" onClick={() => onEdit(pet)}>Chỉnh sửa</button><button type="button" className="button button-ghost button-small" onClick={() => onViewHealth(pet)}>Sức khỏe</button><button type="button" className="button button-ghost button-small" onClick={() => onArchive(pet)}>Lưu trữ</button></div></div></article>;
       })}</div> : <div className="panel"><EmptyState icon="🐾" action={<button className="button button-primary" onClick={onAdd}>Thêm hồ sơ đầu tiên</button>}>Bạn chưa thêm thú cưng nào. Hãy tạo hồ sơ đầu tiên cho bé.</EmptyState></div>}
     </section>
   );
@@ -750,7 +773,7 @@ function PetFormModal({ pet, busy, onClose, onSave }) {
         <div className="photo-field"><div>{preview ? <img className="upload-preview" src={preview} alt="Xem trước ảnh thú cưng" /> : <div className="upload-preview upload-placeholder" aria-hidden="true">🐾</div>}</div><label className="file-input">{file ? `Đã chọn: ${file.name}` : 'Chọn ảnh thú cưng'}<input type="file" accept="image/jpeg,image/png,image/webp" onChange={selectFile} hidden /></label></div>
         <label>Tên bé<input name="petName" value={values.petName} onChange={change} placeholder="Ví dụ: Bông" autoFocus /></label>
         <div className="form-row"><label>Loài<select name="species" value={values.species} onChange={change}><option value="">Chọn loài</option><option value="Chó">Chó</option><option value="Mèo">Mèo</option><option value="Khác">Khác</option></select></label><label>Giống<input name="breed" value={values.breed} onChange={change} placeholder="Ví dụ: Poodle" /></label></div>
-        <div className="form-row"><label>Giới tính<select name="gender" value={values.gender} onChange={change}><option value="Đực">Đực</option><option value="Cái">Cái</option><option value="Chưa rõ">Chưa rõ</option></select></label><label>Ngày sinh<input type="date" name="birthDate" value={values.birthDate} max={todayInputValue()} onChange={change} /></label></div>
+        <div className="form-row"><label>Giới tính<select name="gender" value={values.gender} onChange={change}><option value="Đực">Đực</option><option value="Cái">Cái</option><option value="Khác">Khác / chưa rõ</option></select></label><label>Ngày sinh<input type="date" name="birthDate" value={values.birthDate} max={todayInputValue()} onChange={change} /></label></div>
         <div className="form-row"><label>Cân nặng (kg)<input type="number" name="weight" value={values.weight} min="0.1" step="0.1" onChange={change} /></label><label>Tình trạng sức khỏe<input name="healthStatus" value={values.healthStatus} onChange={change} placeholder="Ví dụ: Khỏe mạnh" /></label></div>
         <div className="button-row"><button type="button" className="button button-secondary" onClick={onClose} disabled={busy}>Hủy</button><button className="button button-primary" disabled={busy}>{busy ? 'Đang lưu…' : 'Lưu hồ sơ'}</button></div>
       </form>
@@ -832,7 +855,7 @@ function BookingCard({ booking, pet, details, payments, serviceById, busy, onOpe
   return <article className="panel appointment-card"><div className="appointment-date"><strong>{String(readDate(booking.bookingDate)?.getDate() || '').padStart(2, '0')}</strong><span>THG {String((readDate(booking.bookingDate)?.getMonth() || 0) + 1).padStart(2, '0')}</span></div><div className="appointment-main"><div className="appointment-title"><div><h3>{pet?.petName || 'Thú cưng'} · {CARE_TYPES[booking.careTypeId] || booking.careTypeId}</h3><p>{service?.serviceName || 'Dịch vụ PetNoVa'} · {formatTime(booking.bookingTime)}</p></div><StatusBadge status={booking.status} /></div><div className="appointment-meta"><span>🐾 {pet?.species || 'Thú cưng'}</span><span>₫ {formatMoney(booking.totalAmount)}</span>{payment && <span>◉ {String(payment.status).toUpperCase() === 'PAID' ? 'Đã thanh toán' : 'Chờ thanh toán'}</span>}</div></div><div className="action-buttons"><button type="button" className="button button-secondary button-small" onClick={onOpen}>Chi tiết</button>{isCancellable(booking) && <button type="button" className="button button-danger button-small" onClick={onCancel} disabled={busy}>{busy ? 'Đang hủy…' : 'Hủy lịch'}</button>}</div></article>;
 }
 
-function BookingDetailModal({ booking, pet, details, payments, serviceById, actionBusy, onClose, onCancel, onSync, onMessage }) {
+function LegacyBookingDetailModal({ booking, pet, details, payments, serviceById, actionBusy, onClose, onCancel, onSync, onMessage }) {
   const [payosLinks, setPayosLinks] = useState({});
   const [creatingLink, setCreatingLink] = useState('');
   const bookingId = itemId(booking, 'bookingId');
@@ -853,6 +876,45 @@ function BookingDetailModal({ booking, pet, details, payments, serviceById, acti
     }
   };
   return <Modal title={`Lịch hẹn ${bookingId}`} onClose={onClose} wide><div className="split-layout modal-booking-layout"><div><DetailGrid><DetailItem label="Thú cưng">{pet?.petName || booking.petId}</DetailItem><DetailItem label="Ngày giờ">{formatDate(booking.bookingDate)} · {formatTime(booking.bookingTime)}</DetailItem><DetailItem label="Hình thức">{CARE_TYPES[booking.careTypeId] || booking.careTypeId}</DetailItem><DetailItem label="Tổng tiền">{formatMoney(booking.totalAmount)}</DetailItem></DetailGrid>{booking.note && <div className="booking-note"><strong>Ghi chú của bạn</strong><p>{booking.note}</p></div>}<section className="modal-section"><h3>Dịch vụ đã chọn</h3>{details.length ? <ul className="list">{details.map((detail) => { const service = serviceById[itemId(detail, 'serviceId')]; return <li className="list-item" key={itemId(detail, 'detailId')}><span className="task-icon">✦</span><div className="list-item-main"><strong>{service?.serviceName || detail.serviceId}</strong><span>{detail.quantity || 1} gói · {formatMoney(detail.price)}</span></div></li>; })}</ul> : <p className="muted">Đang chờ thông tin dịch vụ.</p>}</section></div><aside className="payment-panel"><div className="panel-heading"><h3>Thanh toán</h3></div>{payments.length ? payments.map((payment) => <PaymentPanel key={itemId(payment, 'paymentId')} payment={payment} payosLink={payosLinks[itemId(payment, 'paymentId')]} creating={creatingLink === itemId(payment, 'paymentId')} syncing={actionBusy === `sync-${itemId(payment, 'paymentId')}`} onCreateLink={() => createPayOSLink(payment)} onSync={() => onSync(payment)} />) : <EmptyState icon="₫">Chưa có giao dịch cho lịch hẹn này.</EmptyState>}</aside></div><div className="button-row"><button type="button" className="button button-secondary" onClick={onClose}>Đóng</button>{isCancellable(booking) && <button type="button" className="button button-danger" disabled={actionBusy === `cancel-${bookingId}`} onClick={() => { onCancel(booking); onClose(); }}>Hủy lịch hẹn</button>}</div></Modal>;
+}
+
+function BookingDetailModal({ booking, pet, details, payments, serviceById, actionBusy,
+  onClose, onCancel, onSync, onRetry, onReschedule, onMessage }) {
+  const [adjusting, setAdjusting] = useState(false);
+  const [creating, setCreating] = useState('');
+  const [links, setLinks] = useState({});
+  const openPayOS = async (payment) => {
+    setCreating(payment.paymentId);
+    try {
+      const link = await api.post(`/api/Payments/${encodeURIComponent(payment.paymentId)}/payos-link`);
+      setLinks((current) => ({ ...current, [payment.paymentId]: link.checkoutUrl }));
+      if (link.checkoutUrl && !window.open(link.checkoutUrl, '_blank', 'noopener,noreferrer'))
+        onMessage('Trình duyệt chặn cửa sổ thanh toán. Hãy mở liên kết bên dưới.', 'error');
+    } catch (error) { onMessage(errorText(error, 'Không thể mở PayOS.'), 'error'); }
+    finally { setCreating(''); }
+  };
+  return <Modal title={`Lịch hẹn ${booking.bookingId}`} onClose={onClose} wide>
+    <div className="split-layout modal-booking-layout">
+      <section><DetailGrid><DetailItem label="Thú cưng">{pet?.petName || booking.petId}</DetailItem>
+        <DetailItem label="Ngày giờ">{formatDate(booking.bookingDate)} · {formatTime(booking.bookingTime)}</DetailItem>
+        <DetailItem label="Hình thức">{CARE_TYPES[booking.careTypeId] || booking.careTypeId}</DetailItem>
+        <DetailItem label="Tổng tiền">{formatMoney(booking.totalAmount)}</DetailItem>
+        <DetailItem label="Trạng thái"><StatusBadge status={booking.status} /></DetailItem></DetailGrid>
+        {booking.note && <div className="booking-note"><strong>Ghi chú</strong><p>{booking.note}</p></div>}
+        <div className="modal-section"><h3>Dịch vụ đã chọn</h3>{details.length ? <ul className="list">{details.map((item) => <li className="list-item" key={item.detailId}><span className="task-icon">✦</span><div className="list-item-main"><strong>{serviceById[item.serviceId]?.serviceName || item.serviceId}</strong><span>{formatMoney(item.price)} · {item.quantity} gói</span></div></li>)}</ul> : <p className="muted">Đang tải dịch vụ…</p>}</div>
+      </section>
+      <aside className="payment-panel"><h3>Thanh toán</h3>{payments.length ? [...payments].reverse().map((payment) => <div className="payment-card" key={payment.paymentId}>
+        <div className="payment-card-head"><div><strong>{payment.method === 'CASH' ? 'Tiền mặt tại quầy' : 'Chuyển khoản PayOS'}</strong><span>{formatMoney(payment.amount)} · {payment.paymentId}</span></div><StatusBadge status={payment.status} /></div>
+        {payment.status === 'PAID' && <p className="payment-success">✓ Đã ghi nhận thanh toán.</p>}
+        {payment.status === 'REFUNDED' && <p>Đã ghi nhận hoàn tiền. {payment.refundReason || ''}</p>}
+        {payment.status === 'FAILED' && <button type="button" className="button button-secondary button-small" disabled={actionBusy === `retry-${payment.paymentId}`} onClick={() => onRetry(payment)}>Thử lại thanh toán</button>}
+        {payment.status === 'PENDING' && payment.method === 'CASH' && <p className="cash-note">Thanh toán tại quầy; nhân viên sẽ xác nhận giao dịch.</p>}
+        {payment.status === 'PENDING' && payment.method === 'BANK_TRANSFER' && <><div className="action-buttons"><button type="button" className="button button-primary button-small" disabled={creating === payment.paymentId} onClick={() => openPayOS(payment)}>{creating === payment.paymentId ? 'Đang tạo…' : 'Thanh toán PayOS'}</button><button type="button" className="button button-secondary button-small" disabled={actionBusy === `sync-${payment.paymentId}`} onClick={() => onSync(payment)}>Kiểm tra lại</button></div>{links[payment.paymentId] && <a className="payment-link" href={links[payment.paymentId]} target="_blank" rel="noreferrer">Mở liên kết thanh toán ↗</a>}</>}
+      </div>) : <EmptyState icon="₫">Chưa có giao dịch.</EmptyState>}</aside>
+    </div>
+    {adjusting && <DoiLichForm booking={booking} details={details} busy={actionBusy === `reschedule-${booking.bookingId}`} onCancel={() => setAdjusting(false)} onSave={async (form) => { const ok = await onReschedule(booking, form); if (ok) setAdjusting(false); return ok; }} />}
+    <div className="button-row"><button type="button" className="button button-secondary" onClick={onClose}>Đóng</button>{isCancellable(booking) && <><button type="button" className="button button-secondary" onClick={() => setAdjusting((old) => !old)}>{adjusting ? 'Ẩn đổi lịch' : 'Đổi ngày giờ'}</button><button type="button" className="button button-danger" onClick={() => onCancel(booking)}>Hủy lịch hẹn</button></>}</div>
+  </Modal>;
 }
 
 function PaymentPanel({ payment, payosLink, creating, syncing, onCreateLink, onSync }) {

@@ -16,7 +16,7 @@ namespace PetNoVaApi.Models
 
         public string message { get; set; } = string.Empty;
 
-        // Loại thông báo giúp Flutter chọn icon/cách điều hướng; isRead điều khiển dấu chưa đọc.
+        // Loại thông báo giúp website chọn icon/cách điều hướng; isRead điều khiển dấu chưa đọc.
         public string notificationType { get; set; } = string.Empty;
 
         public bool isRead { get; set; }

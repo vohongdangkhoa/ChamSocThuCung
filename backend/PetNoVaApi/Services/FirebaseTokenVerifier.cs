@@ -15,7 +15,7 @@ public interface IFirebaseTokenVerifier
 }
 
 /// <summary>Danh tính tối thiểu backend tin tưởng sau khi xác minh token.</summary>
-public sealed record FirebaseIdentity(string FirebaseUid, string? Email);
+public sealed record FirebaseIdentity(string FirebaseUid, string? Email, bool EmailVerified = false);
 
 /// <summary>Lỗi API key Firebase bị thiếu hoặc không dùng được.</summary>
 public sealed class FirebaseConfigurationException : Exception
@@ -35,7 +35,7 @@ public sealed class FirebaseVerificationUnavailableException : Exception
     }
 }
 
-/// <summary>Gọi Firebase Identity Toolkit để xác minh Bearer token từ Flutter.</summary>
+/// <summary>Gọi Firebase Identity Toolkit để xác minh Bearer token từ website.</summary>
 public sealed class FirebaseTokenVerifier : IFirebaseTokenVerifier
 {
     // HttpClient do DI cấp, API key đọc từ secret và logger chỉ ghi chẩn đoán phía server.
@@ -133,7 +133,8 @@ public sealed class FirebaseTokenVerifier : IFirebaseTokenVerifier
                         firebaseUser.LocalId!.Trim(),
                         string.IsNullOrWhiteSpace(firebaseUser.Email)
                             ? null
-                            : firebaseUser.Email.Trim()
+                            : firebaseUser.Email.Trim(),
+                        firebaseUser.EmailVerified
                     );
             }
 
@@ -190,5 +191,8 @@ public sealed class FirebaseTokenVerifier : IFirebaseTokenVerifier
 
         [JsonPropertyName("email")]
         public string? Email { get; init; }
+
+        [JsonPropertyName("emailVerified")]
+        public bool EmailVerified { get; init; }
     }
 }

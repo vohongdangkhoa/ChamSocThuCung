@@ -1,68 +1,15 @@
-# PetNoVa API
+# API PetNoVa
 
-Backend ASP.NET Core API duoc copy tu:
+Đây là API ASP.NET Core/.NET 10 và SQL Server cho website React PetNoVa. Khởi động toàn bộ dự án từ thư mục gốc bằng `run_petnova_web_dev.cmd` hoặc `run_petnova_web_dev.ps1`; xem README ở thư mục gốc.
 
-```text
-C:\Users\vohon\source\repos\PetNoVaApi
-```
-
-## Chay trong VS Code
-
-Tu terminal o root `petnova_app`:
+Nếu chỉ cần chạy API trong VS Code:
 
 ```powershell
 dotnet run --project backend/PetNoVaApi/PetNoVaApi.csproj --launch-profile http
 ```
 
-API se nghe o:
+API phát triển dùng `http://localhost:5200`, kiểm tra bằng `http://localhost:5200/health`. Cấu hình SQL Server trong `appsettings.json`. Các thay đổi lược đồ bổ sung được áp dụng khi API khởi động; file SQL tương ứng nằm trong `Database/`.
 
-```text
-http://localhost:5200
-http://<IP-may-tinh>:5200
-```
+Không đưa mật khẩu SMTP, khóa PayOS, Firebase Admin hoặc Cloudinary vào Git. Các tính năng tích hợp bên ngoài chỉ hoạt động khi khóa tương ứng đã được cấu hình trong .NET User Secrets hoặc biến môi trường. `configure_petnova_password_reset.cmd` và `configure_petnova_cloudinary.cmd` ở thư mục gốc hỗ trợ cấu hình một số khóa.
 
-Swagger:
-
-```text
-http://localhost:5200/swagger
-```
-
-Neu chay Flutter web trong VS Code:
-
-```powershell
-flutter run -d chrome --dart-define=API_BASE_URL=http://localhost:5200
-```
-
-Neu chay Android may that, app can goi IP may tinh dang chay API, vi du:
-
-```powershell
-flutter run --dart-define=API_BASE_URL=http://172.32.9.163:5200
-```
-
-Connection string nam trong `appsettings.json` va dang tro toi SQL Server local:
-
-```text
-Server=localhost\MSSQLSERVER01;Database=PetNoVaDB;Trusted_Connection=True;TrustServerCertificate=True;
-```
-
-## Cau hinh Cloudinary
-
-Khong dat `API secret` trong source code. Tu thu muc goc `petnova_app`, chay:
-
-```powershell
-.\configure_petnova_cloudinary.cmd
-```
-
-Script se luu `Cloud name`, `API key` va `API secret` bang .NET User Secrets.
-Huong dan day du nam tai `docs/CloudinaryPetNoVa.md`.
-
-## Cau hinh OTP quen mat khau
-
-Khong dat Gmail App Password hoac Firebase service-account trong source code.
-Tu thu muc goc `petnova_app`, chay:
-
-```powershell
-.\configure_petnova_password_reset.cmd
-```
-
-Huong dan day du nam tai `docs/PasswordResetPetNoVa.md`.
+Khi triển khai thật, dùng HTTPS, cấu hình `Web:PublicBaseUrl` trỏ đến website, cập nhật URL callback PayOS và giới hạn CORS theo domain website.

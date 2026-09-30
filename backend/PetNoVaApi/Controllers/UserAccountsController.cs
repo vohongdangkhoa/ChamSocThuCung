@@ -32,7 +32,7 @@ namespace PetNoVaApi.Controllers
             CancellationToken cancellationToken
         )
         {
-            // Xác minh token trước, không tin role hay firebaseUid do Flutter tự gửi.
+            // Xác minh token trước, không tin role hay firebaseUid do website tự gửi.
             var identityResult = await GetFirebaseIdentityAsync(cancellationToken);
             if (identityResult.Error is not null)
             {
@@ -269,7 +269,7 @@ namespace PetNoVaApi.Controllers
             }
 
             // Các giá trị hệ thống được tạo sau khi mọi validation đầu vào đã qua.
-            user.userId = await GenerateUserIdAsync(cancellationToken);
+            user.userId = await MaDinhDanh.NextAsync(_context, "USER_ACCOUNT", "userId", "U", cancellationToken);
 
             if (string.IsNullOrWhiteSpace(user.role))
             {
@@ -284,6 +284,7 @@ namespace PetNoVaApi.Controllers
             user.createdAt = DateTime.Now;
             user.phone = normalizedPhone;
             user.normalizedPhone = normalizedPhone;
+            user.fcmToken = string.Empty; user.avatarUrl = null; user.avatarPublicId = null;
 
             _context.UserAccounts.Add(user);
             try
@@ -344,6 +345,9 @@ namespace PetNoVaApi.Controllers
                 return NotFound();
             }
 
+            if (existingUser.userId == PhienNguoiDung.Get(HttpContext).userId && normalizedStatus != "ACTIVE")
+                return Conflict("Không thể tự khóa tài khoản đang quản trị.");
+
             existingUser.status = normalizedStatus;
 
             await _context.SaveChangesAsync(cancellationToken);
@@ -372,7 +376,7 @@ namespace PetNoVaApi.Controllers
                 return Forbid();
             }
 
-            // Chỉ bốn role mà Flutter có màn hình tương ứng mới được lưu.
+            // Chỉ bốn role mà website có màn hình tương ứng mới được lưu.
             var normalizedRole = user.role.Trim().ToUpperInvariant();
             if (normalizedRole is not ("CUSTOMER" or "STAFF" or "VET" or "ADMIN"))
             {
@@ -388,6 +392,16 @@ namespace PetNoVaApi.Controllers
             {
                 return NotFound();
             }
+
+            if (existingUser.userId == PhienNguoiDung.Get(HttpContext).userId && normalizedRole != "ADMIN")
+                return Conflict("Không thể tự gỡ quyền quản trị của phiên đang dùng.");
+
+            if (normalizedRole is "STAFF" or "VET" &&
+                !await _context.Staffs.AnyAsync(s => s.userId == id, cancellationToken))
+                return Conflict("Hãy tạo hồ sơ nhân sự ở mục Nhân sự trước khi gán vai trò này.");
+            if (normalizedRole == "CUSTOMER" &&
+                await _context.Staffs.AnyAsync(s => s.userId == id, cancellationToken))
+                return Conflict("Hãy gỡ hồ sơ nhân sự ở mục Nhân sự trước khi chuyển thành khách hàng.");
 
             // CUSTOMER tham gia luồng quên mật khẩu bằng điện thoại nên bắt buộc số +84 hợp lệ/duy nhất.
             if (normalizedRole == "CUSTOMER")
@@ -419,6 +433,9 @@ namespace PetNoVaApi.Controllers
                 existingUser.normalizedPhone = normalizedPhone;
             }
 
+            var linkedStaff = await _context.Staffs.FirstOrDefaultAsync(s => s.userId == id, cancellationToken);
+            if (linkedStaff is not null && normalizedRole is ("STAFF" or "VET"))
+                linkedStaff.role = normalizedRole;
             existingUser.role = normalizedRole;
 
             await _context.SaveChangesAsync(cancellationToken);
@@ -495,6 +512,37 @@ namespace PetNoVaApi.Controllers
             await _context.SaveChangesAsync(cancellationToken);
 
             return NoContent();
+        }
+
+        [HttpPost("sync-email")]
+        public async Task<IActionResult> SyncEmail(CancellationToken cancellationToken)
+        {
+            var identity = HttpContext.Items["petnova.identity"] as FirebaseIdentity;
+            if (identity is null || !identity.EmailVerified || string.IsNullOrWhiteSpace(identity.Email))
+                return BadRequest("Hãy xác nhận email mới trong Firebase rồi đăng nhập lại.");
+            var user = await _context.UserAccounts.FirstOrDefaultAsync(u => u.firebaseUid == identity.FirebaseUid, cancellationToken);
+            if (user is null || user.status != "ACTIVE") return NotFound();
+            var email = identity.Email.Trim().ToLowerInvariant();
+            if (await _context.UserAccounts.AnyAsync(u => u.email == email && u.userId != user.userId, cancellationToken))
+                return Conflict("Email đã gắn với hồ sơ PetNoVa khác.");
+            user.email = email;
+            var staff = await _context.Staffs.FirstOrDefaultAsync(s => s.userId == user.userId, cancellationToken);
+            if (staff is not null) staff.email = email;
+            await _context.SaveChangesAsync(cancellationToken);
+            return Ok(user);
+        }
+
+        [HttpGet("contacts")]
+        public async Task<IActionResult> GetContacts(CancellationToken cancellationToken)
+        {
+            var current = PhienNguoiDung.Get(HttpContext);
+            if (current.role == "CUSTOMER") return StatusCode(403);
+            var customers = _context.UserAccounts.AsNoTracking().Where(u => u.role == "CUSTOMER");
+            if (current.role == "VET")
+                customers = customers.Where(u => _context.Bookings.Any(b => b.userId == u.userId &&
+                    _context.Staffs.Any(s => s.staffId == b.staffId && s.userId == current.userId)));
+            return Ok(await customers.Select(u => new { u.userId, u.fullName, u.email, u.phone })
+                .ToListAsync(cancellationToken));
         }
 
         /// <summary>Kiểm tra số điện thoại chuẩn hóa đã thuộc tài khoản khác hay chưa.</summary>

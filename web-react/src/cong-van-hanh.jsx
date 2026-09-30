@@ -1,5 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { api, formatError } from './api';
+import { api, formatError } from './giao-tiep-api';
+import { CaiDatTaiKhoan } from './cai-dat-tai-khoan';
+import { DoiLichForm } from './lich-hen-khach-hang';
+import { DanhMucVaBaoCao } from './quan-tri-bo-sung';
+import './van-hanh.css';
 
 const ENDPOINTS = {
   bookings: '/api/Bookings',
@@ -33,6 +37,7 @@ const PAYMENT_STATUS_LABELS = {
   FAILED: 'Thất bại',
   CANCELLED: 'Đã hủy',
   EXPIRED: 'Hết hạn',
+  REFUNDED: 'Đã hoàn tiền',
 };
 
 const ROLE_LABELS = {
@@ -43,7 +48,7 @@ const ROLE_LABELS = {
 };
 
 const EMPTY_STAFF_DRAFT = {
-  firebaseUid: '',
+  password: '',
   fullName: '',
   email: '',
   phone: '',
@@ -79,6 +84,16 @@ async function request(method, path, body) {
     ? await api[method](path)
     : await api[method](path, body);
   return unwrapResponse(result);
+}
+
+async function requestAllBookings() {
+  const rows = [];
+  for (let page = 1; page <= 500; page += 1) {
+    const batch = asList(await request('get', `${ENDPOINTS.bookings}?page=${page}`));
+    rows.push(...batch);
+    if (batch.length < 200) return rows;
+  }
+  throw new Error('Danh sách lịch quá lớn. Vui lòng dùng báo cáo để tra cứu theo khoảng ngày.');
 }
 
 function errorText(error, fallback = 'Không thể hoàn tất thao tác. Vui lòng thử lại.') {
@@ -132,6 +147,13 @@ function paymentMethodLabel(method) {
     default:
       return method || 'Chưa chọn';
   }
+}
+
+function paymentRank(payment) {
+  const status = normalise(payment?.status);
+  const priority = status === 'PAID' ? 3 : status === 'PENDING' ? 2 : 1;
+  const sequence = Number(String(payment?.paymentId || '').replace(/\D/g, '')) || 0;
+  return priority * 1_000_000_000 + sequence;
 }
 
 function currency(value) {
@@ -318,6 +340,15 @@ function Notice({ children, error = false }) {
 
 /** Cổng nghiệp vụ dành cho nhân viên vận hành. */
 export function StaffPortal({ user, onLogout }) {
+  const [activeTab, setActiveTab] = useState('bookings');
+  const [selectedBookingId, setSelectedBookingId] = useState('');
+  const [dateFilter, setDateFilter] = useState('');
+  const [ownOnly, setOwnOnly] = useState(false);
+  const [people, setPeople] = useState([]);
+  const [pets, setPets] = useState([]);
+  const [staff, setStaff] = useState([]);
+  const [myStaff, setMyStaff] = useState(null);
+  const [refund, setRefund] = useState({ paymentId: '', reason: '', reference: '' });
   const [bookings, setBookings] = useState([]);
   const [bookingDetails, setBookingDetails] = useState([]);
   const [payments, setPayments] = useState([]);
@@ -333,16 +364,22 @@ export function StaffPortal({ user, onLogout }) {
     if (showLoading) setLoading(true);
     setError('');
     try {
-      const [bookingData, detailData, paymentData, serviceData] = await Promise.all([
-        request('get', ENDPOINTS.bookings),
+      const [bookingData, detailData, paymentData, serviceData, petData, peopleData, staffData, myData] = await Promise.all([
+        requestAllBookings(),
         request('get', ENDPOINTS.bookingDetails),
         request('get', ENDPOINTS.payments),
         request('get', ENDPOINTS.services),
+        request('get', ENDPOINTS.pets),
+        request('get', `${ENDPOINTS.users}/contacts`),
+        request('get', `${ENDPOINTS.staff}/directory`),
+        request('get', `${ENDPOINTS.staff}/me`),
       ]);
       setBookings(asList(bookingData));
       setBookingDetails(asList(detailData));
       setPayments(asList(paymentData));
       setServices(asList(serviceData));
+      setPets(asList(petData)); setPeople(asList(peopleData));
+      setStaff(asList(staffData)); setMyStaff(unwrapResponse(myData));
     } catch (loadError) {
       setError(errorText(loadError, 'Không thể tải danh sách lịch hẹn.'));
     } finally {
@@ -355,10 +392,12 @@ export function StaffPortal({ user, onLogout }) {
   }, [loadBookings]);
 
   const serviceById = useMemo(() => new Map(services.map((service) => [service.serviceId, service])), [services]);
+  const petById = useMemo(() => new Map(pets.map((pet) => [pet.petId, pet])), [pets]);
+  const personById = useMemo(() => new Map(people.map((person) => [person.userId, person])), [people]);
   const paymentByBookingId = useMemo(() => {
     const map = new Map();
     payments.forEach((payment) => {
-      if (!map.has(payment.bookingId)) map.set(payment.bookingId, payment);
+      if (paymentRank(payment) > paymentRank(map.get(payment.bookingId))) map.set(payment.bookingId, payment);
     });
     return map;
   }, [payments]);
@@ -374,6 +413,8 @@ export function StaffPortal({ user, onLogout }) {
     const keyword = query.trim().toLowerCase();
     return [...bookings]
       .filter((booking) => statusFilter === 'ALL' || normalise(booking.status) === statusFilter)
+      .filter((booking) => !dateFilter || dateInputValue(booking.bookingDate) === dateFilter)
+      .filter((booking) => !ownOnly || booking.staffId === myStaff?.staffId)
       .filter((booking) => !keyword || [
         booking.bookingId,
         booking.petId,
@@ -381,7 +422,38 @@ export function StaffPortal({ user, onLogout }) {
         booking.careTypeId,
       ].some((value) => String(value || '').toLowerCase().includes(keyword)))
       .sort((left, right) => String(right.bookingDate || '').localeCompare(String(left.bookingDate || '')));
-  }, [bookings, query, statusFilter]);
+  }, [bookings, query, statusFilter, dateFilter, ownOnly, myStaff]);
+
+  const selectedBooking = bookings.find((item) => item.bookingId === selectedBookingId);
+  const selectedDetails = bookingDetails.filter((item) => item.bookingId === selectedBookingId);
+  const selectedPayments = payments.filter((item) => item.bookingId === selectedBookingId);
+
+  const assignBooking = (staffId) => {
+    if (!selectedBooking || !staffId) return;
+    runAction(`assign-${selectedBookingId}`,
+      () => request('put', `${ENDPOINTS.bookings}/${encodeId(selectedBookingId)}/assign`, { staffId }),
+      'Đã phân công lịch hẹn.');
+  };
+  const saveReschedule = async (values) => {
+    if (!selectedBooking) return false;
+    setBusyKey('reschedule');
+    try {
+      await request('put', `${ENDPOINTS.bookings}/${encodeId(selectedBookingId)}/reschedule`, {
+        bookingDate: values.bookingDate, bookingTime: values.bookingTime,
+        staffId: values.staffId || null, note: values.note.slice(0, 255),
+      });
+      await loadBookings(false); setNotice('Đã đổi ngày giờ hẹn.'); return true;
+    } catch (error) { setNotice(errorText(error)); return false; }
+    finally { setBusyKey(''); }
+  };
+  const submitRefund = async (event) => {
+    event.preventDefault();
+    if (!refund.paymentId) return;
+    const success = await runAction(`refund-${refund.paymentId}`,
+      () => request('put', `${ENDPOINTS.payments}/${encodeId(refund.paymentId)}/refund`, { reason: refund.reason, reference: refund.reference }),
+      'Đã ghi nhận chứng từ hoàn tiền.');
+    if (success) setRefund({ paymentId: '', reason: '', reference: '' });
+  };
 
   const runAction = async (key, operation, successMessage) => {
     setBusyKey(key);
@@ -390,8 +462,10 @@ export function StaffPortal({ user, onLogout }) {
       await operation();
       setNotice(successMessage);
       await loadBookings(false);
+      return true;
     } catch (actionError) {
       setNotice(errorText(actionError));
+      return false;
     } finally {
       setBusyKey('');
     }
@@ -424,7 +498,7 @@ export function StaffPortal({ user, onLogout }) {
     `Đã kiểm tra giao dịch PayOS ${payment.paymentId}.`,
   );
 
-  const tabs = [{ id: 'bookings', label: 'Lịch hẹn & thanh toán', icon: '▣' }];
+  const tabs = [{ id: 'bookings', label: 'Lịch hẹn & thanh toán', icon: '▣' }, { id: 'account', label: 'Tài khoản', icon: '◉' }];
 
   return (
     <PortalShell
@@ -433,11 +507,11 @@ export function StaffPortal({ user, onLogout }) {
       title="Bàn vận hành"
       subtitle="Theo dõi lịch hẹn, tiến độ chăm sóc và thanh toán tại quầy."
       tabs={tabs}
-      activeTab="bookings"
-      onTabChange={() => {}}
+      activeTab={activeTab}
+      onTabChange={setActiveTab}
       onRefresh={() => loadBookings()}
     >
-      <div className="page-heading">
+      {activeTab === 'account' ? <CaiDatTaiKhoan user={user} onLogout={onLogout} /> : <><div className="page-heading">
         <div>
           <h1>Lịch hẹn</h1>
           <p>{visibleBookings.length} lịch phù hợp bộ lọc hiện tại.</p>
@@ -464,6 +538,8 @@ export function StaffPortal({ user, onLogout }) {
               <option value="COMPLETED">Hoàn thành</option>
               <option value="CANCELLED">Đã hủy</option>
             </select>
+            <input type="date" value={dateFilter} onChange={(event) => setDateFilter(event.target.value)} aria-label="Lọc ngày hẹn" />
+            <label className="inline-check"><input type="checkbox" checked={ownOnly} onChange={(event) => setOwnOnly(event.target.checked)} />Chỉ lịch của tôi</label>
           </div>
           <button type="button" className="button button-secondary button-small" onClick={() => loadBookings()}>Làm mới</button>
         </div>
@@ -546,6 +622,7 @@ export function StaffPortal({ user, onLogout }) {
                             </button>
                           )}
                           {blockedCompletion && <span className="muted small">Chờ thanh toán</span>}
+                          <button type="button" className="button button-ghost button-small" onClick={() => setSelectedBookingId(booking.bookingId)}>Xem chi tiết</button>
                         </div>
                       </td>
                     </tr>
@@ -556,15 +633,27 @@ export function StaffPortal({ user, onLogout }) {
           </div>
         )}
       </section>
+      {selectedBooking && <section className="panel chi-tiet-van-hanh"><div className="panel-heading"><h2>Chi tiết {selectedBooking.bookingId}</h2><button type="button" onClick={() => setSelectedBookingId('')}>Đóng</button></div>
+        <div className="detail-grid"><div className="detail-item"><span>Khách hàng</span><strong>{personById.get(selectedBooking.userId)?.fullName || selectedBooking.userId}</strong><small>{personById.get(selectedBooking.userId)?.phone} · {personById.get(selectedBooking.userId)?.email}</small></div><div className="detail-item"><span>Thú cưng</span><strong>{petById.get(selectedBooking.petId)?.petName || selectedBooking.petId}</strong><small>{petById.get(selectedBooking.petId)?.species} · {petById.get(selectedBooking.petId)?.healthStatus}</small></div><div className="detail-item"><span>Ghi chú</span><strong>{selectedBooking.note || 'Không có'}</strong></div></div>
+        <h3>Toàn bộ dịch vụ</h3><ul className="list">{selectedDetails.map((detail) => <li className="list-item" key={detail.detailId}><strong>{serviceById.get(detail.serviceId)?.serviceName || detail.serviceId}</strong><span>{detail.quantity} × {currency(detail.price)}</span></li>)}</ul>
+        <label>Phân công nhân sự<select value={selectedBooking.staffId || ''} disabled={Boolean(busyKey)} onChange={(event) => assignBooking(event.target.value)}><option value="">Chưa phân công</option>{staff.map((person) => <option key={person.staffId} value={person.staffId}>{person.fullName} · {person.role === 'VET' ? 'Bác sĩ' : 'Nhân viên'}</option>)}</select></label>
+        {['PENDING', 'CONFIRMED'].includes(selectedBooking.status) && <DoiLichForm key={selectedBooking.bookingId} booking={selectedBooking} details={selectedDetails} busy={busyKey === 'reschedule'} onSave={saveReschedule} onCancel={() => setSelectedBookingId('')} />}
+        <h3>Giao dịch</h3><ul className="list">{selectedPayments.map((payment) => <li className="list-item" key={payment.paymentId}><strong>{payment.paymentId} · {paymentMethodLabel(payment.method)} · {currency(payment.amount)}</strong><StatusBadge status={payment.status} kind="payment" />{payment.status === 'PAID' && <button type="button" className="button button-secondary button-small" onClick={() => setRefund({ paymentId: payment.paymentId, reason: '', reference: '' })}>Ghi nhận hoàn tiền</button>}</li>)}</ul>
+        {refund.paymentId && <form className="form-grid" onSubmit={submitRefund}><h3>Ghi nhận hoàn tiền đã thực hiện: {refund.paymentId}</h3><p className="muted small">Thao tác này lưu chứng từ, không tự chuyển tiền qua PayOS hoặc ngân hàng.</p><label>Lý do<input required maxLength={500} value={refund.reason} onChange={(e) => setRefund({ ...refund, reason: e.target.value })} /></label><label>Mã tham chiếu hoàn tiền thực tế<input required maxLength={200} value={refund.reference} onChange={(e) => setRefund({ ...refund, reference: e.target.value })} /></label><div className="button-row"><button type="button" className="button button-secondary" onClick={() => setRefund({ paymentId: '', reason: '', reference: '' })}>Hủy</button><button className="button button-primary" disabled={Boolean(busyKey)}>Lưu chứng từ</button></div></form>}
+      </section>}</>}
     </PortalShell>
   );
 }
 
 /** Cổng chuyên môn dành cho bác sĩ thú y. */
 export function VetPortal({ user, onLogout }) {
+  const [activeTab, setActiveTab] = useState('schedule');
   const [pets, setPets] = useState([]);
+  const [bookings, setBookings] = useState([]);
+  const [petQuery, setPetQuery] = useState('');
   const [staffProfile, setStaffProfile] = useState(null);
   const [staffError, setStaffError] = useState('');
+  const [scheduleError, setScheduleError] = useState('');
   const [selectedPetId, setSelectedPetId] = useState('');
   const [records, setRecords] = useState([]);
   const [vaccinations, setVaccinations] = useState([]);
@@ -575,23 +664,34 @@ export function VetPortal({ user, onLogout }) {
   const [notice, setNotice] = useState('');
   const [busyKey, setBusyKey] = useState('');
   const [clinicalTab, setClinicalTab] = useState('records');
-  const [recordForm, setRecordForm] = useState({ diagnosis: '', treatment: '', note: '' });
+  const [recordForm, setRecordForm] = useState({ diagnosis: '', treatment: '', note: '', prescription: '', followUpDate: '', weight: '', correctionReason: '' });
+  const [editingRecordId, setEditingRecordId] = useState('');
+  const [editingVaccinationId, setEditingVaccinationId] = useState('');
+  const [healthDraft, setHealthDraft] = useState({ weight: '', healthStatus: '' });
   const [vaccinationForm, setVaccinationForm] = useState({
     vaccineName: '',
     vaccinationDate: localDateInput(),
     nextDate: oneYearFromTodayInput(),
     note: '',
+    correctionReason: '',
   });
 
   const staffId = deriveStaffId(user, staffProfile);
+
+  useEffect(() => {
+    setEditingRecordId(''); setEditingVaccinationId('');
+    setRecordForm({ diagnosis: '', treatment: '', note: '', prescription: '', followUpDate: '', weight: '', correctionReason: '' });
+    setVaccinationForm({ vaccineName: '', vaccinationDate: localDateInput(), nextDate: oneYearFromTodayInput(), note: '', correctionReason: '' });
+  }, [selectedPetId]);
 
   const loadInitial = useCallback(async (showLoading = true) => {
     if (showLoading) setLoading(true);
     setError('');
     setStaffError('');
-    const [petResult, staffResult] = await Promise.allSettled([
+    const [petResult, staffResult, bookingResult] = await Promise.allSettled([
       request('get', ENDPOINTS.pets),
       request('get', `${ENDPOINTS.staff}/me`),
+      requestAllBookings(),
     ]);
 
     if (petResult.status === 'fulfilled') {
@@ -611,6 +711,8 @@ export function VetPortal({ user, onLogout }) {
       setStaffProfile(null);
       setStaffError(errorText(staffResult.reason, 'Chưa xác định được hồ sơ nhân sự hiện tại.'));
     }
+    setBookings(bookingResult.status === 'fulfilled' ? asList(bookingResult.value) : []);
+    setScheduleError(bookingResult.status === 'rejected' ? errorText(bookingResult.reason, 'Không thể tải ca được phân công.') : '');
 
     setLoading(false);
   }, []);
@@ -649,6 +751,14 @@ export function VetPortal({ user, onLogout }) {
     () => pets.find((pet) => pet.petId === selectedPetId) || null,
     [pets, selectedPetId],
   );
+  useEffect(() => {
+    setHealthDraft({ weight: selectedPet?.weight == null ? '' : String(selectedPet.weight),
+      healthStatus: selectedPet?.healthStatus || '' });
+  }, [selectedPet]);
+  const visiblePets = useMemo(() => pets.filter((pet) => [pet.petName, pet.petId, pet.species, pet.breed]
+    .some((value) => String(value || '').toLocaleLowerCase('vi-VN').includes(petQuery.trim().toLocaleLowerCase('vi-VN')))), [pets, petQuery]);
+  const schedule = useMemo(() => [...bookings].filter((booking) => booking.status !== 'CANCELLED')
+    .sort((left, right) => `${left.bookingDate} ${left.bookingTime}`.localeCompare(`${right.bookingDate} ${right.bookingTime}`)), [bookings]);
 
   const refresh = async () => {
     await loadInitial();
@@ -673,16 +783,21 @@ export function VetPortal({ user, onLogout }) {
     setBusyKey('record');
     setNotice('');
     try {
-      await request('post', ENDPOINTS.records, {
+      await request(editingRecordId ? 'put' : 'post', editingRecordId ? `${ENDPOINTS.records}/${encodeId(editingRecordId)}` : ENDPOINTS.records, {
         recordId: '',
         diagnosis: recordForm.diagnosis.trim(),
         treatment: recordForm.treatment.trim(),
         recordDate: new Date().toISOString(),
         note: recordForm.note.trim() || null,
+        prescription: recordForm.prescription.trim() || null,
+        followUpDate: recordForm.followUpDate ? `${recordForm.followUpDate}T00:00:00` : null,
+        weight: recordForm.weight ? Number(recordForm.weight) : null,
+        correctionReason: recordForm.correctionReason.trim(),
         petId: selectedPet.petId,
         staffId,
       });
-      setRecordForm({ diagnosis: '', treatment: '', note: '' });
+      setRecordForm({ diagnosis: '', treatment: '', note: '', prescription: '', followUpDate: '', weight: '', correctionReason: '' });
+      setEditingRecordId('');
       setNotice(`Đã lưu bệnh án cho ${selectedPet.petName}.`);
       await loadHistory(selectedPet.petId);
     } catch (submitError) {
@@ -698,12 +813,13 @@ export function VetPortal({ user, onLogout }) {
     setBusyKey('vaccination');
     setNotice('');
     try {
-      await request('post', ENDPOINTS.vaccinations, {
+      await request(editingVaccinationId ? 'put' : 'post', editingVaccinationId ? `${ENDPOINTS.vaccinations}/${encodeId(editingVaccinationId)}` : ENDPOINTS.vaccinations, {
         vaccinationId: '',
         vaccineName: vaccinationForm.vaccineName.trim(),
         vaccinationDate: `${vaccinationForm.vaccinationDate}T00:00:00`,
         nextDate: `${vaccinationForm.nextDate}T00:00:00`,
         note: vaccinationForm.note.trim() || null,
+        correctionReason: vaccinationForm.correctionReason.trim(),
         petId: selectedPet.petId,
         staffId,
       });
@@ -712,7 +828,9 @@ export function VetPortal({ user, onLogout }) {
         vaccinationDate: localDateInput(),
         nextDate: oneYearFromTodayInput(),
         note: '',
+        correctionReason: '',
       });
+      setEditingVaccinationId('');
       setNotice(`Đã ghi nhận mũi tiêm cho ${selectedPet.petName}.`);
       await loadHistory(selectedPet.petId);
     } catch (submitError) {
@@ -722,7 +840,33 @@ export function VetPortal({ user, onLogout }) {
     }
   };
 
-  const tabs = [{ id: 'pets', label: 'Hồ sơ thú cưng', icon: '♧' }];
+  const editRecord = (record) => {
+    setEditingRecordId(record.recordId);
+    setRecordForm({ diagnosis: record.diagnosis || '', treatment: record.treatment || '', note: record.note || '',
+      prescription: record.prescription || '', followUpDate: dateInputValue(record.followUpDate),
+      weight: record.weight == null ? '' : String(record.weight), correctionReason: '' });
+  };
+  const editVaccination = (item) => {
+    setEditingVaccinationId(item.vaccinationId);
+    setVaccinationForm({ vaccineName: item.vaccineName || '', vaccinationDate: dateInputValue(item.vaccinationDate),
+      nextDate: dateInputValue(item.nextDate), note: item.note || '', correctionReason: '' });
+  };
+
+  const saveHealth = async (event) => {
+    event.preventDefault();
+    if (!selectedPet) return;
+    setBusyKey('health'); setNotice('');
+    try {
+      await request('put', `${ENDPOINTS.pets}/${encodeId(selectedPet.petId)}`, {
+        ...selectedPet, weight: Number(healthDraft.weight), healthStatus: healthDraft.healthStatus.trim(),
+      });
+      await loadInitial(false);
+      setNotice('Đã cập nhật tình trạng sức khỏe thú cưng.');
+    } catch (saveError) { setNotice(errorText(saveError)); }
+    finally { setBusyKey(''); }
+  };
+
+  const tabs = [{ id: 'schedule', label: 'Ca được phân công', icon: '▣' }, { id: 'pets', label: 'Hồ sơ thú cưng', icon: '♧' }, { id: 'account', label: 'Tài khoản', icon: '◉' }];
 
   return (
     <PortalShell
@@ -731,8 +875,8 @@ export function VetPortal({ user, onLogout }) {
       title="Phòng khám thú y"
       subtitle="Tra cứu hồ sơ, lập bệnh án và theo dõi lịch tiêm cho thú cưng."
       tabs={tabs}
-      activeTab="pets"
-      onTabChange={() => {}}
+      activeTab={activeTab}
+      onTabChange={setActiveTab}
       onRefresh={refresh}
     >
       <div className="page-heading">
@@ -745,16 +889,23 @@ export function VetPortal({ user, onLogout }) {
       <Notice error={Boolean(staffError)}>{staffError}</Notice>
       <Notice error={notice && /^(Không thể|Lỗi|Chưa)/i.test(notice)}>{notice}</Notice>
 
-      {loading ? <LoadingState /> : error ? <ErrorState error={error} onRetry={() => loadInitial()} /> : (
+      {activeTab === 'account' ? <CaiDatTaiKhoan user={user} onLogout={onLogout} /> : activeTab === 'schedule' ? (
+        <section className="panel">
+          <div className="panel-heading"><h2>Ca chăm sóc của tôi</h2><span className="muted small">{schedule.length} ca</span></div>
+          {scheduleError && <Notice error>{scheduleError}</Notice>}
+          {schedule.length === 0 ? <EmptyState icon="◫">Chưa có ca nào được phân công.</EmptyState> : <div className="data-table-wrap"><table className="data-table"><thead><tr><th>Mã lịch</th><th>Thú cưng</th><th>Ngày giờ</th><th>Trạng thái</th><th></th></tr></thead><tbody>{schedule.map((booking) => { const pet = pets.find((item) => item.petId === booking.petId); return <tr key={booking.bookingId}><td>{booking.bookingId}</td><td>{pet?.petName || booking.petId}</td><td>{displayDate(booking.bookingDate)} · {String(booking.bookingTime || '').slice(0, 5)}</td><td><StatusBadge status={booking.status} /></td><td><button type="button" className="button button-secondary button-small" onClick={() => { setSelectedPetId(booking.petId); setActiveTab('pets'); }}>Mở hồ sơ</button></td></tr>; })}</tbody></table></div>}
+        </section>
+      ) : loading ? <LoadingState /> : error ? <ErrorState error={error} onRetry={() => loadInitial()} /> : (
         <div className="split-layout">
           <section className="panel">
             <div className="panel-heading">
               <h2>Thú cưng ({pets.length})</h2>
               <button type="button" onClick={() => loadInitial(false)}>Tải lại</button>
             </div>
-            {pets.length === 0 ? <EmptyState icon="♧">Chưa có hồ sơ thú cưng nào.</EmptyState> : (
+            <input className="search-input" value={petQuery} onChange={(event) => setPetQuery(event.target.value)} placeholder="Tìm tên, mã, giống thú cưng…" aria-label="Tìm thú cưng" />
+            {visiblePets.length === 0 ? <EmptyState icon="♧">Không có hồ sơ thú cưng phù hợp.</EmptyState> : (
               <div className="pet-grid">
-                {pets.map((pet) => (
+                {visiblePets.map((pet) => (
                   <article className="pet-card" key={pet.petId}>
                     <div className="pet-card-image">
                       {pet.imageUrl ? <img src={pet.imageUrl} alt={`Ảnh của ${pet.petName}`} /> : '♧'}
@@ -798,6 +949,11 @@ export function VetPortal({ user, onLogout }) {
                   <div className="detail-item"><span>Giới tính</span><strong>{selectedPet.gender || '—'}</strong></div>
                   <div className="detail-item"><span>Cân nặng</span><strong>{selectedPet.weight || '—'} kg</strong></div>
                 </div>
+                <form className="form-grid cap-nhat-suc-khoe" onSubmit={saveHealth}>
+                  <h3>Cập nhật sức khỏe hiện tại</h3>
+                  <div className="form-row"><label>Cân nặng (kg)<input required type="number" min="0.01" max="999" step="0.01" value={healthDraft.weight} onChange={(event) => setHealthDraft((current) => ({ ...current, weight: event.target.value }))} /></label><label>Tình trạng sức khỏe<input required maxLength={255} value={healthDraft.healthStatus} onChange={(event) => setHealthDraft((current) => ({ ...current, healthStatus: event.target.value }))} /></label></div>
+                  <button type="submit" className="button button-secondary button-small" disabled={busyKey === 'health'}>{busyKey === 'health' ? 'Đang lưu…' : 'Lưu sức khỏe'}</button>
+                </form>
 
                 <div className="tab-list" role="tablist" aria-label="Hồ sơ sức khỏe">
                   <button type="button" role="tab" className={`tab-button${clinicalTab === 'records' ? ' active' : ''}`} onClick={() => setClinicalTab('records')}>Bệnh án ({records.length})</button>
@@ -812,13 +968,17 @@ export function VetPortal({ user, onLogout }) {
                           <h3>{record.diagnosis || 'Chưa có chẩn đoán'}</h3>
                           <p>{displayDate(record.recordDate)} · Nhân sự {record.staffId}</p>
                           <p><strong>Điều trị:</strong> {record.treatment || 'Chưa cập nhật'}</p>
+                          {record.prescription && <p><strong>Toa thuốc:</strong> {record.prescription}</p>}
+                          {record.followUpDate && <p><strong>Tái khám:</strong> {displayDate(record.followUpDate)}</p>}
+                          {record.weight && <p><strong>Cân nặng:</strong> {record.weight} kg</p>}
                           {record.note && <p><strong>Ghi chú:</strong> {record.note}</p>}
+                          {record.staffId === staffId && <button type="button" className="button button-secondary button-small" onClick={() => editRecord(record)}>Sửa có lưu lịch sử</button>}
                         </article>
                       ))}
                     </div>
 
                     <form className="form-grid" onSubmit={submitRecord}>
-                      <h3>Thêm bệnh án</h3>
+                      <h3>{editingRecordId ? `Sửa bệnh án ${editingRecordId}` : 'Thêm bệnh án'}</h3>
                       <label>Chẩn đoán
                         <input required value={recordForm.diagnosis} onChange={(event) => setRecordForm((current) => ({ ...current, diagnosis: event.target.value }))} placeholder="Ví dụ: Viêm da dị ứng" />
                       </label>
@@ -828,7 +988,10 @@ export function VetPortal({ user, onLogout }) {
                       <label>Ghi chú thêm
                         <textarea value={recordForm.note} onChange={(event) => setRecordForm((current) => ({ ...current, note: event.target.value }))} placeholder="Tùy chọn" />
                       </label>
-                      <div className="button-row"><button type="submit" className="button button-primary" disabled={busyKey === 'record' || !staffId}>{busyKey === 'record' ? 'Đang lưu…' : 'Lưu bệnh án'}</button></div>
+                      <label>Toa thuốc / hướng dẫn dùng thuốc<textarea value={recordForm.prescription} onChange={(event) => setRecordForm((current) => ({ ...current, prescription: event.target.value }))} maxLength={2000} /></label>
+                      <div className="form-row"><label>Ngày tái khám<input type="date" value={recordForm.followUpDate} onChange={(event) => setRecordForm((current) => ({ ...current, followUpDate: event.target.value }))} /></label><label>Cân nặng (kg)<input type="number" min="0.01" max="999" step="0.01" value={recordForm.weight} onChange={(event) => setRecordForm((current) => ({ ...current, weight: event.target.value }))} /></label></div>
+                      {editingRecordId && <label>Lý do chỉnh sửa<input required maxLength={500} value={recordForm.correctionReason} onChange={(event) => setRecordForm((current) => ({ ...current, correctionReason: event.target.value }))} /></label>}
+                      <div className="button-row"><button type="submit" className="button button-primary" disabled={busyKey === 'record' || !staffId}>{busyKey === 'record' ? 'Đang lưu…' : editingRecordId ? 'Lưu chỉnh sửa' : 'Lưu bệnh án'}</button>{editingRecordId && <button type="button" className="button button-secondary" onClick={() => { setEditingRecordId(''); setRecordForm({ diagnosis: '', treatment: '', note: '', prescription: '', followUpDate: '', weight: '', correctionReason: '' }); }}>Hủy sửa</button>}</div>
                     </form>
                   </>
                 ) : (
@@ -840,12 +1003,13 @@ export function VetPortal({ user, onLogout }) {
                           <p>Đã tiêm: {displayDate(vaccination.vaccinationDate)} · Nhân sự {vaccination.staffId}</p>
                           <p><strong>Nhắc lại:</strong> {displayDate(vaccination.nextDate)}</p>
                           {vaccination.note && <p><strong>Ghi chú:</strong> {vaccination.note}</p>}
+                          {vaccination.staffId === staffId && <button type="button" className="button button-secondary button-small" onClick={() => editVaccination(vaccination)}>Sửa có lưu lịch sử</button>}
                         </article>
                       ))}
                     </div>
 
                     <form className="form-grid" onSubmit={submitVaccination}>
-                      <h3>Ghi nhận mũi tiêm</h3>
+                      <h3>{editingVaccinationId ? `Sửa mũi tiêm ${editingVaccinationId}` : 'Ghi nhận mũi tiêm'}</h3>
                       <label>Tên vaccine
                         <input required value={vaccinationForm.vaccineName} onChange={(event) => setVaccinationForm((current) => ({ ...current, vaccineName: event.target.value }))} placeholder="Ví dụ: Nobivac DHPPi" />
                       </label>
@@ -860,7 +1024,8 @@ export function VetPortal({ user, onLogout }) {
                       <label>Ghi chú thêm
                         <textarea value={vaccinationForm.note} onChange={(event) => setVaccinationForm((current) => ({ ...current, note: event.target.value }))} placeholder="Tùy chọn" />
                       </label>
-                      <div className="button-row"><button type="submit" className="button button-primary" disabled={busyKey === 'vaccination' || !staffId}>{busyKey === 'vaccination' ? 'Đang lưu…' : 'Lưu mũi tiêm'}</button></div>
+                      {editingVaccinationId && <label>Lý do chỉnh sửa<input required maxLength={500} value={vaccinationForm.correctionReason} onChange={(event) => setVaccinationForm((current) => ({ ...current, correctionReason: event.target.value }))} /></label>}
+                      <div className="button-row"><button type="submit" className="button button-primary" disabled={busyKey === 'vaccination' || !staffId}>{busyKey === 'vaccination' ? 'Đang lưu…' : editingVaccinationId ? 'Lưu chỉnh sửa' : 'Lưu mũi tiêm'}</button>{editingVaccinationId && <button type="button" className="button button-secondary" onClick={() => { setEditingVaccinationId(''); setVaccinationForm({ vaccineName: '', vaccinationDate: localDateInput(), nextDate: oneYearFromTodayInput(), note: '', correctionReason: '' }); }}>Hủy sửa</button>}</div>
                     </form>
                   </>
                 )}
@@ -884,6 +1049,7 @@ export function AdminPortal({ user, onLogout }) {
     users: [],
     staff: [],
     services: [],
+    categories: [],
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -910,8 +1076,10 @@ export function AdminPortal({ user, onLogout }) {
       ['users', ENDPOINTS.users],
       ['staff', ENDPOINTS.staff],
       ['services', ENDPOINTS.services],
+      ['categories', '/api/ServiceCategories'],
     ];
-    const results = await Promise.allSettled(resources.map(([, path]) => request('get', path)));
+    const results = await Promise.allSettled(resources.map(([name, path]) =>
+      name === 'bookings' ? requestAllBookings() : request('get', path)));
     const nextData = {};
     const failures = [];
     results.forEach((result, index) => {
@@ -979,7 +1147,7 @@ export function AdminPortal({ user, onLogout }) {
   const paymentByBookingId = useMemo(() => {
     const map = new Map();
     data.payments.forEach((payment) => {
-      if (!map.has(payment.bookingId)) map.set(payment.bookingId, payment);
+      if (paymentRank(payment) > paymentRank(map.get(payment.bookingId))) map.set(payment.bookingId, payment);
     });
     return map;
   }, [data.payments]);
@@ -1016,7 +1184,7 @@ export function AdminPortal({ user, onLogout }) {
   const startEditStaff = (member) => {
     setStaffEditingId(member.staffId);
     setStaffDraft({
-      firebaseUid: '',
+      password: '',
       fullName: member.fullName || '',
       email: member.email || '',
       phone: member.phone || '',
@@ -1039,7 +1207,7 @@ export function AdminPortal({ user, onLogout }) {
         ? request('put', `${ENDPOINTS.staff}/${encodeId(staffEditingId)}`, payload)
         : request('post', ENDPOINTS.staff, {
           ...payload,
-          firebaseUid: staffDraft.firebaseUid.trim(),
+          password: staffDraft.password,
           email: staffDraft.email.trim(),
         }),
       isEditing ? 'Đã cập nhật hồ sơ nhân sự.' : 'Đã tạo hồ sơ nhân sự.',
@@ -1147,7 +1315,11 @@ export function AdminPortal({ user, onLogout }) {
     { id: 'users', label: 'Tài khoản', icon: '♙' },
     { id: 'staff', label: 'Nhân sự', icon: '♟' },
     { id: 'services', label: 'Dịch vụ', icon: '✦' },
+    { id: 'categories', label: 'Danh mục', icon: '◈' },
     { id: 'bookings', label: 'Lịch hẹn', icon: '▣' },
+    { id: 'reports', label: 'Báo cáo', icon: '▤' },
+    { id: 'system', label: 'Thông báo & nhật ký', icon: '♢' },
+    { id: 'account', label: 'Tài khoản', icon: '◉' },
   ];
 
   const overview = (
@@ -1211,7 +1383,7 @@ export function AdminPortal({ user, onLogout }) {
         <section className="panel">
           <div className="panel-heading"><h2>{staffEditingId ? 'Chỉnh sửa nhân sự' : 'Thêm nhân sự'}</h2><button type="button" onClick={() => setStaffEditorOpen(false)}>Đóng</button></div>
           <form className="form-grid" onSubmit={submitStaff}>
-            {!staffEditingId && <label>Firebase UID<input required value={staffDraft.firebaseUid} onChange={(event) => setStaffDraft((current) => ({ ...current, firebaseUid: event.target.value }))} placeholder="UID từ Firebase Authentication" /></label>}
+            {!staffEditingId && <label>Mật khẩu ban đầu<input required type="password" minLength={12} maxLength={128} autoComplete="new-password" value={staffDraft.password} onChange={(event) => setStaffDraft((current) => ({ ...current, password: event.target.value }))} placeholder="Ít nhất 12 ký tự" /><span className="field-hint">Nhân viên đăng nhập bằng email và mật khẩu này, sau đó tự đổi trong mục Tài khoản.</span></label>}
             <div className="form-row"><label>Họ và tên<input required value={staffDraft.fullName} onChange={(event) => setStaffDraft((current) => ({ ...current, fullName: event.target.value }))} /></label><label>Số điện thoại<input required value={staffDraft.phone} onChange={(event) => setStaffDraft((current) => ({ ...current, phone: event.target.value }))} /></label></div>
             {!staffEditingId && <label>Email<input required type="email" value={staffDraft.email} onChange={(event) => setStaffDraft((current) => ({ ...current, email: event.target.value }))} /></label>}
             <label>Vai trò<select value={staffDraft.role} onChange={(event) => setStaffDraft((current) => ({ ...current, role: event.target.value }))}><option value="STAFF">Nhân viên</option><option value="VET">Bác sĩ thú y</option></select></label>
@@ -1235,7 +1407,7 @@ export function AdminPortal({ user, onLogout }) {
   const servicesPage = (
     <>
       <div className="page-heading"><div><h1>Gói dịch vụ</h1><p>Tạo, điều chỉnh và bật/tắt các dịch vụ khách hàng có thể đặt.</p></div><button type="button" className="button button-primary" onClick={startCreateService}>Thêm dịch vụ</button></div>
-      {serviceEditorOpen && <section className="panel"><div className="panel-heading"><h2>{serviceEditingId ? 'Chỉnh sửa dịch vụ' : 'Thêm dịch vụ'}</h2><button type="button" onClick={() => setServiceEditorOpen(false)}>Đóng</button></div><form className="form-grid" onSubmit={submitService}><label>Tên dịch vụ<input required value={serviceDraft.serviceName} onChange={(event) => setServiceDraft((current) => ({ ...current, serviceName: event.target.value }))} /></label><label>Mô tả<textarea required value={serviceDraft.description} onChange={(event) => setServiceDraft((current) => ({ ...current, description: event.target.value }))} /></label><div className="form-row"><label>Giá (₫)<input required min="1" type="number" value={serviceDraft.price} onChange={(event) => setServiceDraft((current) => ({ ...current, price: event.target.value }))} /></label><label>Thời lượng (phút)<input required min="1" type="number" value={serviceDraft.duration} onChange={(event) => setServiceDraft((current) => ({ ...current, duration: event.target.value }))} /></label></div><div className="form-row"><label>Mã danh mục<input required value={serviceDraft.categoryId} onChange={(event) => setServiceDraft((current) => ({ ...current, categoryId: event.target.value }))} placeholder="Ví dụ: CT001" /></label>{serviceEditingId && <label>Trạng thái<select value={serviceDraft.status} onChange={(event) => setServiceDraft((current) => ({ ...current, status: event.target.value }))}><option value="ACTIVE">Hoạt động</option><option value="INACTIVE">Tạm ngưng</option></select></label>}</div><div className="button-row"><button type="submit" className="button button-primary" disabled={Boolean(busyKey)}>{busyKey ? 'Đang lưu…' : serviceEditingId ? 'Lưu thay đổi' : 'Tạo dịch vụ'}</button><button type="button" className="button button-secondary" onClick={() => setServiceEditorOpen(false)}>Hủy</button></div></form></section>}
+      {serviceEditorOpen && <section className="panel"><div className="panel-heading"><h2>{serviceEditingId ? 'Chỉnh sửa dịch vụ' : 'Thêm dịch vụ'}</h2><button type="button" onClick={() => setServiceEditorOpen(false)}>Đóng</button></div><form className="form-grid" onSubmit={submitService}><label>Tên dịch vụ<input required value={serviceDraft.serviceName} onChange={(event) => setServiceDraft((current) => ({ ...current, serviceName: event.target.value }))} /></label><label>Mô tả<textarea required value={serviceDraft.description} onChange={(event) => setServiceDraft((current) => ({ ...current, description: event.target.value }))} /></label><div className="form-row"><label>Giá (₫)<input required min="1" type="number" value={serviceDraft.price} onChange={(event) => setServiceDraft((current) => ({ ...current, price: event.target.value }))} /></label><label>Thời lượng (phút)<input required min="1" type="number" value={serviceDraft.duration} onChange={(event) => setServiceDraft((current) => ({ ...current, duration: event.target.value }))} /></label></div><div className="form-row"><label>Danh mục<select required value={serviceDraft.categoryId} onChange={(event) => setServiceDraft((current) => ({ ...current, categoryId: event.target.value }))}><option value="">Chọn danh mục</option>{data.categories.filter((item) => item.status === 'ACTIVE' || item.categoryId === serviceDraft.categoryId).map((item) => <option key={item.categoryId} value={item.categoryId}>{item.categoryName}</option>)}</select></label>{serviceEditingId && <label>Trạng thái<select value={serviceDraft.status} onChange={(event) => setServiceDraft((current) => ({ ...current, status: event.target.value }))}><option value="ACTIVE">Hoạt động</option><option value="INACTIVE">Tạm ngưng</option></select></label>}</div><div className="button-row"><button type="submit" className="button button-primary" disabled={Boolean(busyKey)}>{busyKey ? 'Đang lưu…' : serviceEditingId ? 'Lưu thay đổi' : 'Tạo dịch vụ'}</button><button type="button" className="button button-secondary" onClick={() => setServiceEditorOpen(false)}>Hủy</button></div></form></section>}
       <section className="panel"><div className="toolbar"><div className="toolbar-group"><input className="search-input" value={serviceQuery} onChange={(event) => setServiceQuery(event.target.value)} placeholder="Tìm tên, mã, danh mục…" /></div><span className="muted small">{services.length} gói dịch vụ</span></div>{services.length === 0 ? <EmptyState icon="✦">Chưa có gói dịch vụ phù hợp.</EmptyState> : <div className="service-grid">{services.map((service) => { const isBusy = busyKey.includes(service.serviceId); return <article className="service-card" key={service.serviceId}><div className="service-card-body"><div className="panel-heading"><h3>{service.serviceName || service.serviceId}</h3><StatusBadge status={service.status} kind="account" /></div><p>{service.description || 'Chưa có mô tả'}</p><div className="pet-meta"><span className="badge">{service.categoryId || 'Chưa phân loại'}</span><span className="badge">{service.duration || 0} phút</span></div><p className="price">{currency(service.price)}</p><div className="action-buttons"><button type="button" className="button button-secondary button-small" onClick={() => startEditService(service)} disabled={isBusy}>Sửa</button><button type="button" className="button button-secondary button-small" onClick={() => toggleService(service)} disabled={isBusy}>{normalise(service.status) === 'ACTIVE' ? 'Tạm ngưng' : 'Kích hoạt'}</button><button type="button" className="button button-danger button-small" onClick={() => deleteService(service)} disabled={isBusy}>Xóa</button></div></div></article>; })}</div>}</section>
     </>
   );
@@ -1253,6 +1425,10 @@ export function AdminPortal({ user, onLogout }) {
     staff: staffPage,
     services: servicesPage,
     bookings: bookingsPage,
+    categories: <DanhMucVaBaoCao mode="categories" onChanged={() => loadAll(false)} />,
+    reports: <DanhMucVaBaoCao mode="reports" />,
+    system: <DanhMucVaBaoCao mode="system" />,
+    account: <CaiDatTaiKhoan user={user} onLogout={onLogout} />,
   };
 
   return (

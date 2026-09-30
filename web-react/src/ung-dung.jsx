@@ -1,7 +1,7 @@
-import { AuthProvider, useAuth } from './auth';
-import { AuthPages } from './AuthPages';
-import { CustomerPortal } from './CustomerPortal';
-import { AdminPortal, StaffPortal, VetPortal } from './OperationsPortal';
+import { AuthProvider, useAuth } from './xac-thuc';
+import { AuthPages } from './trang-dang-nhap';
+import { CustomerPortal } from './cong-khach-hang';
+import { AdminPortal, StaffPortal, VetPortal } from './cong-van-hanh';
 
 function LoadingScreen() {
   return (

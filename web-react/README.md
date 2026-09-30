@@ -1,30 +1,32 @@
-# PetNoVa Web
+# Giao diện PetNoVa
 
-Frontend React chuyển đổi từ ứng dụng Flutter. API ASP.NET Core trong `../backend/PetNoVaApi` vẫn là nguồn dữ liệu duy nhất.
+Website dùng React, JavaScript, CSS và Vite. Không cần Dart hoặc Flutter.
 
-## Chạy local
+## Chạy
 
-1. Chạy API (mặc định cổng `5200`): `run_petnova_dev.cmd` tại thư mục gốc.
-2. Từ thư mục này, tạo `.env` từ `.env.example` và thay `VITE_API_BASE_URL` nếu API chạy ở địa chỉ khác.
-3. Cài và chạy:
+Tại thư mục gốc `petnova_app`, chạy `run_petnova_web_dev.cmd` hoặc `run_petnova_web_dev.ps1` để khởi động cả API và website. Mở `http://localhost:5173/`.
 
-   ```powershell
-   npm install
-   npm run dev
-   ```
+Nếu chỉ chạy giao diện, vào thư mục `web-react`, chạy `npm install` (lần đầu) rồi `npm run dev`. API vẫn phải chạy ở cổng 5200 để đăng nhập và tải dữ liệu. Go Live không thay thế Vite hoặc API .NET.
 
-Mở `http://localhost:5173`. Build production dùng `npm run build`; thư mục deploy là `dist`.
+## File giao diện
 
-## Chức năng đã chuyển
+| File | Ý nghĩa |
+| --- | --- |
+| `src/diem-vao.jsx` | Điểm bắt đầu React |
+| `src/ung-dung.jsx` | Chọn giao diện theo vai trò |
+| `src/trang-dang-nhap.jsx` | Đăng nhập, đăng ký, quên mật khẩu |
+| `src/cong-khach-hang.jsx` | Các màn hình khách hàng |
+| `src/lich-hen-khach-hang.jsx` | Đặt lịch, đổi lịch, lịch sử thanh toán |
+| `src/cong-van-hanh.jsx` | Màn hình nhân viên, bác sĩ, quản trị |
+| `src/quan-tri-bo-sung.jsx` | Danh mục, báo cáo, thông báo, nhật ký |
+| `src/cai-dat-tai-khoan.jsx` | Thông tin tài khoản |
+| `src/xac-thuc.jsx` | Phiên đăng nhập Firebase |
+| `src/giao-tiep-api.js` | Gọi API .NET |
+| `src/cau-hinh-firebase.js` | Cấu hình Firebase phía website |
+| `src/giao-dien.css`, `src/khach-hang.css`, `src/van-hanh.css` | Kiểu dáng giao diện |
 
-- Firebase: đăng nhập, đăng ký, đăng xuất, lưu email, quên mật khẩu ba bước OTP.
-- Khách hàng: hồ sơ, ảnh avatar, thú cưng, đặt/hủy lịch, bệnh án, tiêm chủng, thanh toán PayOS/tiền mặt, thông báo.
-- Nhân viên: lịch hẹn, luồng trạng thái, xác nhận thanh toán tiền mặt.
-- Bác sĩ: hồ sơ thú cưng, lập bệnh án, ghi nhận tiêm chủng.
-- Quản trị: tài khoản, nhân sự, gói dịch vụ và xem lịch hẹn.
+`index.html`, `vite.config.js`, `package.json` là tên tiêu chuẩn Vite/npm nên được giữ nguyên. Mỗi màn hình React là một hàm/component xuất JSX; không cần một file HTML riêng cho mỗi trang.
 
-## Lưu ý triển khai
+## Build và triển khai
 
-- Cần thêm domain website vào **Firebase Authentication → Authorized domains**.
-- `VITE_API_BASE_URL` production phải là HTTPS do luồng OTP truyền mật khẩu mới.
-- Backend đã cấu hình CORS phát triển rộng rãi. Trước khi public, giới hạn CORS ở `backend/PetNoVaApi/Program.cs` theo domain web thực tế.
+`npm run build` tạo bản tĩnh trong `dist/`. Tạo `.env` theo `.env.example` để đặt `VITE_API_BASE_URL` và cấu hình Firebase nếu cần. Với production, API phải chạy HTTPS, domain website cần có trong Firebase Authentication Authorized Domains, và CORS API chỉ nên cho phép domain đó. PayOS, email OTP và tải ảnh cần khóa dịch vụ phía server.

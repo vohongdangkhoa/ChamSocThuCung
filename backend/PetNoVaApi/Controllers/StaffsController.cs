@@ -16,15 +16,18 @@ namespace PetNoVaApi.Controllers
 
         private readonly PetNoVaDbContext _context;
         private readonly IFirebaseTokenVerifier _firebaseTokenVerifier;
+        private readonly IFirebasePasswordManager _firebaseManager;
 
         /// <summary>Nhận DbContext và Firebase verifier dùng chung cho mọi action quản trị.</summary>
         public StaffsController(
             PetNoVaDbContext context,
-            IFirebaseTokenVerifier firebaseTokenVerifier
+            IFirebaseTokenVerifier firebaseTokenVerifier,
+            IFirebasePasswordManager firebaseManager
         )
         {
             _context = context;
             _firebaseTokenVerifier = firebaseTokenVerifier;
+            _firebaseManager = firebaseManager;
         }
 
         [HttpGet]
@@ -145,6 +148,14 @@ namespace PetNoVaApi.Controllers
                 : Ok(staff);
         }
 
+        [HttpGet("directory")]
+        public async Task<IActionResult> GetDirectory(CancellationToken cancellationToken)
+        {
+            return Ok(await _context.Staffs.AsNoTracking().Where(s => s.status == "ACTIVE")
+                .Select(s => new { s.staffId, s.fullName, s.role })
+                .OrderBy(s => s.fullName).ToListAsync(cancellationToken));
+        }
+
         [HttpPost]
         /// <summary>Tạo UserAccount và Staff liên kết trong một lần SaveChanges.</summary>
         /// <param name="request">UID Firebase, liên hệ và role do admin nhập.</param>
@@ -171,20 +182,23 @@ namespace PetNoVaApi.Controllers
             var fullName = request.fullName.Trim();
             var email = request.email.Trim().ToLower();
             var phone = request.phone.Trim();
-            var firebaseUid = request.firebaseUid.Trim();
+            var password = request.password;
 
             if (string.IsNullOrWhiteSpace(fullName) ||
                 string.IsNullOrWhiteSpace(email) ||
                 string.IsNullOrWhiteSpace(phone) ||
-                string.IsNullOrWhiteSpace(firebaseUid))
+                string.IsNullOrWhiteSpace(password))
             {
                 return BadRequest("Vui lòng nhập đầy đủ thông tin nhân sự.");
             }
 
+            if (password.Length < 12 || password.Length > 128)
+                return BadRequest("Mật khẩu khởi tạo cần từ 12 đến 128 ký tự.");
+
             // Kiểm tra cả email và Firebase UID để không tạo hai tài khoản đăng nhập cùng danh tính.
             if (
                 await _context.UserAccounts.AnyAsync(
-                    user => user.email == email || user.firebaseUid == firebaseUid,
+                    user => user.email == email,
                     cancellationToken
                 )
             )
@@ -194,48 +208,39 @@ namespace PetNoVaApi.Controllers
                 );
             }
 
-            // USER_ACCOUNT chứa thông tin đăng nhập/phân quyền; STAFF chứa nghiệp vụ nhân sự.
-            var user = new UserAccount
-            {
-                userId = await GenerateUserId(cancellationToken),
-                firebaseUid = firebaseUid,
-                fullName = fullName,
-                email = email,
-                phone = phone,
-                role = role,
-                status = "ACTIVE",
-                fcmToken = string.Empty,
-                createdAt = DateTime.Now
-            };
+            var firebaseUid = string.Empty;
+            try { firebaseUid = await _firebaseManager.CreateStaffIdentityAsync(email, password, fullName, cancellationToken); }
+            catch (FirebaseAdminConfigurationException) { return StatusCode(503, new { message = "Cần cấu hình Firebase Admin để tạo nhân sự." }); }
+            catch (Exception) { return Conflict("Không thể tạo tài khoản Firebase; kiểm tra email đã được dùng hoặc thử lại."); }
 
-            var staff = new Staff
-            {
-                staffId = await GenerateStaffId(cancellationToken),
-                fullName = fullName,
-                phone = phone,
-                email = email,
-                role = role,
-                violationCount = 0,
-                status = "ACTIVE",
-                userId = user.userId
-            };
-
-            // Một SaveChanges khiến EF sắp xếp INSERT UserAccount trước Staff theo khóa ngoại.
-            _context.UserAccounts.Add(user);
-            _context.Staffs.Add(staff);
             try
             {
+                // Một SaveChanges lưu đồng thời hồ sơ đăng nhập và hồ sơ nhân sự.
+                var user = new UserAccount
+                {
+                    userId = await MaDinhDanh.NextAsync(_context, "USER_ACCOUNT", "userId", "U", cancellationToken),
+                    firebaseUid = firebaseUid, fullName = fullName, email = email, phone = phone,
+                    role = role, status = "ACTIVE", fcmToken = string.Empty, createdAt = DateTime.Now
+                };
+                var staff = new Staff
+                {
+                    staffId = await MaDinhDanh.NextAsync(_context, "STAFF", "staffId", "ST", cancellationToken),
+                    fullName = fullName, phone = phone, email = email, role = role,
+                    violationCount = 0, status = "ACTIVE", userId = user.userId
+                };
+                _context.UserAccounts.Add(user);
+                _context.Staffs.Add(staff);
                 await _context.SaveChangesAsync(cancellationToken);
+                return CreatedAtAction(nameof(GetStaff), new { id = staff.staffId }, staff);
             }
-            catch (DbUpdateException)
+            catch (Exception exception) when (exception is not OperationCanceledException)
             {
-                // Trả 409 thay vì lộ chi tiết lỗi constraint SQL Server ra client.
-                return Conflict(
-                    "Không thể lưu tài khoản nhân sự. Vui lòng kiểm tra email và thử lại."
-                );
+                try { await _firebaseManager.DeleteIdentityAsync(firebaseUid, CancellationToken.None); }
+                catch { /* Firebase orphan is visible in server logs; admin can retry after reconciliation. */ }
+                return exception is DbUpdateException
+                    ? Conflict("Không thể lưu tài khoản nhân sự. Vui lòng kiểm tra email và thử lại.")
+                    : StatusCode(503, new { message = "Không thể hoàn tất tạo nhân sự. Vui lòng thử lại." });
             }
-
-            return CreatedAtAction(nameof(GetStaff), new { id = staff.staffId }, staff);
         }
 
         [HttpPut("{id}")]
@@ -315,6 +320,11 @@ namespace PetNoVaApi.Controllers
             {
                 return NotFound("Không tìm thấy nhân viên hoặc bác sĩ.");
             }
+
+            if (await _context.Bookings.AnyAsync(b => b.staffId == id, cancellationToken) ||
+                await _context.MedicalRecords.AnyAsync(r => r.staffId == id, cancellationToken) ||
+                await _context.Vaccinations.AnyAsync(v => v.staffId == id, cancellationToken))
+                return Conflict("Nhân sự đã có dữ liệu nghiệp vụ. Hãy tạm ngưng thay vì xóa để giữ lịch sử.");
 
             // Không xóa tài khoản Firebase/SQL: người cũ vẫn có thể dùng PetNoVa như khách hàng.
             var user = await _context.UserAccounts.FindAsync(
@@ -621,7 +631,7 @@ namespace PetNoVaApi.Controllers
     public class CreateStaffRequest
     {
         // DTO không nhận status/violationCount/userId; server tự gán để tránh nâng quyền.
-        public string firebaseUid { get; set; } = string.Empty;
+        public string password { get; set; } = string.Empty;
         public string fullName { get; set; } = string.Empty;
         public string phone { get; set; } = string.Empty;
         public string email { get; set; } = string.Empty;

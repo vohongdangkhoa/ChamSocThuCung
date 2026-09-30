@@ -4,7 +4,7 @@ import { getAuth } from 'firebase/auth';
 /**
  * Firebase's web configuration is public by design. Environment values make it
  * possible to use another Firebase project when deploying, while the defaults
- * keep this client aligned with lib/firebase_options.dart.
+ * giữ cấu hình web nhất quán khi triển khai trên môi trường khác.
  */
 function readEnv(name, fallback) {
   const value = import.meta.env[name];

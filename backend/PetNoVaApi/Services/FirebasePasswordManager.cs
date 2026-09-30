@@ -9,6 +9,10 @@ public interface IFirebasePasswordManager
 {
     void EnsureConfigured();
 
+    Task<string> CreateStaffIdentityAsync(string email, string password, string fullName,
+        CancellationToken cancellationToken = default);
+    Task DeleteIdentityAsync(string firebaseUid, CancellationToken cancellationToken = default);
+
     Task<bool> IdentityMatchesAsync(
         string firebaseUid,
         string email,
@@ -70,6 +74,19 @@ public sealed class FirebasePasswordManager : IFirebasePasswordManager
     {
         _ = _firebaseAuth.Value;
     }
+
+    public async Task<string> CreateStaffIdentityAsync(string email, string password, string fullName,
+        CancellationToken cancellationToken = default)
+    {
+        var user = await _firebaseAuth.Value.CreateUserAsync(new UserRecordArgs
+        {
+            Email = email, Password = password, DisplayName = fullName, EmailVerified = false
+        }, cancellationToken);
+        return user.Uid;
+    }
+
+    public Task DeleteIdentityAsync(string firebaseUid, CancellationToken cancellationToken = default) =>
+        _firebaseAuth.Value.DeleteUserAsync(firebaseUid, cancellationToken);
 
     /// <summary>Đảm bảo UID/email SQL thật sự trùng tài khoản Firebase trước reset.</summary>
     public async Task<bool> IdentityMatchesAsync(

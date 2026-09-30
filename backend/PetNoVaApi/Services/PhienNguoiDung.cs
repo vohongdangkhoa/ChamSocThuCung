@@ -89,9 +89,10 @@ public sealed class KiemTraQuyen(PetNoVaDbContext db, IFirebaseTokenVerifier ver
         if (role is not ("CUSTOMER" or "STAFF" or "VET" or "ADMIN")) return false;
         if (controller == "UserAccounts") return action is "GetUserByFirebaseUid" or "GetUserByEmail" or "GetUserAccount" or
             "CreateUserAccount" or "UpdateProfileByEmail" or "SyncEmail" || role == "ADMIN" || (action == "GetContacts" && role is "STAFF" or "VET");
-        if (controller == "Staffs") return action == "GetDirectory" || role == "ADMIN" || (action == "GetMyStaffProfile" && role is "STAFF" or "VET");
+        if (controller == "Staffs") return role == "ADMIN" || (action == "GetDirectory" && role is "STAFF" or "VET") || (action == "GetMyStaffProfile" && role is "STAFF" or "VET");
         if (controller is "ServicePackages" or "ServiceCategories") return HttpMethods.IsGet(method) || role == "ADMIN";
         if (controller == "AuditLogs") return role == "ADMIN";
+        if (controller == "Reports") return role == "ADMIN";
         if (controller == "Notifications") return HttpMethods.IsGet(method) || action is "MarkAsRead" or "MarkAllAsRead" || role == "ADMIN";
         if (controller is "MedicalRecords" or "Vaccinations") return HttpMethods.IsGet(method) || role is "VET" or "ADMIN";
         if (controller == "Payments") return HttpMethods.IsGet(method) || action is "CreatePayOSPaymentLink" or "SyncPayOSPayment" or "RetryPayment" || role is "ADMIN" or "STAFF";

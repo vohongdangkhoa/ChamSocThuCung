@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PetNoVaApi.Data;
 using PetNoVaApi.Models;
+using PetNoVaApi.Services;
 
 namespace PetNoVaApi.Controllers
 {
@@ -71,8 +72,11 @@ namespace PetNoVaApi.Controllers
                 return BadRequest("Tên, mô tả, giá và thời lượng gói dịch vụ không hợp lệ.");
             }
 
+            if (!await _context.ServiceCategories.AnyAsync(c => c.categoryId == servicePackage.categoryId && c.status == "ACTIVE"))
+                return BadRequest("Danh mục dịch vụ không còn hoạt động.");
+
             // Client không được tự chọn mã/trạng thái ban đầu; dịch vụ mới luôn ACTIVE.
-            servicePackage.serviceId = await GenerateServiceId();
+            servicePackage.serviceId = await MaDinhDanh.NextAsync(_context, "SERVICE_PACKAGE", "serviceId", "SV");
             servicePackage.status = "ACTIVE";
 
             _context.ServicePackages.Add(servicePackage);
@@ -108,6 +112,9 @@ namespace PetNoVaApi.Controllers
             {
                 return BadRequest("Tên, mô tả, giá và thời lượng gói dịch vụ không hợp lệ.");
             }
+
+            if (!await _context.ServiceCategories.AnyAsync(c => c.categoryId == servicePackage.categoryId && c.status == "ACTIVE"))
+                return BadRequest("Danh mục dịch vụ không còn hoạt động.");
 
             // Copy từng trường vào entity đã được theo dõi để tránh over-posting trường ngoài ý muốn.
             existingService.serviceName = servicePackage.serviceName;

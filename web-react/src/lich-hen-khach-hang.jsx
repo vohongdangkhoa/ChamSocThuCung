@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { api, formatError } from './api';
+import { api, formatError } from './giao-tiep-api';
 
 const TIEN = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND', maximumFractionDigits: 0 });
 const NGAY = new Intl.DateTimeFormat('vi-VN');
