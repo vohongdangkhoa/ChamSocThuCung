@@ -89,7 +89,7 @@ public sealed class KiemTraQuyen(PetNoVaDbContext db, IFirebaseTokenVerifier ver
         if (role is not ("CUSTOMER" or "STAFF" or "VET" or "ADMIN")) return false;
         if (controller == "UserAccounts") return action is "GetUserByFirebaseUid" or "GetUserByEmail" or "GetUserAccount" or
             "CreateUserAccount" or "UpdateProfileByEmail" or "SyncEmail" || role == "ADMIN" || (action == "GetContacts" && role is "STAFF" or "VET");
-        if (controller == "Staffs") return role == "ADMIN" || action == "GetDirectory" || (action == "GetMyStaffProfile" && role is "STAFF" or "VET");
+        if (controller == "Staffs") return role == "ADMIN" || (action == "GetDirectory" && role is "STAFF" or "VET") || (action == "GetMyStaffProfile" && role is "STAFF" or "VET");
         if (controller is "ServicePackages" or "ServiceCategories") return HttpMethods.IsGet(method) || role == "ADMIN";
         if (controller == "AuditLogs") return role == "ADMIN";
         if (controller == "Reports") return role == "ADMIN";

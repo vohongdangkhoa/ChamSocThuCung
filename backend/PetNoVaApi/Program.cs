@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using System.Threading.RateLimiting;
 using Microsoft.AspNetCore.RateLimiting;
-using Microsoft.Extensions.FileProviders;
 using PetNoVaApi.Data;
 using PetNoVaApi.Services;
 
@@ -19,7 +18,6 @@ builder.Services.AddControllers(options =>
     options.Filters.Add<KiemTraQuyen>();
     options.Filters.Add<TraLoiCamTruyCap>();
 });
-builder.Services.AddRazorPages();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -29,7 +27,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("PetNovaWeb", policy =>
     {
         var origins = builder.Configuration.GetSection("Web:AllowedOrigins").Get<string[]>()
-            ?? (builder.Environment.IsDevelopment() ? ["http://localhost:5500", "http://127.0.0.1:5500", "http://localhost:5501", "http://127.0.0.1:5501"] : []);
+            ?? (builder.Environment.IsDevelopment() ? ["http://localhost:5173", "http://127.0.0.1:5173"] : []);
         if (origins.Length > 0) policy.WithOrigins(origins)
               .AllowAnyHeader()
               .AllowAnyMethod();
@@ -86,13 +84,6 @@ builder.Services.AddOpenApi();
 // Tạo pipeline sau khi hoàn tất đăng ký phụ thuộc.
 var app = builder.Build();
 
-// Razor Pages dựng HTML; CSS/JS tĩnh vẫn phục vụ từ website/ khi chạy source.
-// Khi publish, các tài nguyên tĩnh được copy vào wwwroot bởi .csproj.
-var websitePath = Path.GetFullPath(Path.Combine(app.Environment.ContentRootPath, "..", "..", "website"));
-var websiteFiles = Directory.Exists(websitePath)
-    ? new PhysicalFileProvider(websitePath)
-    : app.Environment.WebRootFileProvider;
-
 // Bổ sung cột/bảng mới theo cách idempotent trước khi API nhận request.
 await MediaSchemaInitializer.InitializeAsync(app.Services);
 await PasswordResetSchemaInitializer.InitializeAsync(app.Services);
@@ -118,8 +109,6 @@ app.UseExceptionHandler(handler => handler.Run(async context =>
 
 app.UseCors("PetNovaWeb");
 
-app.UseStaticFiles(new StaticFileOptions { FileProvider = websiteFiles });
-
 app.UseRateLimiter();
 
 app.UseAuthorization();
@@ -134,6 +123,5 @@ app.MapGet(
 );
 
 app.MapControllers();
-app.MapRazorPages();
 
 app.Run();
