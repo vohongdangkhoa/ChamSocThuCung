@@ -323,7 +323,7 @@ namespace PetNoVaApi.Controllers
             var web = _configuration["Web:PublicBaseUrl"];
             if (string.IsNullOrWhiteSpace(web))
                 return Content("Quay lại website PetNoVa và kiểm tra trạng thái thanh toán. Chỉ dữ liệu PayOS được xác minh mới có hiệu lực.", "text/plain; charset=utf-8");
-            return Redirect(web.TrimEnd('/') + "/#payments?payos=" + state);
+            return Redirect(web.TrimEnd('/') + "/khach-hang.html#thanh-toan?payos=" + state);
         }
 
         [HttpPut("{id}/confirm")]

@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Quản trị | PetNoVa</title>
+    <link rel="stylesheet" href="/css/giao-dien.css" />
+  </head>
+  <body data-role="ADMIN">
+    <header class="thanh-tren">
+      <a class="thuong-hieu" href="/">🐾 PetNoVa · Quản trị</a>
+      <div class="hang">
+        <strong data-ten-nguoi-dung>...</strong
+        ><button class="nut nut-nho" data-dang-xuat>Đăng xuất</button>
+      </div>
+    </header>
+    <div id="loi-tai-khoan" class="khung" hidden>
+      Không thể mở tài khoản. <a href="/">Đăng nhập lại</a>.
+    </div>
+    <div id="noi-dung" class="bo-cuc" hidden>
+      <nav class="dieu-huong">
+        <button data-tab="tong-quan">Báo cáo</button
+        ><button data-tab="lich-hen">Lịch hẹn</button
+        ><button data-tab="thanh-toan">Thanh toán</button
+        ><button data-tab="nguoi-dung">Người dùng</button
+        ><button data-tab="nhan-su">Nhân sự</button
+        ><button data-tab="dich-vu">Dịch vụ</button
+        ><button data-tab="danh-muc">Danh mục</button
+        ><button data-tab="thong-bao">Thông báo</button
+        ><button data-tab="nhat-ky">Nhật ký</button
+        ><button data-tab="tai-khoan">Tài khoản</button>
+      </nav>
+      <main class="phan-trang">
+        <section data-page="tong-quan">
+          <div class="dau-trang">
+            <h1>Báo cáo quản trị</h1>
+            <p>Tình hình lịch hẹn, doanh thu và hoạt động hệ thống.</p>
+          </div>
+          <form id="form-bao-cao" class="hang khoang">
+            <label>Từ ngày<input name="from" type="date" /></label
+            ><label>Đến ngày<input name="to" type="date" /></label
+            ><button class="nut">Xem báo cáo</button>
+          </form>
+          <div id="so-lieu" class="luoi"></div>
+          <pre id="bao-cao-chi-tiet" class="khung bang-cuon"></pre>
+        </section>
+        <section data-page="lich-hen" hidden>
+          <div class="dau-trang"><h1>Lịch hẹn</h1></div>
+          <div id="danh-sach-lich" class="danh-sach"></div>
+        </section>
+        <section data-page="thanh-toan" hidden>
+          <div class="dau-trang">
+            <h1>Thanh toán</h1>
+            <p>
+              Xác nhận tiền mặt, đồng bộ PayOS và ghi nhận hoàn tiền thủ công.
+            </p>
+          </div>
+          <div id="danh-sach-thanh-toan" class="danh-sach"></div>
+        </section>
+        <section data-page="nguoi-dung" hidden>
+          <div class="dau-trang"><h1>Tài khoản người dùng</h1></div>
+          <label class="khoang"
+            >Tìm theo tên/email<input id="tim-nguoi-dung" type="search"
+          /></label>
+          <div id="danh-sach-nguoi-dung" class="danh-sach"></div>
+        </section>
+        <section data-page="nhan-su" hidden>
+          <div class="dau-trang"><h1>Nhân sự</h1></div>
+          <div class="khung khoang">
+            <h2>Tạo tài khoản nhân sự</h2>
+            <form id="form-nhan-su" class="form">
+              <div class="cot-2">
+                <label>Họ tên<input name="fullName" required /></label
+                ><label>Email<input name="email" type="email" required /></label
+                ><label>Điện thoại<input name="phone" required /></label
+                ><label
+                  >Mật khẩu ban đầu<input
+                    name="password"
+                    type="password"
+                    minlength="6"
+                    required
+                /></label>
+              </div>
+              <label
+                >Vai trò<select name="role">
+                  <option value="STAFF">Nhân viên</option>
+                  <option value="VET">Bác sĩ</option>
+                </select></label
+              ><button class="nut">Tạo nhân sự</button>
+            </form>
+          </div>
+          <div id="danh-sach-nhan-su" class="danh-sach"></div>
+        </section>
+        <section data-page="dich-vu" hidden>
+          <div class="dau-trang"><h1>Gói dịch vụ</h1></div>
+          <div class="khung khoang">
+            <h2>Thêm/sửa dịch vụ</h2>
+            <form id="form-dich-vu" class="form">
+              <input name="serviceId" type="hidden" />
+              <div class="cot-2">
+                <label>Tên dịch vụ<input name="serviceName" required /></label
+                ><label
+                  >Danh mục<select name="categoryId" required></select></label
+                ><label
+                  >Giá (VND)<input
+                    name="price"
+                    type="number"
+                    min="1"
+                    required /></label
+                ><label
+                  >Thời lượng (phút)<input
+                    name="duration"
+                    type="number"
+                    min="1"
+                    max="480"
+                    required
+                /></label>
+              </div>
+              <label>Mô tả<textarea name="description"></textarea></label
+              ><button class="nut">Lưu dịch vụ</button
+              ><button
+                id="huy-sua-dich-vu"
+                type="button"
+                class="nut nut-phu"
+                hidden
+              >
+                Hủy sửa
+              </button>
+            </form>
+          </div>
+          <div id="danh-sach-dich-vu" class="danh-sach"></div>
+        </section>
+        <section data-page="danh-muc" hidden>
+          <div class="dau-trang"><h1>Danh mục dịch vụ</h1></div>
+          <div class="khung khoang">
+            <form id="form-danh-muc" class="form">
+              <input name="categoryId" type="hidden" /><label
+                >Tên danh mục<input name="categoryName" required /></label
+              ><label>Mô tả<textarea name="description"></textarea></label
+              ><button class="nut">Lưu danh mục</button
+              ><button
+                id="huy-sua-danh-muc"
+                type="button"
+                class="nut nut-phu"
+                hidden
+              >
+                Hủy sửa
+              </button>
+            </form>
+          </div>
+          <div id="danh-sach-danh-muc" class="danh-sach"></div>
+        </section>
+        <section data-page="thong-bao" hidden>
+          <div class="dau-trang"><h1>Gửi thông báo</h1></div>
+          <div class="khung khoang">
+            <form id="form-phat-thong-bao" class="form">
+              <label>Tiêu đề<input name="title" required /></label
+              ><label
+                >Nội dung<textarea name="message" required></textarea></label
+              ><label
+                >Người nhận<select name="userId">
+                  <option value="">Tất cả tài khoản đang hoạt động</option>
+                </select></label
+              ><button class="nut">Gửi thông báo</button>
+            </form>
+          </div>
+          <div id="danh-sach-thong-bao" class="danh-sach"></div>
+        </section>
+        <section data-page="nhat-ky" hidden>
+          <div class="dau-trang"><h1>Nhật ký hệ thống</h1></div>
+          <div id="danh-sach-nhat-ky" class="danh-sach"></div>
+          <button id="tai-them-nhat-ky" class="nut nut-phu them-khoang">
+            Xem thêm
+          </button>
+        </section>
+        <section data-page="tai-khoan" hidden>
+          <div class="dau-trang"><h1>Tài khoản</h1></div>
+          <div id="cai-dat-tai-khoan"></div>
+        </section>
+      </main>
+    </div>
+    <div id="thong-bao" class="thong-bao" role="status" hidden></div>
+    <script type="module" src="/js/van-hanh.js"></script>
+  </body>
+</html>

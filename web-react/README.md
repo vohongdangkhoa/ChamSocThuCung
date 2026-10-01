@@ -1,12 +1,18 @@
-# Giao diện PetNoVa
+# Bản React cũ — không còn là giao diện chính
+
+Website hiện tại đã chuyển sang HTML/CSS/JavaScript thuần tại `../website/`.
+Lệnh `../run_petnova_web_dev.ps1` **không dùng thư mục này** và chạy website ở `http://127.0.0.1:5200/`.
+Thư mục React được giữ lại để đối chiếu, chưa xóa nhằm tránh mất code cũ.
+
+## Ghi chú về bản React cũ
 
 Website dùng React, JavaScript, CSS và Vite. Không cần Dart hoặc Flutter.
 
 ## Chạy
 
-Tại thư mục gốc `petnova_app`, chạy `run_petnova_web_dev.cmd` hoặc `run_petnova_web_dev.ps1` để khởi động cả API và website. Mở `http://localhost:5173/`.
+Chỉ khi muốn xem lại bản React cũ, tự chạy `npm install` và `npm run dev` tại thư mục này, rồi mở `http://localhost:5173/`.
 
-Nếu chỉ chạy giao diện, vào thư mục `web-react`, chạy `npm install` (lần đầu) rồi `npm run dev`. API vẫn phải chạy ở cổng 5200 để đăng nhập và tải dữ liệu. Go Live không thay thế Vite hoặc API .NET.
+Bản React cũ vẫn cần API ở cổng 5200 để đăng nhập và tải dữ liệu; đây chỉ là tài liệu lưu trữ, không phải hướng dẫn chạy website mới.
 
 ## File giao diện
 

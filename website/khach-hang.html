@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Khách hàng | PetNoVa</title>
+    <link rel="stylesheet" href="/css/giao-dien.css" />
+  </head>
+  <body>
+    <header class="thanh-tren">
+      <a class="thuong-hieu" href="/">🐾 PetNoVa</a>
+      <div class="hang">
+        <span>Xin chào, <strong data-ten-nguoi-dung>...</strong></span
+        ><button class="nut nut-nho" data-dang-xuat>Đăng xuất</button>
+      </div>
+    </header>
+    <div id="loi-tai-khoan" class="khung" hidden>
+      Không thể mở tài khoản. <a href="/">Về trang đăng nhập</a>.
+    </div>
+    <div id="noi-dung" class="bo-cuc" hidden>
+      <nav class="dieu-huong" aria-label="Menu khách hàng">
+        <button data-tab="tong-quan">Tổng quan</button
+        ><button data-tab="thu-cung">Thú cưng</button
+        ><button data-tab="dat-lich">Đặt lịch</button
+        ><button data-tab="lich-hen">Lịch hẹn</button
+        ><button data-tab="thanh-toan">Thanh toán</button
+        ><button data-tab="suc-khoe">Sức khỏe</button
+        ><button data-tab="thong-bao">Thông báo</button
+        ><button data-tab="tai-khoan">Tài khoản</button>
+      </nav>
+      <main class="phan-trang">
+        <section data-page="tong-quan">
+          <div class="dau-trang">
+            <h1>Chăm sóc bé cưng dễ dàng</h1>
+            <p>Theo dõi thú cưng, lịch hẹn và những thông tin mới nhất.</p>
+          </div>
+          <div id="so-lieu" class="luoi khoang"></div>
+          <div class="khung">
+            <h2>Lịch hẹn gần đây</h2>
+            <div id="lich-gan-day" class="danh-sach"></div>
+          </div>
+        </section>
+        <section data-page="thu-cung" hidden>
+          <div class="dau-trang">
+            <h1>Thú cưng của tôi</h1>
+            <p>Hồ sơ được dùng khi đặt lịch và theo dõi sức khỏe.</p>
+          </div>
+          <div class="cot-2">
+            <div class="khung">
+              <h2>Thêm hoặc sửa thú cưng</h2>
+              <form id="form-thu-cung" class="form">
+                <input type="hidden" name="petId" /><label
+                  >Tên bé<input name="petName" maxlength="100" required
+                /></label>
+                <div class="cot-2">
+                  <label
+                    >Loài<input
+                      name="species"
+                      placeholder="Chó, mèo..."
+                      maxlength="50"
+                      required /></label
+                  ><label
+                    >Giống<input name="breed" maxlength="100" required
+                  /></label>
+                </div>
+                <div class="cot-2">
+                  <label
+                    >Giới tính<select name="gender">
+                      <option>Đực</option>
+                      <option>Cái</option>
+                      <option>Khác</option>
+                    </select></label
+                  ><label
+                    >Ngày sinh<input name="birthDate" type="date" required
+                  /></label>
+                </div>
+                <div class="cot-2">
+                  <label
+                    >Cân nặng (kg)<input
+                      name="weight"
+                      type="number"
+                      min="0.1"
+                      max="999"
+                      step="0.1"
+                      required /></label
+                  ><label
+                    >Tình trạng sức khỏe<input
+                      name="healthStatus"
+                      maxlength="255"
+                      placeholder="Bình thường"
+                  /></label>
+                </div>
+                <button class="nut">Lưu hồ sơ</button
+                ><button
+                  id="huy-sua-thu"
+                  type="button"
+                  class="nut nut-phu"
+                  hidden
+                >
+                  Hủy sửa
+                </button>
+              </form>
+            </div>
+            <div>
+              <h2>Danh sách thú cưng</h2>
+              <div id="danh-sach-thu" class="danh-sach"></div>
+            </div>
+          </div>
+        </section>
+        <section data-page="dat-lich" hidden>
+          <div class="dau-trang">
+            <h1>Đặt lịch chăm sóc</h1>
+            <p>Chọn bé, dịch vụ và khung giờ còn trống.</p>
+          </div>
+          <div class="khung">
+            <form id="form-dat-lich" class="form">
+              <div class="cot-2">
+                <label>Thú cưng<select name="petId" required></select></label
+                ><label
+                  >Loại chăm sóc<select name="careTypeId" required></select
+                ></label>
+              </div>
+              <div>
+                <strong>Dịch vụ</strong>
+                <div id="chon-dich-vu" class="chon-dich-vu them-khoang"></div>
+              </div>
+              <div class="cot-2">
+                <label
+                  >Ngày hẹn<input
+                    name="bookingDate"
+                    type="date"
+                    required /></label
+                ><label
+                  >Nhân sự (không bắt buộc)<select name="staffId">
+                    <option value="">Để PetNoVa phân công</option>
+                  </select></label
+                >
+              </div>
+              <button id="kiem-tra-gio" type="button" class="nut nut-phu">
+                Xem giờ còn trống</button
+              ><label
+                >Giờ hẹn<select name="bookingTime" required>
+                  <option value="">Chọn ngày/dịch vụ rồi xem giờ</option>
+                </select></label
+              ><label
+                >Ghi chú<textarea
+                  name="note"
+                  maxlength="1000"
+                ></textarea></label
+              ><label
+                >Thanh toán<select name="paymentMethod">
+                  <option value="CASH">Tiền mặt tại cửa hàng</option>
+                  <option value="BANK_TRANSFER">Chuyển khoản PayOS</option>
+                </select></label
+              >
+              <p id="tong-tien" class="nho"></p>
+              <button class="nut">Xác nhận đặt lịch</button>
+            </form>
+          </div>
+        </section>
+        <section data-page="lich-hen" hidden>
+          <div class="dau-trang">
+            <h1>Lịch hẹn của tôi</h1>
+            <p>Xem trạng thái, đổi lịch hoặc hủy lịch còn hiệu lực.</p>
+          </div>
+          <div id="danh-sach-lich" class="danh-sach"></div>
+        </section>
+        <section data-page="thanh-toan" hidden>
+          <div class="dau-trang">
+            <h1>Thanh toán</h1>
+            <p>Chuyển khoản qua PayOS hoặc xem biên nhận tiền mặt.</p>
+          </div>
+          <div id="danh-sach-thanh-toan" class="danh-sach"></div>
+        </section>
+        <section data-page="suc-khoe" hidden>
+          <div class="dau-trang">
+            <h1>Hồ sơ sức khỏe</h1>
+            <p>Bệnh án và các mũi tiêm của bé.</p>
+          </div>
+          <label class="khoang"
+            >Chọn thú cưng<select id="chon-thu-suc-khoe"></select
+          ></label>
+          <div class="cot-2">
+            <div class="khung">
+              <h2>Bệnh án</h2>
+              <div id="benh-an" class="danh-sach"></div>
+            </div>
+            <div class="khung">
+              <h2>Tiêm chủng</h2>
+              <div id="tiem-chung" class="danh-sach"></div>
+            </div>
+          </div>
+        </section>
+        <section data-page="thong-bao" hidden>
+          <div class="dau-trang"><h1>Thông báo</h1></div>
+          <button id="doc-tat-ca" class="nut nut-phu khoang">
+            Đánh dấu đã đọc tất cả
+          </button>
+          <div id="danh-sach-thong-bao" class="danh-sach"></div>
+        </section>
+        <section data-page="tai-khoan" hidden>
+          <div class="dau-trang"><h1>Tài khoản của tôi</h1></div>
+          <div id="cai-dat-tai-khoan"></div>
+        </section>
+      </main>
+    </div>
+    <div id="thong-bao" class="thong-bao" role="status" hidden></div>
+    <script type="module" src="/js/khach-hang.js"></script>
+  </body>
+</html>

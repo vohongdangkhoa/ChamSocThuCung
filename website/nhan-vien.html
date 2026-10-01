@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Nhân viên | PetNoVa</title>
+    <link rel="stylesheet" href="/css/giao-dien.css" />
+  </head>
+  <body data-role="STAFF">
+    <header class="thanh-tren">
+      <a class="thuong-hieu" href="/">🐾 PetNoVa · Nhân viên</a>
+      <div class="hang">
+        <strong data-ten-nguoi-dung>...</strong
+        ><button class="nut nut-nho" data-dang-xuat>Đăng xuất</button>
+      </div>
+    </header>
+    <div id="loi-tai-khoan" class="khung" hidden>
+      Không thể mở tài khoản. <a href="/">Đăng nhập lại</a>.
+    </div>
+    <div id="noi-dung" class="bo-cuc" hidden>
+      <nav class="dieu-huong">
+        <button data-tab="tong-quan">Tổng quan</button
+        ><button data-tab="lich-hen">Lịch hẹn</button
+        ><button data-tab="thanh-toan">Thanh toán</button
+        ><button data-tab="khach-hang">Khách hàng</button
+        ><button data-tab="dich-vu">Dịch vụ</button
+        ><button data-tab="thong-bao">Thông báo</button
+        ><button data-tab="tai-khoan">Tài khoản</button>
+      </nav>
+      <main class="phan-trang">
+        <section data-page="tong-quan">
+          <div class="dau-trang">
+            <h1>Điều hành dịch vụ</h1>
+            <p>Quản lý lịch hẹn và hỗ trợ khách hàng.</p>
+          </div>
+          <div id="so-lieu" class="luoi"></div>
+        </section>
+        <section data-page="lich-hen" hidden>
+          <div class="dau-trang">
+            <h1>Lịch hẹn</h1>
+            <p>Xác nhận, phân công và cập nhật tiến độ.</p>
+          </div>
+          <label class="khoang"
+            >Lọc trạng thái<select id="loc-lich">
+              <option value="">Tất cả</option>
+              <option value="PENDING">Chờ xác nhận</option>
+              <option value="CONFIRMED">Đã xác nhận</option>
+              <option value="IN_PROGRESS">Đang chăm sóc</option>
+              <option value="COMPLETED">Hoàn thành</option>
+              <option value="CANCELLED">Đã hủy</option>
+            </select></label
+          >
+          <div id="danh-sach-lich" class="danh-sach"></div>
+        </section>
+        <section data-page="thanh-toan" hidden>
+          <div class="dau-trang">
+            <h1>Thanh toán</h1>
+            <p>Xác nhận tiền mặt và theo dõi chuyển khoản.</p>
+          </div>
+          <div id="danh-sach-thanh-toan" class="danh-sach"></div>
+        </section>
+        <section data-page="khach-hang" hidden>
+          <div class="dau-trang">
+            <h1>Khách hàng</h1>
+            <p>Thông tin liên hệ và thú cưng để hỗ trợ lịch hẹn.</p>
+          </div>
+          <label class="khoang"
+            >Tìm tên, số điện thoại<input
+              id="tim-khach"
+              type="search"
+              placeholder="Nhập để lọc"
+          /></label>
+          <div id="danh-sach-khach" class="danh-sach"></div>
+        </section>
+        <section data-page="dich-vu" hidden>
+          <div class="dau-trang"><h1>Dịch vụ đang cung cấp</h1></div>
+          <div id="danh-sach-dich-vu" class="luoi"></div>
+        </section>
+        <section data-page="thong-bao" hidden>
+          <div class="dau-trang"><h1>Thông báo</h1></div>
+          <div id="danh-sach-thong-bao" class="danh-sach"></div>
+        </section>
+        <section data-page="tai-khoan" hidden>
+          <div class="dau-trang"><h1>Tài khoản</h1></div>
+          <div id="cai-dat-tai-khoan"></div>
+        </section>
+      </main>
+    </div>
+    <div id="thong-bao" class="thong-bao" role="status" hidden></div>
+    <script type="module" src="/js/van-hanh.js"></script>
+  </body>
+</html>

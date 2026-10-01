@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Threading.RateLimiting;
 using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.Extensions.FileProviders;
 using PetNoVaApi.Data;
 using PetNoVaApi.Services;
 
@@ -27,7 +28,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("PetNovaWeb", policy =>
     {
         var origins = builder.Configuration.GetSection("Web:AllowedOrigins").Get<string[]>()
-            ?? (builder.Environment.IsDevelopment() ? ["http://localhost:5173", "http://127.0.0.1:5173"] : []);
+            ?? (builder.Environment.IsDevelopment() ? ["http://localhost:5500", "http://127.0.0.1:5500", "http://localhost:5501", "http://127.0.0.1:5501"] : []);
         if (origins.Length > 0) policy.WithOrigins(origins)
               .AllowAnyHeader()
               .AllowAnyMethod();
@@ -84,6 +85,13 @@ builder.Services.AddOpenApi();
 // Tạo pipeline sau khi hoàn tất đăng ký phụ thuộc.
 var app = builder.Build();
 
+// Khi chạy source, phục vụ trực tiếp thư mục website/ (HTML/CSS/JS thuần).
+// Khi publish, các file được copy vào wwwroot bởi .csproj.
+var websitePath = Path.GetFullPath(Path.Combine(app.Environment.ContentRootPath, "..", "..", "website"));
+var websiteFiles = Directory.Exists(websitePath)
+    ? new PhysicalFileProvider(websitePath)
+    : app.Environment.WebRootFileProvider;
+
 // Bổ sung cột/bảng mới theo cách idempotent trước khi API nhận request.
 await MediaSchemaInitializer.InitializeAsync(app.Services);
 await PasswordResetSchemaInitializer.InitializeAsync(app.Services);
@@ -108,6 +116,9 @@ app.UseExceptionHandler(handler => handler.Run(async context =>
 }));
 
 app.UseCors("PetNovaWeb");
+
+app.UseDefaultFiles(new DefaultFilesOptions { FileProvider = websiteFiles });
+app.UseStaticFiles(new StaticFileOptions { FileProvider = websiteFiles });
 
 app.UseRateLimiter();
 

@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Bác sĩ | PetNoVa</title>
+    <link rel="stylesheet" href="/css/giao-dien.css" />
+  </head>
+  <body data-role="VET">
+    <header class="thanh-tren">
+      <a class="thuong-hieu" href="/">🐾 PetNoVa · Bác sĩ</a>
+      <div class="hang">
+        <strong data-ten-nguoi-dung>...</strong
+        ><button class="nut nut-nho" data-dang-xuat>Đăng xuất</button>
+      </div>
+    </header>
+    <div id="loi-tai-khoan" class="khung" hidden>
+      Không thể mở tài khoản. <a href="/">Đăng nhập lại</a>.
+    </div>
+    <div id="noi-dung" class="bo-cuc" hidden>
+      <nav class="dieu-huong">
+        <button data-tab="tong-quan">Tổng quan</button
+        ><button data-tab="lich-hen">Lịch được phân công</button
+        ><button data-tab="suc-khoe">Bệnh án & tiêm chủng</button
+        ><button data-tab="thong-bao">Thông báo</button
+        ><button data-tab="tai-khoan">Tài khoản</button>
+      </nav>
+      <main class="phan-trang">
+        <section data-page="tong-quan">
+          <div class="dau-trang">
+            <h1>Công việc của bác sĩ</h1>
+            <p>Lịch được phân công và hồ sơ thú cưng có quyền truy cập.</p>
+          </div>
+          <div id="so-lieu" class="luoi"></div>
+        </section>
+        <section data-page="lich-hen" hidden>
+          <div class="dau-trang"><h1>Lịch được phân công</h1></div>
+          <div id="danh-sach-lich" class="danh-sach"></div>
+        </section>
+        <section data-page="suc-khoe" hidden>
+          <div class="dau-trang">
+            <h1>Hồ sơ sức khỏe</h1>
+            <p>Chỉ mở hồ sơ thú cưng thuộc lịch đã phân công.</p>
+          </div>
+          <label class="khoang"
+            >Chọn thú cưng<select id="chon-thu-suc-khoe"></select
+          ></label>
+          <div class="cot-2">
+            <div class="khung">
+              <h2>Ghi bệnh án</h2>
+              <form id="form-benh-an" class="form">
+                <label
+                  >Chẩn đoán<input
+                    name="diagnosis"
+                    maxlength="255"
+                    required /></label
+                ><label
+                  >Điều trị<textarea
+                    name="treatment"
+                    maxlength="2000"
+                    required
+                  ></textarea></label
+                ><label
+                  >Đơn thuốc<textarea
+                    name="prescription"
+                    maxlength="2000"
+                  ></textarea></label
+                ><label
+                  >Cân nặng (kg)<input
+                    name="weight"
+                    type="number"
+                    step="0.1"
+                    min="0.1" /></label
+                ><label
+                  >Ngày tái khám<input name="followUpDate" type="date" /></label
+                ><label
+                  >Ghi chú<textarea
+                    name="note"
+                    maxlength="2000"
+                  ></textarea></label
+                ><button class="nut">Lưu bệnh án</button>
+              </form>
+            </div>
+            <div class="khung">
+              <h2>Ghi tiêm chủng</h2>
+              <form id="form-tiem-chung" class="form">
+                <label
+                  >Tên vaccine<input
+                    name="vaccineName"
+                    maxlength="100"
+                    required /></label
+                ><label
+                  >Ngày tiêm<input
+                    name="vaccinationDate"
+                    type="date"
+                    required /></label
+                ><label
+                  >Ngày nhắc lại<input
+                    name="nextDate"
+                    type="date"
+                    required /></label
+                ><label
+                  >Ghi chú<textarea
+                    name="note"
+                    maxlength="255"
+                  ></textarea></label
+                ><button class="nut">Lưu mũi tiêm</button>
+              </form>
+            </div>
+          </div>
+          <div class="cot-2 them-khoang">
+            <div class="khung">
+              <h2>Lịch sử bệnh án</h2>
+              <div id="benh-an" class="danh-sach"></div>
+            </div>
+            <div class="khung">
+              <h2>Lịch sử tiêm</h2>
+              <div id="tiem-chung" class="danh-sach"></div>
+            </div>
+          </div>
+        </section>
+        <section data-page="thong-bao" hidden>
+          <div class="dau-trang"><h1>Thông báo</h1></div>
+          <div id="danh-sach-thong-bao" class="danh-sach"></div>
+        </section>
+        <section data-page="tai-khoan" hidden>
+          <div class="dau-trang"><h1>Tài khoản</h1></div>
+          <div id="cai-dat-tai-khoan"></div>
+        </section>
+      </main>
+    </div>
+    <div id="thong-bao" class="thong-bao" role="status" hidden></div>
+    <script type="module" src="/js/van-hanh.js"></script>
+  </body>
+</html>
