@@ -19,6 +19,7 @@ builder.Services.AddControllers(options =>
     options.Filters.Add<KiemTraQuyen>();
     options.Filters.Add<TraLoiCamTruyCap>();
 });
+builder.Services.AddRazorPages();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -85,8 +86,8 @@ builder.Services.AddOpenApi();
 // Tạo pipeline sau khi hoàn tất đăng ký phụ thuộc.
 var app = builder.Build();
 
-// Khi chạy source, phục vụ trực tiếp thư mục website/ (HTML/CSS/JS thuần).
-// Khi publish, các file được copy vào wwwroot bởi .csproj.
+// Razor Pages dựng HTML; CSS/JS tĩnh vẫn phục vụ từ website/ khi chạy source.
+// Khi publish, các tài nguyên tĩnh được copy vào wwwroot bởi .csproj.
 var websitePath = Path.GetFullPath(Path.Combine(app.Environment.ContentRootPath, "..", "..", "website"));
 var websiteFiles = Directory.Exists(websitePath)
     ? new PhysicalFileProvider(websitePath)
@@ -117,7 +118,6 @@ app.UseExceptionHandler(handler => handler.Run(async context =>
 
 app.UseCors("PetNovaWeb");
 
-app.UseDefaultFiles(new DefaultFilesOptions { FileProvider = websiteFiles });
 app.UseStaticFiles(new StaticFileOptions { FileProvider = websiteFiles });
 
 app.UseRateLimiter();
@@ -134,5 +134,6 @@ app.MapGet(
 );
 
 app.MapControllers();
+app.MapRazorPages();
 
 app.Run();

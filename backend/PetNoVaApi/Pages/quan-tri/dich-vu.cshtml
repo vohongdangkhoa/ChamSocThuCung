@@ -1,0 +1,43 @@
+@page
+@{
+    ViewData["Title"] = "Dịch vụ";
+}
+<section data-page="dich-vu">
+  <div class="dau-trang"><h1>Gói dịch vụ</h1></div>
+  <div class="khung khoang">
+    <h2>Thêm/sửa dịch vụ</h2>
+    <form id="form-dich-vu" class="form">
+      <input name="serviceId" type="hidden" />
+      <div class="cot-2">
+        <label>Tên dịch vụ<input name="serviceName" required /></label
+        ><label
+          >Danh mục<select name="categoryId" required></select></label
+        ><label
+          >Giá (VND)<input
+            name="price"
+            type="number"
+            min="1"
+            required /></label
+        ><label
+          >Thời lượng (phút)<input
+            name="duration"
+            type="number"
+            min="1"
+            max="480"
+            required
+        /></label>
+      </div>
+      <label>Mô tả<textarea name="description"></textarea></label
+      ><button class="nut">Lưu dịch vụ</button
+      ><button
+        id="huy-sua-dich-vu"
+        type="button"
+        class="nut nut-phu"
+        hidden
+      >
+        Hủy sửa
+      </button>
+    </form>
+  </div>
+  <div id="danh-sach-dich-vu" class="danh-sach"></div>
+</section>

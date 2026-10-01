@@ -1,7 +1,6 @@
 import { api } from "./api.js";
 import { baoVeTrang, taiHoSo } from "./xac-thuc.js";
 import {
-  batDieuHuong,
   chuyenTrang,
   gio,
   h,
@@ -68,9 +67,9 @@ async function load() {
 }
 
 function render() {
-  $("#so-lieu").innerHTML =
+  if ($("#so-lieu")) $("#so-lieu").innerHTML =
     `<div class="card"><h3>${bookings.length}</h3><p>Lịch hẹn hiển thị</p></div><div class="card"><h3>${bookings.filter((b) => b.status === "PENDING").length}</h3><p>Đang chờ xác nhận</p></div><div class="card"><h3>${pets.length}</h3><p>Thú cưng có quyền xem</p></div>`;
-  $("#danh-sach-lich").innerHTML =
+  if ($("#danh-sach-lich")) $("#danh-sach-lich").innerHTML =
     bookings
       .filter(
         (b) => !$("#loc-lich")?.value || b.status === $("#loc-lich").value,
@@ -90,7 +89,7 @@ function render() {
             `<article class="dong"><div><strong>${h(s.fullName)} · ${h(s.staffId)}</strong><p>${h(s.role)} · ${h(s.email)} · ${h(s.phone)}</p>${nhan(s.status)} <small class="nho">Vi phạm: ${h(s.violationCount)}</small></div><div class="hang"><button class="nut nut-phu nut-nho" data-staff-edit="${h(s.staffId)}">Sửa</button><button class="nut nut-phu nut-nho" data-staff-toggle="${h(s.staffId)}">${s.status === "ACTIVE" ? "Tạm khóa" : "Đổi trạng thái"}</button><button class="nut nut-phu nut-nho" data-staff-violation="${h(s.staffId)}">Ghi vi phạm</button>${s.status === "SUSPENDED" ? `<button class="nut nut-phu nut-nho" data-staff-activate="${h(s.staffId)}">Kích hoạt lại</button>` : ""}<button class="nut nut-nguy-hiem nut-nho" data-staff-delete="${h(s.staffId)}">Xóa nếu chưa có lịch sử</button></div></article>`,
         )
         .join("") || empty("Chưa có nhân sự.");
-  $("#danh-sach-dich-vu").innerHTML =
+  if ($("#danh-sach-dich-vu")) $("#danh-sach-dich-vu").innerHTML =
     services
       .map(
         (s) =>
@@ -105,7 +104,7 @@ function render() {
             `<article class="dong"><div><strong>${h(c.categoryName)}</strong><p>${h(c.description)}</p>${nhan(c.status)}</div><div class="hang"><button class="nut nut-phu nut-nho" data-category-edit="${h(c.categoryId)}">Sửa</button><button class="nut nut-phu nut-nho" data-category-toggle="${h(c.categoryId)}">${c.status === "ACTIVE" ? "Tạm ẩn" : "Hiện lại"}</button></div></article>`,
         )
         .join("") || empty("Chưa có danh mục.");
-  $("#danh-sach-thong-bao").innerHTML =
+  if ($("#danh-sach-thong-bao")) $("#danh-sach-thong-bao").innerHTML =
     notifications
       .map(
         (n) =>
@@ -123,14 +122,14 @@ function render() {
       )}`;
   }
   if (role === "ADMIN") {
-    $("#form-dich-vu").categoryId.innerHTML =
+    if ($("#form-dich-vu")) $("#form-dich-vu").categoryId.innerHTML =
       `<option value="">Chọn danh mục</option>${luaChon(
         categories.filter((c) => c.status === "ACTIVE"),
         "",
         (c) => c.categoryName,
         (c) => c.categoryId,
       )}`;
-    $("#form-phat-thong-bao").userId.innerHTML =
+    if ($("#form-phat-thong-bao")) $("#form-phat-thong-bao").userId.innerHTML =
       `<option value="">Tất cả tài khoản đang hoạt động</option>${luaChon(
         users,
         "",
@@ -748,23 +747,22 @@ document.addEventListener("click", async (event) => {
 profile = await baoVeTrang(role);
 if (profile) {
   $("#noi-dung").hidden = false;
-  batDieuHuong();
   if (role === "VET") {
     try {
       staffMe = await api.get("/api/Staffs/me");
     } catch (error) {
       thongBao(error.message, true);
     }
-    $("#form-tiem-chung").vaccinationDate.max = homNay();
-    $("#form-benh-an").followUpDate.min = homNay();
+    if ($("#form-tiem-chung")) $("#form-tiem-chung").vaccinationDate.max = homNay();
+    if ($("#form-benh-an")) $("#form-benh-an").followUpDate.min = homNay();
   }
   try {
     await load();
     if (role === "ADMIN") {
-      await loadReport();
-      await loadAudit();
+      if ($("#bao-cao-chi-tiet")) await loadReport();
+      if ($("#danh-sach-nhat-ky")) await loadAudit();
     }
-    caiDatTaiKhoan(profile, async () => {
+    if ($("#cai-dat-tai-khoan")) caiDatTaiKhoan(profile, async () => {
       profile = await taiHoSo();
       caiDatTaiKhoan(profile, () => location.reload());
     });

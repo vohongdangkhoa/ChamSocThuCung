@@ -286,7 +286,8 @@ textarea:focus {
   display: grid;
   gap: 0.3rem;
 }
-.dieu-huong button {
+.dieu-huong button,
+.dieu-huong a {
   border: 0;
   background: transparent;
   color: #42516a;
@@ -294,9 +295,12 @@ textarea:focus {
   border-radius: 9px;
   padding: 0.72rem 0.8rem;
   font-weight: 600;
+  text-decoration: none;
 }
 .dieu-huong button:hover,
-.dieu-huong button.dang-chon {
+.dieu-huong button.dang-chon,
+.dieu-huong a:hover,
+.dieu-huong a.dang-chon {
   color: #0e509c;
   background: #e5f0ff;
 }
@@ -395,7 +399,8 @@ th {
     margin-bottom: 1rem;
     position: static;
   }
-  .dieu-huong button {
+  .dieu-huong button,
+  .dieu-huong a {
     white-space: nowrap;
   }
   .cot-2 {

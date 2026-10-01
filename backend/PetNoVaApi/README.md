@@ -1,8 +1,8 @@
 # API PetNoVa
 
-Đây là API ASP.NET Core/.NET 10 và SQL Server cho website HTML/CSS/JavaScript PetNoVa trong `../../website/`. Khởi động toàn bộ dự án từ thư mục gốc bằng `run_petnova_web_dev.cmd` hoặc `run_petnova_web_dev.ps1`; xem README ở thư mục gốc.
+Đây là ứng dụng ASP.NET Core/.NET 10 gồm **Razor Pages** trong `Pages/`, API trong `Controllers/` và SQL Server. CSS/JavaScript nằm trong `../../website/`. Khởi động toàn bộ dự án từ thư mục gốc bằng `run_petnova_web_dev.cmd` hoặc `run_petnova_web_dev.ps1`; xem README ở thư mục gốc.
 
-Nếu chỉ cần chạy API trong VS Code:
+Nếu muốn chạy trực tiếp ứng dụng .NET trong VS Code (gồm Razor Pages và API):
 
 ```powershell
 dotnet run --project backend/PetNoVaApi/PetNoVaApi.csproj --launch-profile http

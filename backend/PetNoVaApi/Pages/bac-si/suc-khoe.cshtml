@@ -1,0 +1,86 @@
+@page
+@{
+    ViewData["Title"] = "Sức khỏe";
+}
+<section data-page="suc-khoe">
+  <div class="dau-trang">
+    <h1>Hồ sơ sức khỏe</h1>
+    <p>Chỉ mở hồ sơ thú cưng thuộc lịch đã phân công.</p>
+  </div>
+  <label class="khoang"
+    >Chọn thú cưng<select id="chon-thu-suc-khoe"></select
+  ></label>
+  <div class="cot-2">
+    <div class="khung">
+      <h2>Ghi bệnh án</h2>
+      <form id="form-benh-an" class="form">
+        <label
+          >Chẩn đoán<input
+            name="diagnosis"
+            maxlength="255"
+            required /></label
+        ><label
+          >Điều trị<textarea
+            name="treatment"
+            maxlength="2000"
+            required
+          ></textarea></label
+        ><label
+          >Đơn thuốc<textarea
+            name="prescription"
+            maxlength="2000"
+          ></textarea></label
+        ><label
+          >Cân nặng (kg)<input
+            name="weight"
+            type="number"
+            step="0.1"
+            min="0.1" /></label
+        ><label
+          >Ngày tái khám<input name="followUpDate" type="date" /></label
+        ><label
+          >Ghi chú<textarea
+            name="note"
+            maxlength="2000"
+          ></textarea></label
+        ><button class="nut">Lưu bệnh án</button>
+      </form>
+    </div>
+    <div class="khung">
+      <h2>Ghi tiêm chủng</h2>
+      <form id="form-tiem-chung" class="form">
+        <label
+          >Tên vaccine<input
+            name="vaccineName"
+            maxlength="100"
+            required /></label
+        ><label
+          >Ngày tiêm<input
+            name="vaccinationDate"
+            type="date"
+            required /></label
+        ><label
+          >Ngày nhắc lại<input
+            name="nextDate"
+            type="date"
+            required /></label
+        ><label
+          >Ghi chú<textarea
+            name="note"
+            maxlength="255"
+          ></textarea></label
+        ><button class="nut">Lưu mũi tiêm</button>
+      </form>
+    </div>
+  </div>
+  <div class="cot-2 them-khoang">
+    <div class="khung">
+      <h2>Lịch sử bệnh án</h2>
+      <div id="benh-an" class="danh-sach"></div>
+    </div>
+    <div class="khung">
+      <h2>Lịch sử tiêm</h2>
+      <div id="tiem-chung" class="danh-sach"></div>
+    </div>
+  </div>
+</section>

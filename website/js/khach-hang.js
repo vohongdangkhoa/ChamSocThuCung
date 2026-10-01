@@ -1,7 +1,6 @@
 import { api } from "./api.js";
 import { baoVeTrang, taiHoSo } from "./xac-thuc.js";
 import {
-  batDieuHuong,
   chuyenTrang,
   gio,
   h,
@@ -30,18 +29,19 @@ const empty = (text) => `<div class="rong">${h(text)}</div>`;
 const petName = (key) => pets.find((pet) => pet.petId === key)?.petName || key;
 
 function render() {
-  $("#so-lieu").innerHTML =
+  if ($("#so-lieu")) $("#so-lieu").innerHTML =
     `<div class="card"><h3>${pets.length}</h3><p>Thú cưng</p></div><div class="card"><h3>${bookings.filter((b) => !["COMPLETED", "CANCELLED"].includes(b.status)).length}</h3><p>Lịch đang xử lý</p></div><div class="card"><h3>${notifications.filter((n) => !n.isRead).length}</h3><p>Thông báo chưa đọc</p></div>`;
-  $("#lich-gan-day").innerHTML =
+  if ($("#lich-gan-day")) $("#lich-gan-day").innerHTML =
     bookings.slice(0, 3).map(bookingCard).join("") ||
     empty("Bạn chưa có lịch hẹn.");
-  $("#danh-sach-thu").innerHTML =
+  if ($("#danh-sach-thu")) $("#danh-sach-thu").innerHTML =
     pets
       .map(
         (pet) =>
           `<article class="dong"><div class="hang">${pet.imageUrl ? `<img class="anh-thu" src="${h(pet.imageUrl)}" alt="${h(pet.petName)}">` : ""}<div><strong>${h(pet.petName)}</strong><span class="nho">${h(pet.species)} · ${h(pet.breed)} · ${h(pet.weight)} kg</span><p class="nho">${h(pet.healthStatus || "Chưa ghi tình trạng")}</p></div></div><div class="hang"><button class="nut nut-phu nut-nho" data-pet-edit="${h(pet.petId)}">Sửa</button><button class="nut nut-phu nut-nho" data-pet-photo="${h(pet.petId)}">Ảnh</button><button class="nut nut-nguy-hiem nut-nho" data-pet-archive="${h(pet.petId)}">Lưu trữ</button></div></article>`,
       )
       .join("") || empty("Chưa có thú cưng. Hãy thêm bé đầu tiên.");
+  if ($("#form-dat-lich")) {
   $("#form-dat-lich").petId.innerHTML =
     `<option value="">Chọn thú cưng</option>${luaChon(
       pets,
@@ -62,7 +62,8 @@ function render() {
       (s) => `${s.fullName} (${s.role === "VET" ? "Bác sĩ" : "Nhân viên"})`,
       (s) => s.staffId,
     )}`;
-  $("#chon-dich-vu").innerHTML =
+  }
+  if ($("#chon-dich-vu")) $("#chon-dich-vu").innerHTML =
     services
       .filter((s) => s.status === "ACTIVE")
       .map(
@@ -70,6 +71,7 @@ function render() {
           `<label><input type="checkbox" value="${h(s.serviceId)}"><span><strong>${h(s.serviceName)}</strong><br><small>${tien(s.price)} · ${h(s.duration)} phút</small></span></label>`,
       )
       .join("") || empty("Chưa có dịch vụ đang hoạt động.");
+  if ($("#chon-thu-suc-khoe")) {
   const selectedPet = $("#chon-thu-suc-khoe").value;
   $("#chon-thu-suc-khoe").innerHTML =
     `<option value="">Chọn thú cưng</option>${luaChon(
@@ -78,11 +80,12 @@ function render() {
       (p) => p.petName,
       (p) => p.petId,
     )}`;
-  $("#danh-sach-lich").innerHTML =
+  }
+  if ($("#danh-sach-lich")) $("#danh-sach-lich").innerHTML =
     bookings.map(bookingCard).join("") || empty("Chưa có lịch hẹn.");
-  $("#danh-sach-thanh-toan").innerHTML =
+  if ($("#danh-sach-thanh-toan")) $("#danh-sach-thanh-toan").innerHTML =
     payments.map(paymentCard).join("") || empty("Chưa có thanh toán.");
-  $("#danh-sach-thong-bao").innerHTML =
+  if ($("#danh-sach-thong-bao")) $("#danh-sach-thong-bao").innerHTML =
     notifications
       .map(
         (n) =>
@@ -117,6 +120,7 @@ async function load() {
 }
 
 function capNhatTien() {
+  if (!$("#chon-dich-vu") || !$("#tong-tien")) return;
   const ids = [...$("#chon-dich-vu").querySelectorAll("input:checked")].map(
     (node) => node.value,
   );
@@ -173,7 +177,7 @@ async function loadHealth() {
       .join("") || empty("Chưa có lịch sử tiêm chủng.");
 }
 
-$("#form-thu-cung").addEventListener("submit", async (event) => {
+$("#form-thu-cung")?.addEventListener("submit", async (event) => {
   event.preventDefault();
   const form = event.currentTarget;
   const petId = form.petId.value;
@@ -203,24 +207,24 @@ $("#form-thu-cung").addEventListener("submit", async (event) => {
     await load();
   }
 });
-$("#huy-sua-thu").addEventListener("click", () => {
+$("#huy-sua-thu")?.addEventListener("click", () => {
   $("#form-thu-cung").reset();
   $("#huy-sua-thu").hidden = true;
 });
-$("#chon-dich-vu").addEventListener("change", () => {
+$("#chon-dich-vu")?.addEventListener("change", () => {
   capNhatTien();
   $("#form-dat-lich").bookingTime.innerHTML =
     '<option value="">Hãy xem giờ còn trống</option>';
 });
-$("#kiem-tra-gio").addEventListener("click", (event) =>
+$("#kiem-tra-gio")?.addEventListener("click", (event) =>
   thaoTac(event.currentTarget, xemGio),
 );
-$("#form-dat-lich").addEventListener("change", (event) => {
+$("#form-dat-lich")?.addEventListener("change", (event) => {
   if (["bookingDate", "petId", "staffId"].includes(event.target.name))
     $("#form-dat-lich").bookingTime.innerHTML =
       '<option value="">Hãy xem giờ còn trống</option>';
 });
-$("#form-dat-lich").addEventListener("submit", async (event) => {
+$("#form-dat-lich")?.addEventListener("submit", async (event) => {
   event.preventDefault();
   const form = event.currentTarget;
   const serviceIds = [
@@ -252,10 +256,10 @@ $("#form-dat-lich").addEventListener("submit", async (event) => {
     chuyenTrang("lich-hen");
   }
 });
-$("#chon-thu-suc-khoe").addEventListener("change", () =>
+$("#chon-thu-suc-khoe")?.addEventListener("change", () =>
   loadHealth().catch((e) => thongBao(e.message, true)),
 );
-$("#doc-tat-ca").addEventListener("click", (event) =>
+$("#doc-tat-ca")?.addEventListener("click", (event) =>
   thaoTac(
     event.currentTarget,
     async () => {
@@ -398,23 +402,22 @@ document.addEventListener("click", async (event) => {
 profile = await baoVeTrang("CUSTOMER");
 if (profile) {
   $("#noi-dung").hidden = false;
-  batDieuHuong();
-  $("#form-dat-lich").bookingDate.min = homNay();
-  $("#form-thu-cung").birthDate.max = homNay();
+  if ($("#form-dat-lich")) $("#form-dat-lich").bookingDate.min = homNay();
+  if ($("#form-thu-cung")) $("#form-thu-cung").birthDate.max = homNay();
   try {
     await load();
-    caiDatTaiKhoan(profile, async () => {
+    if ($("#cai-dat-tai-khoan")) caiDatTaiKhoan(profile, async () => {
       profile = await taiHoSo();
       caiDatTaiKhoan(profile, () => location.reload());
     });
   } catch (error) {
     thongBao(error.message, true);
   }
-  if (location.hash.includes("payos=return"))
+  if (new URLSearchParams(location.search).get("payos") === "return")
     thongBao(
       "Đã quay lại từ PayOS. Hãy bấm “Kiểm tra” để đồng bộ trạng thái thanh toán.",
     );
-  if (location.hash.includes("payos=cancel"))
+  if (new URLSearchParams(location.search).get("payos") === "cancel")
     thongBao(
       "Bạn đã rời trang thanh toán PayOS. Giao dịch chưa được xác nhận.",
       true,

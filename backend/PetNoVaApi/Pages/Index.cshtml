@@ -1,0 +1,19 @@
+@page
+@{
+    Layout = null;
+}
+<!doctype html>
+<html lang="vi">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Đăng nhập | PetNoVa</title><link rel="stylesheet" href="/css/giao-dien.css"></head>
+<body class="dang-nhap">
+    <aside class="gioi-thieu"><div class="logo">🐾 PetNoVa</div><h1>Chăm sóc thú cưng, theo cách thật đơn giản.</h1><p>Đặt lịch, quản lý sức khỏe và theo dõi dịch vụ của bé cưng ở một nơi.</p></aside>
+    <main class="dang-nhap-ben-phai"><div class="hop-dang-nhap khung">
+        <h2>Chào mừng bạn</h2><p class="nho">Đăng nhập để tiếp tục với PetNoVa.</p>
+        <div class="tab-dang-nhap"><button type="button" data-chon-form="dang-nhap" class="dang-chon">Đăng nhập</button><button type="button" data-chon-form="dang-ky">Đăng ký</button></div>
+        <form id="form-dang-nhap" data-form="dang-nhap" class="form"><label>Email<input name="email" type="email" autocomplete="email" required></label><label>Mật khẩu<input name="password" type="password" autocomplete="current-password" required></label><button class="nut" type="submit">Đăng nhập</button><button class="nut nut-phu" type="button" data-chon-form="otp-yeu-cau">Quên mật khẩu?</button></form>
+        <form id="form-dang-ky" data-form="dang-ky" class="form" hidden><label>Họ và tên<input name="fullName" autocomplete="name" required></label><label>Email<input name="email" type="email" autocomplete="email" required></label><label>Số điện thoại<input name="phone" type="tel" autocomplete="tel" required></label><label>Mật khẩu<input name="password" type="password" minlength="6" autocomplete="new-password" required></label><label>Nhập lại mật khẩu<input name="confirmPassword" type="password" minlength="6" required></label><button class="nut" type="submit">Tạo tài khoản khách hàng</button></form>
+        <form id="form-otp-yeu-cau" data-form="otp-yeu-cau" class="form" hidden><h3>Đặt lại mật khẩu</h3><p class="nho">Nhập số điện thoại đã đăng ký. Mã xác minh sẽ gửi tới email liên kết.</p><label>Số điện thoại<input name="phone" type="tel" required></label><button class="nut" type="submit">Gửi mã OTP</button><button class="nut nut-phu" type="button" data-chon-form="dang-nhap">Quay lại</button></form>
+        <form id="form-otp-xac-minh" data-form="otp-xac-minh" class="form" hidden><h3>Xác minh mã OTP</h3><p class="nho">Mã đã gửi tới <span id="email-nhan-otp"></span>.</p><label>Mã OTP<input name="otp" inputmode="numeric" autocomplete="one-time-code" required></label><button class="nut" type="submit">Xác minh</button><button class="nut nut-phu" type="button" data-chon-form="otp-yeu-cau">Gửi lại</button></form>
+        <form id="form-otp-hoan-tat" data-form="otp-hoan-tat" class="form" hidden><h3>Tạo mật khẩu mới</h3><label>Mật khẩu mới<input name="password" type="password" minlength="6" required></label><label>Nhập lại mật khẩu<input name="confirmPassword" type="password" minlength="6" required></label><button class="nut" type="submit">Lưu mật khẩu</button></form>
+    </div></main><div id="thong-bao" class="thong-bao" role="status" hidden></div><script type="module" src="/js/dang-nhap.js"></script>
+</body></html>

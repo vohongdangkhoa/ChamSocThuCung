@@ -1,0 +1,40 @@
+@{
+    var path = Context.Request.Path.Value ?? "/";
+    var role = SoDoTrang.VaiTro(path);
+    var title = ViewData["Title"]?.ToString() ?? "PetNoVa";
+}
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>@title | PetNoVa</title>
+    <link rel="stylesheet" href="/css/giao-dien.css">
+</head>
+<body data-role="@SoDoTrang.MaVaiTro(role)">
+    <header class="thanh-tren">
+        <a class="thuong-hieu" href="/">🐾 PetNoVa · @SoDoTrang.TenVaiTro(role)</a>
+        <div class="hang"><strong data-ten-nguoi-dung>...</strong><button class="nut nut-nho" data-dang-xuat>Đăng xuất</button></div>
+    </header>
+    <div id="loi-tai-khoan" class="khung" hidden>Không thể mở tài khoản. <a href="/">Đăng nhập lại</a>.</div>
+    <div id="noi-dung" class="bo-cuc" hidden>
+        <nav class="dieu-huong" aria-label="Menu @SoDoTrang.TenVaiTro(role)">
+            @foreach (var item in SoDoTrang.Menu(role))
+            {
+                <a href="@item.DuongDan" class="@(path.Equals(item.DuongDan, StringComparison.OrdinalIgnoreCase) ? "dang-chon" : "")" aria-current="@(path.Equals(item.DuongDan, StringComparison.OrdinalIgnoreCase) ? "page" : "false")">@item.Ten</a>
+            }
+        </nav>
+        <main class="phan-trang">@RenderBody()</main>
+    </div>
+    <div id="thong-bao" class="thong-bao" role="status" hidden></div>
+    @if (role == "khach-hang")
+    {
+        <script type="module" src="/js/khach-hang.js"></script>
+    }
+    else
+    {
+        <script type="module" src="/js/van-hanh.js"></script>
+    }
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

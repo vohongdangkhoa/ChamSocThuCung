@@ -1,10 +1,11 @@
 <#
 .SYNOPSIS
-Chạy cả website HTML/CSS/JS và API PetNoVa bằng một lệnh.
+Chạy website Razor Pages và API PetNoVa bằng một lệnh.
 
 .DESCRIPTION
-ASP.NET Core phục vụ thư mục website/ và API tại cùng một địa chỉ.
-Không cần npm, Vite hoặc React. Nhấn Ctrl+C để dừng.
+ASP.NET Core dựng các trang Razor trong Pages/, phục vụ CSS/JS từ website/
+và API tại cùng một địa chỉ. Không cần npm, Vite hoặc React.
+Nhấn Ctrl+C để dừng.
 #>
 [CmdletBinding()]
 param()
@@ -14,15 +15,15 @@ $ErrorActionPreference = 'Stop'
 
 $projectRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 $apiDirectory = Join-Path $projectRoot 'backend\PetNoVaApi'
-$websiteDirectory = Join-Path $projectRoot 'website'
+$razorIndex = Join-Path $apiDirectory 'Pages\Index.cshtml'
 $url = 'http://127.0.0.1:5200/'
 
 if (-not (Get-Command dotnet -ErrorAction SilentlyContinue)) {
     Write-Host 'Không tìm thấy .NET SDK. Cài .NET 10 SDK rồi mở lại VS Code.' -ForegroundColor Red
     exit 1
 }
-if (-not (Test-Path -LiteralPath (Join-Path $websiteDirectory 'index.html'))) {
-    Write-Host 'Không tìm thấy website/index.html.' -ForegroundColor Red
+if (-not (Test-Path -LiteralPath $razorIndex)) {
+    Write-Host 'Không tìm thấy Pages/Index.cshtml.' -ForegroundColor Red
     exit 1
 }
 
@@ -47,7 +48,7 @@ if ($portBusy) {
     throw 'Cổng 5200 đang được chương trình khác sử dụng. Hãy dừng chương trình đó rồi chạy lại.'
 }
 
-Write-Host 'PetNoVa: HTML/CSS/JavaScript thuần + API .NET' -ForegroundColor Cyan
+Write-Host 'PetNoVa: Razor Pages + CSS/JavaScript + API .NET' -ForegroundColor Cyan
 Write-Host "Mở trình duyệt: $url" -ForegroundColor Green
 Write-Host 'Giữ terminal này mở. Nhấn Ctrl+C để dừng.' -ForegroundColor DarkGray
 Push-Location $apiDirectory

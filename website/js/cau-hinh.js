@@ -1,4 +1,4 @@
-// Firebase dùng từ CDN chính thức: website không cần React, npm hoặc lệnh build.
+// Firebase dùng từ CDN chính thức: website Razor không cần React hoặc npm.
 import {
   initializeApp,
   getApp,
@@ -18,6 +18,5 @@ export const firebaseConfig = {
 const firebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
 export const auth = getAuth(firebaseApp);
 
-// Khi .NET phục vụ website (cổng 5200), dùng cùng origin. Go Live dùng cổng
-// 5500 thì trình duyệt gọi API .NET ở localhost:5200.
-export const API_BASE = location.port === "5200" ? "" : "http://localhost:5200";
+// Razor Pages và API luôn được ASP.NET Core phục vụ cùng một origin.
+export const API_BASE = "";

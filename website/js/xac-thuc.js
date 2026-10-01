@@ -10,10 +10,10 @@ import { api } from "./api.js";
 import { id, thongBao } from "./chung.js";
 
 const trangVaiTro = {
-  CUSTOMER: "khach-hang.html",
-  STAFF: "nhan-vien.html",
-  VET: "bac-si.html",
-  ADMIN: "quan-tri.html",
+  CUSTOMER: "khach-hang/tong-quan",
+  STAFF: "nhan-vien/tong-quan",
+  VET: "bac-si/tong-quan",
+  ADMIN: "quan-tri/tong-quan",
 };
 
 export function loiDangNhap(error) {

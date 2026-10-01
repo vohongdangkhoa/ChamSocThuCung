@@ -1,0 +1,24 @@
+@page
+@{
+    ViewData["Title"] = "Danh mục";
+}
+<section data-page="danh-muc">
+  <div class="dau-trang"><h1>Danh mục dịch vụ</h1></div>
+  <div class="khung khoang">
+    <form id="form-danh-muc" class="form">
+      <input name="categoryId" type="hidden" /><label
+        >Tên danh mục<input name="categoryName" required /></label
+      ><label>Mô tả<textarea name="description"></textarea></label
+      ><button class="nut">Lưu danh mục</button
+      ><button
+        id="huy-sua-danh-muc"
+        type="button"
+        class="nut nut-phu"
+        hidden
+      >
+        Hủy sửa
+      </button>
+    </form>
+  </div>
+  <div id="danh-sach-danh-muc" class="danh-sach"></div>
+</section>

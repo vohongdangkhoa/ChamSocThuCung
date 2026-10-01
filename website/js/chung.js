@@ -82,32 +82,11 @@ export async function thaoTac(button, action, success) {
 }
 
 export function chuyenTrang(page) {
-  const pages = [...document.querySelectorAll("[data-page]")];
-  if (!pages.some((section) => section.dataset.page === page))
-    page = pages[0]?.dataset.page;
-  pages.forEach((section) => {
-    section.hidden = section.dataset.page !== page;
-  });
-  document.querySelectorAll("[data-tab]").forEach((button) => {
-    const active = button.dataset.tab === page;
-    button.classList.toggle("dang-chon", active);
-    button.setAttribute("aria-current", active ? "page" : "false");
-  });
-  location.hash = page || "";
-  window.scrollTo({ top: 0, behavior: "auto" });
-  document.dispatchEvent(new CustomEvent("petnova:trang", { detail: page }));
-}
-
-export function batDieuHuong() {
-  document
-    .querySelectorAll("[data-tab]")
-    .forEach((button) =>
-      button.addEventListener("click", () => chuyenTrang(button.dataset.tab)),
-    );
-  chuyenTrang(
-    location.hash.slice(1).split("?")[0] ||
-      document.querySelector("[data-page]")?.dataset.page,
-  );
+  const rolePaths = { CUSTOMER: "khach-hang", STAFF: "nhan-vien", VET: "bac-si", ADMIN: "quan-tri" };
+  const rolePath = rolePaths[document.body.dataset.role];
+  if (rolePath && !location.pathname.endsWith(`/${page}`)) {
+    location.assign(`/${rolePath}/${page}`);
+  }
 }
 
 export function luaChon(

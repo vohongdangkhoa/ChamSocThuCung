@@ -1,0 +1,20 @@
+@page
+@{
+    ViewData["Title"] = "Thông báo";
+}
+<section data-page="thong-bao">
+  <div class="dau-trang"><h1>Gửi thông báo</h1></div>
+  <div class="khung khoang">
+    <form id="form-phat-thong-bao" class="form">
+      <label>Tiêu đề<input name="title" required /></label
+      ><label
+        >Nội dung<textarea name="message" required></textarea></label
+      ><label
+        >Người nhận<select name="userId">
+          <option value="">Tất cả tài khoản đang hoạt động</option>
+        </select></label
+      ><button class="nut">Gửi thông báo</button>
+    </form>
+  </div>
+  <div id="danh-sach-thong-bao" class="danh-sach"></div>
+</section>
