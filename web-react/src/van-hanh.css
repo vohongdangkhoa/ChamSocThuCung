@@ -1,7 +1,26 @@
-.chi-tiet-van-hanh { margin-top: 1.5rem; }
-.chi-tiet-van-hanh .detail-grid { margin-bottom: 1.5rem; }
-.chi-tiet-van-hanh .list-item { gap: 1rem; align-items: center; }
-.chi-tiet-van-hanh .form-grid { margin-top: 1rem; }
-.inline-check { display: inline-flex; align-items: center; gap: .45rem; white-space: nowrap; }
-.bo-loc-bao-cao { align-items: end; gap: 1rem; }
-.bo-loc-bao-cao label { flex: 1; }
+.chi-tiet-van-hanh {
+  margin-top: 1.5rem;
+}
+.chi-tiet-van-hanh .detail-grid {
+  margin-bottom: 1.5rem;
+}
+.chi-tiet-van-hanh .list-item {
+  gap: 1rem;
+  align-items: center;
+}
+.chi-tiet-van-hanh .form-grid {
+  margin-top: 1rem;
+}
+.inline-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  white-space: nowrap;
+}
+.bo-loc-bao-cao {
+  align-items: end;
+  gap: 1rem;
+}
+.bo-loc-bao-cao label {
+  flex: 1;
+}

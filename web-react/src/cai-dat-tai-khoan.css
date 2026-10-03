@@ -1,5 +1,21 @@
-.tai-khoan-grid { display: grid; grid-template-columns: minmax(220px, 1fr) minmax(0, 2fr); gap: 24px; align-items: start; }
-.tai-khoan-forms { display: grid; gap: 24px; }
-.cai-dat-tai-khoan .profile-summary p { overflow-wrap: anywhere; }
-.cai-dat-tai-khoan .button-row { margin-top: 0; }
-@media (max-width: 850px) { .tai-khoan-grid { grid-template-columns: 1fr; } }
+.tai-khoan-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(0, 2fr);
+  gap: 24px;
+  align-items: start;
+}
+.tai-khoan-forms {
+  display: grid;
+  gap: 24px;
+}
+.cai-dat-tai-khoan .profile-summary p {
+  overflow-wrap: anywhere;
+}
+.cai-dat-tai-khoan .button-row {
+  margin-top: 0;
+}
+@media (max-width: 850px) {
+  .tai-khoan-grid {
+    grid-template-columns: 1fr;
+  }
+}
