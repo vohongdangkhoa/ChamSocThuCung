@@ -3,9 +3,8 @@
 Khởi động môi trường phát triển PetNoVa Web bằng một lệnh.
 
 .DESCRIPTION
-Tự chạy PetNoVa API ở nền nếu endpoint /health chưa sẵn sàng, sau đó chạy
-Vite cho React ở terminal hiện tại. Nhấn Ctrl+C chỉ dừng Vite; API vẫn chạy
-ở nền để lần mở web tiếp theo không cần khởi động lại.
+Chạy PetNoVa API và website React bằng một lệnh. API do script khởi động
+sẽ được dừng cùng website để lần chạy sau luôn dùng mã nguồn mới.
 #>
 [CmdletBinding()]
 param()
@@ -17,7 +16,9 @@ $projectRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 $apiDirectory = Join-Path $projectRoot 'backend\PetNoVaApi'
 $webDirectory = Join-Path $projectRoot 'web-react'
 $healthUrl = 'http://127.0.0.1:5200/health'
+$webUrl = 'http://localhost:5173/'
 $logDirectory = Join-Path $projectRoot '.dev-logs'
+$apiProcess = $null
 
 function Write-Step {
     param([string]$Message)
@@ -32,6 +33,22 @@ function Test-ApiReady {
     catch {
         return $false
     }
+}
+
+function Get-ApiFailureDetails {
+    param([string]$OutputLog, [string]$ErrorLog)
+
+    $lines = @()
+    foreach ($path in @($ErrorLog, $OutputLog)) {
+        if (Test-Path -LiteralPath $path) {
+            $lines += Get-Content -LiteralPath $path -Tail 12 -ErrorAction SilentlyContinue
+        }
+    }
+    $details = ($lines | Where-Object { $_ -and $_.Trim() } | Select-Object -Last 12) -join [Environment]::NewLine
+    if ($details) {
+        return "$details`nLog đầy đủ: $OutputLog và $ErrorLog"
+    }
+    return "Xem log: $OutputLog và $ErrorLog"
 }
 
 try {
@@ -51,6 +68,24 @@ try {
         throw "Không tìm thấy website React tại $webDirectory"
     }
 
+    $existingWeb = $null
+    try {
+        $existingWeb = Invoke-WebRequest -UseBasicParsing -Uri $webUrl -TimeoutSec 3
+    }
+    catch {
+        # Chưa có website đang phục vụ tại cổng 5173.
+    }
+    if ($null -ne $existingWeb) {
+        if ($existingWeb.Content -notmatch '<title>PetNoVa</title>') {
+            throw 'Cổng 5173 đang bị ứng dụng khác chiếm. Hãy dừng ứng dụng đó rồi chạy lại.'
+        }
+        if (-not (Test-ApiReady)) {
+            throw 'Website PetNoVa đã chạy tại cổng 5173 nhưng API chưa chạy. Hãy dừng terminal Vite cũ bằng Ctrl+C rồi chạy lại lệnh này.'
+        }
+        Write-Step "PetNoVa đã chạy sẵn tại $webUrl. Không cần mở thêm phiên Vite."
+        return
+    }
+
     if (-not (Test-ApiReady)) {
         New-Item -ItemType Directory -Force -Path $logDirectory | Out-Null
         $timestamp = Get-Date -Format 'yyyyMMdd_HHmmss'
@@ -60,7 +95,7 @@ try {
         Write-Step 'Đang khởi động API .NET tại cổng 5200...'
         $apiProcess = Start-Process `
             -FilePath (Get-Command dotnet).Source `
-            -ArgumentList @('run', '--launch-profile', 'http', '--no-restore') `
+            -ArgumentList @('run', '--launch-profile', 'http') `
             -WorkingDirectory $apiDirectory `
             -WindowStyle Hidden `
             -RedirectStandardOutput $standardOutputLog `
@@ -68,10 +103,11 @@ try {
             -PassThru
 
         $ready = $false
-        for ($second = 1; $second -le 45; $second++) {
+        for ($second = 1; $second -le 60; $second++) {
             Start-Sleep -Seconds 1
+            $apiProcess.Refresh()
             if ($apiProcess.HasExited) {
-                throw "API đã dừng khi khởi động. Xem log: $standardOutputLog"
+                throw "API đã dừng khi khởi động.`n$(Get-ApiFailureDetails $standardOutputLog $standardErrorLog)"
             }
             if (Test-ApiReady) {
                 $ready = $true
@@ -80,8 +116,11 @@ try {
         }
 
         if (-not $ready) {
-            throw "API chưa sẵn sàng sau 45 giây. Xem log: $standardOutputLog"
+            throw "API chưa sẵn sàng sau 60 giây.`n$(Get-ApiFailureDetails $standardOutputLog $standardErrorLog)"
         }
+    }
+    else {
+        Write-Host '  API đã chạy sẵn ở cổng 5200; đang dùng phiên API đó.' -ForegroundColor Yellow
     }
 
     Write-Host '  ✓ API đã sẵn sàng: http://127.0.0.1:5200' -ForegroundColor Green
@@ -97,8 +136,11 @@ try {
         }
 
         Write-Step 'Đang chạy website tại http://localhost:5173'
-        Write-Host '  Nhấn Ctrl+C để dừng website; API vẫn chạy nền.' -ForegroundColor DarkGray
+        Write-Host '  Giữ terminal này mở. Nhấn Ctrl+C để dừng website và API do script mở.' -ForegroundColor DarkGray
         & npm run dev
+        if ($LASTEXITCODE -ne 0) {
+            throw "Vite đã dừng với mã lỗi $LASTEXITCODE."
+        }
     }
     finally {
         Pop-Location
@@ -107,4 +149,13 @@ try {
 catch {
     Write-Host "[PetNoVa Web] Lỗi: $($_.Exception.Message)" -ForegroundColor Red
     exit 1
+}
+finally {
+    if ($null -ne $apiProcess) {
+        $apiProcess.Refresh()
+        if (-not $apiProcess.HasExited) {
+            Stop-Process -Id $apiProcess.Id -ErrorAction SilentlyContinue
+            Write-Step 'Đã dừng API do script khởi động.'
+        }
+    }
 }

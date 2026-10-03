@@ -16,7 +16,9 @@ Mở Terminal ở thư mục dự án và chạy một lệnh:
 .\run_petnova_web_dev.ps1
 ```
 
-Script tự mở API .NET ở nền (nếu chưa chạy) và chạy website React ở terminal hiện tại. Mở `http://localhost:5173/` khi Vite báo sẵn sàng.
+Script mở API .NET và website React cùng lúc. Giữ terminal mở khi dùng website, rồi nhấn `Ctrl+C` để dừng. API do script mở sẽ tự dừng; lần chạy sau dùng mã nguồn mới. Nếu cổng 5200 đã có API chạy sẵn, script sẽ dùng phiên đó và không tự dừng nó.
+
+Nếu thấy Vite đã báo `ready` ở một terminal khác, chỉ cần mở `http://localhost:5173/`; không chạy thêm lệnh lần nữa. Script cũng sẽ nhận ra khi PetNoVa đã chạy và không mở thêm phiên Vite trên cùng cổng.
 
 Bạn cũng có thể bấm đúp `run_petnova_web_dev.cmd` trên Windows.
 
