@@ -35,3 +35,6 @@ migrate_working_dir/
 /.dev-logs/
 /build/
 /coverage/
+
+# Local SQL export contains customer/account data; never commit it.
+/backend/PetNoVaApi/Database/PetNoVaDB_khoi_phuc_du_lieu.sql
