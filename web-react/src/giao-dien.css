@@ -111,7 +111,9 @@ img {
 }
 
 .auth-page {
-  grid-template-columns: minmax(280px, 480px) minmax(300px, 510px);
+  grid-template-columns: minmax(280px, 480px) minmax(300px, 460px);
+  /* Căn giữa cả hai cột; place-items chỉ căn nội dung bên trong từng cột. */
+  justify-content: center;
   gap: clamp(30px, 8vw, 120px);
   background:
     radial-gradient(circle at 8% 10%, #cceedd 0, transparent 28%),

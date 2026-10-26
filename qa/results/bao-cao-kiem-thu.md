@@ -75,6 +75,12 @@ Bộ hồi quy trước/sau: [api-before.json](api-before.json), [api-after.json
 
 Ảnh mobile chỉ là bằng chứng cục bộ; công cụ viewport có lúc thay đổi kích thước theo vùng hiển thị. Chưa kết luận responsive của toàn bộ website đạt. Ảnh điều hướng sau sửa chỉ chụp phần đầu trang.
 
+### Bổ sung: căn giữa trang xác thực theo ảnh phản hồi
+
+Đã sửa grid trang đăng nhập/đăng ký: căn giữa cả cụm hai cột bằng `justify-content: center`, đồng bộ cột form với chiều rộng tối đa 460 px. Trước sửa ở viewport CSS 1.440 px, phần giới thiệu bắt đầu tại x=24 px, form kết thúc tại khoảng x=1.104 px nên khoảng trống hai bên không cân. Sau sửa, cụm nội dung bắt đầu tại khoảng x=192,4 px và kết thúc tại x=1.247,6 px, hai bên bằng nhau.
+
+Đã mở trang đăng nhập và đăng ký ở bố cục một cột tại viewport đo được 768 px. Công cụ tự đổi các viewport nhỏ yêu cầu 320/390 px thành 480 px, vì vậy không báo hai kích thước đó đạt. Phiên bổ sung chưa chụp được ảnh; bằng chứng số đo DOM thật được lưu tại [bo-cuc-dang-nhap.json](bo-cuc-dang-nhap.json). Các số đo bổ sung không cộng vào 88 kiểm tra tự động ở trên.
+
 ## Phần chưa xác nhận và việc cần tiếp tục
 
 1. **ADMIN/STAFF/VET trên trình duyệt thật:** hiện tab vẫn ở trang đăng nhập. Cần người dùng đăng nhập từng tài khoản thử nghiệm; chưa xem kết quả controller/mô phỏng component là thay thế cho bước này.

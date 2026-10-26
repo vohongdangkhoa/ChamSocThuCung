@@ -1,0 +1,101 @@
+{
+  "observedAtUtc": "2026-10-26T16:41:48.146Z",
+  "method": "Đọc hình học DOM của trang thật qua trình duyệt",
+  "desktopBefore": {
+    "viewport": 1440,
+    "intro": {
+      "x": 24,
+      "width": 480
+    },
+    "card": {
+      "x": 644.2000122070312,
+      "width": 460
+    }
+  },
+  "desktopAfter": {
+    "viewport": 1440,
+    "intro": {
+      "x": 192.40000915527344,
+      "width": 480
+    },
+    "card": {
+      "x": 787.6000366210938,
+      "width": 460
+    }
+  },
+  "responsiveObservations": [
+    {
+      "blocks": [
+        {
+          "class": "auth-intro",
+          "width": 417.6000061035156,
+          "x": 16
+        },
+        {
+          "class": "auth-card",
+          "width": 417.6000061035156,
+          "x": 16
+        }
+      ],
+      "contentWidth": 449,
+      "height": 800,
+      "mode": "Chào mừng trở lại",
+      "viewport": 480
+    },
+    {
+      "blocks": [
+        {
+          "class": "auth-intro",
+          "width": 417.6000061035156,
+          "x": 16
+        },
+        {
+          "class": "auth-card",
+          "width": 417.6000061035156,
+          "x": 16
+        }
+      ],
+      "contentWidth": 449,
+      "height": 844,
+      "mode": "Chào mừng trở lại",
+      "viewport": 480
+    },
+    {
+      "blocks": [
+        {
+          "class": "auth-intro",
+          "width": 440,
+          "x": 164
+        },
+        {
+          "class": "auth-card",
+          "width": 460,
+          "x": 154
+        }
+      ],
+      "contentWidth": 768,
+      "height": 1024,
+      "mode": "Chào mừng trở lại",
+      "viewport": 768
+    },
+    {
+      "blocks": [
+        {
+          "class": "auth-intro",
+          "width": 440,
+          "x": 148.8000030517578
+        },
+        {
+          "class": "auth-card",
+          "width": 460,
+          "x": 138.8000030517578
+        }
+      ],
+      "contentWidth": 737,
+      "height": 1024,
+      "mode": "Tạo tài khoản",
+      "viewport": 768
+    }
+  ],
+  "limits": "Viewport nhỏ yêu cầu 320/390 bị công cụ đổi thành 480; không coi là đã kiểm thử 320/390. Capture screenshot không thành công ở phiên này."
+}
