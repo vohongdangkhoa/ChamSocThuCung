@@ -9,12 +9,14 @@ import {
 } from "react";
 import {
   createUserWithEmailAndPassword,
+  deleteUser,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
 } from "firebase/auth";
 import { auth } from "./cau-hinh-firebase";
+import { dangKyKhachHang } from "./dang-ky-khach-hang";
 import {
   UserAccountNotFoundError,
   createUserAccount,
@@ -237,31 +239,14 @@ export function AuthProvider({ children }) {
     setError("");
     try {
       // Firebase owns password storage; PetNoVa stores only its business profile.
-      const credential = await createUserWithEmailAndPassword(
-        auth,
-        normalizedEmail,
-        suppliedPassword,
-      );
-      const firebaseUser = credential.user;
-      if (!firebaseUser) {
-        throw new AuthProfileError("Firebase không trả về tài khoản vừa tạo.");
-      }
-
-      await updateProfile(firebaseUser, { displayName: normalizedName });
-      const created = await createUserAccount(
+      const { firebaseUser, account: created } = await dangKyKhachHang(
+        { fullName: normalizedName, email: normalizedEmail, phone: normalizedPhone, password: suppliedPassword },
         {
-          userId: "",
-          firebaseUid: firebaseUser.uid,
-          fullName: normalizedName,
-          email: firebaseUser.email || normalizedEmail,
-          phone: normalizedPhone,
-          role: "CUSTOMER",
-          status: "ACTIVE",
-          fcmToken: "",
-          avatarUrl: "",
-          avatarPublicId: "",
+          createIdentity: (email, password) => createUserWithEmailAndPassword(auth, email, password),
+          updateIdentity: (identity, displayName) => updateProfile(identity, { displayName }),
+          createProfile: createUserAccount,
+          removeIdentity: deleteUser,
         },
-        firebaseUser,
       );
       const nextProfile = validateProfile(created);
 

@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { vietHoaLoiNhap, xoaLoiNhap } from "./thong-bao-bieu-mau";
 import { AuthProvider, useAuth } from "./xac-thuc";
 import { AuthPages } from "./trang-dang-nhap";
 import { CustomerPortal } from "./cong-khach-hang";
@@ -62,6 +64,16 @@ function RolePortal() {
 }
 
 export default function App() {
+  useEffect(() => {
+    document.addEventListener("invalid", vietHoaLoiNhap, true);
+    document.addEventListener("input", xoaLoiNhap, true);
+    document.addEventListener("change", xoaLoiNhap, true);
+    return () => {
+      document.removeEventListener("invalid", vietHoaLoiNhap, true);
+      document.removeEventListener("input", xoaLoiNhap, true);
+      document.removeEventListener("change", xoaLoiNhap, true);
+    };
+  }, []);
   return (
     <AuthProvider>
       <RolePortal />

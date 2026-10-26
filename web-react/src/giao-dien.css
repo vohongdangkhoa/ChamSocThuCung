@@ -924,9 +924,10 @@ textarea {
     justify-content: center;
   }
   .portal {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .sidebar {
+    min-width: 0;
     position: sticky;
     z-index: 10;
     top: 0;
@@ -941,9 +942,17 @@ textarea {
     overflow-x: auto;
     margin: 12px -2px 0;
   }
+  .sidebar nav {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .nav-list > li {
+    flex: 0 0 auto;
+  }
   .nav-button {
     width: auto;
     flex: 0 0 auto;
+    white-space: nowrap;
   }
   .sidebar-footer {
     display: none;
@@ -999,7 +1008,8 @@ textarea {
     padding: 19px;
   }
   .button-row .button {
-    flex: 1;
+    flex: 1 1 160px;
+    min-width: 0;
   }
   .nav-button .nav-icon {
     display: none;

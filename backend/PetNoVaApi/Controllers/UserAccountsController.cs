@@ -215,6 +215,12 @@ namespace PetNoVaApi.Controllers
             }
 
             var identity = identityResult.Identity!;
+            var fullName = user.fullName?.Trim();
+            if (string.IsNullOrWhiteSpace(fullName) || fullName.Length > 100)
+                return BadRequest("Họ và tên cần từ 1 đến 100 ký tự.");
+            if (string.IsNullOrWhiteSpace(identity.Email) || identity.Email.Trim().Length > 100)
+                return BadRequest("Email không được vượt quá 100 ký tự.");
+            user.fullName = fullName;
             // Không cho client đăng ký hộ UID/email khác dù body JSON đã bị chỉnh sửa.
             if (
                 string.IsNullOrWhiteSpace(identity.Email)
@@ -488,6 +494,9 @@ namespace PetNoVaApi.Controllers
             }
 
             // Lưu cả phone và normalizedPhone cùng một chuẩn để đăng nhập hỗ trợ/OTP nhất quán.
+            var fullName = request.fullName?.Trim();
+            if (string.IsNullOrWhiteSpace(fullName) || fullName.Length > 100)
+                return BadRequest("Họ và tên cần từ 1 đến 100 ký tự.");
             var normalizedPhone = PhoneNumberNormalizer.NormalizeVietnamese(request.phone);
             if (normalizedPhone is null)
             {
@@ -505,7 +514,7 @@ namespace PetNoVaApi.Controllers
                 return BadRequest("Số điện thoại này đã được liên kết với tài khoản khác");
             }
 
-            user.fullName = request.fullName;
+            user.fullName = fullName;
             user.phone = normalizedPhone;
             user.normalizedPhone = normalizedPhone;
 
@@ -611,6 +620,9 @@ namespace PetNoVaApi.Controllers
             CancellationToken cancellationToken
         )
         {
+            // Bộ lọc KiemTraQuyen đã xác minh token trong cùng request.
+            if (HttpContext.Items["petnova.identity"] is FirebaseIdentity verifiedIdentity)
+                return new IdentityLookupResult(verifiedIdentity, null);
             // Header phải đúng mẫu "Authorization: Bearer &lt;Firebase ID token&gt;".
             var authorization = Request.Headers.Authorization.ToString();
             if (

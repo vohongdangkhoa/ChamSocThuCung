@@ -1,0 +1,136 @@
+{
+  "Assembly": "C:\\Users\\vohon\\petnova_app\\backend\\PetNoVaApi\\bin\\Debug\\net10.0\\PetNoVaApi.dll",
+  "ExecutedAtUtc": "2026-10-26T16:11:37.6516203Z",
+  "Passed": 16,
+  "Failed": 0,
+  "Results": [
+    {
+      "Id": "API-BK-001",
+      "Description": "Ba l\u1ECBch n\u1ED1i ti\u1EBFp kh\u00F4ng chi\u1EBFm ba ch\u1ED7 \u0111\u1ED3ng th\u1EDDi",
+      "Status": "PASS",
+      "Expected": true,
+      "Actual": true,
+      "Error": null
+    },
+    {
+      "Id": "API-BK-002",
+      "Description": "Ba l\u1ECBch \u0111\u1ED3ng th\u1EDDi \u0111\u1EA1t c\u00F4ng su\u1EA5t ph\u1EA3i b\u1ECB ch\u1EB7n",
+      "Status": "PASS",
+      "Expected": false,
+      "Actual": false,
+      "Error": null
+    },
+    {
+      "Id": "API-BK-003",
+      "Description": "L\u1ECBch m\u1EDBi b\u1EAFt \u0111\u1EA7u \u0111\u00FAng khi l\u1ECBch c\u0169 k\u1EBFt th\u00FAc",
+      "Status": "PASS",
+      "Expected": true,
+      "Actual": true,
+      "Error": null
+    },
+    {
+      "Id": "API-BK-004",
+      "Description": "Th\u00FA c\u01B0ng tr\u00F9ng gi\u1EDD ph\u1EA3i b\u1ECB ch\u1EB7n",
+      "Status": "PASS",
+      "Expected": false,
+      "Actual": false,
+      "Error": null
+    },
+    {
+      "Id": "API-BK-005",
+      "Description": "Nh\u00E2n s\u1EF1 tr\u00F9ng gi\u1EDD ph\u1EA3i b\u1ECB ch\u1EB7n",
+      "Status": "PASS",
+      "Expected": false,
+      "Actual": false,
+      "Error": null
+    },
+    {
+      "Id": "API-BK-006",
+      "Description": "Khung gi\u1EDD \u0111\u00E3 qua ph\u1EA3i b\u1ECB ch\u1EB7n",
+      "Status": "PASS",
+      "Expected": false,
+      "Actual": false,
+      "Error": null
+    },
+    {
+      "Id": "API-BK-007",
+      "Description": "D\u1ECBch v\u1EE5 v\u01B0\u1EE3t gi\u1EDD \u0111\u00F3ng c\u1EEDa ph\u1EA3i b\u1ECB ch\u1EB7n",
+      "Status": "PASS",
+      "Expected": false,
+      "Actual": false,
+      "Error": null
+    },
+    {
+      "Id": "API-BK-008",
+      "Description": "Khung gi\u1EDD c\u00F3 ph\u1EA7n mili gi\u00E2y kh\u00F4ng thu\u1ED9c b\u01B0\u1EDBc 30 ph\u00FAt",
+      "Status": "PASS",
+      "Expected": false,
+      "Actual": false,
+      "Error": null
+    },
+    {
+      "Id": "API-BK-009",
+      "Description": "08:30 \u0111\u00FAng b\u01B0\u1EDBc 30 ph\u00FAt \u0111\u01B0\u1EE3c ch\u1EA5p nh\u1EADn",
+      "Status": "PASS",
+      "Expected": true,
+      "Actual": true,
+      "Error": null
+    },
+    {
+      "Id": "API-SV-001",
+      "Description": "Gi\u00E1 c\u00F3 ph\u1EA7n th\u1EADp ph\u00E2n v\u01B0\u1EE3t precision SQL b\u1ECB t\u1EEB ch\u1ED1i",
+      "Status": "PASS",
+      "Expected": false,
+      "Actual": false,
+      "Error": null
+    },
+    {
+      "Id": "API-SV-002",
+      "Description": "Gi\u00E1 v\u01B0\u1EE3t decimal(18,2) b\u1ECB t\u1EEB ch\u1ED1i",
+      "Status": "PASS",
+      "Expected": false,
+      "Actual": false,
+      "Error": null
+    },
+    {
+      "Id": "API-SV-003",
+      "Description": "D\u1ECBch v\u1EE5 d\u00E0i h\u01A1n gi\u1EDBi h\u1EA1n \u0111\u1EB7t l\u1ECBch 480 ph\u00FAt b\u1ECB t\u1EEB ch\u1ED1i",
+      "Status": "PASS",
+      "Expected": false,
+      "Actual": false,
+      "Error": null
+    },
+    {
+      "Id": "API-SV-004",
+      "Description": "C\u1EADp nh\u1EADt tr\u1EA1ng th\u00E1i d\u1ECBch v\u1EE5 ngo\u00E0i ACTIVE/INACTIVE b\u1ECB t\u1EEB ch\u1ED1i",
+      "Status": "PASS",
+      "Expected": false,
+      "Actual": false,
+      "Error": null
+    },
+    {
+      "Id": "API-SV-005",
+      "Description": "T\u1EA1o d\u1ECBch v\u1EE5 kh\u00F4ng y\u00EAu c\u1EA7u tr\u1EA1ng th\u00E1i t\u1EEB client",
+      "Status": "PASS",
+      "Expected": true,
+      "Actual": true,
+      "Error": null
+    },
+    {
+      "Id": "API-SV-006",
+      "Description": "D\u1ECBch v\u1EE5 h\u1EE3p l\u1EC7 \u0111\u01B0\u1EE3c ch\u1EA5p nh\u1EADn",
+      "Status": "PASS",
+      "Expected": true,
+      "Actual": true,
+      "Error": null
+    },
+    {
+      "Id": "API-SV-007",
+      "Description": "Gi\u00E1 b\u1EB1ng 0 b\u1ECB t\u1EEB ch\u1ED1i",
+      "Status": "PASS",
+      "Expected": false,
+      "Actual": false,
+      "Error": null
+    }
+  ]
+}

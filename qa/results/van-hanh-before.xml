@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+	<testcase name="VET: phản hồi chậm của thú cưng A không đè bệnh án/tiêm chủng B đang chọn" time="0.129142" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\van-hanh.test.mjs" failure="The input did not match the regular expression /Chẩn đoán B/. Input:&#10;&#10;'✦PetNoVa▣Ca được phân công♧Hồ sơ thú cưng◉Tài khoảnBSBác sĩ kiểm thửBác sĩ thú yĐăng xuấtPETNOVA WORKSPACEPhòng khám thú yTra cứu hồ sơ, lập bệnh án và theo dõi lịch tiêm cho thú cưng.↻Hồ sơ khám chữaĐang ghi nhận với mã nhân sự V1.Thú cưng (2)Tải lại♧AlphaChưa cập nhật loài · Chưa cập nhật giống—2 kgSức khỏe: Chưa cập nhậtMở hồ sơ♧BetaChưa cập nhật loài · Chưa cập nhật giống—3 kgSức khỏe: Chưa cập nhậtĐang xem hồ sơBetaB · Chủ nuôi OWNER_BChưa cập nhậtLoài / giống— · —Ngày sinh—Giới tính—Cân nặng3 kgCập nhật sức khỏe hiện tạiCân nặng (kg)Tình trạng sức khỏeLưu sức khỏeBệnh án (1)Tiêm chủng (1)Chẩn đoán A— · Nhân sự V1Điều trị: Điều trị ASửa có lưu lịch sửThêm bệnh ánChẩn đoánHướng điều trịGhi chú thêmToa thuốc / hướng dẫn dùng thuốcNgày tái khámCân nặng (kg)Lưu bệnh án'&#10;">
+		<failure type="testCodeFailure" message="The input did not match the regular expression /Chẩn đoán B/. Input:&#10;&#10;'✦PetNoVa▣Ca được phân công♧Hồ sơ thú cưng◉Tài khoảnBSBác sĩ kiểm thửBác sĩ thú yĐăng xuấtPETNOVA WORKSPACEPhòng khám thú yTra cứu hồ sơ, lập bệnh án và theo dõi lịch tiêm cho thú cưng.↻Hồ sơ khám chữaĐang ghi nhận với mã nhân sự V1.Thú cưng (2)Tải lại♧AlphaChưa cập nhật loài · Chưa cập nhật giống—2 kgSức khỏe: Chưa cập nhậtMở hồ sơ♧BetaChưa cập nhật loài · Chưa cập nhật giống—3 kgSức khỏe: Chưa cập nhậtĐang xem hồ sơBetaB · Chủ nuôi OWNER_BChưa cập nhậtLoài / giống— · —Ngày sinh—Giới tính—Cân nặng3 kgCập nhật sức khỏe hiện tạiCân nặng (kg)Tình trạng sức khỏeLưu sức khỏeBệnh án (1)Tiêm chủng (1)Chẩn đoán A— · Nhân sự V1Điều trị: Điều trị ASửa có lưu lịch sửThêm bệnh ánChẩn đoánHướng điều trịGhi chú thêmToa thuốc / hướng dẫn dùng thuốcNgày tái khámCân nặng (kg)Lưu bệnh án'">
+[Error [ERR_TEST_FAILURE]: The input did not match the regular expression /Chẩn đoán B/. Input:
+
+'✦PetNoVa▣Ca được phân công♧Hồ sơ thú cưng◉Tài khoảnBSBác sĩ kiểm thửBác sĩ thú yĐăng xuấtPETNOVA WORKSPACEPhòng khám thú yTra cứu hồ sơ, lập bệnh án và theo dõi lịch tiêm cho thú cưng.↻Hồ sơ khám chữaĐang ghi nhận với mã nhân sự V1.Thú cưng (2)Tải lại♧AlphaChưa cập nhật loài · Chưa cập nhật giống—2 kgSức khỏe: Chưa cập nhậtMở hồ sơ♧BetaChưa cập nhật loài · Chưa cập nhật giống—3 kgSức khỏe: Chưa cập nhậtĐang xem hồ sơBetaB · Chủ nuôi OWNER_BChưa cập nhậtLoài / giống— · —Ngày sinh—Giới tính—Cân nặng3 kgCập nhật sức khỏe hiện tạiCân nặng (kg)Tình trạng sức khỏeLưu sức khỏeBệnh án (1)Tiêm chủng (1)Chẩn đoán A— · Nhân sự V1Điều trị: Điều trị ASửa có lưu lịch sửThêm bệnh ánChẩn đoánHướng điều trịGhi chú thêmToa thuốc / hướng dẫn dùng thuốcNgày tái khámCân nặng (kg)Lưu bệnh án'
+] {
+  code: 'ERR_TEST_FAILURE',
+  failureType: 'testCodeFailure',
+  cause: AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Chẩn đoán B/. Input:
+  
+  '✦PetNoVa▣Ca được phân công♧Hồ sơ thú cưng◉Tài khoảnBSBác sĩ kiểm thửBác sĩ thú yĐăng xuấtPETNOVA WORKSPACEPhòng khám thú yTra cứu hồ sơ, lập bệnh án và theo dõi lịch tiêm cho thú cưng.↻Hồ sơ khám chữaĐang ghi nhận với mã nhân sự V1.Thú cưng (2)Tải lại♧AlphaChưa cập nhật loài · Chưa cập nhật giống—2 kgSức khỏe: Chưa cập nhậtMở hồ sơ♧BetaChưa cập nhật loài · Chưa cập nhật giống—3 kgSức khỏe: Chưa cập nhậtĐang xem hồ sơBetaB · Chủ nuôi OWNER_BChưa cập nhậtLoài / giống— · —Ngày sinh—Giới tính—Cân nặng3 kgCập nhật sức khỏe hiện tạiCân nặng (kg)Tình trạng sức khỏeLưu sức khỏeBệnh án (1)Tiêm chủng (1)Chẩn đoán A— · Nhân sự V1Điều trị: Điều trị ASửa có lưu lịch sửThêm bệnh ánChẩn đoánHướng điều trịGhi chú thêmToa thuốc / hướng dẫn dùng thuốcNgày tái khámCân nặng (kg)Lưu bệnh án'
+  
+      at TestContext.&lt;anonymous> (file:///C:/Users/vohon/petnova_app/web-react/tests/van-hanh.test.mjs:163:10)
+      at async Test.run (node:internal/test_runner/test:1313:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '✦PetNoVa▣Ca được phân công♧Hồ sơ thú cưng◉Tài khoảnBSBác sĩ kiểm thửBác sĩ thú yĐăng xuấtPETNOVA WORKSPACEPhòng khám thú yTra cứu hồ sơ, lập bệnh án và theo dõi lịch tiêm cho thú cưng.↻Hồ sơ khám chữaĐang ghi nhận với mã nhân sự V1.Thú cưng (2)Tải lại♧AlphaChưa cập nhật loài · Chưa cập nhật giống—2 kgSức khỏe: Chưa cập nhậtMở hồ sơ♧BetaChưa cập nhật loài · Chưa cập nhật giống—3 kgSức khỏe: Chưa cập nhậtĐang xem hồ sơBetaB · Chủ nuôi OWNER_BChưa cập nhậtLoài / giống— · —Ngày sinh—Giới tính—Cân nặng3 kgCập nhật sức khỏe hiện tạiCân nặng (kg)Tình trạng sức khỏeLưu sức khỏeBệnh án (1)Tiêm chủng (1)Chẩn đoán A— · Nhân sự V1Điều trị: Điều trị ASửa có lưu lịch sửThêm bệnh ánChẩn đoánHướng điều trịGhi chú thêmToa thuốc / hướng dẫn dùng thuốcNgày tái khámCân nặng (kg)Lưu bệnh án',
+    expected: /Chẩn đoán B/,
+    operator: 'match',
+    diff: 'simple'
+  }
+}
+		</failure>
+	</testcase>
+	<testcase name="VET: lỗi hồ sơ B không được giữ dữ liệu của A bên dưới tên B" time="0.056618" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\van-hanh.test.mjs" failure="Expected values to be strictly equal:&#10;+ actual - expected&#10;&#10;+ 'Bệnh án (1)'&#10;- 'Bệnh án (0)'&#10;            ^&#10;">
+		<failure type="testCodeFailure" message="Expected values to be strictly equal:&#10;+ actual - expected&#10;&#10;+ 'Bệnh án (1)'&#10;- 'Bệnh án (0)'&#10;            ^">
+[Error [ERR_TEST_FAILURE]: Expected values to be strictly equal:
++ actual - expected
+
++ 'Bệnh án (1)'
+- 'Bệnh án (0)'
+            ^
+] {
+  code: 'ERR_TEST_FAILURE',
+  failureType: 'testCodeFailure',
+  cause: AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'Bệnh án (1)'
+  - 'Bệnh án (0)'
+              ^
+  
+      at TestContext.&lt;anonymous> (file:///C:/Users/vohon/petnova_app/web-react/tests/van-hanh.test.mjs:179:10)
+      at async Test.run (node:internal/test_runner/test:1313:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Bệnh án (1)',
+    expected: 'Bệnh án (0)',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+}
+		</failure>
+	</testcase>
+	<testcase name="VET: ngày tiêm không ở tương lai và ngày nhắc lại bắt đầu từ ngày kế tiếp" time="0.050147" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\van-hanh.test.mjs" failure="Ngày tiêm phải có giới hạn không vượt hôm nay">
+		<failure type="testCodeFailure" message="Ngày tiêm phải có giới hạn không vượt hôm nay">
+[Error [ERR_TEST_FAILURE]: Ngày tiêm phải có giới hạn không vượt hôm nay] {
+  code: 'ERR_TEST_FAILURE',
+  failureType: 'testCodeFailure',
+  cause: AssertionError [ERR_ASSERTION]: Ngày tiêm phải có giới hạn không vượt hôm nay
+      at TestContext.&lt;anonymous> (file:///C:/Users/vohon/petnova_app/web-react/tests/van-hanh.test.mjs:190:10)
+      at async Test.run (node:internal/test_runner/test:1313:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+}
+		</failure>
+	</testcase>
+	<testcase name="Báo cáo: phản hồi khoảng ngày cũ không ghi đè kết quả lần lọc mới" time="0.059374" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\van-hanh.test.mjs" failure="Expected values to be strictly equal:&#10;&#10;'99' !== '7'&#10;">
+		<failure type="testCodeFailure" message="Expected values to be strictly equal:&#10;&#10;'99' !== '7'">
+[Error [ERR_TEST_FAILURE]: Expected values to be strictly equal:
+
+'99' !== '7'
+] {
+  code: 'ERR_TEST_FAILURE',
+  failureType: 'testCodeFailure',
+  cause: AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  '99' !== '7'
+  
+      at TestContext.&lt;anonymous> (file:///C:/Users/vohon/petnova_app/web-react/tests/van-hanh.test.mjs:211:10)
+      at async Test.run (node:internal/test_runner/test:1313:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '99',
+    expected: '7',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+}
+		</failure>
+	</testcase>
+	<testcase name="Báo cáo: lỗi lần tải mới xóa KPI cũ thay vì gắn với khoảng ngày mới" time="0.044106" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\van-hanh.test.mjs" failure="Expected values to be strictly equal:&#10;&#10;4 !== 0&#10;">
+		<failure type="testCodeFailure" message="Expected values to be strictly equal:&#10;&#10;4 !== 0">
+[Error [ERR_TEST_FAILURE]: Expected values to be strictly equal:
+
+4 !== 0
+] {
+  code: 'ERR_TEST_FAILURE',
+  failureType: 'testCodeFailure',
+  cause: AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  4 !== 0
+  
+      at TestContext.&lt;anonymous> (file:///C:/Users/vohon/petnova_app/web-react/tests/van-hanh.test.mjs:226:10)
+      at async Test.run (node:internal/test_runner/test:1313:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 4,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+}
+		</failure>
+	</testcase>
+	<!-- tests 5 -->
+	<!-- suites 0 -->
+	<!-- pass 0 -->
+	<!-- fail 5 -->
+	<!-- cancelled 0 -->
+	<!-- skipped 0 -->
+	<!-- todo 0 -->
+	<!-- duration_ms 447.2527 -->
+</testsuites>

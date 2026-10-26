@@ -1,0 +1,160 @@
+{
+  "executedAtUtc": "2026-10-26T16:11:40.5348223Z",
+  "baseUrl": "http://127.0.0.1:5200",
+  "passed": 19,
+  "failed": 0,
+  "results": [
+    {
+      "id": "HTTP-health",
+      "method": "GET",
+      "path": "/health",
+      "expected": 200,
+      "actual": 200,
+      "status": "PASS"
+    },
+    {
+      "id": "F12_01",
+      "method": "GET",
+      "path": "/api/Pets",
+      "expected": 401,
+      "actual": 401,
+      "status": "PASS"
+    },
+    {
+      "id": "F12_01",
+      "method": "GET",
+      "path": "/api/Bookings",
+      "expected": 401,
+      "actual": 401,
+      "status": "PASS"
+    },
+    {
+      "id": "F12_01",
+      "method": "GET",
+      "path": "/api/BookingDetails",
+      "expected": 401,
+      "actual": 401,
+      "status": "PASS"
+    },
+    {
+      "id": "F12_01",
+      "method": "GET",
+      "path": "/api/Payments",
+      "expected": 401,
+      "actual": 401,
+      "status": "PASS"
+    },
+    {
+      "id": "F12_01",
+      "method": "GET",
+      "path": "/api/UserAccounts",
+      "expected": 401,
+      "actual": 401,
+      "status": "PASS"
+    },
+    {
+      "id": "F12_01",
+      "method": "GET",
+      "path": "/api/Staffs",
+      "expected": 401,
+      "actual": 401,
+      "status": "PASS"
+    },
+    {
+      "id": "F12_01",
+      "method": "GET",
+      "path": "/api/ServicePackages",
+      "expected": 401,
+      "actual": 401,
+      "status": "PASS"
+    },
+    {
+      "id": "F12_01",
+      "method": "GET",
+      "path": "/api/ServiceCategories",
+      "expected": 401,
+      "actual": 401,
+      "status": "PASS"
+    },
+    {
+      "id": "F12_01",
+      "method": "GET",
+      "path": "/api/Reports",
+      "expected": 401,
+      "actual": 401,
+      "status": "PASS"
+    },
+    {
+      "id": "F12_01",
+      "method": "GET",
+      "path": "/api/AuditLogs",
+      "expected": 401,
+      "actual": 401,
+      "status": "PASS"
+    },
+    {
+      "id": "F12_01",
+      "method": "GET",
+      "path": "/api/MedicalRecords",
+      "expected": 401,
+      "actual": 401,
+      "status": "PASS"
+    },
+    {
+      "id": "F12_01",
+      "method": "GET",
+      "path": "/api/Vaccinations",
+      "expected": 401,
+      "actual": 401,
+      "status": "PASS"
+    },
+    {
+      "id": "F12_01",
+      "method": "GET",
+      "path": "/api/Notifications/user/QA-NONE",
+      "expected": 401,
+      "actual": 401,
+      "status": "PASS"
+    },
+    {
+      "id": "F12_01-invalid-token",
+      "method": "GET",
+      "path": "/api/Pets",
+      "expected": 401,
+      "actual": 401,
+      "status": "PASS"
+    },
+    {
+      "id": "F1.5_02",
+      "method": "POST",
+      "path": "/api/auth/password-reset/request",
+      "expected": 400,
+      "actual": 400,
+      "status": "PASS"
+    },
+    {
+      "id": "F1.6_03-invalid-session",
+      "method": "POST",
+      "path": "/api/auth/password-reset/verify",
+      "expected": 400,
+      "actual": 400,
+      "status": "PASS"
+    },
+    {
+      "id": "F1.7_04-invalid-session",
+      "method": "POST",
+      "path": "/api/auth/password-reset/complete",
+      "expected": 400,
+      "actual": 400,
+      "status": "PASS"
+    },
+    {
+      "id": "F5.2_03-invalid-signature",
+      "method": "POST",
+      "path": "/api/Payments/payos-webhook",
+      "expected": 400,
+      "actual": 400,
+      "status": "PASS"
+    }
+  ]
+}

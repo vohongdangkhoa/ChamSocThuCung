@@ -16,6 +16,10 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^5.1.1",
-    "vite": "^7.3.1"
+    "vite": "^7.3.7"
+  },
+  "overrides": {
+    "@grpc/grpc-js": "1.13.6",
+    "source-map-js": "1.2.2"
   }
 }

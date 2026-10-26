@@ -88,6 +88,7 @@ var app = builder.Build();
 await MediaSchemaInitializer.InitializeAsync(app.Services);
 await PasswordResetSchemaInitializer.InitializeAsync(app.Services);
 await KhoiTaoNghiepVu.InitializeAsync(app.Services);
+await ThanhToanSchemaInitializer.InitializeAsync(app.Services);
 
 if (app.Environment.IsDevelopment())
 {

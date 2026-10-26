@@ -6,6 +6,7 @@ import {
   verifyPasswordResetOtp,
 } from "./giao-tiep-api";
 import { useAuth } from "./xac-thuc";
+import { chuanHoaSoDienThoai } from "./dang-ky-khach-hang";
 
 const emptyReset = {
   phone: "",
@@ -138,8 +139,7 @@ export function AuthPages() {
     event?.preventDefault();
     void run(async () => {
       const phone = reset.phone.trim();
-      const count = digitsOnly(phone).length;
-      if (count < 9 || count > 15) {
+      if (!chuanHoaSoDienThoai(phone)) {
         throw new Error("Vui lòng nhập số điện thoại hợp lệ.");
       }
 
@@ -325,6 +325,7 @@ export function AuthPages() {
                   }))
                 }
                 placeholder="Nguyễn Minh Anh"
+                maxLength="100"
                 required
                 value={registerForm.fullName}
               />
@@ -345,6 +346,7 @@ export function AuthPages() {
                 required
                 type="email"
                 value={registerForm.email}
+                maxLength="100"
               />
             </label>
             <label>

@@ -57,7 +57,7 @@ const jsx = (type, props) => ({ type, props: props || {} });
 
 function loadComponent(filename, api, extraExports = '') {
   const source = process.env.PETNOVA_QA_BASELINE === '1'
-    ? execFileSync('git', ['show', `HEAD:web-react/src/${filename}`], { cwd: webRoot, encoding: 'utf8' })
+    ? execFileSync('git', ['show', `${process.env.PETNOVA_QA_BASE_REF || 'e573b91'}:web-react/src/${filename}`], { cwd: webRoot, encoding: 'utf8' })
     : readFileSync(path.join(webRoot, 'src', filename), 'utf8');
   const { code } = transformSync(source + extraExports, { loader: 'jsx', format: 'cjs', jsx: 'automatic' });
   const module = { exports: {} };

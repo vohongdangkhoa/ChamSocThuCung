@@ -1,0 +1,3156 @@
+{
+  "generatedAtUtc": "2026-10-26T16:11:34.829Z",
+  "source": "D:/Hk1 năm 3/LT_KDCLPM/Nhóm09/Nhóm09FullnewsPetNoVa.xlsx",
+  "definitions": {
+    "KIEM_TRA_MOT_PHAN": "Có bằng chứng kiểm tra một hoặc nhiều lớp; chưa đủ bằng chứng cho toàn bộ thủ tục trong Excel.",
+    "CHUA_THUC_HIEN": "Chưa có bằng chứng thực thi được đối chiếu trong đợt này."
+  },
+  "counts": {
+    "total": 273,
+    "partial": 66,
+    "notExecuted": 207,
+    "fullyVerified": 0
+  },
+  "cases": [
+    {
+      "id": "F1_01",
+      "requirement": "F1.1",
+      "sheet": "Testcase_F1",
+      "sourceRow": 23,
+      "description": "Tạo tài khoản khách hàng bằng thông tin hợp lệ",
+      "sourceStepCount": 3,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/frontend.xml",
+          "note": "PASS kiểm tra helper đăng ký với SDK/API giả lập; chưa tạo tài khoản Firebase thật."
+        }
+      ]
+    },
+    {
+      "id": "F1_02",
+      "requirement": null,
+      "sheet": "Testcase_F1",
+      "sourceRow": 26,
+      "description": "Từ chối đăng ký email đã tồn tại",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/frontend.xml",
+          "note": "PASS kiểm tra helper đăng ký với SDK/API giả lập; chưa tạo tài khoản Firebase thật."
+        }
+      ]
+    },
+    {
+      "id": "F1_03",
+      "requirement": null,
+      "sheet": "Testcase_F1",
+      "sourceRow": 28,
+      "description": "Từ chối số điện thoại đã liên kết với khách hàng khác",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/frontend.xml",
+          "note": "PASS kiểm tra helper đăng ký với SDK/API giả lập; chưa tạo tài khoản Firebase thật."
+        }
+      ]
+    },
+    {
+      "id": "F1_04",
+      "requirement": null,
+      "sheet": "Testcase_F1",
+      "sourceRow": 30,
+      "description": "Không tạo tài khoản khi bỏ trống trường bắt buộc",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/frontend.xml",
+          "note": "PASS kiểm tra helper đăng ký với SDK/API giả lập; chưa tạo tài khoản Firebase thật."
+        },
+        {
+          "file": "qa/results/anh/thong-bao-dang-nhap.png",
+          "note": "Đã bấm form rỗng trên trình duyệt thật: đăng nhập báo Vui lòng nhập email; đăng ký báo Vui lòng nhập họ và tên. Ảnh lưu bằng chứng form đăng nhập."
+        }
+      ]
+    },
+    {
+      "id": "F1_05",
+      "requirement": null,
+      "sheet": "Testcase_F1",
+      "sourceRow": 32,
+      "description": "Từ chối email hoặc số điện thoại sai định dạng",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/frontend.xml",
+          "note": "PASS kiểm tra helper đăng ký với SDK/API giả lập; chưa tạo tài khoản Firebase thật."
+        }
+      ]
+    },
+    {
+      "id": "F1.2_01",
+      "requirement": "F1.2",
+      "sheet": "Testcase_F1",
+      "sourceRow": 34,
+      "description": "Chấp nhận mật khẩu đăng ký trùng nhau đúng 6 ký tự",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F1.2_02",
+      "requirement": null,
+      "sheet": "Testcase_F1",
+      "sourceRow": 36,
+      "description": "Chặn hai mật khẩu đăng ký không trùng nhau",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F1.2_03",
+      "requirement": null,
+      "sheet": "Testcase_F1",
+      "sourceRow": 38,
+      "description": "Chặn mật khẩu đăng ký dưới giới hạn 6 ký tự",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/frontend.xml",
+          "note": "PASS kiểm tra helper đăng ký với SDK/API giả lập; chưa tạo tài khoản Firebase thật."
+        }
+      ]
+    },
+    {
+      "id": "F1.3_01",
+      "requirement": "F1.3",
+      "sheet": "Testcase_F1",
+      "sourceRow": 40,
+      "description": "Đăng nhập hợp lệ và mở đúng cổng theo vai trò",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F1.3_02",
+      "requirement": null,
+      "sheet": "Testcase_F1",
+      "sourceRow": 43,
+      "description": "Từ chối đăng nhập khi sai mật khẩu",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F1.3_03",
+      "requirement": null,
+      "sheet": "Testcase_F1",
+      "sourceRow": 45,
+      "description": "Từ chối email chưa đăng ký",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F1.3_04",
+      "requirement": null,
+      "sheet": "Testcase_F1",
+      "sourceRow": 47,
+      "description": "Chặn đăng nhập khi thiếu email hoặc mật khẩu",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/anh/thong-bao-dang-nhap.png",
+          "note": "Đã bấm form rỗng trên trình duyệt thật: đăng nhập báo Vui lòng nhập email; đăng ký báo Vui lòng nhập họ và tên. Ảnh lưu bằng chứng form đăng nhập."
+        }
+      ]
+    },
+    {
+      "id": "F1.4_01",
+      "requirement": "F1.4",
+      "sheet": "Testcase_F1",
+      "sourceRow": 49,
+      "description": "Không cho tài khoản bị tạm ngưng mở dữ liệu nghiệp vụ",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F1.4_02",
+      "requirement": null,
+      "sheet": "Testcase_F1",
+      "sourceRow": 51,
+      "description": "Chặn yêu cầu nghiệp vụ sau khi quản trị khóa tài khoản đang đăng nhập",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F1.5_01",
+      "requirement": "F1.5",
+      "sheet": "Testcase_F1",
+      "sourceRow": 53,
+      "description": "Yêu cầu OTP cho số điện thoại khách hàng ACTIVE",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F1.5_02",
+      "requirement": null,
+      "sheet": "Testcase_F1",
+      "sourceRow": 56,
+      "description": "Chặn số điện thoại sai trước khi cấp OTP hợp lệ",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/http.json",
+          "note": "PASS: POST /api/auth/password-reset/request. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F1.5_03",
+      "requirement": null,
+      "sheet": "Testcase_F1",
+      "sourceRow": 58,
+      "description": "Không tiết lộ số điện thoại chưa có tài khoản",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F1.5_04",
+      "requirement": null,
+      "sheet": "Testcase_F1",
+      "sourceRow": 60,
+      "description": "Giới hạn gửi lại OTP theo thời gian chờ của máy chủ",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F1.6_01",
+      "requirement": "F1.6",
+      "sheet": "Testcase_F1",
+      "sourceRow": 62,
+      "description": "Xác minh OTP đúng còn hiệu lực",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F1.6_02",
+      "requirement": null,
+      "sheet": "Testcase_F1",
+      "sourceRow": 64,
+      "description": "Chặn OTP thiếu chữ số",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F1.6_03",
+      "requirement": null,
+      "sheet": "Testcase_F1",
+      "sourceRow": 66,
+      "description": "Từ chối OTP sai dù đủ 6 chữ số",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/http.json",
+          "note": "PASS: POST /api/auth/password-reset/verify. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F1.6_04",
+      "requirement": null,
+      "sheet": "Testcase_F1",
+      "sourceRow": 68,
+      "description": "Từ chối OTP đã hết hạn",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F1.6_05",
+      "requirement": null,
+      "sheet": "Testcase_F1",
+      "sourceRow": 70,
+      "description": "OTP cũ mất hiệu lực sau gửi lại",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F1.7_01",
+      "requirement": "F1.7",
+      "sheet": "Testcase_F1",
+      "sourceRow": 73,
+      "description": "Đặt mật khẩu mới hợp lệ sau OTP và đăng nhập lại",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F1.7_02",
+      "requirement": null,
+      "sheet": "Testcase_F1",
+      "sourceRow": 76,
+      "description": "Chặn xác nhận mật khẩu mới không khớp",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F1.7_03",
+      "requirement": null,
+      "sheet": "Testcase_F1",
+      "sourceRow": 78,
+      "description": "Chặn mật khẩu reset ngoài khoảng 6 đến 128 ký tự",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F1.7_04",
+      "requirement": null,
+      "sheet": "Testcase_F1",
+      "sourceRow": 80,
+      "description": "Từ chối hoàn tất khi phiên đặt lại mật khẩu hết hạn",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/http.json",
+          "note": "PASS: POST /api/auth/password-reset/complete. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F1.8_01",
+      "requirement": "F1.8",
+      "sheet": "Testcase_F1",
+      "sourceRow": 82,
+      "description": "Đăng xuất khỏi cổng khách hàng",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F1.8_02",
+      "requirement": null,
+      "sheet": "Testcase_F1",
+      "sourceRow": 84,
+      "description": "Không khôi phục truy cập nghiệp vụ bằng tải lại sau đăng xuất",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F1.3_05",
+      "requirement": "F1.3",
+      "sheet": "Testcase_F1",
+      "sourceRow": 87,
+      "description": "GUI: nội dung và bố cục Đăng nhập",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F1.3_06",
+      "requirement": null,
+      "sheet": "Testcase_F1",
+      "sourceRow": 89,
+      "description": "GUI: thao tác Đăng nhập tại màn hình hẹp",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F2_01",
+      "requirement": "F2",
+      "sheet": "Testcase_F2",
+      "sourceRow": 23,
+      "description": "Số liệu tổng quan khớp dữ liệu khách hàng",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F2_02",
+      "requirement": null,
+      "sheet": "Testcase_F2",
+      "sourceRow": 26,
+      "description": "Tổng quan khi khách hàng chưa có dữ liệu",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F2_03",
+      "requirement": null,
+      "sheet": "Testcase_F2",
+      "sourceRow": 28,
+      "description": "Điều hướng từ tổng quan và cập nhật số liệu sau thay đổi",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F2_04",
+      "requirement": "F2",
+      "sheet": "Testcase_F2",
+      "sourceRow": 32,
+      "description": "GUI: nội dung và bố cục Tổng quan khách hàng",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F2_05",
+      "requirement": null,
+      "sheet": "Testcase_F2",
+      "sourceRow": 34,
+      "description": "GUI: thao tác Tổng quan khách hàng tại màn hình hẹp",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F3_01",
+      "requirement": "F3.1",
+      "sheet": "Testcase_F3",
+      "sourceRow": 23,
+      "description": "Xem danh sách thú cưng khi có dữ liệu",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/bao-cao-kiem-thu.md",
+          "note": "Đã mở trang bằng phiên CUSTOMER thật và đọc giao diện; chưa chạy toàn bộ các bước/chuyển trạng thái của ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F3_02",
+      "requirement": null,
+      "sheet": "Testcase_F3",
+      "sourceRow": 25,
+      "description": "Danh sách thú cưng rỗng",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F3_03",
+      "requirement": null,
+      "sheet": "Testcase_F3",
+      "sourceRow": 27,
+      "description": "Danh sách tách biệt giữa hai khách hàng",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F3.2_01",
+      "requirement": "F3.2",
+      "sheet": "Testcase_F3",
+      "sourceRow": 29,
+      "description": "Thêm hồ sơ thú cưng hợp lệ không có ảnh",
+      "sourceStepCount": 3,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/frontend.xml",
+          "note": "PASS kiểm tra helper dữ liệu/validation phía trình duyệt bằng Node; chưa chạy đủ thủ tục của ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F3.2_02",
+      "requirement": null,
+      "sheet": "Testcase_F3",
+      "sourceRow": 32,
+      "description": "Chấp nhận cân nặng tại biên giao diện 0.1 kg",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F3.2_03",
+      "requirement": null,
+      "sheet": "Testcase_F3",
+      "sourceRow": 34,
+      "description": "Chặn cân nặng bằng 0 hoặc bằng giới hạn trên 1000 kg",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/frontend.xml",
+          "note": "PASS kiểm tra helper dữ liệu/validation phía trình duyệt bằng Node; chưa chạy đủ thủ tục của ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F3.2_04",
+      "requirement": null,
+      "sheet": "Testcase_F3",
+      "sourceRow": 36,
+      "description": "Chặn ngày sinh thú cưng ở tương lai",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/frontend.xml",
+          "note": "PASS kiểm tra helper dữ liệu/validation phía trình duyệt bằng Node; chưa chạy đủ thủ tục của ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F3.2_05",
+      "requirement": null,
+      "sheet": "Testcase_F3",
+      "sourceRow": 38,
+      "description": "Chặn hồ sơ thú cưng thiếu dữ liệu bắt buộc",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/frontend.xml",
+          "note": "PASS kiểm tra helper dữ liệu/validation phía trình duyệt bằng Node; chưa chạy đủ thủ tục của ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F3.3_01",
+      "requirement": "F3.3",
+      "sheet": "Testcase_F3",
+      "sourceRow": 40,
+      "description": "Sửa hồ sơ thú cưng của mình và giữ dữ liệu sau tải lại",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F3.3_02",
+      "requirement": null,
+      "sheet": "Testcase_F3",
+      "sourceRow": 43,
+      "description": "Hủy sửa không lưu thay đổi",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F3.3_03",
+      "requirement": null,
+      "sheet": "Testcase_F3",
+      "sourceRow": 45,
+      "description": "Không sửa được thú cưng của khách hàng khác",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F3.4_01",
+      "requirement": "F3.4",
+      "sheet": "Testcase_F3",
+      "sourceRow": 47,
+      "description": "Tải ảnh JPEG/PNG/WebP thật và hiển thị sau tải lại",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F3.4_02",
+      "requirement": null,
+      "sheet": "Testcase_F3",
+      "sourceRow": 50,
+      "description": "Từ chối chọn tệp ảnh thú cưng sai loại",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/frontend.xml",
+          "note": "PASS kiểm tra helper dữ liệu/validation phía trình duyệt bằng Node; chưa chạy đủ thủ tục của ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F3.4_03",
+      "requirement": null,
+      "sheet": "Testcase_F3",
+      "sourceRow": 52,
+      "description": "Máy chủ từ chối ảnh 5.5 MiB dù giao diện đang cho chọn dưới 6 MiB",
+      "sourceStepCount": 3,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/frontend.xml",
+          "note": "PASS kiểm tra helper dữ liệu/validation phía trình duyệt bằng Node; chưa chạy đủ thủ tục của ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F3.4_04",
+      "requirement": null,
+      "sheet": "Testcase_F3",
+      "sourceRow": 55,
+      "description": "Máy chủ từ chối tệp giả ảnh có phần mở rộng JPG",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F3.5_01",
+      "requirement": "F3.5",
+      "sheet": "Testcase_F3",
+      "sourceRow": 57,
+      "description": "Lưu trữ hồ sơ không còn lịch hẹn mở và giữ lịch sử",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F3.5_02",
+      "requirement": null,
+      "sheet": "Testcase_F3",
+      "sourceRow": 60,
+      "description": "Hủy xác nhận lưu trữ giữ nguyên hồ sơ",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F3.5_03",
+      "requirement": null,
+      "sheet": "Testcase_F3",
+      "sourceRow": 62,
+      "description": "Chặn lưu trữ khi thú cưng còn lịch hẹn đang mở",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F3.2_06",
+      "requirement": "F3.2",
+      "sheet": "Testcase_F3",
+      "sourceRow": 65,
+      "description": "GUI: nội dung và bố cục Thêm thú cưng",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F3.2_07",
+      "requirement": null,
+      "sheet": "Testcase_F3",
+      "sourceRow": 67,
+      "description": "GUI: thao tác Thêm thú cưng tại màn hình hẹp",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F4_01",
+      "requirement": "F4.1",
+      "sheet": "Testcase_F4",
+      "sourceRow": 23,
+      "description": "Hiển thị lịch và mở đúng chi tiết của khách hàng",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/frontend.xml",
+          "note": "PASS kiểm tra helper dữ liệu/validation phía trình duyệt bằng Node; chưa chạy đủ thủ tục của ca gốc."
+        },
+        {
+          "file": "qa/results/bao-cao-kiem-thu.md",
+          "note": "Đã mở trang bằng phiên CUSTOMER thật và đọc giao diện; chưa chạy toàn bộ các bước/chuyển trạng thái của ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F4_02",
+      "requirement": null,
+      "sheet": "Testcase_F4",
+      "sourceRow": 25,
+      "description": "Hiển thị trường hợp khách hàng chưa có lịch",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/frontend.xml",
+          "note": "PASS kiểm tra helper dữ liệu/validation phía trình duyệt bằng Node; chưa chạy đủ thủ tục của ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F4_03",
+      "requirement": null,
+      "sheet": "Testcase_F4",
+      "sourceRow": 27,
+      "description": "Không đọc được lịch và chi tiết của khách hàng khác",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F4.2_01",
+      "requirement": "F4.2",
+      "sheet": "Testcase_F4",
+      "sourceRow": 29,
+      "description": "Đổi thú cưng xóa giờ cũ và kiểm tra lại chỗ trống",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F4.2_02",
+      "requirement": null,
+      "sheet": "Testcase_F4",
+      "sourceRow": 31,
+      "description": "Lưu đúng hình thức Gửi thú cưng",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F4.3_01",
+      "requirement": "F4.3",
+      "sheet": "Testcase_F4",
+      "sourceRow": 33,
+      "description": "Chọn một dịch vụ tính đúng tiền và thời lượng",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F4.3_02",
+      "requirement": null,
+      "sheet": "Testcase_F4",
+      "sourceRow": 35,
+      "description": "Chọn nhiều dịch vụ và bỏ một dịch vụ cập nhật tổng",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F4.3_03",
+      "requirement": null,
+      "sheet": "Testcase_F4",
+      "sourceRow": 37,
+      "description": "Biên 10 dịch vụ hợp lệ được chấp nhận",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F4.3_04",
+      "requirement": null,
+      "sheet": "Testcase_F4",
+      "sourceRow": 39,
+      "description": "Không cho đặt dịch vụ đã ngưng hoạt động",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F4.4_01",
+      "requirement": "F4.4",
+      "sheet": "Testcase_F4",
+      "sourceRow": 41,
+      "description": "Sinh khung giờ theo bước 30 phút và thời lượng",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/api-after.json",
+          "note": "PASS hồi quy logic khung giờ; gọi phương thức controller qua DLL, không thay thế quy trình thao tác trình duyệt."
+        }
+      ]
+    },
+    {
+      "id": "F4.4_02",
+      "requirement": null,
+      "sheet": "Testcase_F4",
+      "sourceRow": 43,
+      "description": "Kiểm tra biên ngày đúng 6 tháng và vượt 1 ngày",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F4.4_03",
+      "requirement": null,
+      "sheet": "Testcase_F4",
+      "sourceRow": 45,
+      "description": "Từ chối tra cứu ngày đã qua",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F4.4_04",
+      "requirement": null,
+      "sheet": "Testcase_F4",
+      "sourceRow": 47,
+      "description": "Khung giờ phản ánh biên công suất cấu hình",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/api-after.json",
+          "note": "PASS hồi quy logic khung giờ; gọi phương thức controller qua DLL, không thay thế quy trình thao tác trình duyệt."
+        }
+      ]
+    },
+    {
+      "id": "F4.5_01",
+      "requirement": "F4.5",
+      "sheet": "Testcase_F4",
+      "sourceRow": 49,
+      "description": "Tạo lịch tiền mặt đồng bộ lịch, chi tiết và giao dịch",
+      "sourceStepCount": 3,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: tạo lịch, chi tiết, giao dịch tiền mặt đồng bộ. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F4.5_02",
+      "requirement": null,
+      "sheet": "Testcase_F4",
+      "sourceRow": 52,
+      "description": "Phát lại cùng mã yêu cầu không tạo hai lịch",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: phát lại requestId không tạo hai lịch. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F4.5_03",
+      "requirement": null,
+      "sheet": "Testcase_F4",
+      "sourceRow": 54,
+      "description": "Tiền và thời lượng tạo lịch lấy từ dịch vụ trên máy chủ",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F4.6_01",
+      "requirement": "F4.6",
+      "sheet": "Testcase_F4",
+      "sourceRow": 56,
+      "description": "Tạo lịch chuyển khoản vẫn chờ thanh toán",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F4.6_02",
+      "requirement": null,
+      "sheet": "Testcase_F4",
+      "sourceRow": 58,
+      "description": "Tạo liên kết PayOS cho giao dịch chuyển khoản đang chờ",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F4.6_03",
+      "requirement": null,
+      "sheet": "Testcase_F4",
+      "sourceRow": 60,
+      "description": "Lỗi tạo liên kết không làm mất lịch hoặc ghi đã trả",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F4.7_01",
+      "requirement": "F4.7",
+      "sheet": "Testcase_F4",
+      "sourceRow": 62,
+      "description": "Thiếu dịch vụ không tạo lịch",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: không có dịch vụ không tạo lịch. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F4.7_02",
+      "requirement": null,
+      "sheet": "Testcase_F4",
+      "sourceRow": 64,
+      "description": "Không tạo lịch bằng thú cưng sai chủ hoặc đã lưu trữ",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: thú cưng khác chủ bị từ chối. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F4.7_03",
+      "requirement": null,
+      "sheet": "Testcase_F4",
+      "sourceRow": 66,
+      "description": "Từ chối 11 dịch vụ hoặc mã dịch vụ trùng nhau",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: mã dịch vụ trùng bị từ chối. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F4.7_04",
+      "requirement": null,
+      "sheet": "Testcase_F4",
+      "sourceRow": 68,
+      "description": "Từ chối giờ không theo bước 30 phút",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/api-after.json",
+          "note": "PASS hồi quy logic khung giờ; gọi phương thức controller qua DLL, không thay thế quy trình thao tác trình duyệt."
+        }
+      ]
+    },
+    {
+      "id": "F4.7_05",
+      "requirement": null,
+      "sheet": "Testcase_F4",
+      "sourceRow": 70,
+      "description": "Chấp nhận kết thúc đúng 18:00, chặn vượt giờ đóng cửa",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/api-after.json",
+          "note": "PASS hồi quy logic khung giờ; gọi phương thức controller qua DLL, không thay thế quy trình thao tác trình duyệt."
+        }
+      ]
+    },
+    {
+      "id": "F4.7_06",
+      "requirement": null,
+      "sheet": "Testcase_F4",
+      "sourceRow": 72,
+      "description": "Máy chủ áp dụng biên ghi chú 255/256 ký tự",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: 255 ký tự ghi chú được nhận, 256 bị từ chối. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F4.8_01",
+      "requirement": "F4.8",
+      "sheet": "Testcase_F4",
+      "sourceRow": 74,
+      "description": "Đổi lịch PENDING sang giờ trống và giữ giá dịch vụ",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F4.8_02",
+      "requirement": null,
+      "sheet": "Testcase_F4",
+      "sourceRow": 76,
+      "description": "Giữ lịch cũ khi đóng biểu mẫu đổi lịch",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F4.8_03",
+      "requirement": null,
+      "sheet": "Testcase_F4",
+      "sourceRow": 78,
+      "description": "Từ chối đổi sang giờ thú cưng hoặc nhân sự đã trùng",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F4.8_04",
+      "requirement": null,
+      "sheet": "Testcase_F4",
+      "sourceRow": 80,
+      "description": "Không đổi lịch đã bắt đầu hoặc kết thúc",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F4.9_01",
+      "requirement": "F4.9",
+      "sheet": "Testcase_F4",
+      "sourceRow": 82,
+      "description": "Hủy lịch chưa trả tiền cập nhật trạng thái liên quan",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: hủy lịch chưa trả chuyển giao dịch FAILED. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F4.9_02",
+      "requirement": null,
+      "sheet": "Testcase_F4",
+      "sourceRow": 84,
+      "description": "Không hủy lịch khi đóng xác nhận",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F4.9_03",
+      "requirement": null,
+      "sheet": "Testcase_F4",
+      "sourceRow": 86,
+      "description": "Chặn hủy lịch có giao dịch PAID trước khi xử lý hoàn tiền",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: không hủy lịch có tiền PAID. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F4.9_04",
+      "requirement": null,
+      "sheet": "Testcase_F4",
+      "sourceRow": 88,
+      "description": "Không hủy lịch IN_PROGRESS, COMPLETED hoặc đã CANCELLED",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F4.7_07",
+      "requirement": "F4.7",
+      "sheet": "Testcase_F4",
+      "sourceRow": 90,
+      "description": "Từ chối giờ ngoài giờ mở cửa hoặc đã qua",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/api-after.json",
+          "note": "PASS hồi quy logic khung giờ; gọi phương thức controller qua DLL, không thay thế quy trình thao tác trình duyệt."
+        }
+      ]
+    },
+    {
+      "id": "F4.7_08",
+      "requirement": null,
+      "sheet": "Testcase_F4",
+      "sourceRow": 92,
+      "description": "Kiểm tra biên tổng thời lượng 1 và 480 phút",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F4.7_09",
+      "requirement": null,
+      "sheet": "Testcase_F4",
+      "sourceRow": 94,
+      "description": "Từ chối tổng thời lượng ngoài 1–480 hoặc tiền không dương",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F4.3_05",
+      "requirement": "F4.3",
+      "sheet": "Testcase_F4",
+      "sourceRow": 97,
+      "description": "GUI: nội dung và bố cục Đặt lịch chăm sóc",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F4.3_06",
+      "requirement": null,
+      "sheet": "Testcase_F4",
+      "sourceRow": 99,
+      "description": "GUI: thao tác Đặt lịch chăm sóc tại màn hình hẹp",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F5_01",
+      "requirement": "F5.1",
+      "sheet": "Testcase_F5",
+      "sourceRow": 23,
+      "description": "Lịch sử thanh toán hiển thị đúng giao dịch và số tiền",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/frontend.xml",
+          "note": "PASS kiểm tra helper dữ liệu/validation phía trình duyệt bằng Node; chưa chạy đủ thủ tục của ca gốc."
+        },
+        {
+          "file": "qa/results/bao-cao-kiem-thu.md",
+          "note": "Đã mở trang bằng phiên CUSTOMER thật và đọc giao diện; chưa chạy toàn bộ các bước/chuyển trạng thái của ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F5_02",
+      "requirement": null,
+      "sheet": "Testcase_F5",
+      "sourceRow": 25,
+      "description": "Lọc giao dịch theo trạng thái và khoảng ngày",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F5_03",
+      "requirement": null,
+      "sheet": "Testcase_F5",
+      "sourceRow": 27,
+      "description": "Xem phiếu đúng dữ liệu giao dịch đã thanh toán",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F5_04",
+      "requirement": null,
+      "sheet": "Testcase_F5",
+      "sourceRow": 29,
+      "description": "Không đọc được giao dịch của khách hàng khác",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F5.2_01",
+      "requirement": "F5.2",
+      "sheet": "Testcase_F5",
+      "sourceRow": 31,
+      "description": "Chỉ PayOS xác minh PAID mới ghi nhận đã thanh toán",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F5.2_02",
+      "requirement": null,
+      "sheet": "Testcase_F5",
+      "sourceRow": 33,
+      "description": "Hủy hoặc hết hạn PayOS chuyển giao dịch chờ thành FAILED",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F5.2_03",
+      "requirement": null,
+      "sheet": "Testcase_F5",
+      "sourceRow": 35,
+      "description": "Webhook sai chữ ký hoặc sai tiền không ghi PAID",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL + SDK cục bộ: chữ ký sai hoặc số tiền sai không ghi PAID. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        },
+        {
+          "file": "qa/results/http.json",
+          "note": "PASS: POST /api/Payments/payos-webhook. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F5.2_04",
+      "requirement": null,
+      "sheet": "Testcase_F5",
+      "sourceRow": 37,
+      "description": "Webhook thành công lặp không ghi nhận nhiều lần",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL + SDK cục bộ: hai webhook hợp lệ đồng thời không tạo thông báo trùng. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F5.3_01",
+      "requirement": "F5.3",
+      "sheet": "Testcase_F5",
+      "sourceRow": 39,
+      "description": "Thử lại FAILED tạo giao dịch mới đúng số tiền và phương thức",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: hai lần thử lại đồng thời chỉ tạo một PENDING. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F5.3_02",
+      "requirement": null,
+      "sheet": "Testcase_F5",
+      "sourceRow": 41,
+      "description": "Không thử lại giao dịch đang chờ hoặc đã trả",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F5.3_03",
+      "requirement": null,
+      "sheet": "Testcase_F5",
+      "sourceRow": 43,
+      "description": "Không thử lại khi lịch đã hủy hoặc hoàn thành",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F5.3_04",
+      "requirement": null,
+      "sheet": "Testcase_F5",
+      "sourceRow": 45,
+      "description": "Không thử lại FAILED khi lịch đã có giao dịch chờ khác",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F5_05",
+      "requirement": "F5.1",
+      "sheet": "Testcase_F5",
+      "sourceRow": 48,
+      "description": "GUI: nội dung và bố cục Lịch sử thanh toán",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F5_06",
+      "requirement": null,
+      "sheet": "Testcase_F5",
+      "sourceRow": 50,
+      "description": "GUI: thao tác Lịch sử thanh toán tại màn hình hẹp",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F6_01",
+      "requirement": "F6",
+      "sheet": "Testcase_F6",
+      "sourceRow": 23,
+      "description": "Xem đúng bệnh án và tiêm chủng của thú cưng có dữ liệu",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/bao-cao-kiem-thu.md",
+          "note": "Đã mở trang bằng phiên CUSTOMER thật và đọc giao diện; chưa chạy toàn bộ các bước/chuyển trạng thái của ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F6_02",
+      "requirement": null,
+      "sheet": "Testcase_F6",
+      "sourceRow": 25,
+      "description": "Hiển thị trạng thái khi khách chưa có thú cưng",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F6_03",
+      "requirement": null,
+      "sheet": "Testcase_F6",
+      "sourceRow": 27,
+      "description": "Hiển thị trạng thái khi thú cưng chưa có bệnh án và mũi tiêm",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F6_04",
+      "requirement": null,
+      "sheet": "Testcase_F6",
+      "sourceRow": 29,
+      "description": "Đổi thú cưng không giữ lại dữ liệu hồ sơ trước đó",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F6_05",
+      "requirement": null,
+      "sheet": "Testcase_F6",
+      "sourceRow": 31,
+      "description": "Lịch sử khám được sắp từ ngày mới đến ngày cũ",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F6_06",
+      "requirement": null,
+      "sheet": "Testcase_F6",
+      "sourceRow": 33,
+      "description": "Mũi tiêm tiếp theo chọn ngày nhắc gần nhất chưa qua",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F6_07",
+      "requirement": null,
+      "sheet": "Testcase_F6",
+      "sourceRow": 35,
+      "description": "Chặn khách đọc bệnh án và tiêm chủng của khách khác qua API",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: khách B không đọc bệnh án/tiêm chủng thú cưng A. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F6_08",
+      "requirement": "F6",
+      "sheet": "Testcase_F6",
+      "sourceRow": 38,
+      "description": "GUI: nội dung và bố cục Sổ sức khỏe",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F6_09",
+      "requirement": null,
+      "sheet": "Testcase_F6",
+      "sourceRow": 40,
+      "description": "GUI: thao tác Sổ sức khỏe tại màn hình hẹp",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F7_01",
+      "requirement": "F7",
+      "sheet": "Testcase_F7",
+      "sourceRow": 23,
+      "description": "Xem đúng nội dung và thứ tự thông báo cá nhân",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F7_02",
+      "requirement": null,
+      "sheet": "Testcase_F7",
+      "sourceRow": 25,
+      "description": "Hiển thị trạng thái chưa có thông báo",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F7_03",
+      "requirement": null,
+      "sheet": "Testcase_F7",
+      "sourceRow": 27,
+      "description": "Đọc một thông báo cập nhật số chưa đọc và lưu trạng thái",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: đọc thông báo lưu trạng thái và đọc lặp an toàn. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F7_04",
+      "requirement": null,
+      "sheet": "Testcase_F7",
+      "sourceRow": 29,
+      "description": "Đọc lại thông báo đã đọc không làm giảm số đếm thêm",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: đọc thông báo lưu trạng thái và đọc lặp an toàn. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F7_05",
+      "requirement": null,
+      "sheet": "Testcase_F7",
+      "sourceRow": 31,
+      "description": "Đánh dấu tất cả thông báo của tài khoản là đã đọc",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F7_06",
+      "requirement": null,
+      "sheet": "Testcase_F7",
+      "sourceRow": 33,
+      "description": "Mở thông báo lịch hẹn dẫn đến đúng chi tiết lịch",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F7_07",
+      "requirement": null,
+      "sheet": "Testcase_F7",
+      "sourceRow": 35,
+      "description": "Chặn đọc và đánh dấu thông báo của khách khác",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F7_08",
+      "requirement": null,
+      "sheet": "Testcase_F7",
+      "sourceRow": 38,
+      "description": "Lỗi mạng khi đánh dấu đã đọc không giả báo thành công",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F7_09",
+      "requirement": "F7",
+      "sheet": "Testcase_F7",
+      "sourceRow": 41,
+      "description": "GUI: nội dung và bố cục Thông báo",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F7_10",
+      "requirement": null,
+      "sheet": "Testcase_F7",
+      "sourceRow": 43,
+      "description": "GUI: thao tác Thông báo tại màn hình hẹp",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F8_01",
+      "requirement": "F8.1",
+      "sheet": "Testcase_F8",
+      "sourceRow": 23,
+      "description": "Cập nhật họ tên và số điện thoại hợp lệ",
+      "sourceStepCount": 3,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/bao-cao-kiem-thu.md",
+          "note": "Đã mở trang bằng phiên CUSTOMER thật và đọc giao diện; chưa chạy toàn bộ các bước/chuyển trạng thái của ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F8_02",
+      "requirement": null,
+      "sheet": "Testcase_F8",
+      "sourceRow": 26,
+      "description": "Chặn họ tên rỗng hoặc chỉ có khoảng trắng",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: tên chỉ có khoảng trắng bị từ chối, hồ sơ không đổi. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F8_03",
+      "requirement": null,
+      "sheet": "Testcase_F8",
+      "sourceRow": 28,
+      "description": "Lưu họ tên đúng giới hạn 100 ký tự",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: tên 100 ký tự được lưu, 101 bị chặn trước SQL. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F8_04",
+      "requirement": null,
+      "sheet": "Testcase_F8",
+      "sourceRow": 30,
+      "description": "Từ chối số điện thoại sai định dạng",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F8_05",
+      "requirement": null,
+      "sheet": "Testcase_F8",
+      "sourceRow": 32,
+      "description": "Không cho đổi sang số điện thoại của khách hàng khác",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F8_06",
+      "requirement": null,
+      "sheet": "Testcase_F8",
+      "sourceRow": 34,
+      "description": "Cập nhật ảnh đại diện hợp lệ và giữ sau tải lại",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F8_07",
+      "requirement": null,
+      "sheet": "Testcase_F8",
+      "sourceRow": 36,
+      "description": "Từ chối avatar sai định dạng hoặc vượt giới hạn máy chủ",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F8.2_01",
+      "requirement": "F8.2",
+      "sheet": "Testcase_F8",
+      "sourceRow": 38,
+      "description": "Đổi mật khẩu tài khoản hợp lệ tại biên 8 ký tự",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F8.2_02",
+      "requirement": null,
+      "sheet": "Testcase_F8",
+      "sourceRow": 41,
+      "description": "Không đổi mật khẩu khi mật khẩu hiện tại sai",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F8.2_03",
+      "requirement": null,
+      "sheet": "Testcase_F8",
+      "sourceRow": 43,
+      "description": "Chặn hai mật khẩu mới không trùng nhau",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F8.2_04",
+      "requirement": null,
+      "sheet": "Testcase_F8",
+      "sourceRow": 45,
+      "description": "Chặn mật khẩu tài khoản mới chỉ có 7 ký tự",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F8.2_05",
+      "requirement": null,
+      "sheet": "Testcase_F8",
+      "sourceRow": 47,
+      "description": "Chặn mật khẩu mới trùng mật khẩu hiện tại",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F8.2_06",
+      "requirement": null,
+      "sheet": "Testcase_F8",
+      "sourceRow": 49,
+      "description": "Đổi email qua xác nhận quyền sở hữu và đồng bộ hồ sơ",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F8.2_07",
+      "requirement": null,
+      "sheet": "Testcase_F8",
+      "sourceRow": 52,
+      "description": "Chặn email mới sai định dạng hoặc giống email hiện tại",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F8.2_08",
+      "requirement": null,
+      "sheet": "Testcase_F8",
+      "sourceRow": 54,
+      "description": "Không yêu cầu đổi email khi mật khẩu hiện tại sai",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F8_08",
+      "requirement": "F8.1",
+      "sheet": "Testcase_F8",
+      "sourceRow": 57,
+      "description": "GUI: nội dung và bố cục Thông tin tài khoản",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F8_09",
+      "requirement": null,
+      "sheet": "Testcase_F8",
+      "sourceRow": 59,
+      "description": "GUI: thao tác Thông tin tài khoản tại màn hình hẹp",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F9_01",
+      "requirement": "F9.1",
+      "sheet": "Testcase_F9",
+      "sourceRow": 23,
+      "description": "Tìm và lọc kết hợp đúng lịch được phân công",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F9_02",
+      "requirement": null,
+      "sheet": "Testcase_F9",
+      "sourceRow": 26,
+      "description": "Làm mới lấy thay đổi của lịch",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F9.2_01",
+      "requirement": "F9.2",
+      "sheet": "Testcase_F9",
+      "sourceRow": 28,
+      "description": "Chi tiết đúng khách, thú cưng, toàn bộ dịch vụ và giao dịch",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F9.3_01",
+      "requirement": "F9.3",
+      "sheet": "Testcase_F9",
+      "sourceRow": 30,
+      "description": "Phân công và đổi sang nhân sự ACTIVE còn trống",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: phân công nhân sự ACTIVE còn trống. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F9.3_02",
+      "requirement": null,
+      "sheet": "Testcase_F9",
+      "sourceRow": 32,
+      "description": "Từ chối phân công nhân sự ngưng hoạt động",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F9.3_03",
+      "requirement": null,
+      "sheet": "Testcase_F9",
+      "sourceRow": 34,
+      "description": "Từ chối phân công người đã có lịch chồng giờ",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F9.3_04",
+      "requirement": null,
+      "sheet": "Testcase_F9",
+      "sourceRow": 36,
+      "description": "Không phân công lại lịch CANCELLED hoặc COMPLETED",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F9.4_01",
+      "requirement": "F9.4",
+      "sheet": "Testcase_F9",
+      "sourceRow": 38,
+      "description": "Nhân viên đổi lịch CONFIRMED sang giờ còn chỗ",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F9.4_02",
+      "requirement": null,
+      "sheet": "Testcase_F9",
+      "sourceRow": 40,
+      "description": "Đổi lịch tại quầy bị chặn khi công suất đã đủ",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F9.4_03",
+      "requirement": null,
+      "sheet": "Testcase_F9",
+      "sourceRow": 42,
+      "description": "Không đổi lịch tại quầy đã COMPLETED",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F9.5_01",
+      "requirement": "F9.5",
+      "sheet": "Testcase_F9",
+      "sourceRow": 44,
+      "description": "Chuyển PENDING sang CONFIRMED",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F9.5_02",
+      "requirement": null,
+      "sheet": "Testcase_F9",
+      "sourceRow": 46,
+      "description": "Chuyển CONFIRMED sang IN_PROGRESS",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F9.5_03",
+      "requirement": null,
+      "sheet": "Testcase_F9",
+      "sourceRow": 48,
+      "description": "Chuyển IN_PROGRESS sang COMPLETED khi đã trả tiền",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F9.5_04",
+      "requirement": null,
+      "sheet": "Testcase_F9",
+      "sourceRow": 50,
+      "description": "Từ chối bỏ bước hoặc lùi trạng thái",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: không bỏ bước PENDING sang COMPLETED. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F9.6_01",
+      "requirement": "F9.6",
+      "sheet": "Testcase_F9",
+      "sourceRow": 52,
+      "description": "Chặn hoàn thành khi chỉ có PENDING",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F9.6_02",
+      "requirement": null,
+      "sheet": "Testcase_F9",
+      "sourceRow": 54,
+      "description": "Chặn hoàn thành khi chỉ có FAILED",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F9.6_03",
+      "requirement": null,
+      "sheet": "Testcase_F9",
+      "sourceRow": 56,
+      "description": "Cho hoàn thành khi có PAID dù còn lịch sử FAILED",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F9.7_01",
+      "requirement": "F9.7",
+      "sheet": "Testcase_F9",
+      "sourceRow": 58,
+      "description": "Xác nhận tiền mặt PENDING thành PAID",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: xác nhận tiền mặt và ngày thu. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F9.7_02",
+      "requirement": null,
+      "sheet": "Testcase_F9",
+      "sourceRow": 60,
+      "description": "Xác nhận lặp không ghi thêm lần thu",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: xác nhận lặp không tạo thu/notification mới. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        },
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: hai xác nhận tiền mặt đồng thời chỉ ghi nhận một lần. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F9.7_03",
+      "requirement": null,
+      "sheet": "Testcase_F9",
+      "sourceRow": 62,
+      "description": "Không xác nhận thủ công giao dịch BANK_TRANSFER",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F9.8_01",
+      "requirement": "F9.8",
+      "sheet": "Testcase_F9",
+      "sourceRow": 64,
+      "description": "Nhân viên đồng bộ PayOS đã xác minh thành PAID",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F9.8_02",
+      "requirement": null,
+      "sheet": "Testcase_F9",
+      "sourceRow": 66,
+      "description": "Nhân viên đồng bộ PayOS còn chờ không thành PAID",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F9.8_03",
+      "requirement": null,
+      "sheet": "Testcase_F9",
+      "sourceRow": 68,
+      "description": "Lỗi kết nối PayOS không cập nhật sai trạng thái",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F9.9_01",
+      "requirement": "F9.9",
+      "sheet": "Testcase_F9",
+      "sourceRow": 70,
+      "description": "Lưu chứng từ hoàn tiền ở chiều dài tối đa hợp lệ",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F9.9_02",
+      "requirement": null,
+      "sheet": "Testcase_F9",
+      "sourceRow": 72,
+      "description": "Thiếu hoặc toàn khoảng trắng ở chứng từ bị từ chối",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F9.9_03",
+      "requirement": null,
+      "sheet": "Testcase_F9",
+      "sourceRow": 74,
+      "description": "Chặn chứng từ vượt biên 500/200 ký tự",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F9.9_04",
+      "requirement": null,
+      "sheet": "Testcase_F9",
+      "sourceRow": 76,
+      "description": "Không ghi hoàn tiền cho giao dịch chưa PAID hoặc đã REFUNDED",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F9_03",
+      "requirement": "F9.1",
+      "sheet": "Testcase_F9",
+      "sourceRow": 79,
+      "description": "GUI: nội dung và bố cục Bàn vận hành",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F9_04",
+      "requirement": null,
+      "sheet": "Testcase_F9",
+      "sourceRow": 81,
+      "description": "GUI: thao tác Bàn vận hành tại màn hình hẹp",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F10_01",
+      "requirement": "F10.1",
+      "sheet": "Testcase_F10",
+      "sourceRow": 23,
+      "description": "Xem ca đang được phân công",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F10_02",
+      "requirement": null,
+      "sheet": "Testcase_F10",
+      "sourceRow": 25,
+      "description": "Màn ca được phân công khi chưa có lịch",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F10_03",
+      "requirement": null,
+      "sheet": "Testcase_F10",
+      "sourceRow": 27,
+      "description": "Không hiển thị ca của bác sĩ khác và ca CANCELLED",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F10.2_01",
+      "requirement": "F10.2",
+      "sheet": "Testcase_F10",
+      "sourceRow": 29,
+      "description": "Tìm thú cưng bằng từ khóa hợp lệ",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F10.2_02",
+      "requirement": null,
+      "sheet": "Testcase_F10",
+      "sourceRow": 32,
+      "description": "Tra cứu với từ khóa không tồn tại",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F10.2_03",
+      "requirement": null,
+      "sheet": "Testcase_F10",
+      "sourceRow": 34,
+      "description": "Chọn thú cưng khác không giữ hồ sơ cũ",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F10.3_01",
+      "requirement": "F10.3",
+      "sheet": "Testcase_F10",
+      "sourceRow": 36,
+      "description": "Lưu sức khỏe hợp lệ và giữ các trường định danh",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F10.3_02",
+      "requirement": null,
+      "sheet": "Testcase_F10",
+      "sourceRow": 39,
+      "description": "Lưu cân nặng tại biên giao diện 0.01 kg",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F10.3_03",
+      "requirement": null,
+      "sheet": "Testcase_F10",
+      "sourceRow": 42,
+      "description": "Lưu cân nặng tại biên giao diện 999 kg",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F10.3_04",
+      "requirement": null,
+      "sheet": "Testcase_F10",
+      "sourceRow": 45,
+      "description": "Chặn cân nặng dưới hoặc trên khoảng của giao diện",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F10.3_05",
+      "requirement": null,
+      "sheet": "Testcase_F10",
+      "sourceRow": 47,
+      "description": "Chặn bỏ trống tình trạng sức khỏe tại giao diện",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F10.4_01",
+      "requirement": "F10.4",
+      "sheet": "Testcase_F10",
+      "sourceRow": 49,
+      "description": "Thêm bệnh án hợp lệ",
+      "sourceStepCount": 3,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: bác sĩ được phân công tạo bệnh án đúng tác giả. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F10.4_02",
+      "requirement": null,
+      "sheet": "Testcase_F10",
+      "sourceRow": 52,
+      "description": "Chặn bệnh án thiếu chẩn đoán hoặc điều trị",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F10.4_03",
+      "requirement": null,
+      "sheet": "Testcase_F10",
+      "sourceRow": 54,
+      "description": "Chặn ngày tái khám quá khứ khi thêm bệnh án",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F10.4_04",
+      "requirement": null,
+      "sheet": "Testcase_F10",
+      "sourceRow": 56,
+      "description": "Kiểm tra giới hạn chẩn đoán 255 ký tự qua API",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: chẩn đoán 256 ký tự bị chặn. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F10.5_01",
+      "requirement": "F10.5",
+      "sheet": "Testcase_F10",
+      "sourceRow": 58,
+      "description": "Sửa bệnh án của mình và xem bản trước sửa",
+      "sourceStepCount": 3,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: sửa bệnh án cần lý do và lưu bản trước sửa. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F10.5_02",
+      "requirement": null,
+      "sheet": "Testcase_F10",
+      "sourceRow": 61,
+      "description": "Không sửa bệnh án khi thiếu lý do",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: sửa bệnh án cần lý do và lưu bản trước sửa. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F10.5_03",
+      "requirement": null,
+      "sheet": "Testcase_F10",
+      "sourceRow": 63,
+      "description": "Bác sĩ không sửa bệnh án do người khác ghi",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F10.5_04",
+      "requirement": null,
+      "sheet": "Testcase_F10",
+      "sourceRow": 65,
+      "description": "Hủy sửa bệnh án giữ nguyên dữ liệu",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F10.6_01",
+      "requirement": "F10.6",
+      "sheet": "Testcase_F10",
+      "sourceRow": 67,
+      "description": "Thêm mũi tiêm hợp lệ",
+      "sourceStepCount": 3,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: lưu mũi tiêm hợp lệ. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F10.6_02",
+      "requirement": null,
+      "sheet": "Testcase_F10",
+      "sourceRow": 70,
+      "description": "Sửa mũi tiêm của mình và lưu lịch sử",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F10.6_03",
+      "requirement": null,
+      "sheet": "Testcase_F10",
+      "sourceRow": 73,
+      "description": "Chặn ngày nhắc trùng ngày tiêm",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: chặn ngày nhắc trùng, ngày tiêm tương lai, ngày nhắc quá 10 năm. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        },
+        {
+          "file": "qa/results/frontend.xml",
+          "note": "PASS mô phỏng hook/component thật với API trì hoãn có kiểm soát; không phải đăng nhập và thao tác VET/ADMIN thật."
+        }
+      ]
+    },
+    {
+      "id": "F10.6_04",
+      "requirement": null,
+      "sheet": "Testcase_F10",
+      "sourceRow": 75,
+      "description": "Chặn ngày tiêm tương lai",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: chặn ngày nhắc trùng, ngày tiêm tương lai, ngày nhắc quá 10 năm. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        },
+        {
+          "file": "qa/results/frontend.xml",
+          "note": "PASS mô phỏng hook/component thật với API trì hoãn có kiểm soát; không phải đăng nhập và thao tác VET/ADMIN thật."
+        }
+      ]
+    },
+    {
+      "id": "F10.6_05",
+      "requirement": null,
+      "sheet": "Testcase_F10",
+      "sourceRow": 77,
+      "description": "Chặn ngày nhắc quá 10 năm sau ngày tiêm",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: chặn ngày nhắc trùng, ngày tiêm tương lai, ngày nhắc quá 10 năm. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F10.7_01",
+      "requirement": "F10.7",
+      "sheet": "Testcase_F10",
+      "sourceRow": 79,
+      "description": "Khách hàng không được tạo bệnh án hoặc mũi tiêm",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F10.7_02",
+      "requirement": null,
+      "sheet": "Testcase_F10",
+      "sourceRow": 81,
+      "description": "Bác sĩ không ghi bệnh án cho thú cưng ngoài phạm vi",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: bác sĩ không ghi bệnh án cho thú cưng ngoài phạm vi. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F10.4_05",
+      "requirement": "F10.4",
+      "sheet": "Testcase_F10",
+      "sourceRow": 84,
+      "description": "GUI: nội dung và bố cục Bệnh án",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F10.4_06",
+      "requirement": null,
+      "sheet": "Testcase_F10",
+      "sourceRow": 86,
+      "description": "GUI: thao tác Bệnh án tại màn hình hẹp",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11_01",
+      "requirement": "F11.1",
+      "sheet": "Testcase_F11",
+      "sourceRow": 35,
+      "description": "Đối chiếu số liệu tổng quan quản trị",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11_02",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 37,
+      "description": "Tổng quan khi dữ liệu nghiệp vụ rỗng",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.2_01",
+      "requirement": "F11.2",
+      "sheet": "Testcase_F11",
+      "sourceRow": 39,
+      "description": "Tìm một tài khoản bằng thông tin đã biết",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.2_02",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 41,
+      "description": "Tìm kiếm không có kết quả và khôi phục danh sách",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.3_01",
+      "requirement": "F11.3",
+      "sheet": "Testcase_F11",
+      "sourceRow": 43,
+      "description": "Đổi STAFF thành VET và đồng bộ hai hồ sơ",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.3_02",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 46,
+      "description": "Từ chối vai trò không có trong danh sách",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.3_03",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 48,
+      "description": "Không gán VET cho tài khoản chưa có Staff",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.3_04",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 50,
+      "description": "Không tự hạ quyền tài khoản quản trị đang dùng",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.4_01",
+      "requirement": "F11.4",
+      "sheet": "Testcase_F11",
+      "sourceRow": 52,
+      "description": "Tạm ngưng tài khoản chặn phiên đang mở",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.4_02",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 55,
+      "description": "Kích hoạt lại tài khoản khách",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.4_03",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 57,
+      "description": "Chặn giá trị trạng thái không hợp lệ",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.4_04",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 59,
+      "description": "Không tự khóa tài khoản admin đang dùng",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.5_01",
+      "requirement": "F11.5",
+      "sheet": "Testcase_F11",
+      "sourceRow": 61,
+      "description": "Tạo nhân sự mới và tài khoản liên kết",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.5_02",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 64,
+      "description": "Chặn tạo nhân sự bằng email đã tồn tại",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.5_03",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 66,
+      "description": "Chặn mật khẩu khởi tạo dưới12 ký tự",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.5_04",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 68,
+      "description": "Chặn tạo nhân sự có vai trò ADMIN",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.6_01",
+      "requirement": "F11.6",
+      "sheet": "Testcase_F11",
+      "sourceRow": 70,
+      "description": "Sửa nhân sự và đồng bộ tài khoản",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.6_02",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 72,
+      "description": "Chặn lưu nhân sự thiếu tên hoặc điện thoại",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.6_03",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 74,
+      "description": "Hủy sửa nhân sự",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.7_01",
+      "requirement": "F11.7",
+      "sheet": "Testcase_F11",
+      "sourceRow": 76,
+      "description": "Tạm ngưng nhân sự và ngăn phân công mới",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.7_02",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 79,
+      "description": "Kích hoạt lại nhân sự INACTIVE",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.7_03",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 81,
+      "description": "Kích hoạt nhân sự bị đình chỉ giữ số vi phạm",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.8_01",
+      "requirement": "F11.8",
+      "sheet": "Testcase_F11",
+      "sourceRow": 83,
+      "description": "Vi phạm từ 1 lên 2chưa đình chỉ",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.8_02",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 85,
+      "description": "Vi phạm lần 3tự đình chỉ",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.8_03",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 88,
+      "description": "Hủy xác nhận không tăng vi phạm",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.9_01",
+      "requirement": "F11.9",
+      "sheet": "Testcase_F11",
+      "sourceRow": 90,
+      "description": "Xóa nhân sự chưa có dữ liệu nghiệp vụ",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.9_02",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 93,
+      "description": "Không xóa nhân sự đã có lịch liên quan",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.9_03",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 95,
+      "description": "Hủy xóa nhân sự",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.10_01",
+      "requirement": "F11.10",
+      "sheet": "Testcase_F11",
+      "sourceRow": 97,
+      "description": "Xóa gói dịch vụ chưa phát sinh lịch",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.10_02",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 99,
+      "description": "Chặn thời lượng không dương",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.10_03",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 101,
+      "description": "Tạo gói dịch vụ hợp lệ",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.10_04",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 104,
+      "description": "Sửa gói dịch vụ hợp lệ",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.10_05",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 106,
+      "description": "Chặn giá không dương",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.10_06",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 108,
+      "description": "Chặn tên hoặc mô tả trống",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.10_07",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 110,
+      "description": "Không xóa gói đã có chi tiết lịch hẹn",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.11_01",
+      "requirement": "F11.11",
+      "sheet": "Testcase_F11",
+      "sourceRow": 112,
+      "description": "Tắt dịch vụ ngăn đặt mới",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.11_02",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 115,
+      "description": "Bật lại dịch vụ để đặt mới",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.11_03",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 117,
+      "description": "Tắt dịch vụ không làm mất lịch cũ",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.12_01",
+      "requirement": "F11.12",
+      "sheet": "Testcase_F11",
+      "sourceRow": 119,
+      "description": "Tạo danh mục hợp lệ",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.12_02",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 121,
+      "description": "Sửa tên và mô tả danh mục",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.12_03",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 123,
+      "description": "Chặn tên danh mục trống",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.12_04",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 125,
+      "description": "Danh mục tắt không dùng cho gói mới",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.13_01",
+      "requirement": "F11.13",
+      "sheet": "Testcase_F11",
+      "sourceRow": 128,
+      "description": "Xem lịch toàn hệ thống ở cổng quản trị",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.13_02",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 130,
+      "description": "ADMIN xác nhận lịch hợp lệ qua API",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.14_01",
+      "requirement": "F11.14",
+      "sheet": "Testcase_F11",
+      "sourceRow": 132,
+      "description": "Đối chiếu báo cáo theo ngày và tiền thu/hoàn",
+      "sourceStepCount": 3,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/frontend.xml",
+          "note": "PASS mô phỏng hook/component thật với API trì hoãn có kiểm soát; không phải đăng nhập và thao tác VET/ADMIN thật."
+        }
+      ]
+    },
+    {
+      "id": "F11.14_02",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 135,
+      "description": "Báo cáo khoảng không có dữ liệu",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/frontend.xml",
+          "note": "PASS mô phỏng hook/component thật với API trì hoãn có kiểm soát; không phải đăng nhập và thao tác VET/ADMIN thật."
+        }
+      ]
+    },
+    {
+      "id": "F11.14_03",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 137,
+      "description": "Chặn khoảng ngày đảo ngược ở API",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: báo cáo chặn khoảng đảo ngược hoặc quá 3 năm. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F11.14_04",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 139,
+      "description": "Chặn khoảng báo cáo vượt3 năm",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: báo cáo chặn khoảng đảo ngược hoặc quá 3 năm. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F11.15_01",
+      "requirement": "F11.15",
+      "sheet": "Testcase_F11",
+      "sourceRow": 141,
+      "description": "Xuất CSV và đối chiếu bảng ngày",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.15_02",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 144,
+      "description": "Xuất CSV khi khoảng báo cáo rỗng",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.16_01",
+      "requirement": "F11.16",
+      "sheet": "Testcase_F11",
+      "sourceRow": 146,
+      "description": "Gửi thông báo chung đến đúng tài khoản hoạt động",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.16_02",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 149,
+      "description": "Hủy xác nhận gửi thông báo",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.16_03",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 151,
+      "description": "Chặn thông báo thiếu tiêu đề hoặc nội dung",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.16_04",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 153,
+      "description": "Chặn nội dung vượt giới hạn qua API",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.17_01",
+      "requirement": "F11.17",
+      "sheet": "Testcase_F11",
+      "sourceRow": 155,
+      "description": "Nhật ký ghi thao tác sửa và đúng đối tượng",
+      "sourceStepCount": 3,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.17_02",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 158,
+      "description": "Yêu cầu sai bị từ chối không tạo log thành công",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11.17_03",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 160,
+      "description": "Xem nhật ký khi chưa có log",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11_03",
+      "requirement": "F11.1",
+      "sheet": "Testcase_F11",
+      "sourceRow": 163,
+      "description": "GUI: nội dung và bố cục Tổng quan quản trị",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F11_04",
+      "requirement": null,
+      "sheet": "Testcase_F11",
+      "sourceRow": 165,
+      "description": "GUI: thao tác Tổng quan quản trị tại màn hình hẹp",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F12_01",
+      "requirement": "F12.1",
+      "sheet": "Testcase_F12",
+      "sourceRow": 23,
+      "description": "Không có token không truy cập dữ liệu bảo vệ",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/http.json",
+          "note": "PASS: GET /api/Pets. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        },
+        {
+          "file": "qa/results/http.json",
+          "note": "PASS: GET /api/Bookings. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        },
+        {
+          "file": "qa/results/http.json",
+          "note": "PASS: GET /api/BookingDetails. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        },
+        {
+          "file": "qa/results/http.json",
+          "note": "PASS: GET /api/Payments. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        },
+        {
+          "file": "qa/results/http.json",
+          "note": "PASS: GET /api/UserAccounts. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        },
+        {
+          "file": "qa/results/http.json",
+          "note": "PASS: GET /api/Staffs. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        },
+        {
+          "file": "qa/results/http.json",
+          "note": "PASS: GET /api/ServicePackages. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        },
+        {
+          "file": "qa/results/http.json",
+          "note": "PASS: GET /api/ServiceCategories. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        },
+        {
+          "file": "qa/results/http.json",
+          "note": "PASS: GET /api/Reports. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        },
+        {
+          "file": "qa/results/http.json",
+          "note": "PASS: GET /api/AuditLogs. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        },
+        {
+          "file": "qa/results/http.json",
+          "note": "PASS: GET /api/MedicalRecords. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        },
+        {
+          "file": "qa/results/http.json",
+          "note": "PASS: GET /api/Vaccinations. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        },
+        {
+          "file": "qa/results/http.json",
+          "note": "PASS: GET /api/Notifications/user/QA-NONE. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        },
+        {
+          "file": "qa/results/http.json",
+          "note": "PASS: GET /api/Pets. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F12_02",
+      "requirement": null,
+      "sheet": "Testcase_F12",
+      "sourceRow": 25,
+      "description": "Vai trò ngoài ADMIN không được xem báo cáo/nhật ký",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: Chính sách route: chỉ ADMIN đọc báo cáo/nhật ký. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F12_03",
+      "requirement": null,
+      "sheet": "Testcase_F12",
+      "sourceRow": 27,
+      "description": "Mỗi vai trò mở đúng cổng sau đăng nhập",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F12.2_01",
+      "requirement": "F12.2",
+      "sheet": "Testcase_F12",
+      "sourceRow": 29,
+      "description": "Khách A không đọc/sửa thú cưng của khách B",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: khách A không đọc/sửa thú cưng B. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F12.2_02",
+      "requirement": null,
+      "sheet": "Testcase_F12",
+      "sourceRow": 31,
+      "description": "Khách A không đọc lịch của khách B",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: khách B không đọc lịch A. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F12.2_03",
+      "requirement": null,
+      "sheet": "Testcase_F12",
+      "sourceRow": 33,
+      "description": "Khách A không đọc thanh toán của khách B",
+      "sourceStepCount": 2,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: khách B không đọc thanh toán A. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F12.2_04",
+      "requirement": null,
+      "sheet": "Testcase_F12",
+      "sourceRow": 35,
+      "description": "Khách A không đọc/đánh dấu thông báo của khách B",
+      "sourceStepCount": 3,
+      "status": "KIEM_TRA_MOT_PHAN",
+      "evidence": [
+        {
+          "file": "qa/results/sql-integration.json",
+          "note": "PASS: SQL: khách B không đọc/đánh dấu thông báo A. Chỉ phạm vi kiểm tra ghi trong bằng chứng; chưa xác nhận toàn bộ bước UI trong ca gốc."
+        }
+      ]
+    },
+    {
+      "id": "F12.3_01",
+      "requirement": "F12.3",
+      "sheet": "Testcase_F12",
+      "sourceRow": 38,
+      "description": "Trang quản trị xử lý mất API và tải lại",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F12.3_02",
+      "requirement": null,
+      "sheet": "Testcase_F12",
+      "sourceRow": 40,
+      "description": "Danh sách rỗng sau tìm không giữ dữ liệu cũ",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F12.4_01",
+      "requirement": "F12.4",
+      "sheet": "Testcase_F12",
+      "sourceRow": 43,
+      "description": "GUI: nội dung và bố cục Điều hướng theo vai trò",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F12.4_02",
+      "requirement": null,
+      "sheet": "Testcase_F12",
+      "sourceRow": 45,
+      "description": "GUI: thao tác Điều hướng theo vai trò tại màn hình hẹp",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F12.4_03",
+      "requirement": null,
+      "sheet": "Testcase_F12",
+      "sourceRow": 47,
+      "description": "Trang quản trị tại kích thước máy tính",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    },
+    {
+      "id": "F12.4_04",
+      "requirement": null,
+      "sheet": "Testcase_F12",
+      "sourceRow": 49,
+      "description": "Trang khách và bác sĩ tại màn hình hẹp",
+      "sourceStepCount": 2,
+      "status": "CHUA_THUC_HIEN",
+      "evidence": []
+    }
+  ]
+}

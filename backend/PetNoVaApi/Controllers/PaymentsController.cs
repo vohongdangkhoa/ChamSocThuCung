@@ -125,20 +125,37 @@ namespace PetNoVaApi.Controllers
         [HttpPost("{id}/retry")]
         public async Task<IActionResult> RetryPayment(string id)
         {
-            var old = await Visible.FirstOrDefaultAsync(p => p.paymentId == id);
-            if (old is null) return NotFound();
-            var booking = await _context.Bookings.FirstOrDefaultAsync(b => b.bookingId == old.bookingId);
-            if (booking is null || booking.status is "CANCELLED" or "COMPLETED") return Conflict("Lịch không còn được thanh toán.");
-            if (old.status != "FAILED") return Conflict("Chỉ thử lại giao dịch đã thất bại.");
-            if (await _context.Payments.AnyAsync(p => p.bookingId == old.bookingId && (p.status == "PENDING" || p.status == "PAID")))
-                return Conflict("Lịch đã có giao dịch đang chờ hoặc đã thanh toán.");
-            var payment = new Payment
+            return await InPaymentLock(async () =>
             {
-                paymentId = await MaDinhDanh.NextAsync(_context, "PAYMENT", "paymentId", "PM"),
-                bookingId = old.bookingId, amount = booking.totalAmount, method = old.method, status = "PENDING"
-            };
-            _context.Payments.Add(payment); await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetPayment), new { id = payment.paymentId }, payment);
+                var old = await Visible.FirstOrDefaultAsync(p => p.paymentId == id);
+                if (old is null) return NotFound();
+                var booking = await _context.Bookings.FirstOrDefaultAsync(b => b.bookingId == old.bookingId);
+                if (booking is null || booking.status is "CANCELLED" or "COMPLETED") return Conflict("Lịch không còn được thanh toán.");
+                if (old.status != "FAILED") return Conflict("Chỉ thử lại giao dịch đã thất bại.");
+                if (await _context.Payments.AnyAsync(p => p.bookingId == old.bookingId && (p.status == "PENDING" || p.status == "PAID")))
+                    return Conflict("Lịch đã có giao dịch đang chờ hoặc đã thanh toán.");
+                var payment = new Payment
+                {
+                    paymentId = await MaDinhDanh.NextAsync(_context, "PAYMENT", "paymentId", "PM"),
+                    bookingId = old.bookingId, amount = booking.totalAmount, method = old.method, status = "PENDING"
+                };
+                _context.Payments.Add(payment); await _context.SaveChangesAsync();
+                return CreatedAtAction(nameof(GetPayment), new { id = payment.paymentId }, payment);
+            });
+        }
+
+        private async Task<IActionResult> InPaymentLock(Func<Task<IActionResult>> work)
+        {
+            var strategy = _context.Database.CreateExecutionStrategy();
+            return await strategy.ExecuteAsync<IActionResult>(async () =>
+            {
+                await using var transaction = await _context.Database.BeginTransactionAsync(System.Data.IsolationLevel.Serializable);
+                // Đồng bộ với đổi/hủy lịch và các thao tác tiền mặt/thử lại.
+                await _context.Database.ExecuteSqlRawAsync("DECLARE @result int; EXEC @result = sp_getapplock @Resource='PetNova:lich-hen', @LockMode='Exclusive', @LockOwner='Transaction', @LockTimeout=30000; IF @result < 0 THROW 51000, 'Khong the khoa lich hen', 1;");
+                var result = await work();
+                await transaction.CommitAsync();
+                return result;
+            });
         }
 
         [HttpPost("{id}/payos-link")]
@@ -231,7 +248,7 @@ namespace PetNoVaApi.Controllers
         /// <returns>200 với Payment mới nhất; 400/404; hoặc 502 nếu không gọi được PayOS.</returns>
         public async Task<IActionResult> SyncPayOSPayment(string id)
         {
-            var payment = await Visible.FirstOrDefaultAsync(p => p.paymentId == id);
+            var payment = await Visible.AsNoTracking().FirstOrDefaultAsync(p => p.paymentId == id);
             if (payment == null)
             {
                 return NotFound("Không tìm thấy thanh toán.");
@@ -251,20 +268,27 @@ namespace PetNoVaApi.Controllers
                 var link = await CreatePayOSClient().PaymentRequests.GetAsync(orderCode);
                 var payOSStatus = PaymentLinkStatusConverter.ToSerializedString(link.Status);
 
-                // Chỉ cập nhật khi trạng thái thay đổi để tránh tạo trùng thông báo thanh toán.
-                if (payOSStatus == "PAID" && payment.status is "PENDING" or "FAILED")
+                // Không giữ transaction trong lúc chờ mạng; đọc lại trạng thái sau khi lấy khóa.
+                return await InPaymentLock(async () =>
                 {
-                    await ApplyPaidStatus(payment);
-                    await _context.SaveChangesAsync();
-                }
-                else if ((payOSStatus is "CANCELLED" or "EXPIRED" or "FAILED") && payment.status == "PENDING")
-                {
-                    payment.status = "FAILED";
-                    payment.paymentDate = DateTime.Now;
-                    await _context.SaveChangesAsync();
-                }
+                    var current = await Visible.FirstOrDefaultAsync(p => p.paymentId == id);
+                    if (current is null) return NotFound("Không tìm thấy thanh toán.");
+                    if (current.method != "BANK_TRANSFER" || current.status == "REFUNDED")
+                        return Conflict("Giao dịch không còn có thể đồng bộ PayOS.");
 
-                return Ok(payment);
+                    if (payOSStatus == "PAID" && current.status is "PENDING" or "FAILED")
+                    {
+                        await ApplyPaidStatus(current);
+                        await _context.SaveChangesAsync();
+                    }
+                    else if ((payOSStatus is "CANCELLED" or "EXPIRED" or "FAILED") && current.status == "PENDING")
+                    {
+                        current.status = "FAILED";
+                        current.paymentDate = DateTime.Now;
+                        await _context.SaveChangesAsync();
+                    }
+                    return Ok(current);
+                });
             }
             catch (Exception exception)
             {
@@ -285,24 +309,23 @@ namespace PetNoVaApi.Controllers
             {
                 // VerifyAsync dùng checksum key xác nhận webhook thật sự do PayOS ký.
                 var verified = await CreatePayOSClient().Webhooks.VerifyAsync(webhook);
-                var payment = await FindPaymentByOrderCode(verified.OrderCode);
-
-                // PayOS gửi dữ liệu mẫu khi đăng ký webhook; vẫn cần trả 2xx.
-                if (payment == null)
+                return await InPaymentLock(async () =>
                 {
+                    var payment = await FindPaymentByOrderCode(verified.OrderCode);
+                    // PayOS gửi dữ liệu mẫu khi đăng ký webhook; vẫn cần trả 2xx.
+                    if (payment == null) return Ok(new { success = true });
+
+                    // Kiểm tra mã, tiền và trạng thái dưới cùng khóa để webhook lặp không ghi trùng.
+                    if (verified.Code == "00" &&
+                        verified.Amount == decimal.ToInt64(payment.amount) &&
+                        payment.status is "PENDING" or "FAILED")
+                    {
+                        await ApplyPaidStatus(payment);
+                        await _context.SaveChangesAsync();
+                    }
+
                     return Ok(new { success = true });
-                }
-
-                // Kiểm tra cả mã thành công và số tiền trước khi ghi PAID, chống webhook sai đơn/sai tiền.
-                if (verified.Code == "00" &&
-                    verified.Amount == decimal.ToInt64(payment.amount) &&
-                    payment.status is "PENDING" or "FAILED")
-                {
-                    await ApplyPaidStatus(payment);
-                    await _context.SaveChangesAsync();
-                }
-
-                return Ok(new { success = true });
+                });
             }
             catch (Exception exception)
             {
@@ -329,34 +352,37 @@ namespace PetNoVaApi.Controllers
         [HttpPut("{id}/confirm")]
         /// <summary>Xác nhận thanh toán thủ công, chỉ dùng cho tiền mặt.</summary>
         /// <param name="id">paymentId cần xác nhận tại quầy.</param>
-        /// <returns>204 khi thành công; 400 nếu đã trả/không phải CASH; 404 nếu không có.</returns>
+        /// <returns>204 khi thành công; 409 nếu trạng thái đã đổi; 400 nếu không phải CASH; 404 nếu không có.</returns>
         public async Task<IActionResult> ConfirmPayment(string id)
         {
-            var payment = await _context.Payments.FindAsync(id);
-
-            if (payment == null)
+            return await InPaymentLock(async () =>
             {
-                return NotFound();
-            }
+                var payment = await _context.Payments.FindAsync(id);
 
-            if (payment.status != "PENDING")
-            {
-                return Conflict("Giao dịch không còn chờ xác nhận.");
-            }
+                if (payment == null)
+                {
+                    return NotFound();
+                }
 
-            if (payment.method.Trim().ToUpper() != "CASH")
-            {
-                return BadRequest(
-                    "Chỉ thanh toán tiền mặt mới được nhân viên xác nhận thủ công."
-                );
-            }
+                if (payment.status != "PENDING")
+                {
+                    return Conflict("Giao dịch không còn chờ xác nhận.");
+                }
 
-            // Helper dùng chung bảo đảm tiền mặt và PayOS tạo cùng loại thông báo thành công.
-            await ApplyPaidStatus(payment);
+                if (payment.method.Trim().ToUpper() != "CASH")
+                {
+                    return BadRequest(
+                        "Chỉ thanh toán tiền mặt mới được nhân viên xác nhận thủ công."
+                    );
+                }
 
-            await _context.SaveChangesAsync();
+                // Helper dùng chung bảo đảm tiền mặt và PayOS tạo cùng loại thông báo thành công.
+                await ApplyPaidStatus(payment);
 
-            return NoContent();
+                await _context.SaveChangesAsync();
+
+                return NoContent();
+            });
         }
 
         [HttpPut("{id}/failed")]
@@ -364,55 +390,49 @@ namespace PetNoVaApi.Controllers
         /// <returns>204 khi lưu hoặc 404 nếu paymentId không tồn tại.</returns>
         public async Task<IActionResult> FailedPayment(string id)
         {
-            var payment = await _context.Payments.FindAsync(id);
-
-            if (payment == null)
+            return await InPaymentLock(async () =>
             {
-                return NotFound();
-            }
+                var payment = await _context.Payments.FindAsync(id);
+                if (payment == null) return NotFound();
 
-            if (payment.status != "PENDING") return Conflict("Chỉ giao dịch đang chờ mới có thể đánh dấu thất bại.");
-            payment.status = "FAILED";
-            payment.paymentDate = DateTime.Now;
+                if (payment.status != "PENDING") return Conflict("Chỉ giao dịch đang chờ mới có thể đánh dấu thất bại.");
+                payment.status = "FAILED";
+                payment.paymentDate = DateTime.Now;
 
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+                await _context.SaveChangesAsync();
+                return NoContent();
+            });
         }
         [HttpPut("{id}/refund")]
         /// <summary>Đánh dấu giao dịch đã hoàn tiền và ghi thời điểm xử lý.</summary>
         /// <returns>204 khi lưu hoặc 404 nếu paymentId không tồn tại.</returns>
         public async Task<IActionResult> RefundPayment(string id, [FromBody] HoanTienRequest request)
         {
-            var payment = await _context.Payments.FindAsync(id);
-
-            if (payment == null)
-            {
-                return NotFound();
-            }
-
-            if (payment.status != "PAID") return Conflict("Chỉ giao dịch đã thanh toán mới có thể ghi nhận hoàn tiền.");
             if (string.IsNullOrWhiteSpace(request.reason) || request.reason.Length > 500 ||
                 string.IsNullOrWhiteSpace(request.reference) || request.reference.Length > 200)
                 return BadRequest("Cần lý do và mã tham chiếu việc hoàn tiền thực tế.");
-            // API này chỉ ghi nhận giao dịch đã hoàn ngoài hệ thống; không gọi ngân hàng/PayOS chuyển tiền.
-            payment.status = "REFUNDED";
-            payment.refundReason = request.reason.Trim(); payment.refundReference = request.reference.Trim();
-            payment.refundedAt = DateTime.UtcNow; payment.refundedBy = Current.userId;
-
-            _context.Notifications.Add(new Notification
+            return await InPaymentLock(async () =>
             {
-                notificationId = await MaDinhDanh.NextAsync(_context, "NOTIFICATION", "notificationId", "N"),
-                userId = await _context.Bookings.Where(b => b.bookingId == payment.bookingId)
-                    .Select(b => b.userId).FirstAsync(),
-                title = "Đã ghi nhận hoàn tiền", message = "PetNoVa đã ghi nhận khoản hoàn tiền cho lịch hẹn của bạn.",
-                notificationType = "PAYMENT", relatedType = "BOOKING", relatedId = payment.bookingId,
-                isRead = false, createdAt = DateTime.Now
+                var payment = await _context.Payments.FindAsync(id);
+                if (payment == null) return NotFound();
+                if (payment.status != "PAID") return Conflict("Chỉ giao dịch đã thanh toán mới có thể ghi nhận hoàn tiền.");
+                // Chỉ ghi nhận hoàn tiền đã xử lý ngoài hệ thống; không gọi ngân hàng/PayOS chuyển tiền.
+                payment.status = "REFUNDED";
+                payment.refundReason = request.reason.Trim(); payment.refundReference = request.reference.Trim();
+                payment.refundedAt = DateTime.UtcNow; payment.refundedBy = Current.userId;
+                _context.Notifications.Add(new Notification
+                {
+                    notificationId = await MaDinhDanh.NextAsync(_context, "NOTIFICATION", "notificationId", "N"),
+                    userId = await _context.Bookings.Where(b => b.bookingId == payment.bookingId)
+                        .Select(b => b.userId).FirstAsync(),
+                    title = "Đã ghi nhận hoàn tiền", message = "PetNoVa đã ghi nhận khoản hoàn tiền cho lịch hẹn của bạn.",
+                    notificationType = "PAYMENT", relatedType = "BOOKING", relatedId = payment.bookingId,
+                    isRead = false, createdAt = DateTime.Now
+                });
+
+                await _context.SaveChangesAsync();
+                return NoContent();
             });
-
-            await _context.SaveChangesAsync();
-
-            return NoContent();
         }
 
         /// <summary>Đánh dấu giao dịch PAID và xếp thông báo cho chủ lịch vào DbContext.</summary>

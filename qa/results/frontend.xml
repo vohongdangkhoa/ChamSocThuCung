@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+	<testcase name="1000 lịch hẹn chỉ tải hai danh sách, không tạo 2000 request phụ" time="0.007877" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\khach-hang.test.mjs"/>
+	<testcase name="khách chưa có lịch không cần tải chi tiết hoặc giao dịch" time="0.000182" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\khach-hang.test.mjs"/>
+	<testcase name="lỗi thanh toán không bị che thành danh sách rỗng" time="0.000600" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\khach-hang.test.mjs"/>
+	<testcase name="dữ liệu sai định dạng và hủy request được truyền về bên gọi" time="0.000294" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\khach-hang.test.mjs"/>
+	<testcase name="hồ sơ hợp lệ, ngày nhuận và giới hạn chuỗi được chấp nhận" time="0.001469" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\khach-hang.test.mjs"/>
+	<testcase name="chặn giống trống, ngày sai hoặc tương lai và cân nặng ngoài giới hạn API" time="0.000335" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\khach-hang.test.mjs"/>
+	<testcase name="giới hạn ảnh UI khớp server: đúng 5 MiB được phép, lớn hơn hoặc 6 MiB bị chặn" time="0.000228" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\khach-hang.test.mjs"/>
+	<testcase name="VET: phản hồi chậm của thú cưng A không đè bệnh án/tiêm chủng B đang chọn" time="0.113495" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\van-hanh.test.mjs"/>
+	<testcase name="VET: lỗi hồ sơ B không được giữ dữ liệu của A bên dưới tên B" time="0.013249" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\van-hanh.test.mjs"/>
+	<testcase name="VET: ngày tiêm không ở tương lai và ngày nhắc lại bắt đầu từ ngày kế tiếp" time="0.009361" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\van-hanh.test.mjs"/>
+	<testcase name="Báo cáo: phản hồi khoảng ngày cũ không ghi đè kết quả lần lọc mới" time="0.018166" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\van-hanh.test.mjs"/>
+	<testcase name="Báo cáo: lỗi lần tải mới xóa KPI cũ thay vì gắn với khoảng ngày mới" time="0.004233" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\van-hanh.test.mjs"/>
+	<testcase name="chuẩn hóa số trong nước/quốc tế nhất quán với khóa tra cứu +84" time="0.000958" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\xac-thuc.test.mjs"/>
+	<testcase name="dữ liệu sai bị chặn trước khi tạo danh tính Firebase" time="0.001802" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\xac-thuc.test.mjs"/>
+	<testcase name="đăng ký hợp lệ tạo hồ sơ CUSTOMER ACTIVE và giữ danh tính mới" time="0.000321" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\xac-thuc.test.mjs"/>
+	<testcase name="API từ chối số trùng không để lại email Firebase bị chiếm bởi đăng ký lỗi" time="0.000450" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\xac-thuc.test.mjs"/>
+	<testcase name="email đã dùng: không xóa danh tính có sẵn khi Firebase từ chối tạo" time="0.000191" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\xac-thuc.test.mjs"/>
+	<testcase name="lỗi cập nhật tên Firebase trước SQL dọn đúng tài khoản vừa tạo" time="0.000258" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\xac-thuc.test.mjs"/>
+	<testcase name="lỗi mạng hoặc 5xx sau POST không được xóa danh tính khi SQL có thể đã lưu" time="0.000457" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\xac-thuc.test.mjs"/>
+	<!-- tests 19 -->
+	<!-- suites 0 -->
+	<!-- pass 19 -->
+	<!-- fail 0 -->
+	<!-- cancelled 0 -->
+	<!-- skipped 0 -->
+	<!-- todo 0 -->
+	<!-- duration_ms 301.4151 -->
+</testsuites>
