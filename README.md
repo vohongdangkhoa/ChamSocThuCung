@@ -22,6 +22,16 @@ Nếu thấy Vite đã báo `ready` ở một terminal khác, chỉ cần mở `
 
 Bạn cũng có thể bấm đúp `run_petnova_web_dev.cmd` trên Windows.
 
+### Tắt website
+
+Nếu terminal cũ không còn mở hoặc script báo PetNoVa đã chạy sẵn, mở terminal tại thư mục gốc rồi chạy:
+
+```powershell
+.\tat_petnova_web.ps1
+```
+
+Lệnh này xác định đúng tiến trình React/API trong thư mục dự án ở cổng 5173 và 5200 rồi dừng chúng. Bạn cũng có thể bấm đúp `tat_petnova_web.cmd`. Dịch vụ SQL Server vẫn chạy để dùng cho lần sau; dữ liệu đã lưu vẫn còn trong database.
+
 ## Chạy từng phần (khi cần)
 
 ### 1. Chạy API
