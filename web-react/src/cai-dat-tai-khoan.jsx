@@ -10,6 +10,7 @@ import { auth } from "./cau-hinh-firebase";
 import { api, formatError } from "./giao-tiep-api";
 import { kiemTraTepAnh } from "./du-lieu-khach-hang";
 import { firebaseErrorMessage } from "./xac-thuc";
+import { OMatKhau } from "./o-mat-khau";
 import "./cai-dat-tai-khoan.css";
 
 const TEN_VAI_TRO = {
@@ -238,45 +239,39 @@ export function CaiDatTaiKhoan({ user, onLogout, onUpdated }) {
           </form>
           <form className="panel form-grid" onSubmit={doiMatKhau}>
             <h2>Đổi mật khẩu</h2>
-            <label>
-              Mật khẩu hiện tại
-              <input
-                type="password"
+            <OMatKhau
+              nhan="Mật khẩu hiện tại"
+              disabled={Boolean(dangXuLy)}
+              required
+              autoComplete="current-password"
+              value={matKhau.current}
+              onChange={(e) =>
+                setMatKhau({ ...matKhau, current: e.target.value })
+              }
+            />
+            <div className="form-row">
+              <OMatKhau
+                nhan="Mật khẩu mới"
+                disabled={Boolean(dangXuLy)}
                 required
-                autoComplete="current-password"
-                value={matKhau.current}
+                minLength={8}
+                autoComplete="new-password"
+                value={matKhau.next}
                 onChange={(e) =>
-                  setMatKhau({ ...matKhau, current: e.target.value })
+                  setMatKhau({ ...matKhau, next: e.target.value })
                 }
               />
-            </label>
-            <div className="form-row">
-              <label>
-                Mật khẩu mới
-                <input
-                  type="password"
-                  required
-                  minLength={8}
-                  autoComplete="new-password"
-                  value={matKhau.next}
-                  onChange={(e) =>
-                    setMatKhau({ ...matKhau, next: e.target.value })
-                  }
-                />
-              </label>
-              <label>
-                Nhập lại mật khẩu mới
-                <input
-                  type="password"
-                  required
-                  minLength={8}
-                  autoComplete="new-password"
-                  value={matKhau.confirm}
-                  onChange={(e) =>
-                    setMatKhau({ ...matKhau, confirm: e.target.value })
-                  }
-                />
-              </label>
+              <OMatKhau
+                nhan="Nhập lại mật khẩu mới"
+                disabled={Boolean(dangXuLy)}
+                required
+                minLength={8}
+                autoComplete="new-password"
+                value={matKhau.confirm}
+                onChange={(e) =>
+                  setMatKhau({ ...matKhau, confirm: e.target.value })
+                }
+              />
             </div>
             <p className="muted small">
               Dùng ít nhất 8 ký tự. Mật khẩu chỉ được xử lý bởi hệ thống đăng
@@ -305,16 +300,14 @@ export function CaiDatTaiKhoan({ user, onLogout, onUpdated }) {
                 onChange={(e) => setEmailMoi(e.target.value)}
               />
             </label>
-            <label>
-              Mật khẩu hiện tại
-              <input
-                type="password"
-                required
-                autoComplete="current-password"
-                value={matKhauEmail}
-                onChange={(e) => setMatKhauEmail(e.target.value)}
-              />
-            </label>
+            <OMatKhau
+              nhan="Mật khẩu hiện tại"
+              disabled={Boolean(dangXuLy)}
+              required
+              autoComplete="current-password"
+              value={matKhauEmail}
+              onChange={(e) => setMatKhauEmail(e.target.value)}
+            />
             <div className="button-row">
               <button
                 className="button button-primary"

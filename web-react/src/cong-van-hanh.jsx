@@ -3,6 +3,7 @@ import { api, formatError } from './giao-tiep-api';
 import { CaiDatTaiKhoan } from './cai-dat-tai-khoan';
 import { DoiLichForm } from './lich-hen-khach-hang';
 import { DanhMucVaBaoCao } from './quan-tri-bo-sung';
+import { OMatKhau } from './o-mat-khau';
 import './van-hanh.css';
 
 const ENDPOINTS = {
@@ -1406,7 +1407,7 @@ export function AdminPortal({ user, onLogout }) {
         <section className="panel">
           <div className="panel-heading"><h2>{staffEditingId ? 'Chỉnh sửa nhân sự' : 'Thêm nhân sự'}</h2><button type="button" onClick={() => setStaffEditorOpen(false)}>Đóng</button></div>
           <form className="form-grid" onSubmit={submitStaff}>
-            {!staffEditingId && <label>Mật khẩu ban đầu<input required type="password" minLength={12} maxLength={128} autoComplete="new-password" value={staffDraft.password} onChange={(event) => setStaffDraft((current) => ({ ...current, password: event.target.value }))} placeholder="Ít nhất 12 ký tự" /><span className="field-hint">Nhân viên đăng nhập bằng email và mật khẩu này, sau đó tự đổi trong mục Tài khoản.</span></label>}
+            {!staffEditingId && <div><OMatKhau nhan="Mật khẩu ban đầu" required minLength={12} maxLength={128} autoComplete="new-password" value={staffDraft.password} onChange={(event) => setStaffDraft((current) => ({ ...current, password: event.target.value }))} placeholder="Ít nhất 12 ký tự" /><span className="field-hint">Nhân viên đăng nhập bằng email và mật khẩu này, sau đó tự đổi trong mục Tài khoản.</span></div>}
             <div className="form-row"><label>Họ và tên<input required value={staffDraft.fullName} onChange={(event) => setStaffDraft((current) => ({ ...current, fullName: event.target.value }))} /></label><label>Số điện thoại<input required value={staffDraft.phone} onChange={(event) => setStaffDraft((current) => ({ ...current, phone: event.target.value }))} /></label></div>
             {!staffEditingId && <label>Email<input required type="email" value={staffDraft.email} onChange={(event) => setStaffDraft((current) => ({ ...current, email: event.target.value }))} /></label>}
             <label>Vai trò<select value={staffDraft.role} onChange={(event) => setStaffDraft((current) => ({ ...current, role: event.target.value }))}><option value="STAFF">Nhân viên</option><option value="VET">Bác sĩ thú y</option></select></label>

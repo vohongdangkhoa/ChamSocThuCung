@@ -1,0 +1,21 @@
+{
+  "observedAtUtc": "2026-10-26T16:57:12.742Z",
+  "mode": "Đăng ký",
+  "observation": {
+    "clientWidth": 737,
+    "fields": [
+      {
+        "buttonInside": true,
+        "buttonWidth": 42,
+        "inputWidth": 395.3999938964844
+      },
+      {
+        "buttonInside": true,
+        "buttonWidth": 42,
+        "inputWidth": 395.3999938964844
+      }
+    ],
+    "scrollWidth": 737,
+    "viewportWidth": 768
+  }
+}

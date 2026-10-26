@@ -1,0 +1,131 @@
+{
+  "observedAtUtc": "2026-10-26T16:54:31.669Z",
+  "method": "Thao tác trình duyệt thật, ô nhập rỗng; không tạo tài khoản hoặc đổi mật khẩu",
+  "results": [
+    {
+      "step": "Đăng nhập mặc định",
+      "data": {
+        "font": "\"Segoe UI\", system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
+        "headingFont": "\"Segoe UI\", system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
+        "inputs": [
+          {
+            "autocomplete": "current-password",
+            "hasLabel": true,
+            "type": "password"
+          }
+        ]
+      },
+      "expectedTypes": [
+        "password"
+      ],
+      "status": "PASS"
+    },
+    {
+      "step": "Bấm con mắt đăng nhập",
+      "data": {
+        "alert": null,
+        "submitState": "Đăng nhập",
+        "types": [
+          "text"
+        ]
+      },
+      "expectedTypes": [
+        "text"
+      ],
+      "status": "PASS"
+    },
+    {
+      "step": "Enter trên nút con mắt đăng nhập",
+      "data": {
+        "focusedButton": "Hiện mật khẩu",
+        "types": [
+          "password"
+        ]
+      },
+      "expectedTypes": [
+        "password"
+      ],
+      "status": "PASS"
+    },
+    {
+      "step": "Đăng ký mặc định",
+      "data": {
+        "buttons": [
+          {
+            "controls": "_r_1_",
+            "label": "Hiện mật khẩu",
+            "type": "button"
+          },
+          {
+            "controls": "_r_2_",
+            "label": "Hiện xác nhận mật khẩu",
+            "type": "button"
+          }
+        ],
+        "types": [
+          "password",
+          "password"
+        ]
+      },
+      "expectedTypes": [
+        "password",
+        "password"
+      ],
+      "status": "PASS"
+    },
+    {
+      "step": "Hiện ô mật khẩu đăng ký, giữ ẩn ô xác nhận",
+      "data": {
+        "types": [
+          "text",
+          "password"
+        ]
+      },
+      "expectedTypes": [
+        "text",
+        "password"
+      ],
+      "status": "PASS"
+    },
+    {
+      "step": "Hiện cả hai ô đăng ký",
+      "data": {
+        "types": [
+          "text",
+          "text"
+        ]
+      },
+      "expectedTypes": [
+        "text",
+        "text"
+      ],
+      "status": "PASS"
+    },
+    {
+      "step": "Ẩn ô đầu, giữ hiện ô xác nhận",
+      "data": {
+        "types": [
+          "password",
+          "text"
+        ]
+      },
+      "expectedTypes": [
+        "password",
+        "text"
+      ],
+      "status": "PASS"
+    },
+    {
+      "step": "Quay lại đăng nhập: mặc định che mật khẩu",
+      "data": {
+        "types": [
+          "password"
+        ]
+      },
+      "expectedTypes": [
+        "password"
+      ],
+      "status": "PASS"
+    }
+  ]
+}

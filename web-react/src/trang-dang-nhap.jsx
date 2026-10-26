@@ -7,6 +7,7 @@ import {
 } from "./giao-tiep-api";
 import { useAuth } from "./xac-thuc";
 import { chuanHoaSoDienThoai } from "./dang-ky-khach-hang";
+import { OMatKhau } from "./o-mat-khau";
 
 const emptyReset = {
   phone: "",
@@ -28,15 +29,14 @@ function digitsOnly(value) {
 function AuthBrand() {
   return (
     <section className="auth-intro">
-      <p className="eyebrow">PET CARE, SIMPLIFIED</p>
+      <p className="eyebrow">Chăm sóc thú cưng</p>
       <h1>
         PetNoVa
         <br />
-        <em>luôn ở bên bạn nhỏ.</em>
+        <em>Đồng hành cùng thú cưng của bạn.</em>
       </h1>
       <p>
-        Quản lý hồ sơ, lịch hẹn và hành trình chăm sóc thú cưng trong một không
-        gian ấm áp, dễ dùng.
+        Đặt lịch chăm sóc, lưu hồ sơ sức khỏe và theo dõi lịch tiêm của thú cưng.
       </p>
       <ul className="feature-list">
         <li>
@@ -230,15 +230,15 @@ export function AuthPages() {
       <AuthBrand />
       <section className="auth-card" aria-labelledby="auth-title">
         <h2 id="auth-title">
-          {mode === "login" && "Chào mừng trở lại"}
+          {mode === "login" && "Đăng nhập"}
           {mode === "register" && "Tạo tài khoản"}
           {mode === "forgot" && "Khôi phục mật khẩu"}
         </h2>
         <p>
           {mode === "login" &&
-            "Đăng nhập để tiếp tục chăm sóc bạn nhỏ của bạn."}
+            "Quản lý thú cưng và lịch hẹn của bạn."}
           {mode === "register" &&
-            "Tạo tài khoản PetNoVa cho hành trình chăm sóc thú cưng."}
+            "Điền thông tin bên dưới để tạo tài khoản PetNoVa."}
           {mode === "forgot" &&
             "Khôi phục mật khẩu an toàn bằng mã OTP gửi qua email."}
         </p>
@@ -265,29 +265,26 @@ export function AuthPages() {
                 value={loginForm.email}
               />
             </label>
-            <label>
-              Mật khẩu
-              <input
-                autoComplete="current-password"
-                disabled={busy}
-                onChange={(event) =>
-                  setLoginForm((current) => ({
-                    ...current,
-                    password: event.target.value,
-                  }))
-                }
-                placeholder="Nhập mật khẩu"
-                required
-                type="password"
-                value={loginForm.password}
-              />
-            </label>
+            <OMatKhau
+              nhan="Mật khẩu"
+              autoComplete="current-password"
+              disabled={busy}
+              onChange={(event) =>
+                setLoginForm((current) => ({
+                  ...current,
+                  password: event.target.value,
+                }))
+              }
+              placeholder="Nhập mật khẩu"
+              required
+              value={loginForm.password}
+            />
             <button
               className="button button-primary"
               disabled={busy}
               type="submit"
             >
-              {busy ? "ĐANG ĐĂNG NHẬP…" : "ĐĂNG NHẬP"}
+              {busy ? "Đang đăng nhập…" : "Đăng nhập"}
             </button>
             <button
               className="form-link"
@@ -367,48 +364,42 @@ export function AuthPages() {
                 value={registerForm.phone}
               />
             </label>
-            <label>
-              Mật khẩu
-              <input
-                autoComplete="new-password"
-                disabled={busy}
-                minLength="6"
-                onChange={(event) =>
-                  setRegisterForm((current) => ({
-                    ...current,
-                    password: event.target.value,
-                  }))
-                }
-                placeholder="Ít nhất 6 ký tự"
-                required
-                type="password"
-                value={registerForm.password}
-              />
-            </label>
-            <label>
-              Xác nhận mật khẩu
-              <input
-                autoComplete="new-password"
-                disabled={busy}
-                minLength="6"
-                onChange={(event) =>
-                  setRegisterForm((current) => ({
-                    ...current,
-                    confirmation: event.target.value,
-                  }))
-                }
-                placeholder="Nhập lại mật khẩu"
-                required
-                type="password"
-                value={registerForm.confirmation}
-              />
-            </label>
+            <OMatKhau
+              nhan="Mật khẩu"
+              autoComplete="new-password"
+              disabled={busy}
+              minLength="6"
+              onChange={(event) =>
+                setRegisterForm((current) => ({
+                  ...current,
+                  password: event.target.value,
+                }))
+              }
+              placeholder="Ít nhất 6 ký tự"
+              required
+              value={registerForm.password}
+            />
+            <OMatKhau
+              nhan="Xác nhận mật khẩu"
+              autoComplete="new-password"
+              disabled={busy}
+              minLength="6"
+              onChange={(event) =>
+                setRegisterForm((current) => ({
+                  ...current,
+                  confirmation: event.target.value,
+                }))
+              }
+              placeholder="Nhập lại mật khẩu"
+              required
+              value={registerForm.confirmation}
+            />
             <button
               className="button button-primary"
               disabled={busy}
               type="submit"
             >
-              {busy ? "ĐANG TẠO TÀI KHOẢN…" : "TẠO TÀI KHOẢN"}
+              {busy ? "Đang tạo tài khoản…" : "Tạo tài khoản"}
             </button>
             <p className="auth-switch">
               Đã có tài khoản?{" "}
@@ -478,7 +469,7 @@ export function AuthPages() {
                   disabled={busy}
                   type="submit"
                 >
-                  {busy ? "ĐANG GỬI…" : "GỬI MÃ OTP"}
+                  {busy ? "Đang gửi…" : "Gửi mã OTP"}
                 </button>
               </form>
             )}
@@ -517,7 +508,7 @@ export function AuthPages() {
                   disabled={busy}
                   type="submit"
                 >
-                  {busy ? "ĐANG XÁC THỰC…" : "XÁC THỰC OTP"}
+                  {busy ? "Đang xác thực…" : "Xác thực OTP"}
                 </button>
                 <div className="button-row reset-actions">
                   <button
@@ -544,48 +535,42 @@ export function AuthPages() {
 
             {reset.step === "password" && (
               <form onSubmit={submitNewPassword}>
-                <label>
-                  Mật khẩu mới
-                  <input
-                    autoComplete="new-password"
-                    disabled={busy}
-                    minLength="6"
-                    onChange={(event) =>
-                      setReset((current) => ({
-                        ...current,
-                        password: event.target.value,
-                      }))
-                    }
-                    placeholder="Ít nhất 6 ký tự"
-                    required
-                    type="password"
-                    value={reset.password}
-                  />
-                </label>
-                <label>
-                  Xác nhận mật khẩu mới
-                  <input
-                    autoComplete="new-password"
-                    disabled={busy}
-                    minLength="6"
-                    onChange={(event) =>
-                      setReset((current) => ({
-                        ...current,
-                        confirmation: event.target.value,
-                      }))
-                    }
-                    placeholder="Nhập lại mật khẩu mới"
-                    required
-                    type="password"
-                    value={reset.confirmation}
-                  />
-                </label>
+                <OMatKhau
+                  nhan="Mật khẩu mới"
+                  autoComplete="new-password"
+                  disabled={busy}
+                  minLength="6"
+                  onChange={(event) =>
+                    setReset((current) => ({
+                      ...current,
+                      password: event.target.value,
+                    }))
+                  }
+                  placeholder="Ít nhất 6 ký tự"
+                  required
+                  value={reset.password}
+                />
+                <OMatKhau
+                  nhan="Xác nhận mật khẩu mới"
+                  autoComplete="new-password"
+                  disabled={busy}
+                  minLength="6"
+                  onChange={(event) =>
+                    setReset((current) => ({
+                      ...current,
+                      confirmation: event.target.value,
+                    }))
+                  }
+                  placeholder="Nhập lại mật khẩu mới"
+                  required
+                  value={reset.confirmation}
+                />
                 <button
                   className="button button-primary"
                   disabled={busy}
                   type="submit"
                 >
-                  {busy ? "ĐANG CẬP NHẬT…" : "CẬP NHẬT MẬT KHẨU"}
+                  {busy ? "Đang cập nhật…" : "Cập nhật mật khẩu"}
                 </button>
               </form>
             )}

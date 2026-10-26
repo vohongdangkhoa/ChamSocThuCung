@@ -81,6 +81,14 @@ Bộ hồi quy trước/sau: [api-before.json](api-before.json), [api-after.json
 
 Đã mở trang đăng nhập và đăng ký ở bố cục một cột tại viewport đo được 768 px. Công cụ tự đổi các viewport nhỏ yêu cầu 320/390 px thành 480 px, vì vậy không báo hai kích thước đó đạt. Phiên bổ sung chưa chụp được ảnh; bằng chứng số đo DOM thật được lưu tại [bo-cuc-dang-nhap.json](bo-cuc-dang-nhap.json). Các số đo bổ sung không cộng vào 88 kiểm tra tự động ở trên.
 
+### Bổ sung: nút hiện mật khẩu và kiểu chữ
+
+Đã thêm component dùng chung `o-mat-khau.jsx`, tích hợp vào đăng nhập, hai ô đăng ký, đặt lại mật khẩu, thông tin bảo mật tài khoản và form tạo nhân viên. Mỗi ô có nút hiện/ẩn riêng, nhãn tiếng Việt, thao tác bàn phím và `type="button"` để không gửi form.
+
+Đã thao tác trên trình duyệt thật ở đăng nhập/đăng ký với ô trống: 8 quan sát trạng thái đều khớp mong đợi, gồm hiện/ẩn bằng chuột, Enter, hai ô đăng ký độc lập và mặc định che khi quay lại đăng nhập. Không nhập hoặc đổi mật khẩu thật. Kết quả: [nhap-mat-khau.json](nhap-mat-khau.json). Các form cần đăng nhập/OTP mới chỉ được tích hợp component và build, chưa xác nhận bằng thao tác thật ở đợt bổ sung này.
+
+Font chung đổi sang Segoe UI/system font, bỏ font có chân và tải Google Fonts, giảm cỡ tiêu đề, chỉnh giãn dòng và cách viết trên form xác thực. Kiểm tra tại viewport đo được 768 px: không tràn ngang, hai nút con mắt nằm trong ô nhập. Xem [số đo](bo-cuc-o-mat-khau.json), [ảnh đăng nhập](anh/dang-nhap-font-moi.png), [ảnh đăng ký](anh/dang-ky-font-moi.png). Bản build và 19 kiểm tra hồi quy JavaScript tiếp tục đạt; 8 quan sát UI không được cộng vào 88 kiểm tra tự động trước đó.
+
 ## Phần chưa xác nhận và việc cần tiếp tục
 
 1. **ADMIN/STAFF/VET trên trình duyệt thật:** hiện tab vẫn ở trang đăng nhập. Cần người dùng đăng nhập từng tài khoản thử nghiệm; chưa xem kết quả controller/mô phỏng component là thay thế cho bước này.

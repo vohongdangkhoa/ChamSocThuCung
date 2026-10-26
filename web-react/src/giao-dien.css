@@ -1,5 +1,4 @@
 /* Giao diện chung cho toàn bộ website. */
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap");
 
 :root {
   --ink: #193331;
@@ -16,7 +15,8 @@
   --line: #dce6e0;
   --shadow: 0 16px 40px rgba(30, 69, 62, 0.12);
   color: var(--ink);
-  font-family: "DM Sans", system-ui, sans-serif;
+  font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.5;
   font-synthesis: none;
 }
 
@@ -92,7 +92,7 @@ img {
   box-shadow: var(--shadow);
 }
 .error-card h1 {
-  font-family: "Playfair Display", serif;
+  font-family: inherit;
   margin: 14px 0 8px;
 }
 .error-card p {
@@ -125,18 +125,18 @@ img {
 .eyebrow {
   margin: 0 0 13px;
   color: var(--pine);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
 }
 .auth-intro h1,
 .page-heading h1,
 .portal-welcome h1 {
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(2.35rem, 5vw, 4.5rem);
-  line-height: 1;
-  letter-spacing: -0.035em;
+  font-family: inherit;
+  font-size: clamp(2rem, 3.6vw, 3.25rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
   margin: 0;
 }
 .auth-intro h1 em {
@@ -146,8 +146,8 @@ img {
 .auth-intro > p:not(.eyebrow) {
   max-width: 440px;
   color: var(--muted);
-  font-size: 1.07rem;
-  line-height: 1.7;
+  font-size: 1rem;
+  line-height: 1.65;
 }
 .feature-list {
   list-style: none;
@@ -176,18 +176,69 @@ img {
   padding: clamp(27px, 4vw, 42px);
   background: rgba(255, 254, 253, 0.94);
   border: 1px solid rgba(255, 255, 255, 0.75);
-  border-radius: 28px;
-  box-shadow: var(--shadow);
+  border-radius: 20px;
+  box-shadow: 0 8px 28px rgba(30, 69, 62, 0.08);
 }
 .auth-card h2 {
   margin: 0 0 8px;
-  font-family: "Playfair Display", serif;
-  font-size: 2rem;
+  font-family: inherit;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 .auth-card > p {
   color: var(--muted);
   margin: 0 0 27px;
   line-height: 1.5;
+}
+.auth-card label {
+  font-size: 0.9375rem;
+}
+.auth-card input {
+  min-height: 48px;
+  font-size: 1rem;
+}
+
+/* Chừa chỗ cho nút con mắt để chữ không nằm bên dưới biểu tượng. */
+.password-field {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+}
+.password-control {
+  position: relative;
+  min-width: 0;
+}
+.password-control input {
+  min-width: 0;
+  padding-right: 52px;
+}
+.password-control input::-ms-reveal,
+.password-control input::-ms-clear {
+  display: none;
+}
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 3px;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  color: var(--muted);
+  background: transparent;
+  transform: translateY(-50%);
+}
+.password-toggle:hover:not(:disabled) {
+  color: var(--pine);
+  background: #eef5f1;
+}
+.password-toggle:focus-visible {
+  outline: 2px solid var(--pine);
+  outline-offset: 1px;
 }
 
 .form-grid {
@@ -332,7 +383,8 @@ textarea {
   align-items: center;
   gap: 10px;
   padding: 0 11px 26px;
-  font-family: "Playfair Display", serif;
+  font-family: inherit;
+  font-weight: 700;
   font-size: 1.45rem;
   color: white;
 }
@@ -438,7 +490,7 @@ textarea {
   margin-bottom: 32px;
 }
 .portal-welcome h1 {
-  font-size: clamp(2rem, 4vw, 3.1rem);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
 }
 .portal-welcome p {
   margin: 8px 0 0;
@@ -477,7 +529,7 @@ textarea {
   margin: 0 0 24px;
 }
 .page-heading h1 {
-  font-size: clamp(1.85rem, 3.2vw, 2.55rem);
+  font-size: clamp(1.6rem, 2.5vw, 2rem);
 }
 .page-heading p {
   margin: 7px 0 0;
@@ -511,7 +563,9 @@ textarea {
 .stat-card .stat-number {
   display: block;
   margin-top: 7px;
-  font-family: "Playfair Display", serif;
+  font-family: inherit;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
   font-size: 2rem;
 }
 .stat-card .stat-icon {
@@ -552,8 +606,9 @@ textarea {
 .panel-heading h2,
 .panel-heading h3 {
   margin: 0;
-  font-family: "Playfair Display", serif;
-  font-size: 1.3rem;
+  font-family: inherit;
+  font-size: 1.125rem;
+  font-weight: 600;
 }
 .panel-heading a,
 .panel-heading button {
@@ -740,8 +795,9 @@ textarea {
 .pet-card h3,
 .service-card h3 {
   margin: 0;
-  font-family: "Playfair Display", serif;
-  font-size: 1.22rem;
+  font-family: inherit;
+  font-size: 1.125rem;
+  font-weight: 600;
 }
 .pet-card p,
 .service-card p {
@@ -820,7 +876,8 @@ textarea {
 }
 .modal-heading h2 {
   margin: 0;
-  font-family: "Playfair Display", serif;
+  font-family: inherit;
+  font-weight: 600;
 }
 .close-button {
   display: grid;
@@ -981,7 +1038,7 @@ textarea {
     padding: 28px 16px;
   }
   .auth-intro h1 {
-    font-size: 2.65rem;
+    font-size: 2rem;
   }
   .auth-card {
     padding: 25px 20px;
