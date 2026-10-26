@@ -8,6 +8,7 @@ import {
 } from "firebase/auth";
 import { auth } from "./cau-hinh-firebase";
 import { api, formatError } from "./giao-tiep-api";
+import { kiemTraTepAnh } from "./du-lieu-khach-hang";
 import { firebaseErrorMessage } from "./xac-thuc";
 import "./cai-dat-tai-khoan.css";
 
@@ -95,11 +96,8 @@ export function CaiDatTaiKhoan({ user, onLogout, onUpdated }) {
     event.target.value = "";
     if (!file) return;
     void xuLy("avatar", async () => {
-      if (
-        !/^image\/(jpeg|png|webp)$/.test(file.type) ||
-        file.size > 6 * 1024 * 1024
-      )
-        throw new Error("Chọn ảnh JPG, PNG hoặc WebP dưới 6 MB.");
+      const imageError = kiemTraTepAnh(file);
+      if (imageError) throw new Error(imageError);
       const result = await api.upload("/api/Media/avatar", file);
       capNhat({ avatarUrl: result?.url || hoSo.avatarUrl });
       return "Đã cập nhật ảnh đại diện.";

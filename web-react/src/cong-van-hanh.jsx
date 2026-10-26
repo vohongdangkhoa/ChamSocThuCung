@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { api, formatError } from './giao-tiep-api';
 import { CaiDatTaiKhoan } from './cai-dat-tai-khoan';
 import { DoiLichForm } from './lich-hen-khach-hang';
@@ -181,6 +181,14 @@ function dateInputValue(value) {
 function localDateInput(date = new Date()) {
   const offset = date.getTimezoneOffset() * 60_000;
   return new Date(date.getTime() - offset).toISOString().slice(0, 10);
+}
+
+function followingDayInput(value) {
+  if (!value) return undefined;
+  const date = new Date(`${value}T12:00:00`);
+  if (Number.isNaN(date.getTime())) return undefined;
+  date.setDate(date.getDate() + 1);
+  return localDateInput(date);
 }
 
 function oneYearFromTodayInput() {
@@ -661,6 +669,8 @@ export function VetPortal({ user, onLogout }) {
   const [historyLoading, setHistoryLoading] = useState(false);
   const [error, setError] = useState('');
   const [historyError, setHistoryError] = useState('');
+  const historyRequestId = useRef(0);
+  const currentHistoryPetId = useRef('');
   const [notice, setNotice] = useState('');
   const [busyKey, setBusyKey] = useState('');
   const [clinicalTab, setClinicalTab] = useState('records');
@@ -718,24 +728,31 @@ export function VetPortal({ user, onLogout }) {
   }, []);
 
   const loadHistory = useCallback(async (petId) => {
+    // Chỉ tải cho thú cưng đang chọn; thao tác lưu hồ sơ cũ có thể kết thúc muộn.
+    if (petId !== currentHistoryPetId.current) return;
+    const requestId = ++historyRequestId.current;
+    setRecords([]);
+    setVaccinations([]);
+    setHistoryError('');
     if (!petId) {
-      setRecords([]);
-      setVaccinations([]);
+      setHistoryLoading(false);
       return;
     }
     setHistoryLoading(true);
-    setHistoryError('');
     try {
       const [recordData, vaccinationData] = await Promise.all([
         request('get', `${ENDPOINTS.records}/pet/${encodeId(petId)}`),
         request('get', `${ENDPOINTS.vaccinations}/pet/${encodeId(petId)}`),
       ]);
+      if (requestId !== historyRequestId.current || petId !== currentHistoryPetId.current) return;
       setRecords(asList(recordData));
       setVaccinations(asList(vaccinationData));
     } catch (historyLoadError) {
-      setHistoryError(errorText(historyLoadError, 'Không thể tải hồ sơ sức khỏe của thú cưng.'));
+      if (requestId === historyRequestId.current && petId === currentHistoryPetId.current) {
+        setHistoryError(errorText(historyLoadError, 'Không thể tải hồ sơ sức khỏe của thú cưng.'));
+      }
     } finally {
-      setHistoryLoading(false);
+      if (requestId === historyRequestId.current) setHistoryLoading(false);
     }
   }, []);
 
@@ -744,7 +761,12 @@ export function VetPortal({ user, onLogout }) {
   }, [loadInitial]);
 
   useEffect(() => {
-    if (selectedPetId) loadHistory(selectedPetId);
+    currentHistoryPetId.current = selectedPetId;
+    void loadHistory(selectedPetId);
+    return () => {
+      currentHistoryPetId.current = '';
+      historyRequestId.current += 1;
+    };
   }, [selectedPetId, loadHistory]);
 
   const selectedPet = useMemo(
@@ -922,6 +944,7 @@ export function VetPortal({ user, onLogout }) {
                         type="button"
                         className={`button ${selectedPetId === pet.petId ? 'button-secondary' : 'button-primary'} button-small`}
                         onClick={() => setSelectedPetId(pet.petId)}
+                        disabled={Boolean(busyKey)}
                       >
                         {selectedPetId === pet.petId ? 'Đang xem hồ sơ' : 'Mở hồ sơ'}
                       </button>
@@ -952,12 +975,12 @@ export function VetPortal({ user, onLogout }) {
                 <form className="form-grid cap-nhat-suc-khoe" onSubmit={saveHealth}>
                   <h3>Cập nhật sức khỏe hiện tại</h3>
                   <div className="form-row"><label>Cân nặng (kg)<input required type="number" min="0.01" max="999" step="0.01" value={healthDraft.weight} onChange={(event) => setHealthDraft((current) => ({ ...current, weight: event.target.value }))} /></label><label>Tình trạng sức khỏe<input required maxLength={255} value={healthDraft.healthStatus} onChange={(event) => setHealthDraft((current) => ({ ...current, healthStatus: event.target.value }))} /></label></div>
-                  <button type="submit" className="button button-secondary button-small" disabled={busyKey === 'health'}>{busyKey === 'health' ? 'Đang lưu…' : 'Lưu sức khỏe'}</button>
+                  <button type="submit" className="button button-secondary button-small" disabled={Boolean(busyKey)}>{busyKey === 'health' ? 'Đang lưu…' : 'Lưu sức khỏe'}</button>
                 </form>
 
                 <div className="tab-list" role="tablist" aria-label="Hồ sơ sức khỏe">
-                  <button type="button" role="tab" className={`tab-button${clinicalTab === 'records' ? ' active' : ''}`} onClick={() => setClinicalTab('records')}>Bệnh án ({records.length})</button>
-                  <button type="button" role="tab" className={`tab-button${clinicalTab === 'vaccinations' ? ' active' : ''}`} onClick={() => setClinicalTab('vaccinations')}>Tiêm chủng ({vaccinations.length})</button>
+                  <button type="button" role="tab" aria-selected={clinicalTab === 'records'} className={`tab-button${clinicalTab === 'records' ? ' active' : ''}`} onClick={() => setClinicalTab('records')}>Bệnh án ({records.length})</button>
+                  <button type="button" role="tab" aria-selected={clinicalTab === 'vaccinations'} className={`tab-button${clinicalTab === 'vaccinations' ? ' active' : ''}`} onClick={() => setClinicalTab('vaccinations')}>Tiêm chủng ({vaccinations.length})</button>
                 </div>
 
                 {historyLoading ? <LoadingState label="Đang tải lịch sử sức khỏe…" /> : historyError ? <ErrorState error={historyError} onRetry={() => loadHistory(selectedPet.petId)} /> : clinicalTab === 'records' ? (
@@ -980,13 +1003,13 @@ export function VetPortal({ user, onLogout }) {
                     <form className="form-grid" onSubmit={submitRecord}>
                       <h3>{editingRecordId ? `Sửa bệnh án ${editingRecordId}` : 'Thêm bệnh án'}</h3>
                       <label>Chẩn đoán
-                        <input required value={recordForm.diagnosis} onChange={(event) => setRecordForm((current) => ({ ...current, diagnosis: event.target.value }))} placeholder="Ví dụ: Viêm da dị ứng" />
+                        <input required maxLength={255} value={recordForm.diagnosis} onChange={(event) => setRecordForm((current) => ({ ...current, diagnosis: event.target.value }))} placeholder="Ví dụ: Viêm da dị ứng" />
                       </label>
                       <label>Hướng điều trị
-                        <textarea required value={recordForm.treatment} onChange={(event) => setRecordForm((current) => ({ ...current, treatment: event.target.value }))} placeholder="Thuốc, chế độ chăm sóc, dặn dò…" />
+                        <textarea required maxLength={2000} value={recordForm.treatment} onChange={(event) => setRecordForm((current) => ({ ...current, treatment: event.target.value }))} placeholder="Thuốc, chế độ chăm sóc, dặn dò…" />
                       </label>
                       <label>Ghi chú thêm
-                        <textarea value={recordForm.note} onChange={(event) => setRecordForm((current) => ({ ...current, note: event.target.value }))} placeholder="Tùy chọn" />
+                        <textarea maxLength={2000} value={recordForm.note} onChange={(event) => setRecordForm((current) => ({ ...current, note: event.target.value }))} placeholder="Tùy chọn" />
                       </label>
                       <label>Toa thuốc / hướng dẫn dùng thuốc<textarea value={recordForm.prescription} onChange={(event) => setRecordForm((current) => ({ ...current, prescription: event.target.value }))} maxLength={2000} /></label>
                       <div className="form-row"><label>Ngày tái khám<input type="date" value={recordForm.followUpDate} onChange={(event) => setRecordForm((current) => ({ ...current, followUpDate: event.target.value }))} /></label><label>Cân nặng (kg)<input type="number" min="0.01" max="999" step="0.01" value={recordForm.weight} onChange={(event) => setRecordForm((current) => ({ ...current, weight: event.target.value }))} /></label></div>
@@ -1011,18 +1034,18 @@ export function VetPortal({ user, onLogout }) {
                     <form className="form-grid" onSubmit={submitVaccination}>
                       <h3>{editingVaccinationId ? `Sửa mũi tiêm ${editingVaccinationId}` : 'Ghi nhận mũi tiêm'}</h3>
                       <label>Tên vaccine
-                        <input required value={vaccinationForm.vaccineName} onChange={(event) => setVaccinationForm((current) => ({ ...current, vaccineName: event.target.value }))} placeholder="Ví dụ: Nobivac DHPPi" />
+                        <input required maxLength={100} value={vaccinationForm.vaccineName} onChange={(event) => setVaccinationForm((current) => ({ ...current, vaccineName: event.target.value }))} placeholder="Ví dụ: Nobivac DHPPi" />
                       </label>
                       <div className="form-row">
                         <label>Ngày tiêm
-                          <input required type="date" value={vaccinationForm.vaccinationDate} onChange={(event) => setVaccinationForm((current) => ({ ...current, vaccinationDate: event.target.value }))} />
+                          <input required type="date" min="2000-01-01" max={localDateInput()} value={vaccinationForm.vaccinationDate} onChange={(event) => setVaccinationForm((current) => ({ ...current, vaccinationDate: event.target.value }))} />
                         </label>
                         <label>Ngày nhắc lại
-                          <input required type="date" value={vaccinationForm.nextDate} onChange={(event) => setVaccinationForm((current) => ({ ...current, nextDate: event.target.value }))} />
+                          <input required type="date" min={followingDayInput(vaccinationForm.vaccinationDate)} value={vaccinationForm.nextDate} onChange={(event) => setVaccinationForm((current) => ({ ...current, nextDate: event.target.value }))} />
                         </label>
                       </div>
                       <label>Ghi chú thêm
-                        <textarea value={vaccinationForm.note} onChange={(event) => setVaccinationForm((current) => ({ ...current, note: event.target.value }))} placeholder="Tùy chọn" />
+                        <textarea maxLength={255} value={vaccinationForm.note} onChange={(event) => setVaccinationForm((current) => ({ ...current, note: event.target.value }))} placeholder="Tùy chọn" />
                       </label>
                       {editingVaccinationId && <label>Lý do chỉnh sửa<input required maxLength={500} value={vaccinationForm.correctionReason} onChange={(event) => setVaccinationForm((current) => ({ ...current, correctionReason: event.target.value }))} /></label>}
                       <div className="button-row"><button type="submit" className="button button-primary" disabled={busyKey === 'vaccination' || !staffId}>{busyKey === 'vaccination' ? 'Đang lưu…' : editingVaccinationId ? 'Lưu chỉnh sửa' : 'Lưu mũi tiêm'}</button>{editingVaccinationId && <button type="button" className="button button-secondary" onClick={() => { setEditingVaccinationId(''); setVaccinationForm({ vaccineName: '', vaccinationDate: localDateInput(), nextDate: oneYearFromTodayInput(), note: '', correctionReason: '' }); }}>Hủy sửa</button>}</div>

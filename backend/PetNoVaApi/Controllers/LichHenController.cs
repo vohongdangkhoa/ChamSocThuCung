@@ -242,7 +242,8 @@ public sealed class BookingsController(PetNoVaDbContext db, IConfiguration confi
     private string? ValidateInput(DateTime date, TimeSpan time, string? note)
     {
         if (date.Date < Today || date.Date > Today.AddMonths(6)) return "Ngày hẹn phải trong vòng 6 tháng tới.";
-        if (time < TimeSpan.FromHours(8) || time >= TimeSpan.FromHours(18) || time.Minutes % 30 != 0 || time.Seconds != 0)
+        if (time < TimeSpan.FromHours(8) || time >= TimeSpan.FromHours(18) ||
+            time.Ticks % TimeSpan.FromMinutes(30).Ticks != 0)
             return "Khung giờ phải từ 08:00 đến 18:00 và theo bước 30 phút.";
         if (note?.Length > 255) return "Ghi chú tối đa 255 ký tự.";
         return null;
@@ -259,7 +260,22 @@ public sealed class BookingsController(PetNoVaDbContext db, IConfiguration confi
             b.bookingTime + TimeSpan.FromMinutes(Math.Max(1, b.durationMinutes)) > time).ToList();
         if (petId is not null && overlapping.Any(b => b.petId == petId)) return (false, "Thú cưng đã có lịch trùng giờ.");
         if (staffId is not null && overlapping.Any(b => b.staffId == staffId)) return (false, "Nhân sự đã có lịch trùng giờ.");
-        if (overlapping.Count >= Capacity) return (false, "Khung giờ đã đủ công suất.");
+        // Một lịch dài có thể giao nhiều lịch nối tiếp nhau. Chỉ tính số lịch
+        // đồng thời tại từng mốc, không cộng tất cả lịch có giao một phần.
+        var end = time + TimeSpan.FromMinutes(duration);
+        var occupancyChanges = overlapping.SelectMany(b => new[]
+        {
+            (At: b.bookingTime < time ? time : b.bookingTime, Change: 1),
+            (At: b.bookingTime + TimeSpan.FromMinutes(Math.Max(1, b.durationMinutes)) > end
+                ? end : b.bookingTime + TimeSpan.FromMinutes(Math.Max(1, b.durationMinutes)), Change: -1)
+        }).OrderBy(change => change.At).ThenBy(change => change.Change);
+        var occupied = 0;
+        foreach (var change in occupancyChanges)
+        {
+            // Mốc kết thúc (-1) xử lý trước mốc bắt đầu (+1) cùng giờ.
+            occupied += change.Change;
+            if (occupied >= Capacity) return (false, "Khung giờ đã đủ công suất.");
+        }
         return (true, "");
     }
 

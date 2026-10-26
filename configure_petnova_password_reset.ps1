@@ -89,6 +89,32 @@ function Read-RequiredValue {
     return $value
 }
 
+# Nhận cả đường dẫn thường và đường dẫn có dấu ngoặc từ Windows Copy as path.
+function ConvertTo-ServiceAccountPath {
+    param([string]$Value)
+
+    $filePath = $Value.Trim()
+    if (
+        $filePath.Length -ge 2 -and (
+            ($filePath.StartsWith('"') -and $filePath.EndsWith('"')) -or
+            ($filePath.StartsWith("'") -and $filePath.EndsWith("'"))
+        )
+    ) {
+        $filePath = $filePath.Substring(1, $filePath.Length - 2).Trim()
+    }
+
+    if ([string]::IsNullOrWhiteSpace($filePath)) {
+        throw 'Đường dẫn file Firebase JSON không được để trống.'
+    }
+
+    try {
+        return [IO.Path]::GetFullPath($filePath)
+    }
+    catch {
+        throw 'Đường dẫn file Firebase JSON không hợp lệ. Hãy dùng Copy as path trên file .json vừa tải.'
+    }
+}
+
 # Gọi dotnet user-secrets set và kiểm tra mã thoát của từng khóa.
 function Set-UserSecret {
     param(
@@ -120,6 +146,9 @@ try {
 
     Write-Host '[PetNoVa] Cấu hình OTP Gmail và Firebase Admin' -ForegroundColor Cyan
     Write-Host 'Thông tin bí mật chỉ được lưu trong .NET User Secrets và LocalAppData.' -ForegroundColor DarkGray
+    Write-Host 'Cần Google App Password của Gmail đã bật xác minh 2 bước.' -ForegroundColor DarkGray
+    Write-Host 'Cần file JSON từ Firebase Console > Project settings > Service accounts.' -ForegroundColor DarkGray
+    Write-Host 'Không đưa App Password hoặc file JSON lên GitHub hay gửi qua chat.' -ForegroundColor Yellow
     Write-Host ''
 
     # Sửa BOM cũ trước khi bất kỳ lệnh dotnet user-secrets nào parse JSON.
@@ -138,7 +167,7 @@ try {
     }
 
     $serviceAccountSource = Read-RequiredValue -Prompt 'Đường dẫn file Firebase service-account JSON'
-    $serviceAccountSource = [IO.Path]::GetFullPath($serviceAccountSource)
+    $serviceAccountSource = ConvertTo-ServiceAccountPath -Value $serviceAccountSource
     if (-not (Test-Path -LiteralPath $serviceAccountSource -PathType Leaf)) {
         throw "Không tìm thấy file: $serviceAccountSource"
     }
@@ -174,7 +203,14 @@ try {
     $dotnetPath = (Get-Command dotnet -ErrorAction Stop).Source
     # Sinh pepper mật mã 48 byte dùng HMAC OTP/reset token, không tái dùng giá trị đoán được.
     $pepperBytes = New-Object byte[] 48
-    [Security.Cryptography.RandomNumberGenerator]::Fill($pepperBytes)
+    # GetBytes dùng được trong Windows PowerShell 5.1 mà file .cmd đang gọi.
+    $pepperGenerator = [Security.Cryptography.RandomNumberGenerator]::Create()
+    try {
+        $pepperGenerator.GetBytes($pepperBytes)
+    }
+    finally {
+        $pepperGenerator.Dispose()
+    }
     $pepper = [Convert]::ToBase64String($pepperBytes)
 
     # Chỉ chuyển app password sang BSTR trong phạm vi cần truyền cho dotnet CLI.
@@ -228,7 +264,7 @@ try {
     Write-Host ''
     Write-Host '✓ Đã cấu hình chức năng quên mật khẩu PetNoVa.' -ForegroundColor Green
     Write-Host '  Khởi động lại backend để áp dụng:' -ForegroundColor Green
-    Write-Host '  .\run_petnova_dev.cmd -RestartBackend' -ForegroundColor Cyan
+    Write-Host '  .\run_petnova_web_dev.cmd' -ForegroundColor Cyan
     Write-Host "  Service account an toàn tại: $serviceAccountDestination" -ForegroundColor DarkGray
 }
 catch {

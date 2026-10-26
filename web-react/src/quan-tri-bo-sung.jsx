@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { api, formatError } from "./giao-tiep-api";
 
 const TIEN = new Intl.NumberFormat("vi-VN", {
@@ -195,16 +195,26 @@ function BaoCao() {
   const [dates, setDates] = useState({ from: ngayDau(), to: homNay() });
   const [data, setData] = useState(null);
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const latestRequest = useRef(0);
   const load = async () => {
+    const requestId = ++latestRequest.current;
+    setLoading(true);
+    setMessage("");
+    setData(null);
     try {
-      setData(await api.get(`/api/Reports?from=${dates.from}&to=${dates.to}`));
-      setMessage("");
+      const result = await api.get(`/api/Reports?from=${dates.from}&to=${dates.to}`);
+      // Phản hồi của lần lọc trước không được ghi đè khoảng ngày mới hơn.
+      if (requestId === latestRequest.current) setData(result);
     } catch (e) {
-      setMessage(formatError(e));
+      if (requestId === latestRequest.current) setMessage(formatError(e));
+    } finally {
+      if (requestId === latestRequest.current) setLoading(false);
     }
   };
   useEffect(() => {
     void load();
+    return () => { latestRequest.current += 1; };
   }, []);
   const rows = data?.byDay || [];
   return (
@@ -242,8 +252,11 @@ function BaoCao() {
             onChange={(e) => setDates({ ...dates, to: e.target.value })}
           />
         </label>
-        <button className="button button-primary">Xem báo cáo</button>
+        <button className="button button-primary" disabled={loading}>
+          {loading ? "Đang tải báo cáo…" : "Xem báo cáo"}
+        </button>
       </form>
+      {loading && <p className="notice" role="status">Đang tải số liệu theo khoảng ngày đã chọn…</p>}
       {message && (
         <p className="form-feedback" role="alert">
           {message}
@@ -274,7 +287,7 @@ function BaoCao() {
             </article>
           </div>
           <p className="muted small">
-            Số tiền ghi nhận theo ngày giao dịch; hoàn tiền chỉ tính khi có
+            Khoảng số liệu: {data.from} đến {data.to}. Số tiền ghi nhận theo ngày giao dịch; hoàn tiền chỉ tính khi có
             chứng từ đã thực hiện.
           </p>
           <div className="panel">
@@ -309,6 +322,7 @@ function BaoCao() {
                   </tr>
                 </thead>
                 <tbody>
+                  {rows.length === 0 && <tr><td colSpan={4}>Không có lịch hẹn trong khoảng ngày này.</td></tr>}
                   {rows.map((r) => (
                     <tr key={r.date}>
                       <td>{r.date}</td>
@@ -333,6 +347,7 @@ function BaoCao() {
                   </tr>
                 </thead>
                 <tbody>
+                  {(data.byService || []).length === 0 && <tr><td colSpan={3}>Không có dịch vụ được đặt trong khoảng ngày này.</td></tr>}
                   {(data.byService || []).map((item) => (
                     <tr key={item.serviceId}>
                       <td>{item.serviceName}</td>

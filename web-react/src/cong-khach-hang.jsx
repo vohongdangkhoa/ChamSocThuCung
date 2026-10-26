@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { api, formatError } from "./giao-tiep-api";
 import { CaiDatTaiKhoan } from "./cai-dat-tai-khoan";
+import { taiChiTietLichHen, kiemTraHoSoThuCung, kiemTraTepAnh } from "./du-lieu-khach-hang";
 import {
   DatLichForm,
   DoiLichForm,
@@ -285,6 +286,8 @@ export function CustomerPortal({ user, onLogout }) {
   const [petModal, setPetModal] = useState(null);
   const [bookingDetailId, setBookingDetailId] = useState("");
   const payosReturnHandled = useRef(false);
+  const dataRequest = useRef({ sequence: 0, controller: null });
+  const healthRequest = useRef({ sequence: 0, controller: null });
 
   const userId = String(customer?.userId || "");
 
@@ -331,56 +334,28 @@ export function CustomerPortal({ user, onLogout }) {
     return () => window.clearTimeout(timeout);
   }, [toast]);
 
-  const loadBookingExtras = useCallback(async (bookingList) => {
-    const settled = await Promise.allSettled(
-      list(bookingList).map(async (booking) => {
-        const bookingId = itemId(booking, "bookingId");
-        const [detailsResult, paymentsResult] = await Promise.allSettled([
-          api.get(
-            `/api/BookingDetails/booking/${encodeURIComponent(bookingId)}`,
-          ),
-          api.get(`/api/Payments/booking/${encodeURIComponent(bookingId)}`),
-        ]);
-        return {
-          bookingId,
-          details:
-            detailsResult.status === "fulfilled"
-              ? list(detailsResult.value)
-              : [],
-          payments:
-            paymentsResult.status === "fulfilled"
-              ? list(paymentsResult.value)
-              : [],
-        };
-      }),
-    );
-
-    const nextDetails = {};
-    const nextPayments = {};
-    settled.forEach((result) => {
-      if (result.status !== "fulfilled") return;
-      nextDetails[result.value.bookingId] = result.value.details;
-      nextPayments[result.value.bookingId] = result.value.payments;
-    });
-    setBookingDetails(nextDetails);
-    setPayments(nextPayments);
-  }, []);
-
   const refreshData = useCallback(
     async ({ quiet = false } = {}) => {
       if (!userId) return;
+      dataRequest.current.controller?.abort();
+      const controller = new AbortController();
+      const sequence = dataRequest.current.sequence + 1;
+      dataRequest.current = { sequence, controller };
+      const options = { signal: controller.signal };
       if (!quiet) setIsLoading(true);
       setPageError("");
       try {
         const [petData, bookingData, serviceData, notificationData] =
           await Promise.all([
-            api.get(`/api/Pets/user/${encodeURIComponent(userId)}`),
-            api.get(`/api/Bookings/user/${encodeURIComponent(userId)}`),
-            api.get("/api/ServicePackages"),
-            api.get(`/api/Notifications/user/${encodeURIComponent(userId)}`),
+            api.get(`/api/Pets/user/${encodeURIComponent(userId)}`, options),
+            api.get(`/api/Bookings/user/${encodeURIComponent(userId)}`, options),
+            api.get("/api/ServicePackages", options),
+            api.get(`/api/Notifications/user/${encodeURIComponent(userId)}`, options),
           ]);
         const nextPets = list(petData);
         const nextBookings = list(bookingData);
+        const extras = await taiChiTietLichHen(api, nextBookings, options);
+        if (controller.signal.aborted || sequence !== dataRequest.current.sequence) return;
         setPets(nextPets);
         setBookings(nextBookings);
         setServices(list(serviceData));
@@ -390,37 +365,46 @@ export function CustomerPortal({ user, onLogout }) {
             ? current
             : itemId(nextPets[0], "petId"),
         );
-        await loadBookingExtras(nextBookings);
+        setBookingDetails(extras.details);
+        setPayments(extras.payments);
       } catch (error) {
-        setPageError(errorText(error, "Không thể tải dữ liệu của bạn."));
+        if (!controller.signal.aborted && sequence === dataRequest.current.sequence)
+          setPageError(errorText(error, "Không thể tải dữ liệu của bạn."));
       } finally {
-        if (!quiet) setIsLoading(false);
+        if (sequence === dataRequest.current.sequence) setIsLoading(false);
       }
     },
-    [loadBookingExtras, userId],
+    [userId],
   );
 
   const loadHealthData = useCallback(
     async (petId) => {
+      healthRequest.current.controller?.abort();
+      const controller = new AbortController();
+      const sequence = healthRequest.current.sequence + 1;
+      healthRequest.current = { sequence, controller };
       if (!petId) {
         setHealthRecords([]);
         setVaccinations([]);
+        setHealthLoading(false);
         return;
       }
       setHealthLoading(true);
       try {
         const [recordData, vaccinationData] = await Promise.all([
-          api.get(`/api/MedicalRecords/pet/${encodeURIComponent(petId)}`),
-          api.get(`/api/Vaccinations/pet/${encodeURIComponent(petId)}`),
+          api.get(`/api/MedicalRecords/pet/${encodeURIComponent(petId)}`, { signal: controller.signal }),
+          api.get(`/api/Vaccinations/pet/${encodeURIComponent(petId)}`, { signal: controller.signal }),
         ]);
+        if (controller.signal.aborted || sequence !== healthRequest.current.sequence) return;
         setHealthRecords(list(recordData));
         setVaccinations(list(vaccinationData));
       } catch (error) {
+        if (controller.signal.aborted || sequence !== healthRequest.current.sequence) return;
         notify(errorText(error, "Không thể tải hồ sơ sức khỏe."), "error");
         setHealthRecords([]);
         setVaccinations([]);
       } finally {
-        setHealthLoading(false);
+        if (sequence === healthRequest.current.sequence) setHealthLoading(false);
       }
     },
     [notify],
@@ -428,6 +412,10 @@ export function CustomerPortal({ user, onLogout }) {
 
   useEffect(() => {
     void refreshData();
+    return () => {
+      dataRequest.current.sequence += 1;
+      dataRequest.current.controller?.abort();
+    };
   }, [refreshData]);
   useEffect(() => {
     const sync = () =>
@@ -437,16 +425,18 @@ export function CustomerPortal({ user, onLogout }) {
   }, []);
   useEffect(() => {
     if (activeView === "health") void loadHealthData(selectedPetId);
+    return () => {
+      healthRequest.current.sequence += 1;
+      healthRequest.current.controller?.abort();
+    };
   }, [activeView, loadHealthData, selectedPetId]);
 
   const navigate = useCallback(
     (view) => {
       window.location.hash = view;
       setActiveView(view);
-      if (view === "health" && selectedPetId)
-        void loadHealthData(selectedPetId);
     },
-    [loadHealthData, selectedPetId],
+    [],
   );
 
   const savePet = useCallback(
@@ -476,10 +466,19 @@ export function CustomerPortal({ user, onLogout }) {
         }
         const savedPetId = itemId(savedPet, "petId");
         if (file && savedPetId) {
-          await api.upload(
-            `/api/Media/pets/${encodeURIComponent(savedPetId)}`,
-            file,
-          );
+          try {
+            await api.upload(
+              `/api/Media/pets/${encodeURIComponent(savedPetId)}`,
+              file,
+            );
+          } catch (uploadError) {
+            // Hồ sơ đã tồn tại: lần thử ảnh tiếp theo phải sửa hồ sơ này, không tạo bản sao.
+            setPetModal({ pet: savedPet });
+            await refreshData({ quiet: true });
+            setSelectedPetId(savedPetId);
+            notify(`Hồ sơ đã được lưu, nhưng chưa tải được ảnh. Bạn có thể thử lại ảnh. ${errorText(uploadError)}`, "error");
+            return false;
+          }
         }
         setPetModal(null);
         await refreshData({ quiet: true });
@@ -527,7 +526,7 @@ export function CustomerPortal({ user, onLogout }) {
         const createdBooking = await api.post("/api/Bookings", {
           bookingDate: form.bookingDate,
           bookingTime: form.bookingTime,
-          note: form.note.trim().slice(0, 255),
+          note: form.note.trim(),
           petId: form.petId,
           staffId: form.staffId || null,
           careTypeId: form.careTypeId,
@@ -564,7 +563,7 @@ export function CustomerPortal({ user, onLogout }) {
             bookingDate: form.bookingDate,
             bookingTime: form.bookingTime,
             staffId: form.staffId || null,
-            note: form.note.slice(0, 255),
+            note: form.note.trim(),
           },
         );
         await refreshData({ quiet: true });
@@ -1357,6 +1356,10 @@ function PetFormModal({ pet, busy, onClose, onSave }) {
   const [preview, setPreview] = useState(pet?.imageUrl || "");
   const [formError, setFormError] = useState("");
 
+  useEffect(() => () => {
+    if (preview.startsWith("blob:")) URL.revokeObjectURL(preview);
+  }, [preview]);
+
   const change = (event) =>
     setValues((current) => ({
       ...current,
@@ -1365,36 +1368,16 @@ function PetFormModal({ pet, busy, onClose, onSave }) {
   const selectFile = (event) => {
     const nextFile = event.target.files?.[0];
     if (!nextFile) return;
-    if (!/^image\/(jpeg|png|webp)$/i.test(nextFile.type)) {
-      setFormError("Hãy chọn ảnh JPG, PNG hoặc WebP.");
-      return;
-    }
-    if (nextFile.size > 6 * 1024 * 1024) {
-      setFormError("Ảnh phải có dung lượng dưới 6 MB.");
-      return;
-    }
+    const imageError = kiemTraTepAnh(nextFile);
+    if (imageError) return setFormError(imageError);
     setFormError("");
     setFile(nextFile);
     setPreview(URL.createObjectURL(nextFile));
   };
   const submit = async (event) => {
     event.preventDefault();
-    if (
-      !values.petName.trim() ||
-      !values.species.trim() ||
-      !values.birthDate ||
-      !values.weight ||
-      !values.healthStatus.trim()
-    ) {
-      setFormError(
-        "Vui lòng điền đủ tên, loài, ngày sinh, cân nặng và tình trạng sức khỏe.",
-      );
-      return;
-    }
-    if (Number(values.weight) <= 0) {
-      setFormError("Cân nặng phải lớn hơn 0.");
-      return;
-    }
+    const validationError = kiemTraHoSoThuCung(values, todayInputValue());
+    if (validationError) return setFormError(validationError);
     setFormError("");
     await onSave({ pet, values, file });
   };
@@ -1436,6 +1419,8 @@ function PetFormModal({ pet, busy, onClose, onSave }) {
           Tên bé
           <input
             name="petName"
+            required
+            maxLength={100}
             value={values.petName}
             onChange={change}
             placeholder="Ví dụ: Bông"
@@ -1456,6 +1441,8 @@ function PetFormModal({ pet, busy, onClose, onSave }) {
             Giống
             <input
               name="breed"
+              required
+              maxLength={100}
               value={values.breed}
               onChange={change}
               placeholder="Ví dụ: Poodle"
@@ -1475,6 +1462,8 @@ function PetFormModal({ pet, busy, onClose, onSave }) {
             Ngày sinh
             <input
               type="date"
+              required
+              min="1900-01-01"
               name="birthDate"
               value={values.birthDate}
               max={todayInputValue()}
@@ -1490,6 +1479,8 @@ function PetFormModal({ pet, busy, onClose, onSave }) {
               name="weight"
               value={values.weight}
               min="0.1"
+              required
+              max="999.9"
               step="0.1"
               onChange={change}
             />
@@ -1498,6 +1489,8 @@ function PetFormModal({ pet, busy, onClose, onSave }) {
             Tình trạng sức khỏe
             <input
               name="healthStatus"
+              required
+              maxLength={255}
               value={values.healthStatus}
               onChange={change}
               placeholder="Ví dụ: Khỏe mạnh"
@@ -2537,13 +2530,8 @@ function ProfilePage({ user, busy, onSave, onUploadAvatar, onLogout }) {
   const selectAvatar = async (event) => {
     const file = event.target.files?.[0];
     if (!file) return;
-    if (
-      !/^image\/(jpeg|png|webp)$/i.test(file.type) ||
-      file.size > 6 * 1024 * 1024
-    ) {
-      setFormError("Ảnh đại diện phải là JPG, PNG hoặc WebP dưới 6 MB.");
-      return;
-    }
+    const imageError = kiemTraTepAnh(file);
+    if (imageError) return setFormError(imageError);
     setFormError("");
     await onUploadAvatar(file);
     event.target.value = "";

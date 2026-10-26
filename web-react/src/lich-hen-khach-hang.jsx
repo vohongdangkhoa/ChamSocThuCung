@@ -224,6 +224,8 @@ export function DatLichForm({ pets, services, submitting, onSubmit }) {
       !form.bookingTime
     )
       return setLoi("Hãy chọn thú cưng, ít nhất một dịch vụ và khung giờ.");
+    if (form.note.trim().length > 255)
+      return setLoi("Ghi chú tối đa 255 ký tự.");
     if (new Date(`${form.bookingDate}T${form.bookingTime}`) <= new Date())
       return setLoi("Ngày giờ hẹn phải nằm trong tương lai.");
     if (
@@ -346,7 +348,7 @@ export function DatLichForm({ pets, services, submitting, onSubmit }) {
       <label>
         Ghi chú
         <textarea
-          maxLength={1000}
+          maxLength={255}
           value={form.note}
           disabled={submitting}
           onChange={(e) => sua({ note: e.target.value })}
@@ -389,6 +391,8 @@ export function DoiLichForm({ booking, details, busy, onSave, onCancel }) {
   });
   const submit = async (event) => {
     event.preventDefault();
+    if (form.note.trim().length > 255)
+      return setLoi("Ghi chú tối đa 255 ký tự.");
     if (
       new Date(`${form.bookingDate}T${form.bookingTime}`) <= new Date() ||
       !khungGio.slots.some(
@@ -420,7 +424,7 @@ export function DoiLichForm({ booking, details, busy, onSave, onCancel }) {
       <label>
         Ghi chú
         <textarea
-          maxLength={1000}
+          maxLength={255}
           value={form.note}
           onChange={(e) => setForm({ ...form, note: e.target.value })}
           disabled={busy}

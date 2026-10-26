@@ -1,0 +1,1707 @@
+{
+  "requirements": [
+    {
+      "id": "F4.1",
+      "name": "Danh sách lịch hẹn",
+      "description": "Khách hàng chỉ xem lịch và chi tiết lịch thuộc tài khoản hiện tại.",
+      "type": "Positive / Negative",
+      "importance": "High",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/LichHenController.cs",
+        "web-react/src/cong-khach-hang.jsx",
+        "backend/PetNoVaApi/Controllers/BookingDetailsController.cs"
+      ],
+      "scenarios": "Có lịch; chưa có lịch; thử truy cập lịch của khách hàng khác."
+    },
+    {
+      "id": "F4.2",
+      "name": "Chọn thú cưng và hình thức",
+      "description": "Chọn thú cưng đang sử dụng của chủ tài khoản và hình thức đến trung tâm hoặc gửi thú cưng.",
+      "type": "Positive",
+      "importance": "Medium",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/LichHenController.cs",
+        "web-react/src/lich-hen-khach-hang.jsx",
+        "web-react/src/cong-khach-hang.jsx"
+      ],
+      "scenarios": "Đổi thú cưng kiểm tra lại giờ; lưu đúng hình thức đã chọn."
+    },
+    {
+      "id": "F4.3",
+      "name": "Chọn dịch vụ",
+      "description": "Chọn 1–10 dịch vụ ACTIVE; giá và thời lượng lấy từ dữ liệu dịch vụ trên máy chủ.",
+      "type": "Positive / Negative / Boundary",
+      "importance": "High",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/LichHenController.cs",
+        "web-react/src/lich-hen-khach-hang.jsx"
+      ],
+      "scenarios": "Một, nhiều dịch vụ; bỏ chọn; dịch vụ ngưng hoạt động."
+    },
+    {
+      "id": "F4.4",
+      "name": "Khung giờ còn trống",
+      "description": "Tra cứu ngày từ hôm nay đến hết ngày cùng kỳ sau 6 tháng; giờ bắt đầu từ 08:00, bước 30 phút, hoàn tất trước hoặc đúng 18:00; kiểm tra công suất và lịch trùng.",
+      "type": "Positive / Negative / Boundary",
+      "importance": "High",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/LichHenController.cs",
+        "web-react/src/lich-hen-khach-hang.jsx"
+      ],
+      "scenarios": "Giờ theo thời lượng; biên 6 tháng; ngày đã qua; biên công suất cấu hình."
+    },
+    {
+      "id": "F4.5",
+      "name": "Tạo lịch trả tiền mặt",
+      "description": "Tạo nguyên bộ lịch PENDING, chi tiết dịch vụ và thanh toán CASH/PENDING; chống lặp cùng requestId trong cùng tài khoản.",
+      "type": "Positive / Negative",
+      "importance": "High",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/LichHenController.cs",
+        "backend/PetNoVaApi/Controllers/PaymentsController.cs",
+        "web-react/src/cong-khach-hang.jsx"
+      ],
+      "scenarios": "Tạo hợp lệ; phát lại mã yêu cầu; tính tiền theo giá máy chủ."
+    },
+    {
+      "id": "F4.6",
+      "name": "Tạo lịch PayOS",
+      "description": "Tạo lịch kèm BANK_TRANSFER/PENDING; tạo liên kết PayOS khi cấu hình đáp ứng, không ghi PAID trước xác minh.",
+      "type": "Positive / Negative",
+      "importance": "High",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/LichHenController.cs",
+        "backend/PetNoVaApi/Controllers/PaymentsController.cs",
+        "web-react/src/cong-khach-hang.jsx"
+      ],
+      "scenarios": "Tạo lịch chuyển khoản; tạo liên kết hợp lệ; lỗi cấu hình/liên kết giữ chưa thanh toán."
+    },
+    {
+      "id": "F4.7",
+      "name": "Từ chối lịch không hợp lệ",
+      "description": "Không tạo lịch thiếu dịch vụ hoặc dùng thú cưng không hợp lệ; kiểm tra ngày giờ, số dịch vụ, thời lượng và ghi chú ở máy chủ.",
+      "type": "Negative / Boundary",
+      "importance": "High",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/LichHenController.cs",
+        "web-react/src/lich-hen-khach-hang.jsx",
+        "web-react/src/cong-khach-hang.jsx"
+      ],
+      "scenarios": "Thiếu dịch vụ; thú cưng sai chủ/lưu trữ; quá 10/trùng dịch vụ; giờ sai bước; quá giờ đóng cửa; ghi chú 255/256 ký tự."
+    },
+    {
+      "id": "F4.8",
+      "name": "Đổi lịch hẹn",
+      "description": "Chỉ đổi lịch PENDING hoặc CONFIRMED; giữ nguyên dịch vụ và tiền; kiểm tra chỗ trống, quyền sở hữu và lịch trùng.",
+      "type": "Positive / Negative",
+      "importance": "High",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/LichHenController.cs",
+        "web-react/src/lich-hen-khach-hang.jsx",
+        "web-react/src/cong-khach-hang.jsx"
+      ],
+      "scenarios": "Đổi hợp lệ; giữ lịch cũ; xung đột giờ; trạng thái không cho đổi."
+    },
+    {
+      "id": "F4.9",
+      "name": "Hủy lịch hẹn",
+      "description": "Chỉ hủy lịch PENDING hoặc CONFIRMED chưa có thanh toán PAID; đổi thanh toán PENDING thành FAILED khi hủy.",
+      "type": "Positive / Negative",
+      "importance": "High",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/LichHenController.cs",
+        "web-react/src/cong-khach-hang.jsx"
+      ],
+      "scenarios": "Hủy hợp lệ; không xác nhận hủy; lịch đã trả; trạng thái bắt đầu/kết thúc."
+    },
+    {
+      "id": "F5.1",
+      "name": "Lịch sử thanh toán",
+      "description": "Khách hàng xem giao dịch của mình, lọc theo trạng thái/ngày và xem phiếu của giao dịch PAID hoặc REFUNDED.",
+      "type": "Positive / Negative",
+      "importance": "High",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/PaymentsController.cs",
+        "web-react/src/lich-hen-khach-hang.jsx",
+        "web-react/src/cong-khach-hang.jsx"
+      ],
+      "scenarios": "Có/rỗng; lọc; phiếu khớp dữ liệu; bảo vệ giao dịch khách khác."
+    },
+    {
+      "id": "F5.2",
+      "name": "Đối soát PayOS",
+      "description": "Trạng thái lấy từ PayOS hoặc webhook đã xác minh; kiểm tra mã thành công, số tiền và chống cập nhật lặp.",
+      "type": "Positive / Negative",
+      "importance": "High",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/PaymentsController.cs",
+        "web-react/src/cong-khach-hang.jsx"
+      ],
+      "scenarios": "PAID xác minh; hủy/hết hạn; webhook giả/sai tiền; callback lặp."
+    },
+    {
+      "id": "F5.3",
+      "name": "Thử lại thanh toán",
+      "description": "Chỉ tạo giao dịch mới cho FAILED khi lịch còn thanh toán được và chưa có giao dịch PENDING hoặc PAID; tiền lấy từ lịch.",
+      "type": "Positive / Negative",
+      "importance": "High",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/PaymentsController.cs",
+        "web-react/src/cong-khach-hang.jsx"
+      ],
+      "scenarios": "FAILED hợp lệ; giao dịch đang chờ/đã trả; lịch hủy/hoàn thành; giao dịch chờ khác."
+    },
+    {
+      "id": "F9.1",
+      "name": "Danh sách lịch hẹn vận hành",
+      "description": "Nhân viên xem lịch, tìm theo mã, lọc ngày/trạng thái/lịch được phân công và làm mới dữ liệu.",
+      "type": "Positive / Negative",
+      "importance": "Medium",
+      "sources": [
+        "web-react/src/cong-van-hanh.jsx",
+        "backend/PetNoVaApi/Controllers/LichHenController.cs"
+      ],
+      "scenarios": "Tìm/lọc kết hợp; không có kết quả; làm mới."
+    },
+    {
+      "id": "F9.2",
+      "name": "Chi tiết lịch vận hành",
+      "description": "Nhân viên xem chủ lịch, thú cưng, ghi chú, toàn bộ dòng dịch vụ và các giao dịch của lịch đã chọn.",
+      "type": "Positive",
+      "importance": "Medium",
+      "sources": [
+        "web-react/src/cong-van-hanh.jsx",
+        "backend/PetNoVaApi/Controllers/BookingDetailsController.cs",
+        "backend/PetNoVaApi/Controllers/PaymentsController.cs"
+      ],
+      "scenarios": "Nhiều dịch vụ/giao dịch; dữ liệu khớp và đóng chi tiết."
+    },
+    {
+      "id": "F9.3",
+      "name": "Phân công nhân sự",
+      "description": "STAFF/ADMIN gắn nhân sự ACTIVE không trùng lịch cho lịch chưa CANCELLED/COMPLETED.",
+      "type": "Positive / Negative",
+      "importance": "High",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/LichHenController.cs",
+        "web-react/src/cong-van-hanh.jsx",
+        "backend/PetNoVaApi/Services/PhienNguoiDung.cs",
+        "backend/PetNoVaApi/Controllers/StaffsController.cs"
+      ],
+      "scenarios": "Phân công/đổi; nhân sự ngưng hoạt động; nhân sự trùng giờ; lịch kết thúc."
+    },
+    {
+      "id": "F9.4",
+      "name": "Đổi lịch tại quầy",
+      "description": "Nhân viên đổi ngày giờ cho lịch PENDING/CONFIRMED theo cùng ràng buộc chỗ trống của khách hàng.",
+      "type": "Positive / Negative",
+      "importance": "High",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/LichHenController.cs",
+        "web-react/src/cong-van-hanh.jsx",
+        "web-react/src/lich-hen-khach-hang.jsx"
+      ],
+      "scenarios": "Đổi hợp lệ; khung giờ hết chỗ; lịch đã hoàn thành."
+    },
+    {
+      "id": "F9.5",
+      "name": "Tiến độ chăm sóc",
+      "description": "STAFF/ADMIN chuyển đúng PENDING→CONFIRMED→IN_PROGRESS→COMPLETED; không bỏ bước hoặc lùi trạng thái.",
+      "type": "Positive / Negative",
+      "importance": "High",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/LichHenController.cs",
+        "web-react/src/cong-van-hanh.jsx",
+        "backend/PetNoVaApi/Services/PhienNguoiDung.cs"
+      ],
+      "scenarios": "Ba chuyển tiếp hợp lệ; chuyển trái luồng."
+    },
+    {
+      "id": "F9.6",
+      "name": "Chặn hoàn thành chưa thu tiền",
+      "description": "Chỉ hoàn thành lịch IN_PROGRESS khi có ít nhất một giao dịch PAID.",
+      "type": "Positive / Negative",
+      "importance": "High",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/LichHenController.cs",
+        "web-react/src/cong-van-hanh.jsx"
+      ],
+      "scenarios": "PENDING bị chặn; FAILED bị chặn; PAID cho phép."
+    },
+    {
+      "id": "F9.7",
+      "name": "Xác nhận tiền mặt",
+      "description": "STAFF/ADMIN xác nhận giao dịch CASH/PENDING thành PAID; không xác nhận lặp hoặc xác nhận thủ công BANK_TRANSFER.",
+      "type": "Positive / Negative",
+      "importance": "High",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/PaymentsController.cs",
+        "web-react/src/cong-van-hanh.jsx",
+        "backend/PetNoVaApi/Services/PhienNguoiDung.cs"
+      ],
+      "scenarios": "Xác nhận hợp lệ; lặp; sai phương thức."
+    },
+    {
+      "id": "F9.8",
+      "name": "Kiểm tra PayOS tại quầy",
+      "description": "Nhân viên đồng bộ BANK_TRANSFER theo trạng thái xác minh từ PayOS; lỗi kết nối không tự chuyển PAID.",
+      "type": "Positive / Negative",
+      "importance": "High",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/PaymentsController.cs",
+        "web-react/src/cong-van-hanh.jsx"
+      ],
+      "scenarios": "PAID; còn chờ; lỗi kết nối."
+    },
+    {
+      "id": "F9.9",
+      "name": "Ghi nhận hoàn tiền",
+      "description": "STAFF/ADMIN lưu chứng từ cho giao dịch PAID: lý do 1–500 ký tự không toàn khoảng trắng, tham chiếu 1–200 ký tự; chỉ ghi nhận khoản hoàn đã thực hiện ngoài hệ thống.",
+      "type": "Positive / Negative / Boundary",
+      "importance": "High",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/PaymentsController.cs",
+        "web-react/src/cong-van-hanh.jsx",
+        "backend/PetNoVaApi/Services/PhienNguoiDung.cs"
+      ],
+      "scenarios": "Ghi nhận đủ; thiếu/toàn khoảng trắng; biên chiều dài; giao dịch không PAID."
+    }
+  ],
+  "cases": [
+    {
+      "req": "F4.1",
+      "objective": "Hiển thị lịch và mở đúng chi tiết của khách hàng",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Chuẩn bị ít nhất 2 lịch của tài khoản ở các trạng thái khác nhau và 1 lịch của khách khác.",
+      "steps": [
+        {
+          "action": "Mở mục Đặt lịch.",
+          "data": "Dữ liệu lịch đã chuẩn bị.",
+          "expected": "Chỉ hiển thị lịch của tài khoản hiện tại; ngày, giờ, trạng thái và tổng tiền khớp dữ liệu chuẩn bị."
+        },
+        {
+          "action": "Mở Xem chi tiết của một lịch.",
+          "data": "Chọn mã lịch đang hiện.",
+          "expected": "Chi tiết đúng thú cưng, ngày giờ, hình thức, danh sách dịch vụ và thanh toán của lịch được chọn."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F4.1",
+      "objective": "Hiển thị trường hợp khách hàng chưa có lịch",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Dùng tài khoản chưa có lịch hẹn.",
+      "steps": [
+        {
+          "action": "Mở mục Đặt lịch.",
+          "data": "Tài khoản chưa có lịch.",
+          "expected": "Danh sách không có thẻ lịch và xuất hiện trạng thái rỗng."
+        },
+        {
+          "action": "Tải lại trang.",
+          "data": "Giữ nguyên tài khoản.",
+          "expected": "Vẫn không hiển thị lịch của khách khác; biểu mẫu tạo lịch sử dụng được."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F4.1",
+      "objective": "Không đọc được lịch và chi tiết của khách hàng khác",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Biết mã một lịch thuộc khách hàng B trong CSDL kiểm thử.",
+      "steps": [
+        {
+          "action": "Gửi GET /api/Bookings/{id}.",
+          "data": "id=mã lịch của B; phiên của A.",
+          "expected": "HTTP 404; không trả dữ liệu lịch của B."
+        },
+        {
+          "action": "Gửi GET /api/BookingDetails/booking/{bookingId}.",
+          "data": "bookingId=cùng mã lịch của B; phiên của A.",
+          "expected": "Danh sách rỗng; không trả chi tiết dịch vụ của B."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật. ",
+      "gui": false
+    },
+    {
+      "req": "F4.2",
+      "objective": "Đổi thú cưng xóa giờ cũ và kiểm tra lại chỗ trống",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Có 2 thú cưng chưa lưu trữ, một dịch vụ ACTIVE. D là ngày kiểm thử tại UTC+7; dùng D+1 hoặc ngày tương lai nêu rõ. Mọi mã tài khoản/thú cưng/lịch/thanh toán lấy từ bộ dữ liệu chuẩn bị, không dùng mã giả không tồn tại. ",
+      "steps": [
+        {
+          "action": "Chọn thú cưng thứ nhất, dịch vụ và D+1; chọn một giờ trống.",
+          "data": "Ghi lại thú cưng và giờ đã chọn.",
+          "expected": "Giờ được chọn thuộc dữ liệu còn trống của thú cưng thứ nhất."
+        },
+        {
+          "action": "Chuyển sang thú cưng thứ hai.",
+          "data": "Thú cưng thứ hai thuộc cùng tài khoản.",
+          "expected": "Giờ cũ bị bỏ chọn; giờ trống được kiểm tra lại theo thú cưng mới."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F4.2",
+      "objective": "Lưu đúng hình thức Gửi thú cưng",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Có thú cưng chưa lưu trữ, dịch vụ ACTIVE, khung giờ D+1 còn trống; CARE_TYPE có bản ghi của hai lựa chọn.",
+      "steps": [
+        {
+          "action": "Điền lịch hợp lệ và đổi Hình thức từ Đến trung tâm sang Gửi thú cưng.",
+          "data": "Chọn tiền mặt; chọn giờ tương lai còn trống.",
+          "expected": "Lựa chọn Gửi thú cưng hiển thị trước khi gửi."
+        },
+        {
+          "action": "Bấm Xác nhận đặt lịch và mở chi tiết lịch vừa tạo.",
+          "data": "Lấy mã lịch từ kết quả tạo mới.",
+          "expected": "Lịch lưu đúng hình thức Gửi thú cưng; thú cưng, dịch vụ và ngày giờ không bị đổi ngoài ý muốn."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F4.3",
+      "objective": "Chọn một dịch vụ tính đúng tiền và thời lượng",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Có một dịch vụ ACTIVE giá p>0, thời lượng t từ 1–480 phút đã ghi nhận trước.",
+      "steps": [
+        {
+          "action": "Chọn thú cưng, ngày tương lai và một dịch vụ.",
+          "data": "Một dịch vụ với giá p và thời lượng t.",
+          "expected": "Hiển thị 1 dịch vụ và tổng tiền bằng p."
+        },
+        {
+          "action": "Quan sát khung giờ và thời lượng dự kiến.",
+          "data": "Không đổi dịch vụ.",
+          "expected": "Thời lượng dự kiến bằng t; chỉ có giờ bắt đầu cho phép kết thúc trước hoặc đúng 18:00."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F4.3",
+      "objective": "Chọn nhiều dịch vụ và bỏ một dịch vụ cập nhật tổng",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Có 2 dịch vụ ACTIVE với giá p1,p2>0 và thời lượng t1,t2; tổng thời lượng≤480.",
+      "steps": [
+        {
+          "action": "Chọn cả hai dịch vụ.",
+          "data": "Hai dịch vụ đã ghi nhận giá và thời lượng.",
+          "expected": "Tổng tiền p1+p2, số dịch vụ 2, thời lượng dự kiến t1+t2."
+        },
+        {
+          "action": "Bỏ chọn dịch vụ thứ hai.",
+          "data": "Giữ dịch vụ thứ nhất.",
+          "expected": "Tổng tiền trở về p1, số dịch vụ 1, thời lượng t1; giờ đã chọn bị xóa để kiểm tra lại."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F4.3",
+      "objective": "Biên 10 dịch vụ hợp lệ được chấp nhận",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Chuẩn bị 10 dịch vụ ACTIVE khác nhau, tổng thời lượng≤480 phút và tổng tiền>0; lịch tương lai đủ công suất.",
+      "steps": [
+        {
+          "action": "Gửi yêu cầu tạo lịch hợp lệ với đúng 10 serviceIds.",
+          "data": "10 mã dịch vụ khác nhau; CASH; requestId mới; ngày giờ còn trống.",
+          "expected": "Tạo lịch thành công; không bị từ chối do số lượng bằng 10."
+        },
+        {
+          "action": "Mở chi tiết lịch vừa tạo.",
+          "data": "Mã lịch từ phản hồi.",
+          "expected": "Có đủ 10 dòng dịch vụ, mỗi dòng số lượng 1; tổng tiền/thời lượng bằng tổng dữ liệu máy chủ."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật. ",
+      "gui": false
+    },
+    {
+      "req": "F4.3",
+      "objective": "Không cho đặt dịch vụ đã ngưng hoạt động",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Có một dịch vụ INACTIVE và một dịch vụ ACTIVE trong CSDL kiểm thử.",
+      "steps": [
+        {
+          "action": "Mở biểu mẫu đặt lịch.",
+          "data": "Danh sách gồm dịch vụ ACTIVE và INACTIVE trong nguồn dữ liệu.",
+          "expected": "Dịch vụ INACTIVE không có trong các lựa chọn đặt lịch."
+        },
+        {
+          "action": "Gửi yêu cầu tạo lịch với mã dịch vụ INACTIVE.",
+          "data": "Các trường còn lại hợp lệ; requestId mới.",
+          "expected": "HTTP 400; không tạo lịch, chi tiết hoặc giao dịch cho yêu cầu đó."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật. ",
+      "gui": false
+    },
+    {
+      "req": "F4.4",
+      "objective": "Sinh khung giờ theo bước 30 phút và thời lượng",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. D+1 chưa có lịch; có dịch vụ ACTIVE thời lượng 60 phút. D là ngày kiểm thử tại UTC+7; dùng D+1 hoặc ngày tương lai nêu rõ. Mọi mã tài khoản/thú cưng/lịch/thanh toán lấy từ bộ dữ liệu chuẩn bị, không dùng mã giả không tồn tại. ",
+      "steps": [
+        {
+          "action": "Chọn thú cưng, dịch vụ 60 phút và D+1.",
+          "data": "Không chỉ định nhân sự.",
+          "expected": "Giờ bắt đầu được sinh từ 08:00 theo bước 30 phút; giờ kết thúc không vượt 18:00."
+        },
+        {
+          "action": "Kiểm tra hai mốc cuối ngày.",
+          "data": "Thời lượng=60 phút.",
+          "expected": "17:00 có thể đặt khi còn công suất; 17:30 không nằm trong các giờ đủ thời gian."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F4.4",
+      "objective": "Kiểm tra biên ngày đúng 6 tháng và vượt 1 ngày",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Dữ liệu dịch vụ hợp lệ; ngày biên không có lịch trùng. D là ngày kiểm thử tại UTC+7; dùng D+1 hoặc ngày tương lai nêu rõ. Mọi mã tài khoản/thú cưng/lịch/thanh toán lấy từ bộ dữ liệu chuẩn bị, không dùng mã giả không tồn tại. ",
+      "steps": [
+        {
+          "action": "Yêu cầu GET /api/Bookings/availability cho ngày D.AddMonths(6).",
+          "data": "date=ngày cùng kỳ sau 6 tháng; serviceIds,petId hợp lệ.",
+          "expected": "HTTP 200; trả danh sách khung giờ theo điều kiện của ngày biên."
+        },
+        {
+          "action": "Yêu cầu lại cho ngày D.AddMonths(6)+1 ngày.",
+          "data": "Giữ nguyên petId và serviceIds.",
+          "expected": "HTTP 400; không trả ngày ngoài phạm vi như ngày được đặt."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật. Tính bằng phép cộng tháng lịch như máy chủ, không quy đổi 6 tháng thành 180 ngày.",
+      "gui": false
+    },
+    {
+      "req": "F4.4",
+      "objective": "Từ chối tra cứu ngày đã qua",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Dịch vụ và thú cưng hợp lệ. D là ngày kiểm thử tại UTC+7; dùng D+1 hoặc ngày tương lai nêu rõ. Mọi mã tài khoản/thú cưng/lịch/thanh toán lấy từ bộ dữ liệu chuẩn bị, không dùng mã giả không tồn tại. ",
+      "steps": [
+        {
+          "action": "Mở ô Ngày hẹn.",
+          "data": "Ngày nhỏ nhất được cấu hình là hôm nay trên giao diện.",
+          "expected": "Không thể chọn ngày trước hôm nay bằng thao tác lịch thông thường."
+        },
+        {
+          "action": "Gửi yêu cầu availability cho D−1.",
+          "data": "serviceIds và petId hợp lệ.",
+          "expected": "HTTP 400; thông tin giới hạn ngày được trả về, không có giờ đặt cho ngày quá khứ."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật. Khi máy khách khác múi giờ máy chủ, dùng UTC+7 để xác định D.",
+      "gui": false
+    },
+    {
+      "req": "F4.4",
+      "objective": "Khung giờ phản ánh biên công suất cấu hình",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Xác định C=Booking:Capacity đang áp dụng (mặc định 3 khi không cấu hình). Chuẩn bị D+1 với C−1 lịch trùng khoảng; các thú cưng và nhân sự khác nhau.",
+      "steps": [
+        {
+          "action": "Tra cứu giờ cùng khoảng bằng thú cưng chưa có lịch trùng.",
+          "data": "C−1 lịch đang chiếm công suất.",
+          "expected": "Giờ còn khả dụng nếu không có xung đột riêng thú cưng/nhân sự và đủ thời gian."
+        },
+        {
+          "action": "Bổ sung 1 lịch fixture vào cùng khoảng và kiểm tra lại.",
+          "data": "C lịch không CANCELLED; fixture chỉ ở CSDL kiểm thử.",
+          "expected": "Giờ không khả dụng, lý do công suất; không được tiếp tục đặt vượt công suất."
+        }
+      ],
+      "notes": "Cần người chuẩn bị dữ liệu kiểm thử tạo fixture; không giả định website luôn có công suất 3.",
+      "gui": false
+    },
+    {
+      "req": "F4.5",
+      "objective": "Tạo lịch tiền mặt đồng bộ lịch, chi tiết và giao dịch",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Có thú cưng hợp lệ, ít nhất một dịch vụ ACTIVE giá>0 và D+1 còn chỗ.",
+      "steps": [
+        {
+          "action": "Điền dữ liệu hợp lệ và chọn Tiền mặt tại quầy.",
+          "data": "Ngày giờ tương lai còn trống; ghi chú tùy chọn.",
+          "expected": "Tổng tiền hiển thị đúng dịch vụ; nút Xác nhận đặt lịch khả dụng."
+        },
+        {
+          "action": "Bấm Xác nhận đặt lịch một lần.",
+          "data": "Không sửa dữ liệu trong lúc gửi.",
+          "expected": "Tạo một lịch PENDING kèm các dòng dịch vụ và một giao dịch CASH/PENDING cùng tổng tiền."
+        },
+        {
+          "action": "Tải lại và mở lịch mới.",
+          "data": "Mã lịch hệ thống vừa sinh.",
+          "expected": "Lịch và giao dịch còn tồn tại; tiền mặt vẫn chờ nhân viên xác nhận, chưa thành PAID."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F4.5",
+      "objective": "Phát lại cùng mã yêu cầu không tạo hai lịch",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Chuẩn bị yêu cầu đặt lịch tiền mặt hợp lệ và một requestId thử nghiệm duy nhất; ghi lại số lịch/giao dịch ban đầu.",
+      "steps": [
+        {
+          "action": "Gửi POST /api/Bookings lần đầu.",
+          "data": "Payload hợp lệ với requestId đã ghi.",
+          "expected": "HTTP 201; ghi nhận mã lịch vừa tạo."
+        },
+        {
+          "action": "Gửi lại nguyên payload với cùng requestId và cùng khách hàng.",
+          "data": "Không thay bất kỳ dữ liệu đầu vào.",
+          "expected": "HTTP 200 trả lịch cũ; tổng số lịch, chi tiết và giao dịch không tăng thêm lần hai."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật. Không tạo requestId mới cho lần phát lại; đây là điều kiện chống lặp được triển khai.",
+      "gui": false
+    },
+    {
+      "req": "F4.5",
+      "objective": "Tiền và thời lượng tạo lịch lấy từ dịch vụ trên máy chủ",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Chuẩn bị dịch vụ ACTIVE giá p>0 và thời lượng t; fixture không bị sửa khi chạy ca.",
+      "steps": [
+        {
+          "action": "Gửi tạo lịch với dịch vụ đó và thêm trường amount/totalAmount giả ở payload.",
+          "data": "Dùng 1 đồng ở trường giả; serviceIds và các trường được yêu cầu vẫn hợp lệ.",
+          "expected": "Nếu tạo thành công, số tiền lịch do máy chủ tính từ giá p, không lấy số tiền giả ở payload."
+        },
+        {
+          "action": "Đọc lịch và GET /api/Payments/booking/{bookingId}.",
+          "data": "Mã lịch từ lần tạo.",
+          "expected": "totalAmount=p, durationMinutes=t, giao dịch amount=p; không có giao dịch thu 1 đồng."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật. Các trường giá không thuộc DTO tạo lịch; kiểm tra quyền quyết định giá của máy chủ.",
+      "gui": false
+    },
+    {
+      "req": "F4.6",
+      "objective": "Tạo lịch chuyển khoản vẫn chờ thanh toán",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Có dữ liệu đặt lịch hợp lệ; chưa mở hoặc thực hiện thanh toán ngoài hệ thống.",
+      "steps": [
+        {
+          "action": "Chọn Chuyển khoản PayOS và tạo lịch.",
+          "data": "D+1, giờ còn chỗ, dịch vụ ACTIVE.",
+          "expected": "Lịch PENDING và giao dịch BANK_TRANSFER/PENDING được tạo."
+        },
+        {
+          "action": "Mở chi tiết giao dịch và tải lại.",
+          "data": "Không có xác nhận PayOS PAID.",
+          "expected": "Có lựa chọn Thanh toán PayOS/Kiểm tra lại; giao dịch vẫn PENDING, không tự ghi PAID."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F4.6",
+      "objective": "Tạo liên kết PayOS cho giao dịch chuyển khoản đang chờ",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Có BANK_TRANSFER/PENDING, lịch chưa CANCELLED, mã thanh toán hệ thống hợp lệ; cấu hình PayOS thử nghiệm hoặc bộ giả lập tích hợp được chuẩn bị trả link hợp lệ.",
+      "steps": [
+        {
+          "action": "Bấm Thanh toán PayOS trong chi tiết lịch.",
+          "data": "Giao dịch thuộc tài khoản đang đăng nhập.",
+          "expected": "Nhận liên kết thanh toán cho đúng giao dịch/số tiền và có thể mở trang cổng hoặc liên kết dự phòng."
+        },
+        {
+          "action": "Quay lại PetNoVa mà chưa xác nhận trả tiền.",
+          "data": "Không thực hiện chuyển tiền.",
+          "expected": "Chỉ tạo liên kết không làm trạng thái thành PAID; giao dịch còn chờ."
+        }
+      ],
+      "notes": "Ca tích hợp phụ thuộc cấu hình được người phụ trách cung cấp; không giả định PayOS có sandbox; không chuyển tiền thật.",
+      "gui": false
+    },
+    {
+      "req": "F4.6",
+      "objective": "Lỗi tạo liên kết không làm mất lịch hoặc ghi đã trả",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Có BANK_TRANSFER/PENDING; chuẩn bị môi trường kiểm thử thiếu cấu hình PayOS để kiểm tra nhánh 503.",
+      "steps": [
+        {
+          "action": "Gửi POST /api/Payments/{id}/payos-link.",
+          "data": "id của giao dịch thuộc khách hàng; cấu hình thiếu ít nhất một secret PayOS.",
+          "expected": "HTTP 503; không có liên kết được coi là hợp lệ."
+        },
+        {
+          "action": "Tải lại chi tiết lịch và giao dịch.",
+          "data": "Cùng mã lịch/giao dịch.",
+          "expected": "Lịch và số tiền vẫn còn; giao dịch PENDING, không tự chuyển PAID hoặc tạo thêm giao dịch."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật. Chỉ thay cấu hình trong môi trường kiểm thử do người phụ trách chuẩn bị.",
+      "gui": false
+    },
+    {
+      "req": "F4.7",
+      "objective": "Thiếu dịch vụ không tạo lịch",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Có thú cưng hợp lệ và ngày giờ tương lai; ghi nhận số lịch ban đầu.",
+      "steps": [
+        {
+          "action": "Bỏ chọn toàn bộ dịch vụ trên biểu mẫu.",
+          "data": "serviceIds rỗng.",
+          "expected": "Nút tạo lịch không khả dụng hoặc biểu mẫu yêu cầu chọn ít nhất một dịch vụ."
+        },
+        {
+          "action": "Gửi POST /api/Bookings với serviceIds=[].",
+          "data": "Các trường khác hợp lệ; requestId mới.",
+          "expected": "HTTP 400; số lịch, chi tiết và giao dịch không tăng."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật. ",
+      "gui": false
+    },
+    {
+      "req": "F4.7",
+      "objective": "Không tạo lịch bằng thú cưng sai chủ hoặc đã lưu trữ",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Chuẩn bị hai fixture riêng: thú cưng của B và thú cưng đã lưu trữ của A.",
+      "steps": [
+        {
+          "action": "Gửi tạo lịch hợp lệ ngoài petId của khách B.",
+          "data": "Phiên khách A, requestId mới; petId của B.",
+          "expected": "HTTP 403; không tạo lịch hoặc giao dịch cho thú cưng của B."
+        },
+        {
+          "action": "Gửi yêu cầu độc lập với petId đã lưu trữ của A.",
+          "data": "requestId mới khác; các trường còn lại hợp lệ.",
+          "expected": "HTTP 403; thú cưng đã lưu trữ không được đặt lịch mới."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật. Hai dữ liệu phủ cùng điều kiện sở hữu và !isArchived; kiểm tra riêng từng phản hồi.",
+      "gui": false
+    },
+    {
+      "req": "F4.7",
+      "objective": "Từ chối 11 dịch vụ hoặc mã dịch vụ trùng nhau",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Chuẩn bị 11 dịch vụ ACTIVE, tổng tiền>0 và đủ thời gian; tách riêng từng yêu cầu.",
+      "steps": [
+        {
+          "action": "Gửi tạo lịch với 11 mã dịch vụ khác nhau.",
+          "data": "serviceIds gồm 11 mã; requestId mới.",
+          "expected": "HTTP 400; không tạo lịch do vượt giới hạn 10 dịch vụ."
+        },
+        {
+          "action": "Gửi tạo lịch mới lặp lại cùng một serviceId hai lần.",
+          "data": "serviceIds=[mã đã chuẩn bị,mã đã chuẩn bị]; requestId mới.",
+          "expected": "HTTP 400; không tạo lịch hoặc nhân đôi cùng dịch vụ."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật. ",
+      "gui": false
+    },
+    {
+      "req": "F4.7",
+      "objective": "Từ chối giờ không theo bước 30 phút",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Dịch vụ, thú cưng, hình thức hợp lệ; ngày D+1 không trùng lịch.",
+      "steps": [
+        {
+          "action": "Gửi tạo lịch với giờ 08:15:00.",
+          "data": "bookingDate=D+1; các trường khác hợp lệ.",
+          "expected": "HTTP 400; không tạo lịch vì phút không theo bước 30."
+        },
+        {
+          "action": "Gửi yêu cầu độc lập với giờ 08:00:01.",
+          "data": "requestId khác; giây khác 0.",
+          "expected": "HTTP 400; không tạo lịch ở thời điểm có phần giây."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật. ",
+      "gui": false
+    },
+    {
+      "req": "F4.7",
+      "objective": "Chấp nhận kết thúc đúng 18:00, chặn vượt giờ đóng cửa",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Dịch vụ ACTIVE dài 60 phút; ngày tương lai còn công suất ở 17:00 và 17:30; dùng thú cưng/fixture độc lập.",
+      "steps": [
+        {
+          "action": "Gửi tạo lịch lúc 17:00 với thời lượng 60 phút.",
+          "data": "D+1, kết thúc đúng 18:00.",
+          "expected": "Tạo thành công nếu mọi dữ liệu và chỗ trống hợp lệ."
+        },
+        {
+          "action": "Gửi yêu cầu độc lập lúc 17:30 với thời lượng 60 phút.",
+          "data": "D+1; dùng thú cưng khác không trùng lịch, requestId mới.",
+          "expected": "HTTP 409; không tạo lịch kết thúc 18:30."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật. Chuẩn bị fixture độc lập để không nhầm lỗi trùng thú cưng với lỗi vượt giờ đóng cửa.",
+      "gui": false
+    },
+    {
+      "req": "F4.7",
+      "objective": "Máy chủ áp dụng biên ghi chú 255/256 ký tự",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Hai yêu cầu lịch độc lập hợp lệ và giờ trống; chuẩn bị chuỗi chữ a đủ 255 và 256 ký tự.",
+      "steps": [
+        {
+          "action": "Gửi tạo lịch với note dài đúng 255 ký tự.",
+          "data": "note='a' lặp 255; requestId mới.",
+          "expected": "Không bị từ chối bởi độ dài; lịch tạo thành công nếu các điều kiện khác hợp lệ."
+        },
+        {
+          "action": "Gửi tạo lịch độc lập với note dài 256 ký tự.",
+          "data": "note='a' lặp 256; requestId khác.",
+          "expected": "HTTP 400; không tạo lịch với ghi chú vượt giới hạn."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật. Nguồn hiện tại: textarea cho 1000 ký tự nhưng hàm gửi cắt còn 255; ca này kiểm API. Cần xác nhận yêu cầu UX cho phần bị cắt, không ghi rằng web chắc chắn báo lỗi 256 ký tự.",
+      "gui": false
+    },
+    {
+      "req": "F4.8",
+      "objective": "Đổi lịch PENDING sang giờ trống và giữ giá dịch vụ",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Có lịch PENDING thuộc A; ghi nhận dịch vụ, tổng tiền và giao dịch; chọn D+2 còn trống.",
+      "steps": [
+        {
+          "action": "Mở chi tiết, chọn Đổi ngày giờ rồi chọn D+2/giờ trống.",
+          "data": "Không đổi dịch vụ.",
+          "expected": "Biểu mẫu hiển thị giờ mới được kiểm tra còn nhận lịch."
+        },
+        {
+          "action": "Bấm Lưu lịch mới và tải lại.",
+          "data": "Ngày giờ mới; ghi chú hợp lệ.",
+          "expected": "Ngày giờ lịch đổi; dịch vụ, tổng tiền và giao dịch giữ nguyên; trạng thái vẫn PENDING."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F4.8",
+      "objective": "Giữ lịch cũ khi đóng biểu mẫu đổi lịch",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Có lịch CONFIRMED; đã ghi ngày giờ hiện tại.",
+      "steps": [
+        {
+          "action": "Mở Đổi ngày giờ và chọn ngày giờ khác.",
+          "data": "Không bấm Lưu lịch mới.",
+          "expected": "Biểu mẫu phản ánh lựa chọn mới, lịch chưa được lưu."
+        },
+        {
+          "action": "Bấm Giữ lịch cũ rồi mở lại chi tiết.",
+          "data": "Không gửi yêu cầu lưu.",
+          "expected": "Ngày giờ và ghi chú đã lưu không thay đổi."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F4.8",
+      "objective": "Từ chối đổi sang giờ thú cưng hoặc nhân sự đã trùng",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Có lịch PENDING của thú cưng A và một lịch khác của cùng thú cưng tại D+2/09:00; thời lượng giao nhau.",
+      "steps": [
+        {
+          "action": "Tra cứu D+2 trong biểu mẫu đổi lịch.",
+          "data": "Giữ petId và dịch vụ gốc.",
+          "expected": "Giờ giao với lịch kia không khả dụng; lịch đang sửa được loại khỏi kiểm tra trùng chính nó."
+        },
+        {
+          "action": "Gửi reschedule trực tiếp đến 09:00.",
+          "data": "PUT /api/Bookings/{id}/reschedule; staffId hợp lệ hoặc null.",
+          "expected": "HTTP 409; ngày giờ lịch ban đầu không thay đổi."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật. ",
+      "gui": false
+    },
+    {
+      "req": "F4.8",
+      "objective": "Không đổi lịch đã bắt đầu hoặc kết thúc",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Chuẩn bị các lịch riêng ở IN_PROGRESS, COMPLETED và CANCELLED; các giờ đích đều hợp lệ.",
+      "steps": [
+        {
+          "action": "Mở chi tiết từng lịch fixture.",
+          "data": "Các trạng thái IN_PROGRESS/COMPLETED/CANCELLED.",
+          "expected": "Không có thao tác Đổi ngày giờ dành cho các trạng thái này."
+        },
+        {
+          "action": "Gửi reschedule cho từng fixture bằng dữ liệu hợp lệ.",
+          "data": "Mỗi lần một mã lịch thuộc A; thời gian tương lai.",
+          "expected": "Mỗi yêu cầu HTTP 409; lịch không bị sửa."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật. Chạy độc lập cho từng trạng thái; ghi kết quả từng dữ liệu khi thực thi.",
+      "gui": false
+    },
+    {
+      "req": "F4.9",
+      "objective": "Hủy lịch chưa trả tiền cập nhật trạng thái liên quan",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Có lịch CONFIRMED hoặc PENDING của A với giao dịch PENDING, chưa có bất kỳ PAID.",
+      "steps": [
+        {
+          "action": "Bấm Hủy lịch hẹn rồi xác nhận đồng ý.",
+          "data": "Mã lịch fixture.",
+          "expected": "Lịch chuyển CANCELLED; giao dịch PENDING của lịch chuyển FAILED."
+        },
+        {
+          "action": "Tải lại danh sách và mở chi tiết.",
+          "data": "Cùng mã lịch.",
+          "expected": "Trạng thái hủy được giữ; không còn thao tác đổi/hủy như lịch đang chờ."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F4.9",
+      "objective": "Không hủy lịch khi đóng xác nhận",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Có lịch PENDING chưa thanh toán.",
+      "steps": [
+        {
+          "action": "Bấm Hủy lịch hẹn.",
+          "data": "Mã lịch đã chuẩn bị.",
+          "expected": "Xuất hiện hộp xác nhận hủy."
+        },
+        {
+          "action": "Chọn Hủy/Cancel của hộp xác nhận và tải lại.",
+          "data": "Không đồng ý hủy.",
+          "expected": "Lịch giữ PENDING; giao dịch giữ trạng thái ban đầu; không tạo yêu cầu hủy thành công."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F4.9",
+      "objective": "Chặn hủy lịch có giao dịch PAID trước khi xử lý hoàn tiền",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Có lịch CONFIRMED với ít nhất một giao dịch PAID.",
+      "steps": [
+        {
+          "action": "Yêu cầu hủy lịch và đồng ý trong hộp xác nhận.",
+          "data": "Lịch thuộc A, thanh toán PAID.",
+          "expected": "Hệ thống từ chối, nêu cần xử lý hoàn tiền trước khi hủy."
+        },
+        {
+          "action": "Tải lại chi tiết.",
+          "data": "Cùng lịch và giao dịch.",
+          "expected": "Lịch vẫn CONFIRMED, giao dịch PAID; không tự thực hiện chuyển/hoàn tiền."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F4.9",
+      "objective": "Không hủy lịch IN_PROGRESS, COMPLETED hoặc đã CANCELLED",
+      "pre": "Đăng nhập tài khoản CUSTOMER/ACTIVE thử nghiệm. Website và máy chủ kết nối CSDL kiểm thử. Có ba lịch fixture độc lập ở trạng thái IN_PROGRESS/COMPLETED/CANCELLED.",
+      "steps": [
+        {
+          "action": "Mở chi tiết từng trạng thái.",
+          "data": "Các lịch thuộc A.",
+          "expected": "Không hiển thị thao tác hủy cho lịch đã bắt đầu/kết thúc."
+        },
+        {
+          "action": "Gửi PUT /api/Bookings/{id}/cancel lần lượt cho từng fixture.",
+          "data": "Phiên A; mỗi lần một id fixture.",
+          "expected": "Mỗi yêu cầu HTTP 409; trạng thái lịch và giao dịch không bị đổi."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật. ",
+      "gui": false
+    },
+    {
+      "req": "F4.7",
+      "objective": "Từ chối giờ ngoài giờ mở cửa hoặc đã qua",
+      "pre": "Đăng nhập CUSTOMER/ACTIVE thử nghiệm; website, máy chủ và CSDL kiểm thử sẵn sàng. Có thú cưng, dịch vụ ACTIVE và hình thức hợp lệ; D là hôm nay theo UTC+7; mỗi yêu cầu độc lập.",
+      "steps": [
+        {
+          "action": "Gửi tạo lịch cho D+1 ở 07:30 và 18:00, mỗi giờ một requestId mới.",
+          "data": "Thời lượng 30 phút; các trường khác hợp lệ.",
+          "expected": "Mỗi yêu cầu HTTP 400; không tạo lịch ngoài giờ bắt đầu cho phép."
+        },
+        {
+          "action": "Gửi tạo lịch cho một giờ 30 phút của hôm nay đã kết thúc tại thời điểm gửi.",
+          "data": "Chỉ thực hiện nhánh này khi đã có giờ từ 08:00 đến 17:30 trong quá khứ hôm nay; requestId mới.",
+          "expected": "HTTP 409; không nhận khung giờ đã qua."
+        }
+      ],
+      "notes": "Ca API bổ sung; dùng công cụ gửi HTTP với phiên/tokens thử nghiệm, chỉ trên CSDL kiểm thử. Nếu đang trước giờ mở cửa, chuẩn bị đồng hồ kiểm thử hoặc dời riêng dữ liệu quá khứ sang sau 08:00; không đổi giờ máy thật.",
+      "gui": false
+    },
+    {
+      "req": "F4.7",
+      "objective": "Kiểm tra biên tổng thời lượng 1 và 480 phút",
+      "pre": "Đăng nhập CUSTOMER/ACTIVE thử nghiệm; website, máy chủ và CSDL kiểm thử sẵn sàng. Chuẩn bị hai bộ fixture dịch vụ ACTIVE có tổng thời lượng lần lượt 1 và 480 phút; tổng giá>0; D+1/08:00 còn đủ công suất, thú cưng khác nhau.",
+      "steps": [
+        {
+          "action": "Gửi tạo lịch với bộ dịch vụ tổng 1 phút.",
+          "data": "D+1/08:00; requestId mới.",
+          "expected": "Không bị từ chối do thời lượng=1; lịch tạo thành công khi các điều kiện còn lại hợp lệ."
+        },
+        {
+          "action": "Gửi yêu cầu độc lập với bộ dịch vụ tổng 480 phút.",
+          "data": "D+1/08:00; thú cưng khác, requestId mới.",
+          "expected": "Không bị từ chối do thời lượng=480; durationMinutes lưu bằng 480 và không vượt giờ đóng cửa."
+        }
+      ],
+      "notes": "Ca API bổ sung; dùng công cụ gửi HTTP với phiên/tokens thử nghiệm, chỉ trên CSDL kiểm thử. Đây là dữ liệu biên do người phụ trách chuẩn bị trước, không tuyên bố hiện đã có dịch vụ dài 1 hoặc 480 phút.",
+      "gui": false
+    },
+    {
+      "req": "F4.7",
+      "objective": "Từ chối tổng thời lượng ngoài 1–480 hoặc tiền không dương",
+      "pre": "Đăng nhập CUSTOMER/ACTIVE thử nghiệm; website, máy chủ và CSDL kiểm thử sẵn sàng. Chuẩn bị fixture riêng: tổng thời lượng=0; tổng thời lượng=481; tổng tiền=0 với thời lượng hợp lệ. Dữ liệu fixture chỉ trong CSDL kiểm thử.",
+      "steps": [
+        {
+          "action": "Gửi từng yêu cầu tạo lịch với tổng thời lượng 0 và 481 phút.",
+          "data": "Mỗi bộ serviceIds có tối đa 10 mã ACTIVE; giá>0; requestId mới.",
+          "expected": "Mỗi yêu cầu HTTP 400; không có lịch hoặc giao dịch mới."
+        },
+        {
+          "action": "Gửi yêu cầu có tổng tiền 0.",
+          "data": "Thời lượng 30 phút, ngày giờ hợp lệ, requestId mới.",
+          "expected": "HTTP 400; không tạo lịch/giao dịch có tổng tiền không dương."
+        }
+      ],
+      "notes": "Ca API bổ sung; dùng công cụ gửi HTTP với phiên/tokens thử nghiệm, chỉ trên CSDL kiểm thử. Nếu cấu trúc CSDL cấm tạo fixture 0 phút/0 đồng, cần người phụ trách chuẩn bị môi trường giả lập phù hợp; chưa đánh dấu đã thực hiện.",
+      "gui": false
+    },
+    {
+      "req": "F5.1",
+      "objective": "Lịch sử thanh toán hiển thị đúng giao dịch và số tiền",
+      "pre": "Đăng nhập CUSTOMER/ACTIVE thử nghiệm; website, máy chủ và CSDL kiểm thử sẵn sàng. Có các giao dịch CASH/BANK_TRANSFER của A ở trạng thái PENDING/PAID/FAILED/REFUNDED; ghi nhận số tiền và lịch tương ứng.",
+      "steps": [
+        {
+          "action": "Mở mục Thanh toán.",
+          "data": "Bộ giao dịch của tài khoản A.",
+          "expected": "Danh sách hiện đúng mã giao dịch, mã lịch, ngày, phương thức, số tiền và trạng thái."
+        },
+        {
+          "action": "Bấm mã lịch tại một giao dịch.",
+          "data": "Chọn mã lịch đã ghi nhận.",
+          "expected": "Mở đúng chi tiết lịch liên kết; tổng tiền/dịch vụ và các giao dịch khớp dữ liệu chuẩn bị."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F5.1",
+      "objective": "Lọc giao dịch theo trạng thái và khoảng ngày",
+      "pre": "Đăng nhập CUSTOMER/ACTIVE thử nghiệm; website, máy chủ và CSDL kiểm thử sẵn sàng. Chuẩn bị giao dịch PAID trong khoảng [a,b] và giao dịch khác ngoài khoảng/khác trạng thái; a≤b.",
+      "steps": [
+        {
+          "action": "Chọn trạng thái Đã thanh toán và khoảng ngày a đến b.",
+          "data": "Trạng thái PAID; hai biên a,b có fixture.",
+          "expected": "Chỉ hiện giao dịch PAID có ngày trong khoảng, bao gồm cả ngày a và b."
+        },
+        {
+          "action": "Xóa bộ lọc hoặc chuyển sang khoảng không có giao dịch.",
+          "data": "Khoảng rỗng đã chuẩn bị.",
+          "expected": "Xóa lọc trả danh sách đầy đủ của A; khoảng rỗng hiện Không có giao dịch phù hợp."
+        }
+      ],
+      "notes": "Ngày dùng để lọc là paymentDate, nếu chưa có thì bookingDate theo nguồn giao diện.",
+      "gui": false
+    },
+    {
+      "req": "F5.1",
+      "objective": "Xem phiếu đúng dữ liệu giao dịch đã thanh toán",
+      "pre": "Đăng nhập CUSTOMER/ACTIVE thử nghiệm; website, máy chủ và CSDL kiểm thử sẵn sàng. Có giao dịch PAID kèm lịch/dịch vụ hợp lệ; đã ghi nhận họ tên, email và số tiền.",
+      "steps": [
+        {
+          "action": "Bấm Xem phiếu tại giao dịch PAID.",
+          "data": "Chọn mã giao dịch thuộc A.",
+          "expected": "Phiếu hiển thị đúng khách hàng, email, mã giao dịch, trạng thái và dữ liệu của lịch/giao dịch đó."
+        },
+        {
+          "action": "Đóng phiếu bằng nút đóng hoặc Escape.",
+          "data": "Không in hoặc sửa dữ liệu.",
+          "expected": "Quay lại danh sách; giao dịch và trạng thái không thay đổi."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F5.1",
+      "objective": "Không đọc được giao dịch của khách hàng khác",
+      "pre": "Đăng nhập CUSTOMER/ACTIVE thử nghiệm; website, máy chủ và CSDL kiểm thử sẵn sàng. A và B có giao dịch riêng; biết mã giao dịch và mã lịch của B từ fixture.",
+      "steps": [
+        {
+          "action": "Gửi GET /api/Payments/{id} bằng phiên A.",
+          "data": "id=giao dịch của B.",
+          "expected": "HTTP 404; không lộ chi tiết giao dịch B."
+        },
+        {
+          "action": "Gửi GET /api/Payments/booking/{bookingId} bằng phiên A.",
+          "data": "bookingId=lịch của B.",
+          "expected": "Danh sách rỗng; lịch sử trên trang A không xuất hiện giao dịch B."
+        }
+      ],
+      "notes": "Ca API bổ sung; dùng công cụ gửi HTTP với phiên/tokens thử nghiệm, chỉ trên CSDL kiểm thử. ",
+      "gui": false
+    },
+    {
+      "req": "F5.2",
+      "objective": "Chỉ PayOS xác minh PAID mới ghi nhận đã thanh toán",
+      "pre": "Đăng nhập CUSTOMER/ACTIVE thử nghiệm; website, máy chủ và CSDL kiểm thử sẵn sàng. Có BANK_TRANSFER/PENDING; bộ giả lập tích hợp hoặc cấu hình thử nghiệm trả trạng thái PAID cho đúng orderCode.",
+      "steps": [
+        {
+          "action": "Bấm Kiểm tra lại trong giao dịch chờ.",
+          "data": "Kết quả xác minh PayOS=PAID; không chuyển tiền thật.",
+          "expected": "Giao dịch chuyển PAID, có thời điểm thanh toán; thông báo xác nhận thanh toán được ghi nhận."
+        },
+        {
+          "action": "Tải lại trang Thanh toán.",
+          "data": "Cùng giao dịch.",
+          "expected": "Trạng thái PAID được giữ và có thể xem phiếu."
+        }
+      ],
+      "notes": "Ca tích hợp chỉ thực hiện khi đã có cấu hình/bộ giả lập; không giả định PayOS cung cấp sandbox.",
+      "gui": false
+    },
+    {
+      "req": "F5.2",
+      "objective": "Hủy hoặc hết hạn PayOS chuyển giao dịch chờ thành FAILED",
+      "pre": "Đăng nhập CUSTOMER/ACTIVE thử nghiệm; website, máy chủ và CSDL kiểm thử sẵn sàng. Chuẩn bị các giao dịch BANK_TRANSFER/PENDING độc lập và kết quả PayOS giả lập CANCELLED/EXPIRED/FAILED.",
+      "steps": [
+        {
+          "action": "Đồng bộ từng giao dịch với một kết quả PayOS đã chuẩn bị.",
+          "data": "Mỗi fixture tương ứng một trạng thái CANCELLED, EXPIRED hoặc FAILED.",
+          "expected": "Giao dịch PENDING tương ứng chuyển FAILED và có thời điểm xử lý; không thành PAID."
+        },
+        {
+          "action": "Mở lại chi tiết từng lịch.",
+          "data": "Các lịch còn được thanh toán.",
+          "expected": "Có thể tiếp cận Thử lại thanh toán cho FAILED; lịch không tự chuyển CANCELLED chỉ vì thanh toán hủy."
+        }
+      ],
+      "notes": "Chạy mỗi trạng thái trên fixture riêng; nguồn chỉ đổi trạng thái thanh toán, không hủy lịch tự động.",
+      "gui": false
+    },
+    {
+      "req": "F5.2",
+      "objective": "Webhook sai chữ ký hoặc sai tiền không ghi PAID",
+      "pre": "Đăng nhập CUSTOMER/ACTIVE thử nghiệm; website, máy chủ và CSDL kiểm thử sẵn sàng. Có BANK_TRANSFER/PENDING; bộ giả lập webhook được chuẩn bị, có khả năng tạo payload đúng/sai chữ ký trong môi trường thử nghiệm.",
+      "steps": [
+        {
+          "action": "Gửi webhook có chữ ký không hợp lệ.",
+          "data": "POST /api/Payments/payos-webhook; payload fixture.",
+          "expected": "HTTP 400; trạng thái giao dịch giữ PENDING."
+        },
+        {
+          "action": "Gửi webhook xác minh được nhưng Amount khác số tiền hoặc Code khác 00.",
+          "data": "Mỗi dữ liệu một fixture PENDING riêng; orderCode đúng.",
+          "expected": "Không cập nhật PAID; không sinh thông báo thanh toán thành công cho dữ liệu sai."
+        }
+      ],
+      "notes": "Ca API bổ sung; dùng công cụ gửi HTTP với phiên/tokens thử nghiệm, chỉ trên CSDL kiểm thử. Không bịa hoặc dùng secret thật trong file; cần người phụ trách cung cấp bộ giả lập chữ ký. Các chuỗi return URL không thay thế xác minh webhook.",
+      "gui": false
+    },
+    {
+      "req": "F5.2",
+      "objective": "Webhook thành công lặp không ghi nhận nhiều lần",
+      "pre": "Đăng nhập CUSTOMER/ACTIVE thử nghiệm; website, máy chủ và CSDL kiểm thử sẵn sàng. Có BANK_TRANSFER/PENDING; chuẩn bị webhook xác minh được, Code=00, Amount đúng và orderCode đúng.",
+      "steps": [
+        {
+          "action": "Gửi webhook thành công lần đầu.",
+          "data": "Payload fixture đã xác minh.",
+          "expected": "HTTP 200; giao dịch PAID, một thông báo thanh toán thành công được tạo."
+        },
+        {
+          "action": "Gửi lại đúng payload đó rồi mở lịch sử.",
+          "data": "Cùng orderCode và số tiền.",
+          "expected": "HTTP 200; vẫn một giao dịch, không thêm lần thu hoặc thêm thông báo thanh toán thành công do phát lại."
+        }
+      ],
+      "notes": "Ca API bổ sung; dùng công cụ gửi HTTP với phiên/tokens thử nghiệm, chỉ trên CSDL kiểm thử. Cần bộ giả lập/cấu hình thử nghiệm; đây là thiết kế, chưa gửi webhook hoặc chuyển tiền.",
+      "gui": false
+    },
+    {
+      "req": "F5.3",
+      "objective": "Thử lại FAILED tạo giao dịch mới đúng số tiền và phương thức",
+      "pre": "Đăng nhập CUSTOMER/ACTIVE thử nghiệm; website, máy chủ và CSDL kiểm thử sẵn sàng. Có lịch PENDING hoặc CONFIRMED, một giao dịch FAILED; không có giao dịch PENDING/PAID của lịch; ghi totalAmount và phương thức.",
+      "steps": [
+        {
+          "action": "Bấm Thử lại thanh toán trên FAILED.",
+          "data": "Lịch vẫn được thanh toán; dùng fixture.",
+          "expected": "Tạo giao dịch mới mã khác, trạng thái PENDING, tiền bằng totalAmount và phương thức giống giao dịch thất bại."
+        },
+        {
+          "action": "Tải lại chi tiết lịch.",
+          "data": "Giao dịch cũ và mới.",
+          "expected": "Giao dịch cũ giữ FAILED để truy vết; giao dịch mới PENDING, không ghi đã trả khi chưa xác nhận."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F5.3",
+      "objective": "Không thử lại giao dịch đang chờ hoặc đã trả",
+      "pre": "Đăng nhập CUSTOMER/ACTIVE thử nghiệm; website, máy chủ và CSDL kiểm thử sẵn sàng. Có hai fixture độc lập: giao dịch PENDING và PAID thuộc A.",
+      "steps": [
+        {
+          "action": "Gửi POST /api/Payments/{id}/retry cho PENDING.",
+          "data": "Mã giao dịch đang chờ.",
+          "expected": "HTTP 409; không thêm giao dịch."
+        },
+        {
+          "action": "Gửi retry cho PAID.",
+          "data": "Mã giao dịch đã thanh toán.",
+          "expected": "HTTP 409; không tạo thêm lần thu cho giao dịch đã trả."
+        }
+      ],
+      "notes": "Ca API bổ sung; dùng công cụ gửi HTTP với phiên/tokens thử nghiệm, chỉ trên CSDL kiểm thử. ",
+      "gui": false
+    },
+    {
+      "req": "F5.3",
+      "objective": "Không thử lại khi lịch đã hủy hoặc hoàn thành",
+      "pre": "Đăng nhập CUSTOMER/ACTIVE thử nghiệm; website, máy chủ và CSDL kiểm thử sẵn sàng. Có các giao dịch FAILED ở hai lịch fixture độc lập CANCELLED và COMPLETED.",
+      "steps": [
+        {
+          "action": "Gửi retry cho FAILED của lịch CANCELLED.",
+          "data": "POST /api/Payments/{id}/retry; phiên chủ lịch.",
+          "expected": "HTTP 409; không tạo giao dịch mới."
+        },
+        {
+          "action": "Gửi retry cho FAILED của lịch COMPLETED.",
+          "data": "Fixture thứ hai.",
+          "expected": "HTTP 409; không mở lại việc thanh toán lịch đã hoàn thành."
+        }
+      ],
+      "notes": "Ca API bổ sung; dùng công cụ gửi HTTP với phiên/tokens thử nghiệm, chỉ trên CSDL kiểm thử. Giao diện hiện có thể còn hiện nút cho FAILED; kết quả chặn được xác định tại máy chủ, không lấy sự có mặt của nút làm bằng chứng cho phép.",
+      "gui": false
+    },
+    {
+      "req": "F5.3",
+      "objective": "Không thử lại FAILED khi lịch đã có giao dịch chờ khác",
+      "pre": "Đăng nhập CUSTOMER/ACTIVE thử nghiệm; website, máy chủ và CSDL kiểm thử sẵn sàng. Một lịch được thanh toán có giao dịch FAILED và một giao dịch PENDING khác; các mã lấy từ fixture.",
+      "steps": [
+        {
+          "action": "Gửi retry cho giao dịch FAILED.",
+          "data": "Cùng lịch đã có PENDING.",
+          "expected": "HTTP 409; thông báo lịch có giao dịch đang chờ hoặc đã thanh toán."
+        },
+        {
+          "action": "Đọc lại toàn bộ giao dịch của lịch.",
+          "data": "GET /api/Payments/booking/{bookingId}.",
+          "expected": "Số giao dịch không tăng; giao dịch FAILED và PENDING giữ trạng thái ban đầu."
+        }
+      ],
+      "notes": "Ca API bổ sung; dùng công cụ gửi HTTP với phiên/tokens thử nghiệm, chỉ trên CSDL kiểm thử. ",
+      "gui": false
+    },
+    {
+      "req": "F9.1",
+      "objective": "Tìm và lọc kết hợp đúng lịch được phân công",
+      "pre": "Đăng nhập tài khoản STAFF/ACTIVE đã có hồ sơ nhân sự; website, máy chủ và CSDL kiểm thử sẵn sàng. Chuẩn bị lịch được giao cho nhân viên hiện tại và nhân viên khác, khác ngày và trạng thái; ghi các mã trước.",
+      "steps": [
+        {
+          "action": "Mở Lịch hẹn & thanh toán và nhập một phần mã lịch đã chuẩn bị.",
+          "data": "Tìm theo bookingId; đối chiếu dữ liệu fixture.",
+          "expected": "Chỉ hiện các lịch có mã chứa từ khóa, không phân biệt hoa/thường."
+        },
+        {
+          "action": "Chọn trạng thái, ngày và bật Chỉ lịch của tôi.",
+          "data": "Chọn bộ dữ liệu có một lịch thỏa đồng thời.",
+          "expected": "Chỉ hiện lịch thỏa cả từ khóa, trạng thái, ngày và staffId hiện tại."
+        },
+        {
+          "action": "Nhập từ khóa không khớp bất kỳ mã nào.",
+          "data": "Chuỗi không có trong bộ fixture.",
+          "expected": "Danh sách rỗng và hiển thị Chưa có lịch hẹn phù hợp."
+        }
+      ],
+      "notes": "Nguồn hiện tại tìm theo bookingId/petId/userId/careTypeId; chưa có căn cứ khẳng định tìm được họ tên khách hoặc tên thú cưng.",
+      "gui": false
+    },
+    {
+      "req": "F9.1",
+      "objective": "Làm mới lấy thay đổi của lịch",
+      "pre": "Đăng nhập tài khoản STAFF/ACTIVE đã có hồ sơ nhân sự; website, máy chủ và CSDL kiểm thử sẵn sàng. Có lịch fixture PENDING; một phiên STAFF/ADMIN thứ hai chuẩn bị đổi lịch đó theo thao tác hợp lệ.",
+      "steps": [
+        {
+          "action": "Mở danh sách và ghi trạng thái lịch.",
+          "data": "Mã lịch fixture PENDING.",
+          "expected": "Dữ liệu ban đầu đúng fixture."
+        },
+        {
+          "action": "Phiên thứ hai xác nhận lịch; tại phiên đang kiểm tra bấm Làm mới.",
+          "data": "Thay đổi hợp lệ PENDING→CONFIRMED ở môi trường thử nghiệm.",
+          "expected": "Dòng lịch cập nhật CONFIRMED; không tạo bản sao; số lượng phù hợp bộ lọc được cập nhật."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F9.2",
+      "objective": "Chi tiết đúng khách, thú cưng, toàn bộ dịch vụ và giao dịch",
+      "pre": "Đăng nhập tài khoản STAFF/ACTIVE đã có hồ sơ nhân sự; website, máy chủ và CSDL kiểm thử sẵn sàng. Có lịch ít nhất 2 dịch vụ và 2 giao dịch ở trạng thái khác nhau; ghi khách, thú cưng, ghi chú, đơn giá/số lượng và tổng trước.",
+      "steps": [
+        {
+          "action": "Bấm Xem chi tiết của lịch.",
+          "data": "Chọn mã lịch fixture.",
+          "expected": "Hiển thị đúng chủ lịch/thú cưng/ghi chú; danh sách Toàn bộ dịch vụ có đủ dòng, số lượng và giá đúng."
+        },
+        {
+          "action": "Đối chiếu mục Giao dịch với fixture rồi bấm Đóng.",
+          "data": "Các giao dịch cùng bookingId.",
+          "expected": "Không trộn giao dịch của lịch khác; số tiền/trạng thái đúng; đóng chi tiết không sửa dữ liệu."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F9.3",
+      "objective": "Phân công và đổi sang nhân sự ACTIVE còn trống",
+      "pre": "Đăng nhập tài khoản STAFF/ACTIVE đã có hồ sơ nhân sự; website, máy chủ và CSDL kiểm thử sẵn sàng. Lịch PENDING chưa phân công; có hai nhân sự ACTIVE không có lịch chồng thời gian.",
+      "steps": [
+        {
+          "action": "Mở chi tiết và chọn nhân sự ACTIVE thứ nhất.",
+          "data": "Chọn mã nhân sự từ danh sách hiện có.",
+          "expected": "staffId của lịch cập nhật nhân sự đó, thông báo phân công được ghi."
+        },
+        {
+          "action": "Chuyển sang nhân sự ACTIVE thứ hai rồi tải lại.",
+          "data": "Nhân sự thứ hai còn trống.",
+          "expected": "Lịch lưu người phụ trách mới; ngày giờ, dịch vụ và tổng tiền không đổi."
+        }
+      ],
+      "notes": "Nguồn kiểm tra ACTIVE và trùng giờ; không có quy tắc ghép chuyên khoa với dịch vụ, không ghi kỳ vọng chặn vì sai chuyên khoa.",
+      "gui": false
+    },
+    {
+      "req": "F9.3",
+      "objective": "Từ chối phân công nhân sự ngưng hoạt động",
+      "pre": "Đăng nhập tài khoản STAFF/ACTIVE đã có hồ sơ nhân sự; website, máy chủ và CSDL kiểm thử sẵn sàng. Có lịch PENDING và một hồ sơ nhân sự INACTIVE trong CSDL kiểm thử.",
+      "steps": [
+        {
+          "action": "Mở danh sách Phân công nhân sự.",
+          "data": "Nhân sự INACTIVE đã chuẩn bị.",
+          "expected": "Không có nhân sự INACTIVE trong danh mục nhân sự hoạt động."
+        },
+        {
+          "action": "Gửi PUT /api/Bookings/{id}/assign với staffId INACTIVE.",
+          "data": "Mã lịch và mã nhân sự lấy từ fixture.",
+          "expected": "HTTP 400; người phụ trách lịch không bị đổi."
+        }
+      ],
+      "notes": "Ca API bổ sung; dùng công cụ HTTP với phiên thử nghiệm STAFF, không thao tác dữ liệu thật. ",
+      "gui": false
+    },
+    {
+      "req": "F9.3",
+      "objective": "Từ chối phân công người đã có lịch chồng giờ",
+      "pre": "Đăng nhập tài khoản STAFF/ACTIVE đã có hồ sơ nhân sự; website, máy chủ và CSDL kiểm thử sẵn sàng. Có hai lịch khác thú cưng tại D+1 với khoảng thời gian chồng nhau; nhân sự ACTIVE đã được gắn vào lịch thứ nhất.",
+      "steps": [
+        {
+          "action": "Gửi assign cho lịch thứ hai với nhân sự đó.",
+          "data": "PUT /api/Bookings/{id}/assign; staffId đang bận.",
+          "expected": "HTTP 409; thông báo nhân sự trùng giờ."
+        },
+        {
+          "action": "Tải lại cả hai lịch.",
+          "data": "Mã hai lịch fixture.",
+          "expected": "Lịch thứ nhất giữ người phụ trách; lịch thứ hai giữ phân công ban đầu, không ghi phân công chồng."
+        }
+      ],
+      "notes": "Ca API bổ sung; dùng công cụ HTTP với phiên thử nghiệm STAFF, không thao tác dữ liệu thật. ",
+      "gui": false
+    },
+    {
+      "req": "F9.3",
+      "objective": "Không phân công lại lịch CANCELLED hoặc COMPLETED",
+      "pre": "Đăng nhập tài khoản STAFF/ACTIVE đã có hồ sơ nhân sự; website, máy chủ và CSDL kiểm thử sẵn sàng. Có hai lịch fixture độc lập ở CANCELLED và COMPLETED; nhân sự ACTIVE không bị trùng.",
+      "steps": [
+        {
+          "action": "Gửi assign cho lịch CANCELLED.",
+          "data": "Mã nhân sự ACTIVE và mã lịch đã hủy.",
+          "expected": "HTTP 409; từ chối vì lịch kết thúc."
+        },
+        {
+          "action": "Gửi assign cho lịch COMPLETED.",
+          "data": "Fixture độc lập đã hoàn thành.",
+          "expected": "HTTP 409; không sửa staffId của lịch đã hoàn thành."
+        }
+      ],
+      "notes": "Ca API bổ sung; dùng công cụ HTTP với phiên thử nghiệm STAFF, không thao tác dữ liệu thật. Không coi select còn hiển thị ở UI là quyền cho phép thay đổi; kiểm tra quyết định máy chủ.",
+      "gui": false
+    },
+    {
+      "req": "F9.4",
+      "objective": "Nhân viên đổi lịch CONFIRMED sang giờ còn chỗ",
+      "pre": "Đăng nhập tài khoản STAFF/ACTIVE đã có hồ sơ nhân sự; website, máy chủ và CSDL kiểm thử sẵn sàng. Có lịch CONFIRMED, ghi dịch vụ/tổng tiền/thanh toán cũ; D+2 có giờ trống.",
+      "steps": [
+        {
+          "action": "Mở chi tiết, chọn ngày giờ đích trong biểu mẫu Đổi ngày giờ hẹn.",
+          "data": "D+2, giờ còn trống, nhân sự ACTIVE hoặc PetNoVa sắp xếp.",
+          "expected": "Khung giờ đích khả dụng và được chọn."
+        },
+        {
+          "action": "Bấm Lưu lịch mới rồi làm mới.",
+          "data": "Ghi chú≤255 ký tự.",
+          "expected": "Ngày/giờ/nhân sự/ghi chú theo dữ liệu gửi; trạng thái CONFIRMED, dịch vụ và số tiền giữ nguyên."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F9.4",
+      "objective": "Đổi lịch tại quầy bị chặn khi công suất đã đủ",
+      "pre": "Đăng nhập tài khoản STAFF/ACTIVE đã có hồ sơ nhân sự; website, máy chủ và CSDL kiểm thử sẵn sàng. Lịch cần đổi PENDING; xác định C công suất; chuẩn bị C lịch không CANCELLED chồng giờ đích, không cùng thú cưng để chỉ kiểm công suất.",
+      "steps": [
+        {
+          "action": "Tra cứu ngày giờ đích.",
+          "data": "C lịch khác đang chiếm công suất ở giờ đích.",
+          "expected": "Giờ đích không khả dụng."
+        },
+        {
+          "action": "Gửi reschedule trực tiếp đến giờ đó.",
+          "data": "PUT /api/Bookings/{id}/reschedule, ngày giờ đúng bước.",
+          "expected": "HTTP 409; lịch gốc giữ nguyên ngày giờ."
+        }
+      ],
+      "notes": "Ca API bổ sung; dùng công cụ HTTP với phiên thử nghiệm STAFF, không thao tác dữ liệu thật. C lấy từ cấu hình thực tế đã chuẩn bị, mặc định3 nếu chưa cấu hình.",
+      "gui": false
+    },
+    {
+      "req": "F9.4",
+      "objective": "Không đổi lịch tại quầy đã COMPLETED",
+      "pre": "Đăng nhập tài khoản STAFF/ACTIVE đã có hồ sơ nhân sự; website, máy chủ và CSDL kiểm thử sẵn sàng. Có lịch COMPLETED; ngày giờ đích còn trống và đúng phạm vi.",
+      "steps": [
+        {
+          "action": "Mở chi tiết lịch COMPLETED.",
+          "data": "Mã lịch fixture.",
+          "expected": "Không có biểu mẫu đổi lịch cho trạng thái đã hoàn thành."
+        },
+        {
+          "action": "Gửi yêu cầu reschedule trực tiếp với dữ liệu hợp lệ.",
+          "data": "Ngày tương lai, giờ hợp lệ, ghi chú≤255.",
+          "expected": "HTTP 409; không cập nhật ngày giờ lịch hoàn thành."
+        }
+      ],
+      "notes": "Ca API bổ sung; dùng công cụ HTTP với phiên thử nghiệm STAFF, không thao tác dữ liệu thật. ",
+      "gui": false
+    },
+    {
+      "req": "F9.5",
+      "objective": "Chuyển PENDING sang CONFIRMED",
+      "pre": "Đăng nhập tài khoản STAFF/ACTIVE đã có hồ sơ nhân sự; website, máy chủ và CSDL kiểm thử sẵn sàng. Có lịch PENDING thử nghiệm; chưa cần thanh toán để xác nhận lịch.",
+      "steps": [
+        {
+          "action": "Bấm Xác nhận lịch.",
+          "data": "Mã lịch PENDING.",
+          "expected": "Hiện hộp xác nhận trạng thái đích Đã xác nhận."
+        },
+        {
+          "action": "Đồng ý rồi làm mới.",
+          "data": "Không đổi dữ liệu lịch khác.",
+          "expected": "Lịch CONFIRMED; người dùng chủ lịch nhận thông báo xác nhận; chi tiết/tiền không đổi."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F9.5",
+      "objective": "Chuyển CONFIRMED sang IN_PROGRESS",
+      "pre": "Đăng nhập tài khoản STAFF/ACTIVE đã có hồ sơ nhân sự; website, máy chủ và CSDL kiểm thử sẵn sàng. Có lịch CONFIRMED thử nghiệm.",
+      "steps": [
+        {
+          "action": "Bấm Bắt đầu chăm sóc tại lịch đã xác nhận.",
+          "data": "Mã lịch CONFIRMED.",
+          "expected": "Hộp xác nhận chuyển sang Đang chăm sóc."
+        },
+        {
+          "action": "Đồng ý và làm mới.",
+          "data": "Fixture được chọn.",
+          "expected": "Lịch IN_PROGRESS; thông báo dịch vụ đang thực hiện được ghi nhận."
+        }
+      ],
+      "notes": "Nếu nhãn nút bản chạy khác, chọn hành động tương ứng trạng thái IN_PROGRESS, không suy đoán ngày giờ là điều kiện nguồn chưa có.",
+      "gui": false
+    },
+    {
+      "req": "F9.5",
+      "objective": "Chuyển IN_PROGRESS sang COMPLETED khi đã trả tiền",
+      "pre": "Đăng nhập tài khoản STAFF/ACTIVE đã có hồ sơ nhân sự; website, máy chủ và CSDL kiểm thử sẵn sàng. Có lịch IN_PROGRESS với ít nhất một thanh toán PAID.",
+      "steps": [
+        {
+          "action": "Bấm Hoàn thành dịch vụ.",
+          "data": "Lịch và giao dịch fixture.",
+          "expected": "Nút khả dụng; xuất hiện xác nhận chuyển Hoàn thành."
+        },
+        {
+          "action": "Đồng ý rồi tải lại.",
+          "data": "Không sửa dịch vụ/thanh toán.",
+          "expected": "Lịch COMPLETED; thông báo hoàn thành được ghi; giao dịch vẫn PAID."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F9.5",
+      "objective": "Từ chối bỏ bước hoặc lùi trạng thái",
+      "pre": "Đăng nhập tài khoản STAFF/ACTIVE đã có hồ sơ nhân sự; website, máy chủ và CSDL kiểm thử sẵn sàng. Chuẩn bị hai lịch riêng ở PENDING và CONFIRMED; có tiền PAID để loại điều kiện tiền khỏi ca.",
+      "steps": [
+        {
+          "action": "Gửi status cho lịch PENDING với status=COMPLETED.",
+          "data": "PUT /api/Bookings/{id}/status; fixture thứ nhất.",
+          "expected": "HTTP 409; lịch vẫn PENDING."
+        },
+        {
+          "action": "Gửi status cho lịch CONFIRMED với status=PENDING.",
+          "data": "Fixture thứ hai.",
+          "expected": "HTTP 409; lịch vẫn CONFIRMED, không lùi trạng thái."
+        }
+      ],
+      "notes": "Ca API bổ sung; dùng công cụ HTTP với phiên thử nghiệm STAFF, không thao tác dữ liệu thật. ",
+      "gui": false
+    },
+    {
+      "req": "F9.6",
+      "objective": "Chặn hoàn thành khi chỉ có PENDING",
+      "pre": "Đăng nhập tài khoản STAFF/ACTIVE đã có hồ sơ nhân sự; website, máy chủ và CSDL kiểm thử sẵn sàng. Có lịch IN_PROGRESS, thanh toán duy nhất PENDING và không có PAID.",
+      "steps": [
+        {
+          "action": "Quan sát thao tác Hoàn thành dịch vụ.",
+          "data": "Dữ liệu lịch đang chăm sóc.",
+          "expected": "Nút không khả dụng và hiện Chờ thanh toán/cần xác nhận tiền."
+        },
+        {
+          "action": "Gửi status=COMPLETED trực tiếp.",
+          "data": "PUT /api/Bookings/{id}/status.",
+          "expected": "HTTP 409; lịch IN_PROGRESS, giao dịch PENDING giữ nguyên."
+        }
+      ],
+      "notes": "Ca API bổ sung; dùng công cụ HTTP với phiên thử nghiệm STAFF, không thao tác dữ liệu thật. ",
+      "gui": false
+    },
+    {
+      "req": "F9.6",
+      "objective": "Chặn hoàn thành khi chỉ có FAILED",
+      "pre": "Đăng nhập tài khoản STAFF/ACTIVE đã có hồ sơ nhân sự; website, máy chủ và CSDL kiểm thử sẵn sàng. Có lịch IN_PROGRESS, thanh toán FAILED, không có PAID hoặc giao dịch khác.",
+      "steps": [
+        {
+          "action": "Mở danh sách vận hành.",
+          "data": "Mã lịch fixture.",
+          "expected": "Không được hoàn thành dịch vụ khi chưa có giao dịch PAID."
+        },
+        {
+          "action": "Gửi status=COMPLETED trực tiếp.",
+          "data": "Phiên STAFF; mã lịch fixture.",
+          "expected": "HTTP 409; không đổi lịch thành COMPLETED và không đổi FAILED thành PAID."
+        }
+      ],
+      "notes": "Ca API bổ sung; dùng công cụ HTTP với phiên thử nghiệm STAFF, không thao tác dữ liệu thật. ",
+      "gui": false
+    },
+    {
+      "req": "F9.6",
+      "objective": "Cho hoàn thành khi có PAID dù còn lịch sử FAILED",
+      "pre": "Đăng nhập tài khoản STAFF/ACTIVE đã có hồ sơ nhân sự; website, máy chủ và CSDL kiểm thử sẵn sàng. Có lịch IN_PROGRESS với giao dịch FAILED cũ và một giao dịch PAID hợp lệ mới.",
+      "steps": [
+        {
+          "action": "Làm mới danh sách vận hành.",
+          "data": "Cùng bookingId có FAILED và PAID.",
+          "expected": "Trạng thái thanh toán ưu tiên PAID; nút Hoàn thành dịch vụ khả dụng."
+        },
+        {
+          "action": "Chọn hoàn thành và xác nhận.",
+          "data": "Mã lịch fixture.",
+          "expected": "Lịch COMPLETED; giao dịch PAID/FAILED giữ đúng lịch sử, không bị thu lại."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F9.7",
+      "objective": "Xác nhận tiền mặt PENDING thành PAID",
+      "pre": "Đăng nhập tài khoản STAFF/ACTIVE đã có hồ sơ nhân sự; website, máy chủ và CSDL kiểm thử sẵn sàng. Có giao dịch CASH/PENDING của lịch thử nghiệm; thao tác chỉ mô phỏng xác nhận dữ liệu, không thu tiền thật.",
+      "steps": [
+        {
+          "action": "Bấm Xác nhận tiền mặt.",
+          "data": "Mã giao dịch CASH/PENDING fixture.",
+          "expected": "Giao dịch chuyển PAID và được ghi thời điểm thanh toán; có thông báo thanh toán thành công."
+        },
+        {
+          "action": "Làm mới rồi đối chiếu lịch sử khách hàng thử nghiệm.",
+          "data": "Cùng giao dịch.",
+          "expected": "Hai phía cùng PAID; số tiền và mã giao dịch giữ nguyên."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F9.7",
+      "objective": "Xác nhận lặp không ghi thêm lần thu",
+      "pre": "Đăng nhập tài khoản STAFF/ACTIVE đã có hồ sơ nhân sự; website, máy chủ và CSDL kiểm thử sẵn sàng. Chuẩn bị giao dịch CASH/PAID đã xác nhận; ghi số lượng giao dịch và thông báo thành công trước.",
+      "steps": [
+        {
+          "action": "Gửi PUT /api/Payments/{id}/confirm lần nữa.",
+          "data": "Mã giao dịch đã PAID.",
+          "expected": "HTTP 409; giao dịch không còn chờ xác nhận."
+        },
+        {
+          "action": "Đọc lại lịch sử và thông báo của chủ lịch.",
+          "data": "Cùng fixture.",
+          "expected": "Không có giao dịch mới hoặc thông báo thanh toán thành công mới do yêu cầu lặp."
+        }
+      ],
+      "notes": "Ca API bổ sung; dùng công cụ HTTP với phiên thử nghiệm STAFF, không thao tác dữ liệu thật. ",
+      "gui": false
+    },
+    {
+      "req": "F9.7",
+      "objective": "Không xác nhận thủ công giao dịch BANK_TRANSFER",
+      "pre": "Đăng nhập tài khoản STAFF/ACTIVE đã có hồ sơ nhân sự; website, máy chủ và CSDL kiểm thử sẵn sàng. Có BANK_TRANSFER/PENDING thuộc lịch thử nghiệm.",
+      "steps": [
+        {
+          "action": "Quan sát thao tác trên dòng lịch.",
+          "data": "Giao dịch BANK_TRANSFER/PENDING.",
+          "expected": "Có Kiểm tra PayOS, không có Xác nhận tiền mặt cho giao dịch đó."
+        },
+        {
+          "action": "Gửi PUT /api/Payments/{id}/confirm trực tiếp.",
+          "data": "Mã giao dịch BANK_TRANSFER.",
+          "expected": "HTTP 400; trạng thái vẫn PENDING, không bỏ qua xác minh PayOS."
+        }
+      ],
+      "notes": "Ca API bổ sung; dùng công cụ HTTP với phiên thử nghiệm STAFF, không thao tác dữ liệu thật. ",
+      "gui": false
+    },
+    {
+      "req": "F9.8",
+      "objective": "Nhân viên đồng bộ PayOS đã xác minh thành PAID",
+      "pre": "Đăng nhập tài khoản STAFF/ACTIVE đã có hồ sơ nhân sự; website, máy chủ và CSDL kiểm thử sẵn sàng. Có BANK_TRANSFER/PENDING; PayOS thử nghiệm hoặc bộ giả lập tích hợp được chuẩn bị trả PAID cho đúng giao dịch.",
+      "steps": [
+        {
+          "action": "Bấm Kiểm tra PayOS tại dòng lịch.",
+          "data": "Fixture trả PAID; không chuyển tiền thật.",
+          "expected": "Giao dịch PAID và có thời điểm thanh toán."
+        },
+        {
+          "action": "Làm mới danh sách và chi tiết.",
+          "data": "Cùng bookingId/paymentId.",
+          "expected": "Hiển thị Đã thanh toán nhất quán; không tạo một giao dịch thu mới."
+        }
+      ],
+      "notes": "Phụ thuộc cấu hình/bộ giả lập do người phụ trách chuẩn bị; không tự gán PAID ở bảng dữ liệu để thay việc kiểm API.",
+      "gui": false
+    },
+    {
+      "req": "F9.8",
+      "objective": "Nhân viên đồng bộ PayOS còn chờ không thành PAID",
+      "pre": "Đăng nhập tài khoản STAFF/ACTIVE đã có hồ sơ nhân sự; website, máy chủ và CSDL kiểm thử sẵn sàng. Có BANK_TRANSFER/PENDING; bộ giả lập tích hợp trả trạng thái PENDING.",
+      "steps": [
+        {
+          "action": "Bấm Kiểm tra PayOS.",
+          "data": "Kết quả PayOS=PENDING.",
+          "expected": "Giao dịch giữ PENDING dù thao tác kiểm tra trả thành công."
+        },
+        {
+          "action": "Kiểm tra lịch IN_PROGRESS tương ứng nếu có.",
+          "data": "Không có giao dịch PAID khác.",
+          "expected": "Hoàn thành dịch vụ vẫn bị chặn; thông báo đã kiểm tra không được hiểu là đã thanh toán."
+        }
+      ],
+      "notes": "Bộ giả lập phải trả dữ liệu qua cùng lớp tích hợp PayOS; chưa thực hiện trong phạm vi thiết kế.",
+      "gui": false
+    },
+    {
+      "req": "F9.8",
+      "objective": "Lỗi kết nối PayOS không cập nhật sai trạng thái",
+      "pre": "Đăng nhập tài khoản STAFF/ACTIVE đã có hồ sơ nhân sự; website, máy chủ và CSDL kiểm thử sẵn sàng. Có BANK_TRANSFER/PENDING; chuẩn bị lỗi kết nối/timeout PayOS ở môi trường thử nghiệm.",
+      "steps": [
+        {
+          "action": "Bấm Kiểm tra PayOS.",
+          "data": "Tích hợp trả lỗi kết nối đã chuẩn bị.",
+          "expected": "Máy chủ trả lỗi kiểm tra; website hiển thị phản hồi lỗi, không báo đã nhận tiền."
+        },
+        {
+          "action": "Khôi phục kết nối rồi làm mới.",
+          "data": "Chưa có xác minh PAID.",
+          "expected": "Giao dịch vẫn PENDING và số tiền giữ nguyên; có thể thử kiểm tra lại khi môi trường hoạt động."
+        }
+      ],
+      "notes": "Không ngắt mạng/cấu hình môi trường dùng chung chưa được chuẩn bị; lỗi tích hợp kiểm soát ở môi trường thử nghiệm.",
+      "gui": false
+    },
+    {
+      "req": "F9.9",
+      "objective": "Lưu chứng từ hoàn tiền ở chiều dài tối đa hợp lệ",
+      "pre": "Đăng nhập tài khoản STAFF/ACTIVE đã có hồ sơ nhân sự; website, máy chủ và CSDL kiểm thử sẵn sàng. Có giao dịch PAID fixture. Chuẩn bị chứng từ mô phỏng hoàn ngoài hệ thống, lý do 500 ký tự và mã tham chiếu mô phỏng 200 ký tự không toàn khoảng trắng.",
+      "steps": [
+        {
+          "action": "Mở Ghi nhận hoàn tiền, nhập lý do/tham chiếu rồi Lưu chứng từ.",
+          "data": "reason dài500; reference dài200; chỉ dữ liệu mô phỏng.",
+          "expected": "Chấp nhận lưu; payment thành REFUNDED, lưu đúng lý do và tham chiếu."
+        },
+        {
+          "action": "Tải lại giao dịch.",
+          "data": "Cùng mã giao dịch fixture.",
+          "expected": "Giữ REFUNDED; có người/thời điểm ghi nhận và thông báo cho chủ lịch; không có thao tác chuyển tiền tự động."
+        }
+      ],
+      "notes": "Chứng từ là fixture mô phỏng được chuẩn bị; không khai đã hoàn tiền thật hoặc dùng thao tác này để gửi tiền.",
+      "gui": false
+    },
+    {
+      "req": "F9.9",
+      "objective": "Thiếu hoặc toàn khoảng trắng ở chứng từ bị từ chối",
+      "pre": "Đăng nhập tài khoản STAFF/ACTIVE đã có hồ sơ nhân sự; website, máy chủ và CSDL kiểm thử sẵn sàng. Có giao dịch PAID fixture; chuẩn bị lý do và tham chiếu hợp lệ để thay từng trường.",
+      "steps": [
+        {
+          "action": "Gửi refund với reason rỗng hoặc chỉ khoảng trắng, reference hợp lệ.",
+          "data": "PUT /api/Payments/{id}/refund; mỗi biến thể là yêu cầu độc lập.",
+          "expected": "HTTP 400; giao dịch giữ PAID."
+        },
+        {
+          "action": "Gửi refund với reference rỗng hoặc chỉ khoảng trắng, reason hợp lệ.",
+          "data": "Giữ payment PAID; mỗi biến thể độc lập.",
+          "expected": "HTTP 400; không tạo chứng từ REFUNDED hoặc thông báo hoàn thành."
+        }
+      ],
+      "notes": "Ca API bổ sung; dùng công cụ HTTP với phiên thử nghiệm STAFF, không thao tác dữ liệu thật. ",
+      "gui": false
+    },
+    {
+      "req": "F9.9",
+      "objective": "Chặn chứng từ vượt biên 500/200 ký tự",
+      "pre": "Đăng nhập tài khoản STAFF/ACTIVE đã có hồ sơ nhân sự; website, máy chủ và CSDL kiểm thử sẵn sàng. Có giao dịch PAID; chuẩn bị chuỗi chữ a dài501 và mã tham chiếu mô phỏng dài201.",
+      "steps": [
+        {
+          "action": "Gửi refund có reason dài501, reference hợp lệ.",
+          "data": "Yêu cầu API, tránh bị maxlength UI cắt trước.",
+          "expected": "HTTP 400; giao dịch vẫn PAID."
+        },
+        {
+          "action": "Gửi refund có reason hợp lệ, reference dài201.",
+          "data": "Cùng fixture còn PAID.",
+          "expected": "HTTP 400; không lưu chứng từ vượt độ dài."
+        }
+      ],
+      "notes": "Ca API bổ sung; dùng công cụ HTTP với phiên thử nghiệm STAFF, không thao tác dữ liệu thật. ",
+      "gui": false
+    },
+    {
+      "req": "F9.9",
+      "objective": "Không ghi hoàn tiền cho giao dịch chưa PAID hoặc đã REFUNDED",
+      "pre": "Đăng nhập tài khoản STAFF/ACTIVE đã có hồ sơ nhân sự; website, máy chủ và CSDL kiểm thử sẵn sàng. Có ba fixture riêng PENDING, FAILED, REFUNDED; lý do/tham chiếu mô phỏng hợp lệ.",
+      "steps": [
+        {
+          "action": "Gửi refund lần lượt cho PENDING và FAILED.",
+          "data": "Mỗi lần một paymentId fixture; reason/reference hợp lệ.",
+          "expected": "Mỗi yêu cầu HTTP 409; không đổi các giao dịch thành REFUNDED."
+        },
+        {
+          "action": "Gửi refund lặp cho fixture REFUNDED.",
+          "data": "Đã ghi nhận trước; chứng từ cũ được ghi lại để đối chiếu.",
+          "expected": "HTTP 409; giữ chứng từ cũ, không ghi nhận hoàn lần hai."
+        }
+      ],
+      "notes": "Ca API bổ sung; dùng công cụ HTTP với phiên thử nghiệm STAFF, không thao tác dữ liệu thật. ",
+      "gui": false
+    }
+  ]
+}

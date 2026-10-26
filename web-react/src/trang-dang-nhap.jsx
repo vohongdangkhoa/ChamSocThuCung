@@ -159,8 +159,8 @@ export function AuthPages() {
       }));
       setNotice(
         isResend
-          ? "Đã xử lý yêu cầu gửi lại OTP."
-          : "Mã OTP đã được gửi tới email liên kết.",
+          ? "Nếu tài khoản hợp lệ, yêu cầu gửi lại mã đã được xử lý."
+          : "Nếu số điện thoại khớp tài khoản, mã OTP sẽ được gửi tới email liên kết.",
       );
     });
   }

@@ -1,0 +1,2417 @@
+{
+  "requirements": [
+    {
+      "id": "F10.1",
+      "name": "Ca được phân công",
+      "description": "Bác sĩ xem các lịch được phân công cho chính hồ sơ nhân sự của mình; cổng bác sĩ loại ca CANCELLED.",
+      "type": "Positive / Negative",
+      "importance": "High",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/HoSoSucKhoeController.cs",
+        "backend/PetNoVaApi/Controllers/ThuCungController.cs",
+        "backend/PetNoVaApi/Services/PhienNguoiDung.cs",
+        "web-react/src/cong-van-hanh.jsx",
+        "backend/PetNoVaApi/Controllers/LichHenController.cs"
+      ],
+      "scenarios": [
+        "Có ca được phân công",
+        "Không có ca",
+        "Không thấy ca của bác sĩ khác hoặc ca đã hủy trên giao diện"
+      ]
+    },
+    {
+      "id": "F10.2",
+      "name": "Tra cứu thú cưng",
+      "description": "Bác sĩ tìm trong tập thú cưng được phép thấy theo tên, mã, loài hoặc giống; chọn hồ sơ để xem sức khỏe.",
+      "type": "Positive / Negative",
+      "importance": "Medium",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/HoSoSucKhoeController.cs",
+        "backend/PetNoVaApi/Controllers/ThuCungController.cs",
+        "backend/PetNoVaApi/Services/PhienNguoiDung.cs",
+        "web-react/src/cong-van-hanh.jsx"
+      ],
+      "scenarios": [
+        "Từ khóa trùng tên/mã/loài/giống",
+        "Không có từ khóa trùng",
+        "Đổi thú cưng tải đúng hồ sơ"
+      ]
+    },
+    {
+      "id": "F10.3",
+      "name": "Cập nhật sức khỏe hiện tại",
+      "description": "Bác sĩ cập nhật cân nặng và tình trạng của thú cưng được phân công; giao diện quy định cân nặng 0,01–999 kg, bước 0,01.",
+      "type": "Positive / Negative / Boundary",
+      "importance": "High",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/HoSoSucKhoeController.cs",
+        "backend/PetNoVaApi/Controllers/ThuCungController.cs",
+        "backend/PetNoVaApi/Services/PhienNguoiDung.cs",
+        "web-react/src/cong-van-hanh.jsx"
+      ],
+      "scenarios": [
+        "Cập nhật hợp lệ và còn sau tải lại",
+        "Biên giao diện 0,01 và 999 kg",
+        "Ngoài biên giao diện bị chặn",
+        "Thiếu tình trạng sức khỏe bị giao diện chặn"
+      ]
+    },
+    {
+      "id": "F10.4",
+      "name": "Thêm bệnh án",
+      "description": "Bác sĩ ghi bệnh án cho thú cưng được phân công. Chẩn đoán bắt buộc <=255 ký tự, điều trị bắt buộc <=2000; ghi chú/toa thuốc <=2000; tái khám không trước ngày hiện tại khi thêm.",
+      "type": "Positive / Negative / Boundary",
+      "importance": "High",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/HoSoSucKhoeController.cs",
+        "backend/PetNoVaApi/Controllers/ThuCungController.cs",
+        "backend/PetNoVaApi/Services/PhienNguoiDung.cs",
+        "web-react/src/cong-van-hanh.jsx"
+      ],
+      "scenarios": [
+        "Thêm đủ dữ liệu và xem sau tải lại",
+        "Thiếu chẩn đoán hoặc điều trị",
+        "Tái khám trước ngày hiện tại",
+        "Kiểm tra giới hạn độ dài"
+      ]
+    },
+    {
+      "id": "F10.5",
+      "name": "Sửa bệnh án có lịch sử",
+      "description": "Bác sĩ sửa bệnh án do chính mình ghi hoặc ADMIN sửa bệnh án trong quyền; phải có lý do 1–500 ký tự và lưu bản chụp trước sửa.",
+      "type": "Positive / Negative / Boundary",
+      "importance": "High",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/HoSoSucKhoeController.cs",
+        "backend/PetNoVaApi/Controllers/ThuCungController.cs",
+        "backend/PetNoVaApi/Services/PhienNguoiDung.cs",
+        "web-react/src/cong-van-hanh.jsx"
+      ],
+      "scenarios": [
+        "Sửa bệnh án của mình và lưu lịch sử",
+        "Thiếu lý do bị chặn",
+        "Bác sĩ khác không được sửa",
+        "Hủy sửa không đổi dữ liệu"
+      ]
+    },
+    {
+      "id": "F10.6",
+      "name": "Tiêm chủng",
+      "description": "Thêm/sửa mũi tiêm; tên vaccine bắt buộc <=100, ghi chú <=255; ngày tiêm từ năm 2000 đến D; nhắc lại sau ngày tiêm và không quá 10 năm. Sửa cần lý do và lưu lịch sử.",
+      "type": "Positive / Negative / Boundary",
+      "importance": "High",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/HoSoSucKhoeController.cs",
+        "backend/PetNoVaApi/Controllers/ThuCungController.cs",
+        "backend/PetNoVaApi/Services/PhienNguoiDung.cs",
+        "web-react/src/cong-van-hanh.jsx"
+      ],
+      "scenarios": [
+        "Thêm mũi tiêm hợp lệ",
+        "Sửa có lý do và lưu lịch sử",
+        "Ngày nhắc không sau ngày tiêm",
+        "Ngày tiêm tương lai",
+        "Ngày nhắc vượt10 năm"
+      ]
+    },
+    {
+      "id": "F10.7",
+      "name": "Phân quyền hồ sơ y tế",
+      "description": "Cấm CUSTOMER/STAFF ghi bệnh án/tiêm chủng; VET chỉ ghi cho thú cưng có ca không CANCELLED được phân công. Sai tác giả sửa được kiểm tra riêng ở F10.5.",
+      "type": "Negative",
+      "importance": "High",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/HoSoSucKhoeController.cs",
+        "backend/PetNoVaApi/Controllers/ThuCungController.cs",
+        "backend/PetNoVaApi/Services/PhienNguoiDung.cs",
+        "web-react/src/cong-van-hanh.jsx"
+      ],
+      "scenarios": [
+        "Khách hàng không ghi hồ sơ y tế",
+        "Bác sĩ không ghi cho thú cưng ngoài phạm vi"
+      ]
+    },
+    {
+      "id": "F11.1",
+      "name": "Tổng quan quản trị",
+      "description": "Hiển thị tổng lịch, lịch PENDING, tổng tiền giao dịch PAID, số dịch vụ ACTIVE, số khách và hồ sơ thú cưng.",
+      "type": "Positive",
+      "importance": "Medium",
+      "sources": [
+        "web-react/src/cong-van-hanh.jsx",
+        "backend/PetNoVaApi/Controllers/UserAccountsController.cs",
+        "backend/PetNoVaApi/Controllers/StaffsController.cs",
+        "backend/PetNoVaApi/Services/PhienNguoiDung.cs"
+      ],
+      "scenarios": [
+        "Thống kê khớp tập dữ liệu có kiểm soát",
+        "Không có dữ liệu nghiệp vụ"
+      ]
+    },
+    {
+      "id": "F11.2",
+      "name": "Danh sách tài khoản",
+      "description": "Quản trị xem tài khoản và tìm theo mã, tên, email hoặc điện thoại; UI hiện chưa có bộ lọc riêng theo vai trò/trạng thái.",
+      "type": "Positive / Negative",
+      "importance": "Medium",
+      "sources": [
+        "web-react/src/cong-van-hanh.jsx",
+        "backend/PetNoVaApi/Controllers/UserAccountsController.cs",
+        "backend/PetNoVaApi/Controllers/StaffsController.cs",
+        "backend/PetNoVaApi/Services/PhienNguoiDung.cs"
+      ],
+      "scenarios": [
+        "Tìm kiếm từ khóa có kết quả",
+        "Từ khóa không trùng và xóa từ khóa"
+      ]
+    },
+    {
+      "id": "F11.3",
+      "name": "Đổi vai trò tài khoản",
+      "description": "ADMIN gán một trong4 vai trò. STAFF/VET cần hồ sơ nhân sự liên kết; CUSTOMER không còn hồ sơ Staff, có số Việt Nam hợp lệ duy nhất; cấm tự gỡ quyền admin.",
+      "type": "Positive / Negative",
+      "importance": "High",
+      "sources": [
+        "web-react/src/cong-van-hanh.jsx",
+        "backend/PetNoVaApi/Controllers/UserAccountsController.cs",
+        "backend/PetNoVaApi/Controllers/StaffsController.cs",
+        "backend/PetNoVaApi/Services/PhienNguoiDung.cs"
+      ],
+      "scenarios": [
+        "Đổi STAFF sang VET và đồng bộ nhân sự",
+        "Vai trò lạ bị từ chối",
+        "Không gán STAFF/VET khi chưa có Staff",
+        "Không tự hạ quyền admin"
+      ]
+    },
+    {
+      "id": "F11.4",
+      "name": "Trạng thái tài khoản",
+      "description": "ADMIN đặt ACTIVE/INACTIVE/SUSPENDED; cấm tự khóa admin hiện dùng; trạng thái không ACTIVE chặn API dù phiên đã có token.",
+      "type": "Positive / Negative",
+      "importance": "High",
+      "sources": [
+        "web-react/src/cong-van-hanh.jsx",
+        "backend/PetNoVaApi/Controllers/UserAccountsController.cs",
+        "backend/PetNoVaApi/Controllers/StaffsController.cs",
+        "backend/PetNoVaApi/Services/PhienNguoiDung.cs"
+      ],
+      "scenarios": [
+        "Khóa tài khoản và chặn phiên đang có",
+        "Kích hoạt lại",
+        "Trạng thái lạ",
+        "Tự khóa quản trị"
+      ]
+    },
+    {
+      "id": "F11.5",
+      "name": "Thêm nhân sự",
+      "description": "Tạo Staff và UserAccount liên kết cùng danh tính Firebase; vai trò STAFF/VET; thông tin bắt buộc, mật khẩu khởi tạo12–128 ký tự, email chưa tồn tại.",
+      "type": "Positive / Negative / Boundary",
+      "importance": "High",
+      "sources": [
+        "web-react/src/cong-van-hanh.jsx",
+        "backend/PetNoVaApi/Controllers/UserAccountsController.cs",
+        "backend/PetNoVaApi/Controllers/StaffsController.cs",
+        "backend/PetNoVaApi/Services/PhienNguoiDung.cs"
+      ],
+      "scenarios": [
+        "Tạo nhân sự hợp lệ",
+        "Email trùng",
+        "Mật khẩu11 ký tự bị từ chối",
+        "Vai trò không phải STAFF/VET bị từ chối"
+      ]
+    },
+    {
+      "id": "F11.6",
+      "name": "Sửa nhân sự",
+      "description": "Cập nhật họ tên/điện thoại/vai trò STAFF hoặc VET và đồng bộ sang tài khoản liên kết; email không được sửa qua form này.",
+      "type": "Positive / Negative",
+      "importance": "High",
+      "sources": [
+        "web-react/src/cong-van-hanh.jsx",
+        "backend/PetNoVaApi/Controllers/UserAccountsController.cs",
+        "backend/PetNoVaApi/Controllers/StaffsController.cs",
+        "backend/PetNoVaApi/Services/PhienNguoiDung.cs"
+      ],
+      "scenarios": [
+        "Sửa hợp lệ và đồng bộ",
+        "Thiếu tên/điện thoại",
+        "Hủy sửa"
+      ]
+    },
+    {
+      "id": "F11.7",
+      "name": "Ngưng/kích hoạt nhân sự",
+      "description": "Đổi ACTIVE/INACTIVE hoặc kích hoạt SUSPENDED; đồng bộ trạng thái UserAccount. Danh bạ phân công chỉ chứa Staff ACTIVE.",
+      "type": "Positive / Negative",
+      "importance": "High",
+      "sources": [
+        "web-react/src/cong-van-hanh.jsx",
+        "backend/PetNoVaApi/Controllers/UserAccountsController.cs",
+        "backend/PetNoVaApi/Controllers/StaffsController.cs",
+        "backend/PetNoVaApi/Services/PhienNguoiDung.cs",
+        "backend/PetNoVaApi/Controllers/LichHenController.cs"
+      ],
+      "scenarios": [
+        "Tạm ngưng và loại khỏi danh bạ phân công",
+        "Kích hoạt lại",
+        "Kích hoạt SUSPENDED không xóa số vi phạm"
+      ]
+    },
+    {
+      "id": "F11.8",
+      "name": "Ghi vi phạm nhân sự",
+      "description": "Mỗi yêu cầu ghi vi phạm tăng1; đạt từ 3 lần trở lên tự SUSPENDED và tài khoản liên kết INACTIVE. UI yêu cầu xác nhận.",
+      "type": "Positive / Negative / Boundary",
+      "importance": "Medium",
+      "sources": [
+        "web-react/src/cong-van-hanh.jsx",
+        "backend/PetNoVaApi/Controllers/UserAccountsController.cs",
+        "backend/PetNoVaApi/Controllers/StaffsController.cs",
+        "backend/PetNoVaApi/Services/PhienNguoiDung.cs"
+      ],
+      "scenarios": [
+        "Từ1 lên 2chưa đình chỉ",
+        "Từ2 lên 3đình chỉ",
+        "Hủy xác nhận không tăng"
+      ]
+    },
+    {
+      "id": "F11.9",
+      "name": "Xóa nhân sự",
+      "description": "Chỉ xóa Staff không có lịch/bệnh án/tiêm chủng liên quan; tài khoản được giữ và chuyển CUSTOMER/ACTIVE với số Việt Nam hợp lệ duy nhất; UI có xác nhận.",
+      "type": "Positive / Negative",
+      "importance": "Medium",
+      "sources": [
+        "web-react/src/cong-van-hanh.jsx",
+        "backend/PetNoVaApi/Controllers/UserAccountsController.cs",
+        "backend/PetNoVaApi/Controllers/StaffsController.cs",
+        "backend/PetNoVaApi/Services/PhienNguoiDung.cs"
+      ],
+      "scenarios": [
+        "Xóa Staff chưa có nghiệp vụ giữ tài khoản",
+        "Có dữ liệu nghiệp vụ bị chặn",
+        "Hủy xóa"
+      ]
+    },
+    {
+      "id": "F11.10",
+      "name": "Quản lý dịch vụ",
+      "description": "ADMIN tạo/sửa/xóa gói; tên/mô tả/danh mục không rỗng, giá và phút >0, danh mục ACTIVE. Gói đã có BookingDetail không được xóa.",
+      "type": "Positive / Negative / Boundary",
+      "importance": "High",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/ServicePackagesController.cs",
+        "backend/PetNoVaApi/Controllers/DanhMucController.cs",
+        "web-react/src/cong-van-hanh.jsx",
+        "web-react/src/quan-tri-bo-sung.jsx"
+      ],
+      "scenarios": [
+        "Tạo hợp lệ",
+        "Sửa và tải lại",
+        "Giá0/âm",
+        "Thiếu trường bắt buộc",
+        "Không xóa gói đã có lịch"
+      ]
+    },
+    {
+      "id": "F11.11",
+      "name": "Trạng thái dịch vụ",
+      "description": "Bật/tắt ACTIVE/INACTIVE; chỉ gói ACTIVE được chọn khi đặt mới; lịch cũ vẫn giữ chi tiết gói.",
+      "type": "Positive / Negative",
+      "importance": "High",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/ServicePackagesController.cs",
+        "backend/PetNoVaApi/Controllers/DanhMucController.cs",
+        "web-react/src/cong-van-hanh.jsx",
+        "web-react/src/quan-tri-bo-sung.jsx",
+        "backend/PetNoVaApi/Controllers/LichHenController.cs"
+      ],
+      "scenarios": [
+        "Tắt gói và kiểm tra đặt mới",
+        "Bật lại gói",
+        "Lịch cũ vẫn đọc được"
+      ]
+    },
+    {
+      "id": "F11.12",
+      "name": "Danh mục dịch vụ",
+      "description": "ADMIN thêm/sửa tên/mô tả và đổi ACTIVE/INACTIVE. Tên không rỗng. Chưa có căn cứ chắc chắn cho ràng buộc tên duy nhất.",
+      "type": "Positive / Negative",
+      "importance": "Medium",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/ServicePackagesController.cs",
+        "backend/PetNoVaApi/Controllers/DanhMucController.cs",
+        "web-react/src/cong-van-hanh.jsx",
+        "web-react/src/quan-tri-bo-sung.jsx"
+      ],
+      "scenarios": [
+        "Tạo danh mục",
+        "Sửa danh mục",
+        "Tên rỗng",
+        "Danh mục INACTIVE không dùng cho gói mới"
+      ]
+    },
+    {
+      "id": "F11.13",
+      "name": "Quản lý lịch hẹn",
+      "description": "ADMIN xem bảng tất cả lịch, khách/thú cưng/gói đầu tiên và giao dịch được ưu tiên. Giao diện quản trị hiện chỉ đọc; API ADMIN được xử lý theo các quy tắc vận hành.",
+      "type": "Positive / Negative",
+      "importance": "High",
+      "sources": [
+        "web-react/src/cong-van-hanh.jsx",
+        "backend/PetNoVaApi/Controllers/UserAccountsController.cs",
+        "backend/PetNoVaApi/Controllers/StaffsController.cs",
+        "backend/PetNoVaApi/Services/PhienNguoiDung.cs",
+        "backend/PetNoVaApi/Controllers/LichHenController.cs"
+      ],
+      "scenarios": [
+        "Xem lịch của nhiều khách",
+        "ADMIN cập nhật đúng luồng qua API"
+      ]
+    },
+    {
+      "id": "F11.14",
+      "name": "Báo cáo theo ngày",
+      "description": "Báo cáo theo ngày lịch cho số lịch/hoàn thành/giá trị đặt; tiền thu theo paymentDate, hoàn theo refundedAt; khoảng tối đa3 năm, gồm cả hai đầu ngày.",
+      "type": "Positive / Negative / Boundary",
+      "importance": "High",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/BaoCaoController.cs",
+        "web-react/src/quan-tri-bo-sung.jsx"
+      ],
+      "scenarios": [
+        "Đối chiếu số liệu và hai loại ngày tiền",
+        "Khoảng không có dữ liệu",
+        "Ngày bắt đầu sau ngày kết thúc",
+        "Khoảng vượt3 năm"
+      ]
+    },
+    {
+      "id": "F11.15",
+      "name": "Xuất CSV báo cáo",
+      "description": "Xuất bảng Lịch theo ngày gồm Ngày/Số lịch/Hoàn thành/Giá trị đặt; UTF-8 có BOM, ô có quote/escape. Giao diện không xuất tên dịch vụ hay nội dung người dùng.",
+      "type": "Positive / Negative",
+      "importance": "Medium",
+      "sources": [
+        "backend/PetNoVaApi/Controllers/BaoCaoController.cs",
+        "web-react/src/quan-tri-bo-sung.jsx"
+      ],
+      "scenarios": [
+        "Xuất CSV khớp bảng và mở trong Excel",
+        "Xuất khi báo cáo rỗng"
+      ]
+    },
+    {
+      "id": "F11.16",
+      "name": "Thông báo chung",
+      "description": "ADMIN gửi1 thông báo SYSTEM cho mỗi tài khoản ACTIVE; title1–100, message1–255; có xác nhận gửi. Dùng CSDL/tài khoản thử vì broadcast toàn bộ ACTIVE.",
+      "type": "Positive / Negative / Boundary",
+      "importance": "Medium",
+      "sources": [
+        "backend/PetNoVaApi/Services/PhienNguoiDung.cs",
+        "backend/PetNoVaApi/Controllers/ThongBaoController.cs",
+        "backend/PetNoVaApi/Controllers/DanhMucController.cs",
+        "web-react/src/quan-tri-bo-sung.jsx"
+      ],
+      "scenarios": [
+        "Gửi đến đúng ACTIVE",
+        "Hủy gửi",
+        "Thiếu tiêu đề/nội dung",
+        "Vượt giới hạn độ dài"
+      ]
+    },
+    {
+      "id": "F11.17",
+      "name": "Nhật ký thao tác",
+      "description": "ADMIN xem nhật ký100 mục/trang, mới trước; ghi mọi non-GET thành công của tài khoản có quyền, gồm user/name/role/action/route id/UTCtime; không lưu body/token/nội dung bệnh án.",
+      "type": "Positive / Negative",
+      "importance": "Medium",
+      "sources": [
+        "backend/PetNoVaApi/Services/PhienNguoiDung.cs",
+        "backend/PetNoVaApi/Controllers/ThongBaoController.cs",
+        "backend/PetNoVaApi/Controllers/DanhMucController.cs",
+        "web-react/src/quan-tri-bo-sung.jsx"
+      ],
+      "scenarios": [
+        "Thao tác thành công được ghi đúng",
+        "Thao tác bị từ chối không tạo log thành công",
+        "Danh sách rỗng"
+      ]
+    },
+    {
+      "id": "F12.1",
+      "name": "Phân quyền vai trò",
+      "description": "API xác minh token Firebase, hồ sơ ACTIVE và vai trò từ CSDL; giao diện mở cổng theo vai trò hiện tại.",
+      "type": "Positive / Negative",
+      "importance": "High",
+      "sources": [
+        "backend/PetNoVaApi/Services/PhienNguoiDung.cs",
+        "backend/PetNoVaApi/Controllers/ThongBaoController.cs",
+        "backend/PetNoVaApi/Controllers/DanhMucController.cs",
+        "web-react/src/quan-tri-bo-sung.jsx",
+        "web-react/src/cong-van-hanh.jsx"
+      ],
+      "scenarios": [
+        "Thiếu token không đọc dữ liệu",
+        "CUSTOMER/STAFF/VET không gọi quản trị",
+        "Đăng nhập4 vai trò vào đúng cổng"
+      ]
+    },
+    {
+      "id": "F12.2",
+      "name": "Cô lập dữ liệu khách hàng",
+      "description": "Khách hàng chỉ đọc/sửa tài nguyên thuộc sở hữu; kiểm tra riêng thú cưng, lịch, thanh toán và thông báo bằng ID của khách khác.",
+      "type": "Negative",
+      "importance": "High",
+      "sources": [
+        "backend/PetNoVaApi/Services/PhienNguoiDung.cs",
+        "backend/PetNoVaApi/Controllers/ThongBaoController.cs",
+        "backend/PetNoVaApi/Controllers/DanhMucController.cs",
+        "web-react/src/quan-tri-bo-sung.jsx",
+        "backend/PetNoVaApi/Controllers/ThuCungController.cs",
+        "backend/PetNoVaApi/Controllers/LichHenController.cs",
+        "backend/PetNoVaApi/Controllers/PaymentsController.cs"
+      ],
+      "scenarios": [
+        "ID thú cưng khác",
+        "ID lịch khác",
+        "ID thanh toán khác",
+        "ID thông báo khác"
+      ]
+    },
+    {
+      "id": "F12.3",
+      "name": "Lỗi API và trạng thái rỗng",
+      "description": "Giao diện phản hồi khi tải/lỗi API và tập dữ liệu rỗng; có thể tải lại khi kết nối phục hồi.",
+      "type": "Negative / LooknFeel",
+      "importance": "Medium",
+      "sources": [
+        "web-react/src/cong-van-hanh.jsx",
+        "backend/PetNoVaApi/Controllers/UserAccountsController.cs",
+        "backend/PetNoVaApi/Controllers/StaffsController.cs",
+        "backend/PetNoVaApi/Services/PhienNguoiDung.cs",
+        "web-react/src/quan-tri-bo-sung.jsx"
+      ],
+      "scenarios": [
+        "API lỗi rồi khôi phục",
+        "Danh sách không có dữ liệu"
+      ]
+    },
+    {
+      "id": "F12.4",
+      "name": "Hiển thị nhiều kích thước",
+      "description": "Kiểm tra các màn hình chính desktop/mobile theo CSS responsive; chọn kích thước đại diện để đánh giá khả năng sử dụng, không coi kích thước chọn là đặc tả màn hình bắt buộc.",
+      "type": "LooknFeel",
+      "importance": "Medium",
+      "sources": [
+        "web-react/src/giao-dien.css",
+        "web-react/src/khach-hang.css",
+        "web-react/src/cong-van-hanh.jsx"
+      ],
+      "scenarios": [
+        "Màn hình máy tính đại diện",
+        "Màn hình hẹp đại diện"
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "req": "F10.1",
+      "objective": "Xem ca đang được phân công",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_VET_A: tài khoản thử ACTIVE/VET, liên kết nhân sự ACTIVE; đang đăng nhập cổng bác sĩ. P_A: thú cưng chưa lưu trữ, tên Bé Mây QA, loài Chó, giống Poodle QA, giới tính Cái, ngày sinh D−2 năm, cân nặng 5 kg, tình trạng Bình thường; có lịch B_A không CANCELLED phân công cho QA_VET_A. B_A: D+1, 09:00, CONFIRMED; ghi lại mã lịch, mã thú cưng và giờ đối chiếu.",
+      "steps": [
+        {
+          "action": "Mở mục Ca được phân công.",
+          "data": "QA_VET_A",
+          "expected": "Danh sách ca của bác sĩ tải được."
+        },
+        {
+          "action": "Tìm B_A và đối chiếu dữ liệu.",
+          "data": "B_A; P_A; D+1 09:00",
+          "expected": "Hiện đúng mã lịch, thú cưng, ngày giờ và trạng thái của B_A."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F10.1",
+      "objective": "Màn ca được phân công khi chưa có lịch",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_VET_EMPTY ACTIVE/VET có hồ sơ Staff ACTIVE, không có Booking nào phân công; đăng nhập tài khoản này.",
+      "steps": [
+        {
+          "action": "Mở mục Ca được phân công.",
+          "data": "QA_VET_EMPTY",
+          "expected": "Mục lịch mở được, không hiển thị ca của người khác."
+        },
+        {
+          "action": "Tải lại danh sách.",
+          "data": "Không có ca thuộc QA_VET_EMPTY",
+          "expected": "Hiện trạng thái rỗng; không có dữ liệu lịch giả."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F10.1",
+      "objective": "Không hiển thị ca của bác sĩ khác và ca CANCELLED",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_VET_A: tài khoản thử ACTIVE/VET, liên kết nhân sự ACTIVE; đang đăng nhập cổng bác sĩ. P_A: thú cưng chưa lưu trữ, tên Bé Mây QA, loài Chó, giống Poodle QA, giới tính Cái, ngày sinh D−2 năm, cân nặng 5 kg, tình trạng Bình thường; có lịch B_A không CANCELLED phân công cho QA_VET_A. B_B phân công QA_VET_B ACTIVE/VET; B_CANCEL phân công QA_VET_A nhưng CANCELLED; ghi lại cả hai mã.",
+      "steps": [
+        {
+          "action": "Mở Ca được phân công và tải lại.",
+          "data": "B_B; B_CANCEL",
+          "expected": "Cổng bác sĩ hiển thị danh sách sau khi lọc."
+        },
+        {
+          "action": "Tra các mã cần loại.",
+          "data": "B_B; B_CANCEL",
+          "expected": "Không hiển thị ca B_B hoặc B_CANCEL; B_A còn hiển thị."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F10.2",
+      "objective": "Tìm thú cưng bằng từ khóa hợp lệ",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_VET_A: tài khoản thử ACTIVE/VET, liên kết nhân sự ACTIVE; đang đăng nhập cổng bác sĩ. P_A: thú cưng chưa lưu trữ, tên Bé Mây QA, loài Chó, giống Poodle QA, giới tính Cái, ngày sinh D−2 năm, cân nặng 5 kg, tình trạng Bình thường; có lịch B_A không CANCELLED phân công cho QA_VET_A. Chỉ P_A có tên chứa Bé Mây QA trong phạm vi của bác sĩ.",
+      "steps": [
+        {
+          "action": "Mở Hồ sơ thú cưng.",
+          "data": "QA_VET_A",
+          "expected": "Danh sách thú cưng được phép xem xuất hiện."
+        },
+        {
+          "action": "Nhập từ khóa.",
+          "data": "Bé Mây QA",
+          "expected": "Danh sách chỉ gồm thú cưng có trường tìm kiếm chứa từ khóa; có P_A."
+        },
+        {
+          "action": "Xóa từ khóa rồi tìm bằng mã.",
+          "data": "Mã thực tế P_A",
+          "expected": "Hiện P_A; không đổi dữ liệu hồ sơ."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F10.2",
+      "objective": "Tra cứu với từ khóa không tồn tại",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_VET_A: tài khoản thử ACTIVE/VET, liên kết nhân sự ACTIVE; đang đăng nhập cổng bác sĩ. P_A: thú cưng chưa lưu trữ, tên Bé Mây QA, loài Chó, giống Poodle QA, giới tính Cái, ngày sinh D−2 năm, cân nặng 5 kg, tình trạng Bình thường; có lịch B_A không CANCELLED phân công cho QA_VET_A. Không có thú cưng nào trong phạm vi chứa chuỗi QA_KHONG_CO_724.",
+      "steps": [
+        {
+          "action": "Mở Hồ sơ thú cưng.",
+          "data": "QA_VET_A",
+          "expected": "Trang hồ sơ mở được."
+        },
+        {
+          "action": "Nhập từ khóa không trùng.",
+          "data": "QA_KHONG_CO_724",
+          "expected": "Không hiển thị thú cưng không khớp; có trạng thái rỗng."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F10.2",
+      "objective": "Chọn thú cưng khác không giữ hồ sơ cũ",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_VET_A: tài khoản thử ACTIVE/VET, liên kết nhân sự ACTIVE; đang đăng nhập cổng bác sĩ. P_A: thú cưng chưa lưu trữ, tên Bé Mây QA, loài Chó, giống Poodle QA, giới tính Cái, ngày sinh D−2 năm, cân nặng 5 kg, tình trạng Bình thường; có lịch B_A không CANCELLED phân công cho QA_VET_A. P_B là thú cưng thứ hai có lịch không CANCELLED phân công QA_VET_A, có bệnh án và mũi tiêm khác P_A; ghi lại các ID tương ứng.",
+      "steps": [
+        {
+          "action": "Chọn P_A.",
+          "data": "P_A",
+          "expected": "Thông tin, bệnh án và tiêm chủng thuộc P_A."
+        },
+        {
+          "action": "Chọn P_B.",
+          "data": "P_B",
+          "expected": "Thông tin hồ sơ, bệnh án và tiêm chủng đổi sang P_B; không hiện dữ liệu P_A trong hồ sơ P_B."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F10.3",
+      "objective": "Lưu sức khỏe hợp lệ và giữ các trường định danh",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_VET_A: tài khoản thử ACTIVE/VET, liên kết nhân sự ACTIVE; đang đăng nhập cổng bác sĩ. P_A: thú cưng chưa lưu trữ, tên Bé Mây QA, loài Chó, giống Poodle QA, giới tính Cái, ngày sinh D−2 năm, cân nặng 5 kg, tình trạng Bình thường; có lịch B_A không CANCELLED phân công cho QA_VET_A. Ghi lại tên/loài/giống/giới tính/ngày sinh ban đầu của P_A.",
+      "steps": [
+        {
+          "action": "Chọn P_A và nhập phần sức khỏe.",
+          "data": "Cân nặng 5.25; tình trạng Theo dõi sức khỏe QA",
+          "expected": "Dữ liệu mới hiển thị trong form."
+        },
+        {
+          "action": "Bấm lưu tình trạng sức khỏe.",
+          "data": "P_A",
+          "expected": "Thông báo lưu thành công; cân nặng và tình trạng được cập nhật."
+        },
+        {
+          "action": "Tải lại và chọn lại P_A.",
+          "data": "P_A",
+          "expected": "Vẫn 5.25 kg và đúng tình trạng; tên/loài/giống/giới tính/ngày sinh không đổi."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F10.3",
+      "objective": "Lưu cân nặng tại biên giao diện 0.01 kg",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_VET_A: tài khoản thử ACTIVE/VET, liên kết nhân sự ACTIVE; đang đăng nhập cổng bác sĩ. P_A: thú cưng chưa lưu trữ, tên Bé Mây QA, loài Chó, giống Poodle QA, giới tính Cái, ngày sinh D−2 năm, cân nặng 5 kg, tình trạng Bình thường; có lịch B_A không CANCELLED phân công cho QA_VET_A. P_A đang có dữ liệu định danh hợp lệ.",
+      "steps": [
+        {
+          "action": "Mở phần cập nhật sức khỏe P_A.",
+          "data": "P_A",
+          "expected": "Form sức khỏe mở với dữ liệu hiện có."
+        },
+        {
+          "action": "Nhập cân nặng, tình trạng rồi lưu.",
+          "data": "0.01 kg; tình trạng Theo dõi QA",
+          "expected": "Giá trị biên được chấp nhận."
+        },
+        {
+          "action": "Tải lại hồ sơ.",
+          "data": "0.01 kg",
+          "expected": "Cân nặng lưu đúng giá trị đã nhập."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F10.3",
+      "objective": "Lưu cân nặng tại biên giao diện 999 kg",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_VET_A: tài khoản thử ACTIVE/VET, liên kết nhân sự ACTIVE; đang đăng nhập cổng bác sĩ. P_A: thú cưng chưa lưu trữ, tên Bé Mây QA, loài Chó, giống Poodle QA, giới tính Cái, ngày sinh D−2 năm, cân nặng 5 kg, tình trạng Bình thường; có lịch B_A không CANCELLED phân công cho QA_VET_A. P_A đang có dữ liệu định danh hợp lệ.",
+      "steps": [
+        {
+          "action": "Mở phần cập nhật sức khỏe P_A.",
+          "data": "P_A",
+          "expected": "Form sức khỏe mở với dữ liệu hiện có."
+        },
+        {
+          "action": "Nhập cân nặng, tình trạng rồi lưu.",
+          "data": "999 kg; tình trạng Theo dõi QA",
+          "expected": "Giá trị biên được chấp nhận."
+        },
+        {
+          "action": "Tải lại hồ sơ.",
+          "data": "999 kg",
+          "expected": "Cân nặng lưu đúng giá trị đã nhập."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F10.3",
+      "objective": "Chặn cân nặng dưới hoặc trên khoảng của giao diện",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_VET_A: tài khoản thử ACTIVE/VET, liên kết nhân sự ACTIVE; đang đăng nhập cổng bác sĩ. P_A: thú cưng chưa lưu trữ, tên Bé Mây QA, loài Chó, giống Poodle QA, giới tính Cái, ngày sinh D−2 năm, cân nặng 5 kg, tình trạng Bình thường; có lịch B_A không CANCELLED phân công cho QA_VET_A. Cân nặng P_A ban đầu 5 kg. Thực hiện riêng từng dữ liệu; khôi phục 5 kg trước lượt sau.",
+      "steps": [
+        {
+          "action": "Nhập giá trị ngoài biên tại form sức khỏe.",
+          "data": "Lượt 1: 0; lượt 2: 999.01; tình trạng Theo dõi QA",
+          "expected": "Ô số được kiểm tra theo min 0.01, max 999."
+        },
+        {
+          "action": "Bấm lưu rồi tải lại P_A.",
+          "data": "Từng lượt độc lập",
+          "expected": "Giao diện không cho lưu giá trị ngoài khoảng; dữ liệu P_A vẫn 5 kg."
+        }
+      ],
+      "notes": "Lặp với từng dữ liệu độc lập. Giới hạn API hiện là >0 và <1000, khác giới hạn form; chưa có đặc tả thống nhất để kết luận biên API 0.01–999.",
+      "gui": false
+    },
+    {
+      "req": "F10.3",
+      "objective": "Chặn bỏ trống tình trạng sức khỏe tại giao diện",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_VET_A: tài khoản thử ACTIVE/VET, liên kết nhân sự ACTIVE; đang đăng nhập cổng bác sĩ. P_A: thú cưng chưa lưu trữ, tên Bé Mây QA, loài Chó, giống Poodle QA, giới tính Cái, ngày sinh D−2 năm, cân nặng 5 kg, tình trạng Bình thường; có lịch B_A không CANCELLED phân công cho QA_VET_A. Ghi lại tình trạng ban đầu Bình thường.",
+      "steps": [
+        {
+          "action": "Xóa tình trạng, giữ cân nặng hợp lệ.",
+          "data": "Tình trạng rỗng; cân nặng 5",
+          "expected": "Form hiển thị tình trạng rỗng."
+        },
+        {
+          "action": "Bấm lưu và tải lại.",
+          "data": "P_A",
+          "expected": "Trường bắt buộc ngăn gửi/lưu từ giao diện; tình trạng cũ còn nguyên."
+        }
+      ],
+      "notes": "UI có required; Pets API chỉ yêu cầu healthStatus không null và dài <=255, không cấm chuỗi rỗng. Cần xác nhận yêu cầu thống nhất nếu kiểm tra trực tiếp API.",
+      "gui": false
+    },
+    {
+      "req": "F10.4",
+      "objective": "Thêm bệnh án hợp lệ",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_VET_A: tài khoản thử ACTIVE/VET, liên kết nhân sự ACTIVE; đang đăng nhập cổng bác sĩ. P_A: thú cưng chưa lưu trữ, tên Bé Mây QA, loài Chó, giống Poodle QA, giới tính Cái, ngày sinh D−2 năm, cân nặng 5 kg, tình trạng Bình thường; có lịch B_A không CANCELLED phân công cho QA_VET_A. P_A chưa có bệnh án mang nội dung QA_BENHAN_01; không dùng chỉ định y tế thật.",
+      "steps": [
+        {
+          "action": "Chọn P_A, tab Bệnh án và nhập dữ liệu thử.",
+          "data": "Chẩn đoán QA_BENHAN_01; điều trị Nội dung điều trị thử; toa Nội dung toa thử; cân nặng 5.3; tái khám D+7",
+          "expected": "Form thể hiện đủ dữ liệu."
+        },
+        {
+          "action": "Bấm Lưu bệnh án.",
+          "data": "QA_VET_A",
+          "expected": "Tạo một bệnh án mới cho P_A; người ghi là nhân sự của QA_VET_A, ngày ghi là D."
+        },
+        {
+          "action": "Tải lại hồ sơ P_A.",
+          "data": "QA_BENHAN_01",
+          "expected": "Bệnh án còn đủ nội dung; cân nặng hiện tại P_A là 5.3 kg."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F10.4",
+      "objective": "Chặn bệnh án thiếu chẩn đoán hoặc điều trị",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_VET_A: tài khoản thử ACTIVE/VET, liên kết nhân sự ACTIVE; đang đăng nhập cổng bác sĩ. P_A: thú cưng chưa lưu trữ, tên Bé Mây QA, loài Chó, giống Poodle QA, giới tính Cái, ngày sinh D−2 năm, cân nặng 5 kg, tình trạng Bình thường; có lịch B_A không CANCELLED phân công cho QA_VET_A. Ghi lại số bệnh án P_A trước kiểm tra; lặp độc lập từng bộ dữ liệu.",
+      "steps": [
+        {
+          "action": "Nhập dữ liệu thiếu trường bắt buộc.",
+          "data": "Lượt1: chẩn đoán rỗng, điều trị QA; lượt 2: chẩn đoán QA, điều trị rỗng",
+          "expected": "Form có một trường bắt buộc rỗng ở mỗi lượt."
+        },
+        {
+          "action": "Bấm Lưu bệnh án rồi tải lại.",
+          "data": "P_A",
+          "expected": "Không tạo bệnh án mới; có chỉ dẫn dữ liệu không hợp lệ."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F10.4",
+      "objective": "Chặn ngày tái khám quá khứ khi thêm bệnh án",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_VET_A: tài khoản thử ACTIVE/VET, liên kết nhân sự ACTIVE; đang đăng nhập cổng bác sĩ. P_A: thú cưng chưa lưu trữ, tên Bé Mây QA, loài Chó, giống Poodle QA, giới tính Cái, ngày sinh D−2 năm, cân nặng 5 kg, tình trạng Bình thường; có lịch B_A không CANCELLED phân công cho QA_VET_A. Ghi lại số bệnh án P_A.",
+      "steps": [
+        {
+          "action": "Nhập bệnh án có tái khám trước D.",
+          "data": "Chẩn đoán QA_DATE; điều trị Nội dung thử; tái khám D−1",
+          "expected": "Form nhận ngày để kiểm tra."
+        },
+        {
+          "action": "Lưu rồi tải lại.",
+          "data": "P_A",
+          "expected": "Yêu cầu bị từ chối; số bệnh án không tăng."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F10.4",
+      "objective": "Kiểm tra giới hạn chẩn đoán 255 ký tự qua API",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_VET_A: tài khoản thử ACTIVE/VET, liên kết nhân sự ACTIVE; đang đăng nhập cổng bác sĩ. P_A: thú cưng chưa lưu trữ, tên Bé Mây QA, loài Chó, giống Poodle QA, giới tính Cái, ngày sinh D−2 năm, cân nặng 5 kg, tình trạng Bình thường; có lịch B_A không CANCELLED phân công cho QA_VET_A. Có token QA_VET_A; P_A được phép ghi; mỗi lượt dùng payload hợp lệ chỉ thay chẩn đoán.",
+      "steps": [
+        {
+          "action": "Gửi yêu cầu tạo với chẩn đoán đúng biên.",
+          "data": "POST /api/MedicalRecords; petId=P_A; diagnosis='A'×255; treatment=QA; weight=null; followUpDate=null",
+          "expected": "API chấp nhận và tạo bệnh án."
+        },
+        {
+          "action": "Gửi yêu cầu tạo khác vượt biên.",
+          "data": "diagnosis='A'×256; các trường khác như lượt 1",
+          "expected": "API trả 400; không tạo thêm bệnh án vượt độ dài."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.",
+      "gui": false
+    },
+    {
+      "req": "F10.5",
+      "objective": "Sửa bệnh án của mình và xem bản trước sửa",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_VET_A: tài khoản thử ACTIVE/VET, liên kết nhân sự ACTIVE; đang đăng nhập cổng bác sĩ. P_A: thú cưng chưa lưu trữ, tên Bé Mây QA, loài Chó, giống Poodle QA, giới tính Cái, ngày sinh D−2 năm, cân nặng 5 kg, tình trạng Bình thường; có lịch B_A không CANCELLED phân công cho QA_VET_A. MR_A thuộc P_A do QA_VET_A lập: chẩn đoán QA_CU, điều trị QA_CU, ngày ghi D−2; chưa có revisions.",
+      "steps": [
+        {
+          "action": "Bấm Sửa có lưu lịch sử tại MR_A và nhập thay đổi.",
+          "data": "Chẩn đoán QA_MOI; điều trị QA_MOI; lý do Sửa nội dung nhập nhầm QA; tái khám D+3",
+          "expected": "Form sửa có giá trị mới và lý do."
+        },
+        {
+          "action": "Lưu chỉnh sửa rồi tải lại.",
+          "data": "MR_A",
+          "expected": "Cùng MR_A được cập nhật; không tạo bệnh án trùng."
+        },
+        {
+          "action": "Đọc lịch sử sửa qua API.",
+          "data": "GET /api/MedicalRecords/{MR_A}/revisions; token QA_VET_A",
+          "expected": "Có bản chụp nội dung QA_CU, lý do, người sửa và thời điểm sửa."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.",
+      "gui": false
+    },
+    {
+      "req": "F10.5",
+      "objective": "Không sửa bệnh án khi thiếu lý do",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_VET_A: tài khoản thử ACTIVE/VET, liên kết nhân sự ACTIVE; đang đăng nhập cổng bác sĩ. P_A: thú cưng chưa lưu trữ, tên Bé Mây QA, loài Chó, giống Poodle QA, giới tính Cái, ngày sinh D−2 năm, cân nặng 5 kg, tình trạng Bình thường; có lịch B_A không CANCELLED phân công cho QA_VET_A. MR_A thuộc P_A do QA_VET_A lập; ghi lại nội dung và số revisions.",
+      "steps": [
+        {
+          "action": "Mở sửa, đổi chẩn đoán nhưng bỏ trống lý do.",
+          "data": "Chẩn đoán QA_KHONG_LUU; lý do rỗng",
+          "expected": "Form có thay đổi nhưng chưa lưu."
+        },
+        {
+          "action": "Bấm Lưu chỉnh sửa rồi tải lại.",
+          "data": "MR_A",
+          "expected": "Không lưu thay đổi; nội dung và số revisions không tăng."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F10.5",
+      "objective": "Bác sĩ không sửa bệnh án do người khác ghi",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_VET_A: tài khoản thử ACTIVE/VET, liên kết nhân sự ACTIVE; đang đăng nhập cổng bác sĩ. P_A: thú cưng chưa lưu trữ, tên Bé Mây QA, loài Chó, giống Poodle QA, giới tính Cái, ngày sinh D−2 năm, cân nặng 5 kg, tình trạng Bình thường; có lịch B_A không CANCELLED phân công cho QA_VET_A. MR_B thuộc P_A do QA_VET_B lập; P_A vẫn thuộc phạm vi xem của QA_VET_A. Có token QA_VET_A và payload đủ lý do.",
+      "steps": [
+        {
+          "action": "Mở P_A, xem MR_B.",
+          "data": "MR_B",
+          "expected": "Xem được bệnh án trong phạm vi; giao diện không hiện nút sửa MR_B cho QA_VET_A."
+        },
+        {
+          "action": "Gửi PUT trực tiếp vào MR_B.",
+          "data": "PUT /api/MedicalRecords/{MR_B}; diagnosis=QA; treatment=QA; correctionReason=Kiểm tra quyền",
+          "expected": "API trả 400 theo CanEdit; không sửa bệnh án và không thêm revision."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện. Không ấn định 403/404 cho ca này: controller hiện gộp sai tác giả vào 400.",
+      "gui": false
+    },
+    {
+      "req": "F10.5",
+      "objective": "Hủy sửa bệnh án giữ nguyên dữ liệu",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_VET_A: tài khoản thử ACTIVE/VET, liên kết nhân sự ACTIVE; đang đăng nhập cổng bác sĩ. P_A: thú cưng chưa lưu trữ, tên Bé Mây QA, loài Chó, giống Poodle QA, giới tính Cái, ngày sinh D−2 năm, cân nặng 5 kg, tình trạng Bình thường; có lịch B_A không CANCELLED phân công cho QA_VET_A. MR_A thuộc P_A do QA_VET_A lập; ghi lại dữ liệu trước sửa.",
+      "steps": [
+        {
+          "action": "Mở sửa và thay nội dung.",
+          "data": "Chẩn đoán QA_HUY; lý do Thử hủy QA",
+          "expected": "Form hiển thị thay đổi."
+        },
+        {
+          "action": "Bấm Hủy sửa rồi tải lại P_A.",
+          "data": "MR_A",
+          "expected": "Thoát chế độ sửa; bệnh án gốc không đổi, không thêm lịch sử sửa."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F10.6",
+      "objective": "Thêm mũi tiêm hợp lệ",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_VET_A: tài khoản thử ACTIVE/VET, liên kết nhân sự ACTIVE; đang đăng nhập cổng bác sĩ. P_A: thú cưng chưa lưu trữ, tên Bé Mây QA, loài Chó, giống Poodle QA, giới tính Cái, ngày sinh D−2 năm, cân nặng 5 kg, tình trạng Bình thường; có lịch B_A không CANCELLED phân công cho QA_VET_A. Chưa có mũi vaccine QA_VAC_01 tại P_A.",
+      "steps": [
+        {
+          "action": "Chọn Tiêm chủng và nhập dữ liệu thử.",
+          "data": "Tên QA_VAC_01; ngày tiêm D; nhắc D+1 năm; ghi chú Dữ liệu kiểm thử",
+          "expected": "Form có đủ nội dung."
+        },
+        {
+          "action": "Bấm Lưu mũi tiêm.",
+          "data": "P_A",
+          "expected": "Tạo một mũi tiêm thuộc P_A, staffId của QA_VET_A."
+        },
+        {
+          "action": "Tải lại P_A và mở Tiêm chủng.",
+          "data": "QA_VAC_01",
+          "expected": "Mũi tiêm còn đúng tên, ngày và ghi chú."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F10.6",
+      "objective": "Sửa mũi tiêm của mình và lưu lịch sử",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_VET_A: tài khoản thử ACTIVE/VET, liên kết nhân sự ACTIVE; đang đăng nhập cổng bác sĩ. P_A: thú cưng chưa lưu trữ, tên Bé Mây QA, loài Chó, giống Poodle QA, giới tính Cái, ngày sinh D−2 năm, cân nặng 5 kg, tình trạng Bình thường; có lịch B_A không CANCELLED phân công cho QA_VET_A. VC_A thuộc P_A do QA_VET_A ghi: tên QA_VAC_CU, ngày D−10, nhắc D+1 năm; ghi lại lịch sử hiện có.",
+      "steps": [
+        {
+          "action": "Bấm Sửa có lưu lịch sử và sửa.",
+          "data": "VC_A; tên QA_VAC_MOI; nhắc D+2 năm; lý do Sửa ngày nhập nhầm QA",
+          "expected": "Form có dữ liệu sửa và lý do."
+        },
+        {
+          "action": "Lưu chỉnh sửa rồi tải lại.",
+          "data": "VC_A",
+          "expected": "VC_A giữ mã, có tên/ngày mới."
+        },
+        {
+          "action": "Đọc revisions qua API.",
+          "data": "GET /api/Vaccinations/{VC_A}/revisions",
+          "expected": "Có snapshot QA_VAC_CU, lý do, người và thời gian sửa."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.",
+      "gui": false
+    },
+    {
+      "req": "F10.6",
+      "objective": "Chặn ngày nhắc trùng ngày tiêm",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_VET_A: tài khoản thử ACTIVE/VET, liên kết nhân sự ACTIVE; đang đăng nhập cổng bác sĩ. P_A: thú cưng chưa lưu trữ, tên Bé Mây QA, loài Chó, giống Poodle QA, giới tính Cái, ngày sinh D−2 năm, cân nặng 5 kg, tình trạng Bình thường; có lịch B_A không CANCELLED phân công cho QA_VET_A. Ghi lại số mũi tiêm trước kiểm tra.",
+      "steps": [
+        {
+          "action": "Nhập mũi tiêm có hai ngày bằng nhau.",
+          "data": "Tên QA_VAC_DATE; ngày tiêm D; nhắc D",
+          "expected": "Form nhận dữ liệu kiểm tra."
+        },
+        {
+          "action": "Lưu rồi tải lại.",
+          "data": "P_A",
+          "expected": "Không tạo mũi tiêm; có thông báo dữ liệu/ngày không hợp lệ."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F10.6",
+      "objective": "Chặn ngày tiêm tương lai",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_VET_A: tài khoản thử ACTIVE/VET, liên kết nhân sự ACTIVE; đang đăng nhập cổng bác sĩ. P_A: thú cưng chưa lưu trữ, tên Bé Mây QA, loài Chó, giống Poodle QA, giới tính Cái, ngày sinh D−2 năm, cân nặng 5 kg, tình trạng Bình thường; có lịch B_A không CANCELLED phân công cho QA_VET_A. Ghi lại số mũi tiêm trước kiểm tra.",
+      "steps": [
+        {
+          "action": "Nhập mũi tiêm ở tương lai.",
+          "data": "Tên QA_VAC_FUTURE; tiêm D+1; nhắc D+1 năm",
+          "expected": "Form có dữ liệu thử."
+        },
+        {
+          "action": "Lưu rồi tải lại.",
+          "data": "P_A",
+          "expected": "Không tạo mũi tiêm tương lai."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F10.6",
+      "objective": "Chặn ngày nhắc quá 10 năm sau ngày tiêm",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_VET_A: tài khoản thử ACTIVE/VET, liên kết nhân sự ACTIVE; đang đăng nhập cổng bác sĩ. P_A: thú cưng chưa lưu trữ, tên Bé Mây QA, loài Chó, giống Poodle QA, giới tính Cái, ngày sinh D−2 năm, cân nặng 5 kg, tình trạng Bình thường; có lịch B_A không CANCELLED phân công cho QA_VET_A. Ghi lại số mũi tiêm; D hợp lệ từ năm 2000 trở đi.",
+      "steps": [
+        {
+          "action": "Nhập mũi tiêm với ngày nhắc vượt khoảng.",
+          "data": "Tên QA_VAC_RANGE; tiêm D; nhắc D+10 năm+1 ngày",
+          "expected": "Form có dữ liệu vượt khoảng."
+        },
+        {
+          "action": "Lưu rồi tải lại.",
+          "data": "P_A",
+          "expected": "API/giao diện báo dữ liệu không hợp lệ; không tạo mũi tiêm."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F10.7",
+      "objective": "Khách hàng không được tạo bệnh án hoặc mũi tiêm",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_CUS_A ACTIVE/CUSTOMER sở hữu P_A. Có token QA_CUS_A; ghi lại số bệnh án/tiêm chủng của P_A. Thực hiện từng yêu cầu độc lập.",
+      "steps": [
+        {
+          "action": "Gửi yêu cầu tạo bằng token khách hàng.",
+          "data": "Lượt1 POST /api/MedicalRecords: petId=P_A, diagnosis=QA, treatment=QA; lượt 2 POST /api/Vaccinations: petId=P_A, vaccineName=QA, vaccinationDate=D, nextDate=D+1 năm",
+          "expected": "Mỗi yêu cầu bị 403 do sai vai trò."
+        },
+        {
+          "action": "Đọc lại hồ sơ bằng tài khoản có quyền.",
+          "data": "P_A",
+          "expected": "Không tăng bệnh án hoặc mũi tiêm từ hai yêu cầu trái quyền."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.",
+      "gui": false
+    },
+    {
+      "req": "F10.7",
+      "objective": "Bác sĩ không ghi bệnh án cho thú cưng ngoài phạm vi",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_VET_A: tài khoản thử ACTIVE/VET, liên kết nhân sự ACTIVE; đang đăng nhập cổng bác sĩ. P_A: thú cưng chưa lưu trữ, tên Bé Mây QA, loài Chó, giống Poodle QA, giới tính Cái, ngày sinh D−2 năm, cân nặng 5 kg, tình trạng Bình thường; có lịch B_A không CANCELLED phân công cho QA_VET_A. P_OUT thuộc khách khác và chỉ có ca của QA_VET_B; QA_VET_A chưa từng được phân công ca không CANCELLED cho P_OUT. Có token QA_VET_A.",
+      "steps": [
+        {
+          "action": "Gửi tạo bệnh án cho P_OUT.",
+          "data": "POST /api/MedicalRecords; petId=P_OUT; diagnosis=QA; treatment=QA; trường tùy chọn rỗng",
+          "expected": "API trả404, không tiết lộ hồ sơ."
+        },
+        {
+          "action": "Đối chiếu bằng QA_ADMIN.",
+          "data": "P_OUT",
+          "expected": "Không có bệnh án mới do QA_VET_A tạo."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.",
+      "gui": false
+    },
+    {
+      "req": "F11.1",
+      "objective": "Đối chiếu số liệu tổng quan quản trị",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. Bộ dữ liệu thử đã được đối chiếu: n lịch, p lịch PENDING, k giao dịch PAID có tổng S, a dịch vụ ACTIVE; có giao dịch REFUNDED để phân biệt. Ghi chính xác n,p,k,S,a từ danh sách/API trước chạy.",
+      "steps": [
+        {
+          "action": "Mở Tổng quan và bấm tải lại.",
+          "data": "QA_ADMIN",
+          "expected": "Các thẻ và thông tin tổng quan tải được."
+        },
+        {
+          "action": "Đối chiếu từng chỉ số.",
+          "data": "n; p; S; a; k",
+          "expected": "Tổng lịch=n, chờ xác nhận=p, doanh thu đã thu=S từ PAID, dịch vụ hoạt động=a, giao dịch đã thu=k."
+        }
+      ],
+      "notes": "Không dùng netCollected trong Reports làm số đối chiếu: dashboard chỉ cộng giao dịch status PAID.",
+      "gui": false
+    },
+    {
+      "req": "F11.1",
+      "objective": "Tổng quan khi dữ liệu nghiệp vụ rỗng",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. Bản sao CSDL chỉ có QA_ADMIN; không có Bookings, Payments, Pets, ServicePackages, tài khoản CUSTOMER. Không xóa dữ liệu thật.",
+      "steps": [
+        {
+          "action": "Mở Tổng quan.",
+          "data": "CSDL thử rỗng nghiệp vụ",
+          "expected": "Trang tải được."
+        },
+        {
+          "action": "Đối chiếu thẻ thống kê và lịch gần đây.",
+          "data": "Không có dữ liệu",
+          "expected": "Các số nghiệp vụ bằng0; danh sách lịch có trạng thái rỗng."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.2",
+      "objective": "Tìm một tài khoản bằng thông tin đã biết",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. QA_CUS_A ACTIVE/CUSTOMER có họ tên Khách QA_724, email thử riêng đã chuẩn bị, số điện thoại thử; các trường đã ghi để đối chiếu.",
+      "steps": [
+        {
+          "action": "Mở Tài khoản quản lý người dùng.",
+          "data": "QA_ADMIN",
+          "expected": "Danh sách có mã, họ tên, email, điện thoại, vai trò, trạng thái."
+        },
+        {
+          "action": "Nhập từ khóa duy nhất.",
+          "data": "QA_724",
+          "expected": "Chỉ tài khoản có mã/tên/email/điện thoại chứa từ khóa được hiển thị; có QA_CUS_A."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.2",
+      "objective": "Tìm kiếm không có kết quả và khôi phục danh sách",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. Không tài khoản nào có chuỗi QA_KHONG_CO_724; ghi số tài khoản ban đầu.",
+      "steps": [
+        {
+          "action": "Nhập từ khóa không trùng tại danh sách tài khoản.",
+          "data": "QA_KHONG_CO_724",
+          "expected": "Danh sách rỗng và có thông báo không tìm thấy phù hợp."
+        },
+        {
+          "action": "Xóa từ khóa.",
+          "data": "Chuỗi rỗng",
+          "expected": "Danh sách đầy đủ trở lại; dữ liệu vai trò/trạng thái không thay đổi."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.3",
+      "objective": "Đổi STAFF thành VET và đồng bộ hai hồ sơ",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. QA_STAFF_A ACTIVE/STAFF có Staff ACTIVE liên kết; ghi userId/staffId; tài khoản là dữ liệu thử.",
+      "steps": [
+        {
+          "action": "Tại danh sách tài khoản đổi vai trò.",
+          "data": "QA_STAFF_A; chọn VET",
+          "expected": "Thao tác lưu được."
+        },
+        {
+          "action": "Tải lại Tài khoản và Nhân sự.",
+          "data": "Cùng userId/staffId",
+          "expected": "Cả UserAccount.role và Staff.role là VET."
+        },
+        {
+          "action": "Đăng nhập lại QA_STAFF_A.",
+          "data": "Tài khoản sau đổi vai trò",
+          "expected": "Mở cổng bác sĩ theo vai trò mới."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.3",
+      "objective": "Từ chối vai trò không có trong danh sách",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. QA_CUS_A ACTIVE/CUSTOMER; có token QA_ADMIN; ghi role hiện tại.",
+      "steps": [
+        {
+          "action": "Gửi yêu cầu vai trò không hợp lệ.",
+          "data": "PUT /api/UserAccounts/{QA_CUS_A}/role; role=MANAGER",
+          "expected": "API trả400."
+        },
+        {
+          "action": "Đọc lại tài khoản.",
+          "data": "QA_CUS_A",
+          "expected": "Vai trò vẫn CUSTOMER."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.",
+      "gui": false
+    },
+    {
+      "req": "F11.3",
+      "objective": "Không gán VET cho tài khoản chưa có Staff",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. QA_CUS_A ACTIVE/CUSTOMER không có bản ghi Staff liên kết.",
+      "steps": [
+        {
+          "action": "Đổi vai trò QA_CUS_A sang VET.",
+          "data": "Danh sách Tài khoản; chọn VET",
+          "expected": "Hệ thống từ chối vì thiếu hồ sơ nhân sự."
+        },
+        {
+          "action": "Tải lại tài khoản và danh sách nhân sự.",
+          "data": "QA_CUS_A",
+          "expected": "Role CUSTOMER giữ nguyên; không tự tạo hồ sơ Staff."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.3",
+      "objective": "Không tự hạ quyền tài khoản quản trị đang dùng",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. Ghi userId của QA_ADMIN hiện tại.",
+      "steps": [
+        {
+          "action": "Đổi role của chính QA_ADMIN.",
+          "data": "Chọn CUSTOMER",
+          "expected": "Hệ thống từ chối tự gỡ quyền quản trị."
+        },
+        {
+          "action": "Tải lại.",
+          "data": "QA_ADMIN",
+          "expected": "Role vẫn ADMIN, tiếp tục truy cập cổng quản trị."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.4",
+      "objective": "Tạm ngưng tài khoản chặn phiên đang mở",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. QA_CUS_A ACTIVE/CUSTOMER đang đăng nhập ở trình duyệt thứ2; ghi userId và token hiện tại.",
+      "steps": [
+        {
+          "action": "Đổi trạng thái QA_CUS_A sang INACTIVE.",
+          "data": "Tài khoản QA_CUS_A",
+          "expected": "Lưu trạng thái INACTIVE."
+        },
+        {
+          "action": "Tại phiên QA_CUS_A đang mở, tải dữ liệu thú cưng.",
+          "data": "GET /api/Pets hoặc tải lại trang khách",
+          "expected": "Yêu cầu bị403; không nhận dữ liệu bảo vệ dù token chưa hết hạn."
+        },
+        {
+          "action": "Tải lại danh sách tài khoản ở admin.",
+          "data": "QA_CUS_A",
+          "expected": "Trạng thái vẫn INACTIVE."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.4",
+      "objective": "Kích hoạt lại tài khoản khách",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. QA_CUS_A INACTIVE/CUSTOMER, có thông tin đăng nhập thử hợp lệ.",
+      "steps": [
+        {
+          "action": "Đặt QA_CUS_A thành ACTIVE.",
+          "data": "Danh sách Tài khoản",
+          "expected": "Lưu thành công."
+        },
+        {
+          "action": "Đăng nhập QA_CUS_A ở cửa sổ riêng và mở thú cưng.",
+          "data": "Thông tin đăng nhập QA_CUS_A",
+          "expected": "Đọc được dữ liệu thuộc quyền; không bị chặn vì trạng thái cũ."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.4",
+      "objective": "Chặn giá trị trạng thái không hợp lệ",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. QA_CUS_A ACTIVE/CUSTOMER; có token QA_ADMIN.",
+      "steps": [
+        {
+          "action": "Gửi trạng thái lạ.",
+          "data": "PUT /api/UserAccounts/{QA_CUS_A}/status; status=DELETED",
+          "expected": "API trả400."
+        },
+        {
+          "action": "Đọc lại tài khoản.",
+          "data": "QA_CUS_A",
+          "expected": "Trạng thái vẫn ACTIVE."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.",
+      "gui": false
+    },
+    {
+      "req": "F11.4",
+      "objective": "Không tự khóa tài khoản admin đang dùng",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. QA_ADMIN hiện ACTIVE.",
+      "steps": [
+        {
+          "action": "Tại dòng QA_ADMIN chọn INACTIVE.",
+          "data": "QA_ADMIN",
+          "expected": "Hệ thống từ chối tự khóa."
+        },
+        {
+          "action": "Tải lại và mở Tổng quan.",
+          "data": "QA_ADMIN",
+          "expected": "Trạng thái vẫn ACTIVE; cổng quản trị truy cập được."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.5",
+      "objective": "Tạo nhân sự mới và tài khoản liên kết",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. Firebase Admin tạo tài khoản đã cấu hình cho dự án thử. Chuẩn bị email thử duy nhất QA_NEW_EMAIL và số Việt Nam thử hợp lệ QA_NEW_PHONE chưa dùng; ghi giá trị thực trước chạy.",
+      "steps": [
+        {
+          "action": "Mở Thêm nhân sự và điền.",
+          "data": "Họ tên Nhân sự QA_724; email QA_NEW_EMAIL; điện thoại QA_NEW_PHONE; role STAFF; mật khẩu PetNoVa_QA_1234!",
+          "expected": "Form nhận đủ thông tin."
+        },
+        {
+          "action": "Bấm Tạo nhân sự.",
+          "data": "Nhấn một lần",
+          "expected": "Tạo Staff ACTIVE, violationCount=0 và UserAccount ACTIVE/STAFF liên kết bằng userId."
+        },
+        {
+          "action": "Đăng nhập ở cửa sổ riêng bằng nhân sự vừa tạo.",
+          "data": "QA_NEW_EMAIL; mật khẩu đã nhập",
+          "expected": "Vào cổng nhân viên; thông tin tên/vai trò đúng."
+        }
+      ],
+      "notes": "Email và số điện thoại là dữ liệu fixture phải chuẩn bị; không giả định các ký hiệu này là địa chỉ đăng nhập thật.",
+      "gui": false
+    },
+    {
+      "req": "F11.5",
+      "objective": "Chặn tạo nhân sự bằng email đã tồn tại",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. QA_EXISTING_EMAIL thuộc tài khoản thử có sẵn; Firebase Admin cấu hình; ghi tổng Staff/UserAccounts.",
+      "steps": [
+        {
+          "action": "Điền form thêm nhân sự với email trùng.",
+          "data": "Tên Nhân sự QA_Trung; email QA_EXISTING_EMAIL; số thử hợp lệ; role STAFF; password PetNoVa_QA_1234!",
+          "expected": "Form đủ dữ liệu."
+        },
+        {
+          "action": "Bấm Tạo nhân sự rồi tải lại.",
+          "data": "Email trùng",
+          "expected": "Không tạo Staff/tài khoản mới; có thông báo xung đột."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.5",
+      "objective": "Chặn mật khẩu khởi tạo dưới12 ký tự",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. Email thử duy nhất QA_NEW_EMAIL, số thử hợp lệ; dữ liệu khác hợp lệ.",
+      "steps": [
+        {
+          "action": "Điền form với mật khẩu11 ký tự.",
+          "data": "password='A'×11; tên Nhân sự QA; role VET; QA_NEW_EMAIL; số thử hợp lệ",
+          "expected": "Trường mật khẩu được kiểm tra minLength12."
+        },
+        {
+          "action": "Bấm Tạo nhân sự rồi tải lại.",
+          "data": "Nhân sự QA",
+          "expected": "Không tạo Staff/tài khoản mới."
+        }
+      ],
+      "notes": "Biên12–128 được định nghĩa trong cả UI và API; có thể bổ sung hai biên chấp nhận khi mở rộng bộ kiểm thử.",
+      "gui": false
+    },
+    {
+      "req": "F11.5",
+      "objective": "Chặn tạo nhân sự có vai trò ADMIN",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. Có token QA_ADMIN; email mới duy nhất và Firebase thử; họ tên, điện thoại và password hợp lệ.",
+      "steps": [
+        {
+          "action": "Gửi yêu cầu tạo với vai trò ngoài Staff/Vet.",
+          "data": "POST /api/Staffs; fullName=Nhân sự QA; email=QA_NEW_EMAIL; phone=QA_NEW_PHONE; password=PetNoVa_QA_1234!; role=ADMIN",
+          "expected": "API trả400 trước khi tạo danh tính."
+        },
+        {
+          "action": "Tải lại danh sách.",
+          "data": "QA_NEW_EMAIL",
+          "expected": "Không có Staff/UserAccount mới cho email này."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện. Không tự đặt quy tắc số điện thoại trùng khi tạo Staff: controller hiện không có kiểm tra uniqueness rõ ràng cho phone.",
+      "gui": false
+    },
+    {
+      "req": "F11.6",
+      "objective": "Sửa nhân sự và đồng bộ tài khoản",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. QA_STAFF_A ACTIVE/STAFF có UserAccount liên kết; chuẩn bị số thử hợp lệ QA_PHONE_MOI.",
+      "steps": [
+        {
+          "action": "Mở Sửa nhân sự và nhập.",
+          "data": "Họ tên Nhân sự QA_MOI; phone QA_PHONE_MOI; role VET",
+          "expected": "Form có nội dung mới."
+        },
+        {
+          "action": "Bấm Lưu thay đổi rồi tải lại Nhân sự và Tài khoản.",
+          "data": "QA_STAFF_A",
+          "expected": "Tên, điện thoại, role mới đồng nhất ở Staff và UserAccount; email gốc giữ nguyên."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.6",
+      "objective": "Chặn lưu nhân sự thiếu tên hoặc điện thoại",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. QA_STAFF_A ACTIVE; ghi dữ liệu trước sửa. Lặp hai lượt độc lập.",
+      "steps": [
+        {
+          "action": "Mở sửa và xóa một trường bắt buộc.",
+          "data": "Lượt1: họ tên rỗng; lượt 2: điện thoại rỗng",
+          "expected": "Form có trường bắt buộc rỗng."
+        },
+        {
+          "action": "Bấm Lưu rồi tải lại.",
+          "data": "QA_STAFF_A",
+          "expected": "Không lưu ở mỗi lượt; Staff/UserAccount vẫn dữ liệu ban đầu."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.6",
+      "objective": "Hủy sửa nhân sự",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. QA_STAFF_A ACTIVE; ghi dữ liệu trước sửa.",
+      "steps": [
+        {
+          "action": "Mở Sửa và đổi tên.",
+          "data": "Nhân sự QA_HUY",
+          "expected": "Form có nội dung mới chưa lưu."
+        },
+        {
+          "action": "Bấm Hủy rồi tải lại.",
+          "data": "QA_STAFF_A",
+          "expected": "Không đổi Staff hoặc UserAccount liên kết."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.7",
+      "objective": "Tạm ngưng nhân sự và ngăn phân công mới",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. QA_STAFF_A Staff ACTIVE/UserAccount ACTIVE; có lịch B_PENDING chưa phân công ở tương lai; phiên STAFF vận hành thử khác.",
+      "steps": [
+        {
+          "action": "Bấm Tạm ngưng QA_STAFF_A.",
+          "data": "Nhân sự QA_STAFF_A",
+          "expected": "Staff thành INACTIVE; UserAccount liên kết thành INACTIVE."
+        },
+        {
+          "action": "Ở cổng vận hành tải lại danh sách phân công.",
+          "data": "B_PENDING",
+          "expected": "QA_STAFF_A không còn trong lựa chọn nhân sự hoạt động."
+        },
+        {
+          "action": "Đăng nhập hoặc gọi API bằng QA_STAFF_A.",
+          "data": "Tài khoản bị ngưng",
+          "expected": "Không truy cập dữ liệu bảo vệ vì không ACTIVE."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.7",
+      "objective": "Kích hoạt lại nhân sự INACTIVE",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. QA_STAFF_A Staff INACTIVE, UserAccount INACTIVE; email/password thử còn hợp lệ.",
+      "steps": [
+        {
+          "action": "Bấm Kích hoạt tại nhân sự.",
+          "data": "QA_STAFF_A",
+          "expected": "Staff và UserAccount thành ACTIVE."
+        },
+        {
+          "action": "Tải lại danh bạ phân công và đăng nhập nhân sự.",
+          "data": "QA_STAFF_A",
+          "expected": "Nhân sự lại có trong danh bạ; tài khoản truy cập cổng theo role."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.7",
+      "objective": "Kích hoạt nhân sự bị đình chỉ giữ số vi phạm",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. QA_STAFF_A SUSPENDED, violationCount=3; UserAccount INACTIVE.",
+      "steps": [
+        {
+          "action": "Bấm Kích hoạt.",
+          "data": "QA_STAFF_A",
+          "expected": "Staff ACTIVE và UserAccount ACTIVE."
+        },
+        {
+          "action": "Tải lại dòng nhân sự.",
+          "data": "QA_STAFF_A",
+          "expected": "Số vi phạm vẫn3; hệ thống không tự đặt về0."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.8",
+      "objective": "Vi phạm từ 1 lên 2chưa đình chỉ",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. QA_STAFF_A ACTIVE, violationCount=1, UserAccount ACTIVE.",
+      "steps": [
+        {
+          "action": "Bấm Ghi vi phạm và xác nhận.",
+          "data": "QA_STAFF_A",
+          "expected": "Gửi một thao tác ghi vi phạm."
+        },
+        {
+          "action": "Tải lại dòng nhân sự và tài khoản.",
+          "data": "QA_STAFF_A",
+          "expected": "violationCount=2; Staff/UserAccount vẫn ACTIVE."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.8",
+      "objective": "Vi phạm lần 3tự đình chỉ",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. QA_STAFF_A ACTIVE, violationCount=2, UserAccount ACTIVE; đang có phiên nhân sự thử.",
+      "steps": [
+        {
+          "action": "Bấm Ghi vi phạm và xác nhận một lần.",
+          "data": "QA_STAFF_A",
+          "expected": "Số vi phạm tăng lên3."
+        },
+        {
+          "action": "Tải lại Nhân sự và Tài khoản.",
+          "data": "QA_STAFF_A",
+          "expected": "Staff SUSPENDED; UserAccount INACTIVE; UI không cho ghi thêm khi đang đình chỉ."
+        },
+        {
+          "action": "Tại phiên QA_STAFF_A tải dữ liệu.",
+          "data": "Phiên còn token",
+          "expected": "API chặn vì tài khoản không ACTIVE."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.8",
+      "objective": "Hủy xác nhận không tăng vi phạm",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. QA_STAFF_A ACTIVE, violationCount=1.",
+      "steps": [
+        {
+          "action": "Bấm Ghi vi phạm.",
+          "data": "QA_STAFF_A",
+          "expected": "Hiện xác nhận trước thao tác."
+        },
+        {
+          "action": "Chọn Hủy và tải lại.",
+          "data": "QA_STAFF_A",
+          "expected": "violationCount vẫn1, trạng thái vẫn ACTIVE."
+        }
+      ],
+      "notes": "API không idempotent: mỗi PUT add-violation được chấp nhận đều tăng1; không kỳ vọng gửi lặp vẫn chỉ tăng1.",
+      "gui": false
+    },
+    {
+      "req": "F11.9",
+      "objective": "Xóa nhân sự chưa có dữ liệu nghiệp vụ",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. QA_STAFF_DELETE có Staff, UserAccount liên kết; không có Booking/MedicalRecord/Vaccination tham chiếu; UserAccount.phone là số Việt Nam hợp lệ duy nhất, không trùng normalizedPhone tài khoản khác.",
+      "steps": [
+        {
+          "action": "Bấm Xóa nhân sự và xác nhận.",
+          "data": "QA_STAFF_DELETE",
+          "expected": "Xóa Staff thành công."
+        },
+        {
+          "action": "Tải lại Nhân sự và Tài khoản.",
+          "data": "userId cũ",
+          "expected": "Không còn Staff; UserAccount vẫn tồn tại, role CUSTOMER, status ACTIVE, số điện thoại chuẩn hóa."
+        },
+        {
+          "action": "Đăng nhập lại tài khoản đó.",
+          "data": "Email/password của QA_STAFF_DELETE",
+          "expected": "Vào cổng khách hàng."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.9",
+      "objective": "Không xóa nhân sự đã có lịch liên quan",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. QA_STAFF_A có ít nhất Booking B_A tham chiếu staffId; ghi trạng thái/role hiện tại.",
+      "steps": [
+        {
+          "action": "Bấm Xóa và xác nhận.",
+          "data": "QA_STAFF_A",
+          "expected": "Hệ thống báo không thể xóa do dữ liệu nghiệp vụ."
+        },
+        {
+          "action": "Tải lại Nhân sự/Tài khoản và xem B_A.",
+          "data": "QA_STAFF_A; B_A",
+          "expected": "Staff và UserAccount giữ nguyên; lịch sử B_A không mất."
+        }
+      ],
+      "notes": "API cũng chặn nếu có MedicalRecord hoặc Vaccination; không chỉ lịch đang hoạt động.",
+      "gui": false
+    },
+    {
+      "req": "F11.9",
+      "objective": "Hủy xóa nhân sự",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. QA_STAFF_DELETE không có nghiệp vụ, đủ điều kiện xóa.",
+      "steps": [
+        {
+          "action": "Bấm Xóa.",
+          "data": "QA_STAFF_DELETE",
+          "expected": "Hiện xác nhận xóa/chuyển tài khoản."
+        },
+        {
+          "action": "Chọn Hủy rồi tải lại.",
+          "data": "QA_STAFF_DELETE",
+          "expected": "Staff và tài khoản không đổi."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.10",
+      "objective": "Xóa gói dịch vụ chưa phát sinh lịch",
+      "pre": "Môi trường kiểm thử riêng đã chạy. QA_ADMIN là tài khoản ACTIVE/ADMIN đang đăng nhập. SV_DELETE là gói thử thuộc danh mục ACTIVE; không có BookingDetail tham chiếu SV_DELETE. Ghi serviceId thực trước khi chạy.",
+      "steps": [
+        {
+          "action": "Bấm Xóa tại SV_DELETE và xác nhận.",
+          "data": "SV_DELETE",
+          "expected": "Dịch vụ được xóa thành công."
+        },
+        {
+          "action": "Tải lại và tìm mã gói vừa xóa.",
+          "data": "SV_DELETE",
+          "expected": "Không còn SV_DELETE trong danh sách; tra chi tiết qua API có quyền trả 404."
+        }
+      ],
+      "notes": "Dùng gói thử riêng, không dùng dịch vụ thật.",
+      "gui": false
+    },
+    {
+      "req": "F11.10",
+      "objective": "Chặn thời lượng không dương",
+      "pre": "Môi trường kiểm thử riêng đã chạy. QA_ADMIN là tài khoản ACTIVE/ADMIN đang đăng nhập. SC_A là danh mục ACTIVE. Chưa có gói tên Gói QA_PHUT. Hai lượt độc lập chỉ thay thời lượng.",
+      "steps": [
+        {
+          "action": "Điền gói mới với thời lượng không hợp lệ.",
+          "data": "Tên Gói QA_PHUT; mô tả Nội dung thử; giá 100000; SC_A; lượt 1 duration=0; lượt 2 duration=-1.",
+          "expected": "Ô thời lượng kiểm tra tối thiểu 1 phút."
+        },
+        {
+          "action": "Bấm Tạo dịch vụ và tải lại danh sách ở từng lượt.",
+          "data": "Hai lượt độc lập",
+          "expected": "Không tạo dịch vụ có thời lượng 0 hoặc âm."
+        }
+      ],
+      "notes": "API cũng yêu cầu duration > 0; chưa có căn cứ áp dụng giới hạn riêng cao nhất cho từng dịch vụ.",
+      "gui": false
+    },
+    {
+      "req": "F11.10",
+      "objective": "Tạo gói dịch vụ hợp lệ",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. SC_A là danh mục ACTIVE; chưa có gói tên Gói QA_724.",
+      "steps": [
+        {
+          "action": "Mở Thêm dịch vụ và điền.",
+          "data": "Tên Gói QA_724; mô tả Dịch vụ thử; giá100000; thời lượng30 phút; danh mục SC_A",
+          "expected": "Form đủ dữ liệu."
+        },
+        {
+          "action": "Bấm Tạo dịch vụ.",
+          "data": "Gói QA_724",
+          "expected": "Sinh serviceId mới, trạng thái ACTIVE."
+        },
+        {
+          "action": "Tải lại và tìm gói.",
+          "data": "Gói QA_724",
+          "expected": "Tên, mô tả, giá, thời lượng và danh mục đúng."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.10",
+      "objective": "Sửa gói dịch vụ hợp lệ",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. SV_A ACTIVE thuộc SC_A ACTIVE; ghi serviceId.",
+      "steps": [
+        {
+          "action": "Mở Sửa SV_A và đổi nội dung.",
+          "data": "Tên Gói QA_SUA; mô tả Mô tả mới QA; giá120000; thời lượng45; SC_A",
+          "expected": "Form có dữ liệu mới."
+        },
+        {
+          "action": "Lưu và tải lại.",
+          "data": "SV_A",
+          "expected": "Cùng serviceId có giá trị mới; không tạo gói khác."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.10",
+      "objective": "Chặn giá không dương",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. SC_A ACTIVE; dùng tên Gói QA_GIA; chưa tồn tại; lặp độc lập hai lượt.",
+      "steps": [
+        {
+          "action": "Điền form gói với giá không hợp lệ.",
+          "data": "Giá lượt 1=0, lượt 2=−1; thời lượng30; tên/mô tả đầy đủ; SC_A",
+          "expected": "Ô giá được kiểm tra min1."
+        },
+        {
+          "action": "Bấm Tạo và tải lại.",
+          "data": "Từng lượt riêng",
+          "expected": "Không tạo dịch vụ ở cả hai lượt."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.10",
+      "objective": "Chặn tên hoặc mô tả trống",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. SC_A ACTIVE; ghi số dịch vụ; lặp hai lượt độc lập.",
+      "steps": [
+        {
+          "action": "Điền form thiếu một trường bắt buộc.",
+          "data": "Lượt1 tên rỗng/mô tả QA; lượt 2 tên QA/mô tả rỗng; giá100000; phút30; SC_A",
+          "expected": "Có trường bắt buộc trống."
+        },
+        {
+          "action": "Bấm Tạo và tải lại.",
+          "data": "Từng lượt riêng",
+          "expected": "Không có gói mới được lưu."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.10",
+      "objective": "Không xóa gói đã có chi tiết lịch hẹn",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. SV_USED có ít nhất BookingDetail tham chiếu kể cả lịch cũ; ghi lại lịch và serviceId.",
+      "steps": [
+        {
+          "action": "Bấm Xóa SV_USED và xác nhận.",
+          "data": "SV_USED",
+          "expected": "Hệ thống từ chối xóa vì gói đã phát sinh lịch."
+        },
+        {
+          "action": "Tải lại gói và lịch liên quan.",
+          "data": "SV_USED; lịch cũ",
+          "expected": "Gói còn tồn tại; lịch sử còn tham chiếu gói."
+        }
+      ],
+      "notes": "Có thể tạm ngưng theo F11.11. Chưa thiết kế kỳ vọng trùng tên dịch vụ bị chặn vì nguồn không định nghĩa uniqueness.",
+      "gui": false
+    },
+    {
+      "req": "F11.11",
+      "objective": "Tắt dịch vụ ngăn đặt mới",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. SV_A ACTIVE; QA_CUS_A ACTIVE/CUSTOMER có thú cưng đang hoạt động; SV_A đang có trong danh sách đặt.",
+      "steps": [
+        {
+          "action": "Bấm Tạm ngưng SV_A ở quản trị.",
+          "data": "SV_A",
+          "expected": "Trạng thái thành INACTIVE."
+        },
+        {
+          "action": "Đăng nhập QA_CUS_A và mở lại đặt lịch.",
+          "data": "SV_A",
+          "expected": "SV_A không còn được chọn như gói khả dụng."
+        },
+        {
+          "action": "Thử yêu cầu đặt/availability trực tiếp có SV_A.",
+          "data": "Ngày D+1 và các dữ liệu khác hợp lệ",
+          "expected": "API từ chối dịch vụ không ACTIVE, không tạo lịch."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.",
+      "gui": false
+    },
+    {
+      "req": "F11.11",
+      "objective": "Bật lại dịch vụ để đặt mới",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. SV_A INACTIVE, danh mục SC_A ACTIVE; khách QA_CUS_A có thú cưng; các điều kiện đặt hợp lệ.",
+      "steps": [
+        {
+          "action": "Bấm Kích hoạt SV_A.",
+          "data": "SV_A",
+          "expected": "Trạng thái thành ACTIVE."
+        },
+        {
+          "action": "Ở khách hàng tải lại danh sách dịch vụ.",
+          "data": "SV_A",
+          "expected": "SV_A xuất hiện trong gói có thể lựa chọn đặt mới."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.11",
+      "objective": "Tắt dịch vụ không làm mất lịch cũ",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. SV_USED ACTIVE đã có lịch B_OLD; ghi giá/chi tiết của BookingDetail.",
+      "steps": [
+        {
+          "action": "Tạm ngưng SV_USED.",
+          "data": "SV_USED",
+          "expected": "Gói thành INACTIVE."
+        },
+        {
+          "action": "Mở lại B_OLD bằng tài khoản có quyền.",
+          "data": "B_OLD",
+          "expected": "Lịch cũ, tên/gói và số tiền lịch sử vẫn xem được; không xóa BookingDetail."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.12",
+      "objective": "Tạo danh mục hợp lệ",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. Chưa có danh mục thử QA_DM_724.",
+      "steps": [
+        {
+          "action": "Mở Danh mục và nhập.",
+          "data": "Tên QA_DM_724; mô tả Danh mục thử",
+          "expected": "Form có dữ liệu."
+        },
+        {
+          "action": "Bấm Thêm và tải lại.",
+          "data": "QA_DM_724",
+          "expected": "Có categoryId mới, tên/mô tả đúng, status ACTIVE."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.12",
+      "objective": "Sửa tên và mô tả danh mục",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. SC_A ACTIVE, tên QA_DM_CU; ghi categoryId.",
+      "steps": [
+        {
+          "action": "Bấm Sửa SC_A, nhập qua các hộp nhắc.",
+          "data": "Tên QA_DM_MOI; mô tả Mô tả mới QA",
+          "expected": "Nhận tên và mô tả chỉnh sửa."
+        },
+        {
+          "action": "Xác nhận và tải lại.",
+          "data": "SC_A",
+          "expected": "Cùng categoryId có nội dung mới; trạng thái giữ nguyên."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.12",
+      "objective": "Chặn tên danh mục trống",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. Ghi số danh mục hiện tại.",
+      "steps": [
+        {
+          "action": "Để trống tên, nhập mô tả.",
+          "data": "Tên rỗng; mô tả QA",
+          "expected": "Form thiếu tên bắt buộc."
+        },
+        {
+          "action": "Bấm thêm và tải lại.",
+          "data": "Danh mục mới",
+          "expected": "Không tạo danh mục tên trống."
+        }
+      ],
+      "notes": "Không ghi kỳ vọng tên trùng bị chặn: controller chưa có kiểm tra tên trùng; cần xác nhận đặc tả nếu muốn bổ sung.",
+      "gui": false
+    },
+    {
+      "req": "F11.12",
+      "objective": "Danh mục tắt không dùng cho gói mới",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. SC_A ACTIVE; không sửa gói đang có, chỉ thử tạo mới; có token QA_ADMIN.",
+      "steps": [
+        {
+          "action": "Tạm ngưng SC_A trong Danh mục.",
+          "data": "SC_A",
+          "expected": "Trạng thái INACTIVE."
+        },
+        {
+          "action": "Mở Thêm dịch vụ.",
+          "data": "Danh mục SC_A",
+          "expected": "SC_A không hiện trong lựa chọn danh mục ACTIVE."
+        },
+        {
+          "action": "Gửi tạo dịch vụ trực tiếp với SC_A.",
+          "data": "POST /api/ServicePackages; tên/mô tả QA; giá100000; duration30; categoryId=SC_A",
+          "expected": "API trả400; không tạo dịch vụ mới thuộc danh mục tắt."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.",
+      "gui": false
+    },
+    {
+      "req": "F11.13",
+      "objective": "Xem lịch toàn hệ thống ở cổng quản trị",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. Có B_A của QA_CUS_A và B_B của QA_CUS_B; mỗi lịch đúng1 gói để đối chiếu, thú cưng/giá/giao dịch đã ghi.",
+      "steps": [
+        {
+          "action": "Mở tab Lịch hẹn.",
+          "data": "QA_ADMIN",
+          "expected": "Bảng lịch toàn hệ thống mở được."
+        },
+        {
+          "action": "Đối chiếu B_A và B_B.",
+          "data": "Mã/khách/thú cưng/ngày giờ/tổng tiền/giao dịch nguồn",
+          "expected": "Cả hai lịch có mặt; dữ liệu từng dòng khớp nguồn, không nhầm khách."
+        }
+      ],
+      "notes": "UI hiện không có ô tìm/lọc hay nút chi tiết/cập nhật tại bảng admin; không đưa thao tác UI chưa tồn tại vào test case.",
+      "gui": false
+    },
+    {
+      "req": "F11.13",
+      "objective": "ADMIN xác nhận lịch hợp lệ qua API",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. B_A PENDING tại D+1 với dữ liệu hợp lệ; token QA_ADMIN; ghi trạng thái trước chạy.",
+      "steps": [
+        {
+          "action": "Gửi cập nhật trạng thái lịch.",
+          "data": "PUT /api/Bookings/{B_A}/status; status=CONFIRMED",
+          "expected": "API chấp nhận ADMIN và chuyển PENDING→CONFIRMED."
+        },
+        {
+          "action": "Tải lại bảng Lịch hẹn quản trị.",
+          "data": "B_A",
+          "expected": "B_A hiển thị CONFIRMED."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện. Chỉ chạy nếu bài yêu cầu phạm vi API; giao diện admin hiện không có nút này.",
+      "gui": false
+    },
+    {
+      "req": "F11.14",
+      "objective": "Đối chiếu báo cáo theo ngày và tiền thu/hoàn",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. CSDL thử có tập giao dịch được kiểm soát; chọn khoảng D−7 đến D. Ghi độc lập tổng lịch theo bookingDate, completed, totalAmount; paidAmount gồm PAID và REFUNDED có paymentDate trong khoảng; refundAmount có REFUNDED/refundedAt trong khoảng; có giao dịch hoàn trong khoảng nhưng thu ngoài khoảng.",
+      "steps": [
+        {
+          "action": "Mở Báo cáo, nhập khoảng và Xem báo cáo.",
+          "data": "Từ D−7; đến D",
+          "expected": "Báo cáo trả đúng from/to gồm hai đầu."
+        },
+        {
+          "action": "Đối chiếu tổng và bảng ngày/dịch vụ.",
+          "data": "Số liệu nguồn đã ghi trong precondition",
+          "expected": "Số lịch/hoàn thành/giá trị đặt khớp bookingDate; tiền thu và hoàn khớp ngày giao dịch tương ứng, không dùng ngày lịch thay thế."
+        },
+        {
+          "action": "Đối chiếu dữ liệu API nếu cần.",
+          "data": "GET /api/Reports?from=...&to=...",
+          "expected": "netCollected=paidAmount−refundAmount; byDay/byService cộng đúng nguồn."
+        }
+      ],
+      "notes": "Không tự đặt số tổng khi chưa chuẩn bị dữ liệu; điền giá trị đối chiếu thực từ bộ dữ liệu thử trước khi chạy.",
+      "gui": false
+    },
+    {
+      "req": "F11.14",
+      "objective": "Báo cáo khoảng không có dữ liệu",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. Khoảng D−60 đến D−59 không có bookingDate, paymentDate hoặc refundedAt của bất kỳ bản ghi thử nào.",
+      "steps": [
+        {
+          "action": "Chọn khoảng và Xem báo cáo.",
+          "data": "D−60 đến D−59",
+          "expected": "API trả báo cáo hợp lệ."
+        },
+        {
+          "action": "Đối chiếu chỉ số và bảng.",
+          "data": "Không dữ liệu nguồn",
+          "expected": "Các tổng bằng0, byDay/byService rỗng; không giữ số liệu của lần xem trước."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.14",
+      "objective": "Chặn khoảng ngày đảo ngược ở API",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. Có token QA_ADMIN.",
+      "steps": [
+        {
+          "action": "Gửi khoảng bắt đầu lớn hơn kết thúc.",
+          "data": "GET /api/Reports?from=D&to=D−1",
+          "expected": "API trả400."
+        },
+        {
+          "action": "Xem nội dung phản hồi.",
+          "data": "Khoảng ngược",
+          "expected": "Có thông tin khoảng không hợp lệ; không trả báo cáo như dữ liệu hợp lệ."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện. UI dùng min/max để ngăn khoảng ngược; API vẫn cần ca trực tiếp.",
+      "gui": false
+    },
+    {
+      "req": "F11.14",
+      "objective": "Chặn khoảng báo cáo vượt3 năm",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. Có token QA_ADMIN; chọn start=D−4năm; end=start+3 năm+1 ngày.",
+      "steps": [
+        {
+          "action": "Gửi yêu cầu báo cáo vượt khoảng.",
+          "data": "GET /api/Reports?from=start&to=end",
+          "expected": "API trả400."
+        },
+        {
+          "action": "Gửi đúng biên3 năm.",
+          "data": "end=start+3 năm",
+          "expected": "API chấp nhận và trả báo cáo trong khoảng, kể cả rỗng."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.",
+      "gui": false
+    },
+    {
+      "req": "F11.15",
+      "objective": "Xuất CSV và đối chiếu bảng ngày",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. Báo cáo D−7 đến D có ít nhất2 ngày có lịch; đã ghi các hàng byDay.",
+      "steps": [
+        {
+          "action": "Xem báo cáo đúng khoảng.",
+          "data": "D−7 đến D",
+          "expected": "Bảng Lịch theo ngày hiện dữ liệu."
+        },
+        {
+          "action": "Bấm Xuất CSV cho Excel và mở tệp.",
+          "data": "Tệp petnova-bao-cao-<from>-<to>.csv",
+          "expected": "Tệp tải được; tiêu đề tiếng Việt đúng, tách đúng4 cột."
+        },
+        {
+          "action": "Đối chiếu với bảng ngày.",
+          "data": "Ngày; Số lịch; Hoàn thành; Giá trị đặt",
+          "expected": "Số hàng và từng giá trị khớp; không tự chèn tên khách/thú cưng."
+        }
+      ],
+      "notes": "Không thiết kế ca nhập '=,+,-,@' bằng tên khách để kiểm tra CSV vì CSV hiện chỉ có ngày và số; hàm escape có phòng ngừa nhưng đường nhập đó không tới CSV này.",
+      "gui": false
+    },
+    {
+      "req": "F11.15",
+      "objective": "Xuất CSV khi khoảng báo cáo rỗng",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. Đã xác nhận khoảng D−60 đến D−59 không có dữ liệu.",
+      "steps": [
+        {
+          "action": "Xem báo cáo khoảng rỗng.",
+          "data": "D−60 đến D−59",
+          "expected": "Bảng ngày không có hàng dữ liệu."
+        },
+        {
+          "action": "Xuất CSV rồi mở.",
+          "data": "Tệp tải xuống",
+          "expected": "Có đúng hàng tiêu đề4 cột, không có hàng của báo cáo trước."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.16",
+      "objective": "Gửi thông báo chung đến đúng tài khoản hoạt động",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. CSDL thử có đúng n tài khoản ACTIVE bao gồm QA_ADMIN và1 tài khoản INACTIVE; ghi danh sách userId và số thông báo trước. Không nối dữ liệu người dùng thật.",
+      "steps": [
+        {
+          "action": "Nhập tiêu đề/nội dung và bấm Gửi cho tất cả.",
+          "data": "Tiêu đề QA_TB_724; nội dung Thông báo kiểm thử",
+          "expected": "Hiện xác nhận gửi tới tất cả tài khoản đang hoạt động."
+        },
+        {
+          "action": "Đồng ý gửi.",
+          "data": "Một lần xác nhận",
+          "expected": "Báo gửi n thông báo."
+        },
+        {
+          "action": "Đọc danh sách thông báo bằng admin/từng tài khoản thử.",
+          "data": "QA_TB_724",
+          "expected": "Mỗi tài khoản ACTIVE nhận1 tin SYSTEM chưa đọc; INACTIVE không nhận tin này."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.16",
+      "objective": "Hủy xác nhận gửi thông báo",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. Ghi tổng thông báo trước; chỉ CSDL thử.",
+      "steps": [
+        {
+          "action": "Nhập form đủ dữ liệu và bấm gửi.",
+          "data": "Tiêu đề QA_TB_HUY; nội dung Thử hủy",
+          "expected": "Hiện hộp xác nhận."
+        },
+        {
+          "action": "Chọn Hủy rồi tải lại danh sách.",
+          "data": "QA_TB_HUY",
+          "expected": "Không tạo thông báo QA_TB_HUY, không tăng số tin."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.16",
+      "objective": "Chặn thông báo thiếu tiêu đề hoặc nội dung",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. Ghi số thông báo; lặp độc lập hai lượt.",
+      "steps": [
+        {
+          "action": "Điền thiếu một trường bắt buộc.",
+          "data": "Lượt1 title rỗng/message QA; lượt 2 title QA/message rỗng",
+          "expected": "Form có trường bắt buộc rỗng."
+        },
+        {
+          "action": "Bấm gửi, tải lại danh sách.",
+          "data": "Từng lượt riêng",
+          "expected": "Không tạo thông báo mới."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F11.16",
+      "objective": "Chặn nội dung vượt giới hạn qua API",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. Có token QA_ADMIN; ghi tổng thông báo trước; môi trường chỉ dữ liệu thử.",
+      "steps": [
+        {
+          "action": "Gửi broadcast vượt chiều dài.",
+          "data": "Lượt1 title='A'×101/message=QA; lượt 2 title=QA/message='A'×256; POST /api/Notifications/broadcast",
+          "expected": "Mỗi lượt API trả400."
+        },
+        {
+          "action": "Đối chiếu số thông báo.",
+          "data": "Từng lượt độc lập",
+          "expected": "Không tạo thông báo từ payload vượt giới hạn."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.",
+      "gui": false
+    },
+    {
+      "req": "F11.17",
+      "objective": "Nhật ký ghi thao tác sửa và đúng đối tượng",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. SV_A thuộc SC_A ACTIVE; ghi số/id log lớn nhất và thời điểm trước sửa.",
+      "steps": [
+        {
+          "action": "Sửa SV_A bằng dữ liệu hợp lệ.",
+          "data": "Tên Gói QA_LOG; các trường khác hợp lệ",
+          "expected": "Sửa thành công."
+        },
+        {
+          "action": "Mở Thông báo & nhật ký, bấm Tải lại.",
+          "data": "QA_ADMIN",
+          "expected": "Có log mới cho thao tác PUT cập nhật ServicePackages."
+        },
+        {
+          "action": "Đối chiếu log với thao tác.",
+          "data": "QA_ADMIN; SV_A; khoảng thời gian thực hiện",
+          "expected": "Người/role/action/targetId=SV_A và thời điểm đúng; không chứa password/token/body."
+        }
+      ],
+      "notes": "Không đòi nhật ký chỉ có ADMIN: bộ lọc ghi cả non-GET thành công của các role được phép.",
+      "gui": false
+    },
+    {
+      "req": "F11.17",
+      "objective": "Yêu cầu sai bị từ chối không tạo log thành công",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. Có token QA_ADMIN; ghi id log lớn nhất; QA_CUS_A ACTIVE/CUSTOMER.",
+      "steps": [
+        {
+          "action": "Gửi yêu cầu thay role không hợp lệ.",
+          "data": "PUT /api/UserAccounts/{QA_CUS_A}/role; role=MANAGER",
+          "expected": "API trả400; role không đổi."
+        },
+        {
+          "action": "Tải nhật ký sau thao tác.",
+          "data": "GET /api/AuditLogs",
+          "expected": "Không có log thành công tương ứng với yêu cầu400 này."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.",
+      "gui": false
+    },
+    {
+      "req": "F11.17",
+      "objective": "Xem nhật ký khi chưa có log",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. Bản sao CSDL thử có QA_ADMIN nhưng bảng AuditLogs rỗng; không thực hiện thay đổi trước ca.",
+      "steps": [
+        {
+          "action": "Mở Thông báo & nhật ký.",
+          "data": "QA_ADMIN",
+          "expected": "Trang tải được."
+        },
+        {
+          "action": "Kiểm tra bảng nhật ký.",
+          "data": "0 log",
+          "expected": "Bảng không có hàng log; không hiển thị log giả hoặc log từ phiên trước."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F12.1",
+      "objective": "Không có token không truy cập dữ liệu bảo vệ",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. Có môi trường thử; chưa đăng nhập; không gửi Authorization.",
+      "steps": [
+        {
+          "action": "Gọi API dữ liệu bảo vệ.",
+          "data": "GET /api/Pets; không có Authorization",
+          "expected": "API trả401."
+        },
+        {
+          "action": "Kiểm tra body phản hồi.",
+          "data": "Phản hồi401",
+          "expected": "Không có danh sách thú cưng hoặc dữ liệu người dùng."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.",
+      "gui": false
+    },
+    {
+      "req": "F12.1",
+      "objective": "Vai trò ngoài ADMIN không được xem báo cáo/nhật ký",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. Có3 tài khoản ACTIVE QA_CUS_A/CUSTOMER, QA_STAFF_A/STAFF có Staff ACTIVE, QA_VET_A/VET có Staff ACTIVE; có token từng tài khoản; chạy từng lượt riêng.",
+      "steps": [
+        {
+          "action": "Gọi API quản trị bằng token từng role.",
+          "data": "GET /api/Reports; GET /api/AuditLogs; lặp CUSTOMER,STAFF,VET",
+          "expected": "Mỗi yêu cầu trả403."
+        },
+        {
+          "action": "Kiểm tra phản hồi.",
+          "data": "Các lượt bị từ chối",
+          "expected": "Không lộ báo cáo hay log; không thay đổi dữ liệu."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.",
+      "gui": false
+    },
+    {
+      "req": "F12.1",
+      "objective": "Mỗi vai trò mở đúng cổng sau đăng nhập",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. Chuẩn bị4 tài khoản thử ACTIVE tương ứng CUSTOMER, STAFF, VET, ADMIN; STAFF/VET có nhân sự ACTIVE; email/password đã xác nhận. Đăng xuất giữa các lượt.",
+      "steps": [
+        {
+          "action": "Đăng nhập bằng từng tài khoản thử.",
+          "data": "4 lượt: CUSTOMER, STAFF, VET, ADMIN",
+          "expected": "Mỗi tài khoản đăng nhập thành công theo quyền."
+        },
+        {
+          "action": "Kiểm tra cổng và menu.",
+          "data": "CUSTOMER: khách hàng; STAFF: vận hành; VET: phòng khám; ADMIN: quản trị",
+          "expected": "Mở đúng cổng theo role từ hồ sơ; không giữ menu/dữ liệu của tài khoản lượt trước."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F12.2",
+      "objective": "Khách A không đọc/sửa thú cưng của khách B",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_CUS_A và QA_CUS_B đều ACTIVE/CUSTOMER, hai chủ khác nhau; P_B thuộc QA_CUS_B; B_B có userId QA_CUS_B, petId P_B; PM_B là Payment của B_B; N_B là Notification userId QA_CUS_B. Ghi mã thực và dữ liệu gốc; dùng token QA_CUS_A. Payload sửa P_B có dữ liệu định danh hợp lệ để kiểm tra quyền, không bị lẫn lỗi nhập.",
+      "steps": [
+        {
+          "action": "Gọi đọc P_B.",
+          "data": "GET /api/Pets/{P_B}",
+          "expected": "API trả404, không lộ hồ sơ P_B."
+        },
+        {
+          "action": "Gửi sửa P_B và kiểm tra lại bằng chủB.",
+          "data": "PUT /api/Pets/{P_B}; petId=P_B; dữ liệu hợp lệ, weight=7",
+          "expected": "API trả404; hồ sơ P_B không đổi."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.",
+      "gui": false
+    },
+    {
+      "req": "F12.2",
+      "objective": "Khách A không đọc lịch của khách B",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_CUS_A và QA_CUS_B đều ACTIVE/CUSTOMER, hai chủ khác nhau; P_B thuộc QA_CUS_B; B_B có userId QA_CUS_B, petId P_B; PM_B là Payment của B_B; N_B là Notification userId QA_CUS_B. Ghi mã thực và dữ liệu gốc; dùng token QA_CUS_A. ",
+      "steps": [
+        {
+          "action": "Gọi chi tiết lịch của khách B.",
+          "data": "GET /api/Bookings/{B_B}",
+          "expected": "API trả404, không lộ B_B."
+        },
+        {
+          "action": "Gọi danh sách theo userId khách B.",
+          "data": "GET /api/Bookings/user/{QA_CUS_B}",
+          "expected": "Danh sách rỗng; không có lịch của khách B."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.",
+      "gui": false
+    },
+    {
+      "req": "F12.2",
+      "objective": "Khách A không đọc thanh toán của khách B",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_CUS_A và QA_CUS_B đều ACTIVE/CUSTOMER, hai chủ khác nhau; P_B thuộc QA_CUS_B; B_B có userId QA_CUS_B, petId P_B; PM_B là Payment của B_B; N_B là Notification userId QA_CUS_B. Ghi mã thực và dữ liệu gốc; dùng token QA_CUS_A. ",
+      "steps": [
+        {
+          "action": "Gọi chi tiết thanh toán PM_B.",
+          "data": "GET /api/Payments/{PM_B}",
+          "expected": "API trả404."
+        },
+        {
+          "action": "Gọi danh sách thanh toán với token A.",
+          "data": "GET /api/Payments",
+          "expected": "Không có PM_B hoặc khoản thanh toán thuộc khách B."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.",
+      "gui": false
+    },
+    {
+      "req": "F12.2",
+      "objective": "Khách A không đọc/đánh dấu thông báo của khách B",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_CUS_A và QA_CUS_B đều ACTIVE/CUSTOMER, hai chủ khác nhau; P_B thuộc QA_CUS_B; B_B có userId QA_CUS_B, petId P_B; PM_B là Payment của B_B; N_B là Notification userId QA_CUS_B. Ghi mã thực và dữ liệu gốc; dùng token QA_CUS_A. N_B đang isRead=false.",
+      "steps": [
+        {
+          "action": "Đọc N_B và danh sách theo user B.",
+          "data": "GET /api/Notifications/{N_B}; GET /api/Notifications/user/{QA_CUS_B}",
+          "expected": "Chi tiết trả404; danh sách theo user khác trả403, không lộ nội dung."
+        },
+        {
+          "action": "Gửi đánh dấu đã đọc N_B.",
+          "data": "PUT /api/Notifications/{N_B}/read",
+          "expected": "API trả404."
+        },
+        {
+          "action": "Đối chiếu bằng QA_CUS_B.",
+          "data": "N_B",
+          "expected": "isRead vẫnfalse."
+        }
+      ],
+      "notes": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.",
+      "gui": false
+    },
+    {
+      "req": "F12.3",
+      "objective": "Trang quản trị xử lý mất API và tải lại",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. Mở trình duyệt có công cụ mạng; chỉ chặn request API tại trình duyệt của ca, không dừng môi trường người khác.",
+      "steps": [
+        {
+          "action": "Chặn các yêu cầu API rồi tải lại cổng quản trị.",
+          "data": "Chặn đường /api/* trong công cụ mạng",
+          "expected": "Có phản hồi lỗi/không tải dữ liệu; không hiển thị trang trắng."
+        },
+        {
+          "action": "Gỡ chặn và bấm tải lại.",
+          "data": "Kết nối API phục hồi",
+          "expected": "Tải được dữ liệu hiện tại; thông báo lỗi cũ được xử lý khi tải thành công."
+        }
+      ],
+      "notes": "Ca chưa thực thi; nội dung cụ thể thông báo ghi theo quan sát, không tự đặt nguyên văn.",
+      "gui": false
+    },
+    {
+      "req": "F12.3",
+      "objective": "Danh sách rỗng sau tìm không giữ dữ liệu cũ",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. Có nhân sự tên Nhân sự QA; không nhân sự nào chứa QA_KHONG_CO_724.",
+      "steps": [
+        {
+          "action": "Mở Nhân sự và tìm tên đang có.",
+          "data": "Nhân sự QA",
+          "expected": "Có kết quả phù hợp."
+        },
+        {
+          "action": "Đổi sang từ khóa không có.",
+          "data": "QA_KHONG_CO_724",
+          "expected": "Hiện trạng thái rỗng, không còn các hàng kết quả lượt trước."
+        }
+      ],
+      "notes": "",
+      "gui": false
+    },
+    {
+      "req": "F12.4",
+      "objective": "Trang quản trị tại kích thước máy tính",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_ADMIN: tài khoản thử ACTIVE, role ADMIN; đang đăng nhập cổng quản trị. Dùng trình duyệt ở zoom100%; có tài khoản/dịch vụ/lịch thử và form thêm nhân sự.",
+      "steps": [
+        {
+          "action": "Đặt viewport đại diện máy tính và mở Tổng quan.",
+          "data": "1366×768; zoom100%",
+          "expected": "Tiêu đề/menu/thẻ thống kê đọc được và thao tác được."
+        },
+        {
+          "action": "Mở Nhân sự, form thêm và bảng lịch.",
+          "data": "Cùng viewport",
+          "expected": "Nhãn/ô/nút không che nhau; bảng rộng có thể cuộn để xem đủ cột."
+        }
+      ],
+      "notes": "1366×768 là cấu hình kiểm tra đề xuất, không phải giới hạn được đặc tả. Ca chỉ thiết kế, chưa kết luận đạt.",
+      "gui": false
+    },
+    {
+      "req": "F12.4",
+      "objective": "Trang khách và bác sĩ tại màn hình hẹp",
+      "pre": "Môi trường kiểm thử riêng đã chạy; D là ngày chạy tại Asia/Ho_Chi_Minh. Các tên QA và ký hiệu ID dưới đây là bộ dữ liệu cần chuẩn bị, không phải tài khoản đã có sẵn; thay bằng mã thực khi thực hiện. QA_CUS_A ACTIVE có thú cưng và lịch; QA_VET_A ACTIVE/VET có Staff ACTIVE và ca được phân công. Dùng dữ liệu thử, zoom100%, đăng xuất giữa2 role.",
+      "steps": [
+        {
+          "action": "Đặt viewport và mở cổng khách.",
+          "data": "390×844; mở danh sách thú cưng và form đặt lịch",
+          "expected": "Nội dung đọc được; form/nút chính nằm trong vùng thao tác, có thể cuộn."
+        },
+        {
+          "action": "Đăng nhập bác sĩ và mở Hồ sơ thú cưng, form bệnh án.",
+          "data": "390×844; QA_VET_A",
+          "expected": "Các ô/nút/tab dùng được; không có phần thiết yếu bị che/cắt mất."
+        }
+      ],
+      "notes": "390×844 là kích thước đại diện đề xuất. Root có thể chuyển ca này sang nhóm Look and Feel (GUI) trong mẫu; gui=false theo phân công nội dung.",
+      "gui": false
+    }
+  ]
+}

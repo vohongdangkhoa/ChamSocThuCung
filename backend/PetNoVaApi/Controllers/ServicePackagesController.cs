@@ -108,7 +108,7 @@ namespace PetNoVaApi.Controllers
                 return NotFound();
             }
 
-            if (!IsValid(servicePackage))
+            if (!IsValid(servicePackage, requireStatus: true))
             {
                 return BadRequest("Tên, mô tả, giá và thời lượng gói dịch vụ không hợp lệ.");
             }
@@ -181,13 +181,16 @@ namespace PetNoVaApi.Controllers
 
         /// <summary>Kiểm tra các điều kiện tối thiểu trước khi ghi DB.</summary>
         /// <returns>true khi chuỗi bắt buộc có nội dung và price/duration lớn hơn 0.</returns>
-        private static bool IsValid(ServicePackage servicePackage)
+        private static bool IsValid(ServicePackage servicePackage, bool requireStatus = false)
         {
             return !string.IsNullOrWhiteSpace(servicePackage.serviceName) &&
                 !string.IsNullOrWhiteSpace(servicePackage.description) &&
                 !string.IsNullOrWhiteSpace(servicePackage.categoryId) &&
-                servicePackage.price > 0 &&
-                servicePackage.duration > 0;
+                // Giữ nguyên giá khi lưu decimal(18,2), không làm tròn giá nhỏ thành 0.
+                servicePackage.price >= 0.01m && servicePackage.price <= 9999999999999999.99m &&
+                servicePackage.price == decimal.Round(servicePackage.price, 2) &&
+                servicePackage.duration is >= 1 and <= 480 &&
+                (!requireStatus || servicePackage.status is "ACTIVE" or "INACTIVE");
         }
 
         /// <summary>Sinh serviceId tiếp theo từ phần số lớn nhất của các mã SVxxx hiện có.</summary>
