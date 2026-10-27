@@ -17,6 +17,7 @@ import {
 } from "firebase/auth";
 import { auth } from "./cau-hinh-firebase";
 import { dangKyKhachHang } from "./dang-ky-khach-hang";
+import { kiemTraMatKhau } from "./quy-tac-mat-khau";
 import {
   UserAccountNotFoundError,
   createUserAccount,
@@ -99,7 +100,8 @@ export function firebaseErrorMessage(error) {
     case "auth/invalid-email":
       return "Email không đúng định dạng.";
     case "auth/weak-password":
-      return "Mật khẩu cần có ít nhất 6 ký tự.";
+    case "auth/password-does-not-meet-requirements":
+      return "Mật khẩu chưa đáp ứng yêu cầu. Hãy dùng 12–128 ký tự, có chữ hoa, chữ thường, số và ký tự đặc biệt.";
     case "auth/network-request-failed":
       return "Kết nối Firebase bị gián đoạn. Hãy kiểm tra mạng rồi thử lại.";
     case "auth/too-many-requests":
@@ -230,9 +232,8 @@ export function AuthProvider({ children }) {
     const normalizedEmail = requiredText(email, "Email");
     const normalizedPhone = requiredText(phone, "Số điện thoại");
     const suppliedPassword = String(password ?? "");
-    if (suppliedPassword.length < 6) {
-      throw new AuthProfileError("Mật khẩu cần có ít nhất 6 ký tự.");
-    }
+    const loiMatKhau = kiemTraMatKhau(suppliedPassword);
+    if (loiMatKhau) throw new AuthProfileError(loiMatKhau);
 
     registrationInFlight.current = true;
     setLoading(true);

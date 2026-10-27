@@ -11,6 +11,7 @@ import { api, formatError } from "./giao-tiep-api";
 import { kiemTraTepAnh } from "./du-lieu-khach-hang";
 import { firebaseErrorMessage } from "./xac-thuc";
 import { OMatKhau } from "./o-mat-khau";
+import { DO_DAI_MAT_KHAU_TOI_THIEU, DO_DAI_MAT_KHAU_TOI_DA, kiemTraMatKhau } from "./quy-tac-mat-khau";
 import "./cai-dat-tai-khoan.css";
 
 const TEN_VAI_TRO = {
@@ -107,8 +108,8 @@ export function CaiDatTaiKhoan({ user, onLogout, onUpdated }) {
   const doiMatKhau = (event) => {
     event.preventDefault();
     void xuLy("password", async () => {
-      if (matKhau.next.length < 8)
-        throw new Error("Mật khẩu mới cần ít nhất 8 ký tự.");
+      const loiMatKhau = kiemTraMatKhau(matKhau.next);
+      if (loiMatKhau) throw new Error(loiMatKhau);
       if (matKhau.next !== matKhau.confirm)
         throw new Error("Hai mật khẩu mới chưa giống nhau.");
       if (matKhau.next === matKhau.current)
@@ -254,7 +255,7 @@ export function CaiDatTaiKhoan({ user, onLogout, onUpdated }) {
                 nhan="Mật khẩu mới"
                 disabled={Boolean(dangXuLy)}
                 required
-                minLength={8}
+                apDungQuyTac
                 autoComplete="new-password"
                 value={matKhau.next}
                 onChange={(e) =>
@@ -265,7 +266,8 @@ export function CaiDatTaiKhoan({ user, onLogout, onUpdated }) {
                 nhan="Nhập lại mật khẩu mới"
                 disabled={Boolean(dangXuLy)}
                 required
-                minLength={8}
+                minLength={DO_DAI_MAT_KHAU_TOI_THIEU}
+                maxLength={DO_DAI_MAT_KHAU_TOI_DA}
                 autoComplete="new-password"
                 value={matKhau.confirm}
                 onChange={(e) =>
@@ -274,8 +276,7 @@ export function CaiDatTaiKhoan({ user, onLogout, onUpdated }) {
               />
             </div>
             <p className="muted small">
-              Dùng ít nhất 8 ký tự. Mật khẩu chỉ được xử lý bởi hệ thống đăng
-              nhập Firebase.
+              Mật khẩu mới cần khác mật khẩu hiện tại. Hạn chế dùng lại mật khẩu từ tài khoản khác.
             </p>
             <button
               className="button button-primary"

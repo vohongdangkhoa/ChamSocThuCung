@@ -1,0 +1,56 @@
+{
+  "executedAtUtc": "2026-10-27T03:26:07.3345821Z",
+  "baseUrl": "http://127.0.0.1:5200",
+  "passed": 8,
+  "failed": 0,
+  "results": [
+    {
+      "id": "short",
+      "actualStatus": 400,
+      "message": "Mật khẩu cần ít nhất 12 ký tự.",
+      "status": "PASS"
+    },
+    {
+      "id": "missing-upper",
+      "actualStatus": 400,
+      "message": "Mật khẩu cần ít nhất một chữ hoa (A-Z).",
+      "status": "PASS"
+    },
+    {
+      "id": "missing-lower",
+      "actualStatus": 400,
+      "message": "Mật khẩu cần ít nhất một chữ thường (a-z).",
+      "status": "PASS"
+    },
+    {
+      "id": "missing-digit",
+      "actualStatus": 400,
+      "message": "Mật khẩu cần ít nhất một chữ số (0-9).",
+      "status": "PASS"
+    },
+    {
+      "id": "missing-symbol",
+      "actualStatus": 400,
+      "message": "Mật khẩu cần có ít nhất một ký tự đặc biệt như !, @, # hoặc $.",
+      "status": "PASS"
+    },
+    {
+      "id": "unicode",
+      "actualStatus": 400,
+      "message": "Mật khẩu chỉ dùng chữ không dấu, số, dấu cách và ký hiệu trên bàn phím.",
+      "status": "PASS"
+    },
+    {
+      "id": "too-long",
+      "actualStatus": 400,
+      "message": "Mật khẩu không được vượt quá 128 ký tự.",
+      "status": "PASS"
+    },
+    {
+      "id": "valid-password-invalid-session",
+      "actualStatus": 400,
+      "message": "Phiên đặt lại mật khẩu đã hết hạn. Vui lòng gửi OTP mới.",
+      "status": "PASS"
+    }
+  ]
+}

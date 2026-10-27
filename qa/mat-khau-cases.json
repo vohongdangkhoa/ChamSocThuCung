@@ -1,0 +1,257 @@
+[
+  {
+    "id": "empty",
+    "password": "",
+    "valid": false
+  },
+  {
+    "id": "null",
+    "password": null,
+    "valid": false
+  },
+  {
+    "id": "minimum-12",
+    "password": "Abcdefghi1!X",
+    "valid": true
+  },
+  {
+    "id": "eleven",
+    "password": "Abcdefgh1!X",
+    "valid": false
+  },
+  {
+    "id": "maximum-128",
+    "password": "Ab1!xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "valid": true
+  },
+  {
+    "id": "over-128",
+    "password": "Ab1!xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "valid": false
+  },
+  {
+    "id": "missing-upper",
+    "password": "abcdefghij1!",
+    "valid": false
+  },
+  {
+    "id": "missing-lower",
+    "password": "ABCDEFGHIJ1!",
+    "valid": false
+  },
+  {
+    "id": "missing-digit",
+    "password": "Abcdefghijk!",
+    "valid": false
+  },
+  {
+    "id": "missing-symbol",
+    "password": "Abcdefghij12",
+    "valid": false
+  },
+  {
+    "id": "space-not-symbol",
+    "password": "Abcdefghi12 ",
+    "valid": false
+  },
+  {
+    "id": "plus-not-firebase-symbol",
+    "password": "Abcdefghi12+",
+    "valid": false
+  },
+  {
+    "id": "minus-not-firebase-symbol",
+    "password": "Abcdefghi12-",
+    "valid": false
+  },
+  {
+    "id": "equals-not-firebase-symbol",
+    "password": "Abcdefghi12=",
+    "valid": false
+  },
+  {
+    "id": "other-punctuation-with-symbol",
+    "password": "Abcdefgh12+!",
+    "valid": true
+  },
+  {
+    "id": "vietnamese-precomposed",
+    "password": "Abcdefgh1!Đa",
+    "valid": false
+  },
+  {
+    "id": "vietnamese-combining",
+    "password": "Abcdefg1!áX",
+    "valid": false
+  },
+  {
+    "id": "emoji",
+    "password": "Abcdefgh1!😀",
+    "valid": false
+  },
+  {
+    "id": "tab",
+    "password": "Abcdefgh1!\tX",
+    "valid": false
+  },
+  {
+    "id": "newline",
+    "password": "Abcdefgh1!\nX",
+    "valid": false
+  },
+  {
+    "id": "leading-space-no-trim",
+    "password": " Abcdefgh1!X",
+    "valid": true
+  },
+  {
+    "id": "trailing-space-no-trim",
+    "password": "Abcdefgh1!X ",
+    "valid": true
+  },
+  {
+    "id": "without-boundary-space-too-short",
+    "password": "Abcdefgh1!X",
+    "valid": false
+  },
+  {
+    "id": "allowed-symbol-0",
+    "password": "Abcdefghi12^",
+    "valid": true
+  },
+  {
+    "id": "allowed-symbol-1",
+    "password": "Abcdefghi12$",
+    "valid": true
+  },
+  {
+    "id": "allowed-symbol-2",
+    "password": "Abcdefghi12*",
+    "valid": true
+  },
+  {
+    "id": "allowed-symbol-3",
+    "password": "Abcdefghi12.",
+    "valid": true
+  },
+  {
+    "id": "allowed-symbol-4",
+    "password": "Abcdefghi12[",
+    "valid": true
+  },
+  {
+    "id": "allowed-symbol-5",
+    "password": "Abcdefghi12]",
+    "valid": true
+  },
+  {
+    "id": "allowed-symbol-6",
+    "password": "Abcdefghi12{",
+    "valid": true
+  },
+  {
+    "id": "allowed-symbol-7",
+    "password": "Abcdefghi12}",
+    "valid": true
+  },
+  {
+    "id": "allowed-symbol-8",
+    "password": "Abcdefghi12(",
+    "valid": true
+  },
+  {
+    "id": "allowed-symbol-9",
+    "password": "Abcdefghi12)",
+    "valid": true
+  },
+  {
+    "id": "allowed-symbol-10",
+    "password": "Abcdefghi12?",
+    "valid": true
+  },
+  {
+    "id": "allowed-symbol-11",
+    "password": "Abcdefghi12\"",
+    "valid": true
+  },
+  {
+    "id": "allowed-symbol-12",
+    "password": "Abcdefghi12!",
+    "valid": true
+  },
+  {
+    "id": "allowed-symbol-13",
+    "password": "Abcdefghi12@",
+    "valid": true
+  },
+  {
+    "id": "allowed-symbol-14",
+    "password": "Abcdefghi12#",
+    "valid": true
+  },
+  {
+    "id": "allowed-symbol-15",
+    "password": "Abcdefghi12%",
+    "valid": true
+  },
+  {
+    "id": "allowed-symbol-16",
+    "password": "Abcdefghi12&",
+    "valid": true
+  },
+  {
+    "id": "allowed-symbol-17",
+    "password": "Abcdefghi12/",
+    "valid": true
+  },
+  {
+    "id": "allowed-symbol-18",
+    "password": "Abcdefghi12\\",
+    "valid": true
+  },
+  {
+    "id": "allowed-symbol-19",
+    "password": "Abcdefghi12,",
+    "valid": true
+  },
+  {
+    "id": "allowed-symbol-20",
+    "password": "Abcdefghi12>",
+    "valid": true
+  },
+  {
+    "id": "allowed-symbol-21",
+    "password": "Abcdefghi12<",
+    "valid": true
+  },
+  {
+    "id": "allowed-symbol-22",
+    "password": "Abcdefghi12'",
+    "valid": true
+  },
+  {
+    "id": "allowed-symbol-23",
+    "password": "Abcdefghi12:",
+    "valid": true
+  },
+  {
+    "id": "allowed-symbol-24",
+    "password": "Abcdefghi12;",
+    "valid": true
+  },
+  {
+    "id": "allowed-symbol-25",
+    "password": "Abcdefghi12|",
+    "valid": true
+  },
+  {
+    "id": "allowed-symbol-26",
+    "password": "Abcdefghi12_",
+    "valid": true
+  },
+  {
+    "id": "allowed-symbol-27",
+    "password": "Abcdefghi12~",
+    "valid": true
+  }
+]

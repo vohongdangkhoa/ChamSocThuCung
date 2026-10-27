@@ -1,0 +1,659 @@
+{
+  "ExecutedAtUtc": "2026-10-27T03:26:09.2020463Z",
+  "Fixture": "C:\\Users\\vohon\\petnova_app\\qa\\mat-khau-cases.json",
+  "FixtureCases": 51,
+  "Checks": 108,
+  "Passed": 108,
+  "Failed": 0,
+  "ExternalCalls": 0,
+  "Results": [
+    {
+      "Id": "length-constants",
+      "Kind": "contract",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "empty",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "null",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "minimum-12",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "eleven",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "maximum-128",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "over-128",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "missing-upper",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "missing-lower",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "missing-digit",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "missing-symbol",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "space-not-symbol",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "plus-not-firebase-symbol",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "minus-not-firebase-symbol",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "equals-not-firebase-symbol",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "other-punctuation-with-symbol",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "vietnamese-precomposed",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "vietnamese-combining",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "emoji",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "tab",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "newline",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "leading-space-no-trim",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "trailing-space-no-trim",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "without-boundary-space-too-short",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "allowed-symbol-0",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "allowed-symbol-1",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "allowed-symbol-2",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "allowed-symbol-3",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "allowed-symbol-4",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "allowed-symbol-5",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "allowed-symbol-6",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "allowed-symbol-7",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "allowed-symbol-8",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "allowed-symbol-9",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "allowed-symbol-10",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "allowed-symbol-11",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "allowed-symbol-12",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "allowed-symbol-13",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "allowed-symbol-14",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "allowed-symbol-15",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "allowed-symbol-16",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "allowed-symbol-17",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "allowed-symbol-18",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "allowed-symbol-19",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "allowed-symbol-20",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "allowed-symbol-21",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "allowed-symbol-22",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "allowed-symbol-23",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "allowed-symbol-24",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "allowed-symbol-25",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "allowed-symbol-26",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "allowed-symbol-27",
+      "Kind": "validator",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "empty",
+      "Kind": "reset-before-db",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "empty",
+      "Kind": "manager-create-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "empty",
+      "Kind": "manager-update-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "null",
+      "Kind": "reset-before-db",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "null",
+      "Kind": "manager-create-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "null",
+      "Kind": "manager-update-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "eleven",
+      "Kind": "reset-before-db",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "eleven",
+      "Kind": "manager-create-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "eleven",
+      "Kind": "manager-update-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "over-128",
+      "Kind": "reset-before-db",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "over-128",
+      "Kind": "manager-create-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "over-128",
+      "Kind": "manager-update-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "missing-upper",
+      "Kind": "reset-before-db",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "missing-upper",
+      "Kind": "manager-create-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "missing-upper",
+      "Kind": "manager-update-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "missing-lower",
+      "Kind": "reset-before-db",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "missing-lower",
+      "Kind": "manager-create-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "missing-lower",
+      "Kind": "manager-update-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "missing-digit",
+      "Kind": "reset-before-db",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "missing-digit",
+      "Kind": "manager-create-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "missing-digit",
+      "Kind": "manager-update-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "missing-symbol",
+      "Kind": "reset-before-db",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "missing-symbol",
+      "Kind": "manager-create-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "missing-symbol",
+      "Kind": "manager-update-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "space-not-symbol",
+      "Kind": "reset-before-db",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "space-not-symbol",
+      "Kind": "manager-create-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "space-not-symbol",
+      "Kind": "manager-update-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "plus-not-firebase-symbol",
+      "Kind": "reset-before-db",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "plus-not-firebase-symbol",
+      "Kind": "manager-create-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "plus-not-firebase-symbol",
+      "Kind": "manager-update-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "minus-not-firebase-symbol",
+      "Kind": "reset-before-db",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "minus-not-firebase-symbol",
+      "Kind": "manager-create-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "minus-not-firebase-symbol",
+      "Kind": "manager-update-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "equals-not-firebase-symbol",
+      "Kind": "reset-before-db",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "equals-not-firebase-symbol",
+      "Kind": "manager-create-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "equals-not-firebase-symbol",
+      "Kind": "manager-update-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "vietnamese-precomposed",
+      "Kind": "reset-before-db",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "vietnamese-precomposed",
+      "Kind": "manager-create-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "vietnamese-precomposed",
+      "Kind": "manager-update-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "vietnamese-combining",
+      "Kind": "reset-before-db",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "vietnamese-combining",
+      "Kind": "manager-create-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "vietnamese-combining",
+      "Kind": "manager-update-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "emoji",
+      "Kind": "reset-before-db",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "emoji",
+      "Kind": "manager-create-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "emoji",
+      "Kind": "manager-update-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "tab",
+      "Kind": "reset-before-db",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "tab",
+      "Kind": "manager-create-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "tab",
+      "Kind": "manager-update-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "newline",
+      "Kind": "reset-before-db",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "newline",
+      "Kind": "manager-create-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "newline",
+      "Kind": "manager-update-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "without-boundary-space-too-short",
+      "Kind": "reset-before-db",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "without-boundary-space-too-short",
+      "Kind": "manager-create-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "without-boundary-space-too-short",
+      "Kind": "manager-update-before-firebase",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "no-credential-read",
+      "Kind": "guard",
+      "Status": "PASS",
+      "Error": null
+    },
+    {
+      "Id": "firebase-not-initialized",
+      "Kind": "guard",
+      "Status": "PASS",
+      "Error": null
+    }
+  ]
+}

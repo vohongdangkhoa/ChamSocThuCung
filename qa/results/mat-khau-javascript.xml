@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+	<testcase name="1000 lịch hẹn chỉ tải hai danh sách, không tạo 2000 request phụ" time="0.017845" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\khach-hang.test.mjs"/>
+	<testcase name="khách chưa có lịch không cần tải chi tiết hoặc giao dịch" time="0.000366" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\khach-hang.test.mjs"/>
+	<testcase name="lỗi thanh toán không bị che thành danh sách rỗng" time="0.001054" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\khach-hang.test.mjs"/>
+	<testcase name="dữ liệu sai định dạng và hủy request được truyền về bên gọi" time="0.000613" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\khach-hang.test.mjs"/>
+	<testcase name="hồ sơ hợp lệ, ngày nhuận và giới hạn chuỗi được chấp nhận" time="0.003309" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\khach-hang.test.mjs"/>
+	<testcase name="chặn giống trống, ngày sai hoặc tương lai và cân nặng ngoài giới hạn API" time="0.000717" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\khach-hang.test.mjs"/>
+	<testcase name="giới hạn ảnh UI khớp server: đúng 5 MiB được phép, lớn hơn hoặc 6 MiB bị chặn" time="0.000508" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\khach-hang.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: empty" time="0.004368" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: null" time="0.003079" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: minimum-12" time="0.000914" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: eleven" time="0.000436" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: maximum-128" time="0.000356" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: over-128" time="0.000238" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: missing-upper" time="0.000260" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: missing-lower" time="0.000193" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: missing-digit" time="0.000382" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: missing-symbol" time="0.000468" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: space-not-symbol" time="0.000218" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: plus-not-firebase-symbol" time="0.000147" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: minus-not-firebase-symbol" time="0.000122" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: equals-not-firebase-symbol" time="0.000102" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: other-punctuation-with-symbol" time="0.000103" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: vietnamese-precomposed" time="0.000287" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: vietnamese-combining" time="0.000146" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: emoji" time="0.000105" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: tab" time="0.000137" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: newline" time="0.000102" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: leading-space-no-trim" time="0.000125" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: trailing-space-no-trim" time="0.000157" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: without-boundary-space-too-short" time="0.000120" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: allowed-symbol-0" time="0.000105" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: allowed-symbol-1" time="0.000097" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: allowed-symbol-2" time="0.000106" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: allowed-symbol-3" time="0.000096" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: allowed-symbol-4" time="0.000241" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: allowed-symbol-5" time="0.000221" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: allowed-symbol-6" time="0.000211" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: allowed-symbol-7" time="0.000110" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: allowed-symbol-8" time="0.000114" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: allowed-symbol-9" time="0.000155" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: allowed-symbol-10" time="0.000094" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: allowed-symbol-11" time="0.000140" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: allowed-symbol-12" time="0.000131" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: allowed-symbol-13" time="0.000114" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: allowed-symbol-14" time="0.000111" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: allowed-symbol-15" time="0.000131" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: allowed-symbol-16" time="0.000150" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: allowed-symbol-17" time="0.000161" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: allowed-symbol-18" time="0.000156" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: allowed-symbol-19" time="0.000136" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: allowed-symbol-20" time="0.000289" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: allowed-symbol-21" time="0.000181" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: allowed-symbol-22" time="0.000109" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: allowed-symbol-23" time="0.000118" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: allowed-symbol-24" time="0.000103" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: allowed-symbol-25" time="0.000119" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: allowed-symbol-26" time="0.000108" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="quy tắc mật khẩu: allowed-symbol-27" time="0.000163" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="mật khẩu sai bị chặn trước mọi lời gọi tạo danh tính/hồ sơ" time="0.006304" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="đăng ký giữ nguyên dấu cách trong mật khẩu hợp lệ" time="0.000484" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\mat-khau.test.mjs"/>
+	<testcase name="VET: phản hồi chậm của thú cưng A không đè bệnh án/tiêm chủng B đang chọn" time="0.163912" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\van-hanh.test.mjs"/>
+	<testcase name="VET: lỗi hồ sơ B không được giữ dữ liệu của A bên dưới tên B" time="0.037847" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\van-hanh.test.mjs"/>
+	<testcase name="VET: ngày tiêm không ở tương lai và ngày nhắc lại bắt đầu từ ngày kế tiếp" time="0.039357" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\van-hanh.test.mjs"/>
+	<testcase name="Báo cáo: phản hồi khoảng ngày cũ không ghi đè kết quả lần lọc mới" time="0.040897" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\van-hanh.test.mjs"/>
+	<testcase name="Báo cáo: lỗi lần tải mới xóa KPI cũ thay vì gắn với khoảng ngày mới" time="0.007927" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\van-hanh.test.mjs"/>
+	<testcase name="chuẩn hóa số trong nước/quốc tế nhất quán với khóa tra cứu +84" time="0.002904" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\xac-thuc.test.mjs"/>
+	<testcase name="dữ liệu sai bị chặn trước khi tạo danh tính Firebase" time="0.005757" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\xac-thuc.test.mjs"/>
+	<testcase name="đăng ký hợp lệ tạo hồ sơ CUSTOMER ACTIVE và giữ danh tính mới" time="0.001804" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\xac-thuc.test.mjs"/>
+	<testcase name="API từ chối số trùng không để lại email Firebase bị chiếm bởi đăng ký lỗi" time="0.003459" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\xac-thuc.test.mjs"/>
+	<testcase name="email đã dùng: không xóa danh tính có sẵn khi Firebase từ chối tạo" time="0.000696" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\xac-thuc.test.mjs"/>
+	<testcase name="lỗi cập nhật tên Firebase trước SQL dọn đúng tài khoản vừa tạo" time="0.000603" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\xac-thuc.test.mjs"/>
+	<testcase name="lỗi mạng hoặc 5xx sau POST không được xóa danh tính khi SQL có thể đã lưu" time="0.001040" classname="test" file="C:\Users\vohon\petnova_app\web-react\tests\xac-thuc.test.mjs"/>
+	<!-- tests 72 -->
+	<!-- suites 0 -->
+	<!-- pass 72 -->
+	<!-- fail 0 -->
+	<!-- cancelled 0 -->
+	<!-- skipped 0 -->
+	<!-- todo 0 -->
+	<!-- duration_ms 619.0802 -->
+</testsuites>

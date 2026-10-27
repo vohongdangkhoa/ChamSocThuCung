@@ -192,8 +192,8 @@ namespace PetNoVaApi.Controllers
                 return BadRequest("Vui lòng nhập đầy đủ thông tin nhân sự.");
             }
 
-            if (password.Length < 12 || password.Length > 128)
-                return BadRequest("Mật khẩu khởi tạo cần từ 12 đến 128 ký tự.");
+            var passwordError = QuyTacMatKhau.KiemTra(password);
+            if (passwordError is not null) return BadRequest(passwordError);
 
             // Kiểm tra cả email và Firebase UID để không tạo hai tài khoản đăng nhập cùng danh tính.
             if (

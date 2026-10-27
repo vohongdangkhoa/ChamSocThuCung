@@ -8,6 +8,7 @@ import {
 import { useAuth } from "./xac-thuc";
 import { chuanHoaSoDienThoai } from "./dang-ky-khach-hang";
 import { OMatKhau } from "./o-mat-khau";
+import { DO_DAI_MAT_KHAU_TOI_THIEU, DO_DAI_MAT_KHAU_TOI_DA, kiemTraMatKhau } from "./quy-tac-mat-khau";
 
 const emptyReset = {
   phone: "",
@@ -192,12 +193,8 @@ export function AuthPages() {
   function submitNewPassword(event) {
     event.preventDefault();
     void run(async () => {
-      if (reset.password.length < 6) {
-        throw new Error("Mật khẩu mới cần ít nhất 6 ký tự.");
-      }
-      if (reset.password.length > 128) {
-        throw new Error("Mật khẩu mới không được quá 128 ký tự.");
-      }
+      const loiMatKhau = kiemTraMatKhau(reset.password);
+      if (loiMatKhau) throw new Error(loiMatKhau);
       if (reset.password !== reset.confirmation) {
         throw new Error("Hai mật khẩu chưa trùng khớp.");
       }
@@ -321,7 +318,7 @@ export function AuthPages() {
                     fullName: event.target.value,
                   }))
                 }
-                placeholder="Nguyễn Minh Anh"
+                placeholder="Nguyễn Văn A"
                 maxLength="100"
                 required
                 value={registerForm.fullName}
@@ -368,14 +365,14 @@ export function AuthPages() {
               nhan="Mật khẩu"
               autoComplete="new-password"
               disabled={busy}
-              minLength="6"
+              apDungQuyTac
               onChange={(event) =>
                 setRegisterForm((current) => ({
                   ...current,
                   password: event.target.value,
                 }))
               }
-              placeholder="Ít nhất 6 ký tự"
+              placeholder="Tạo mật khẩu của bạn"
               required
               value={registerForm.password}
             />
@@ -383,7 +380,8 @@ export function AuthPages() {
               nhan="Xác nhận mật khẩu"
               autoComplete="new-password"
               disabled={busy}
-              minLength="6"
+              minLength={DO_DAI_MAT_KHAU_TOI_THIEU}
+              maxLength={DO_DAI_MAT_KHAU_TOI_DA}
               onChange={(event) =>
                 setRegisterForm((current) => ({
                   ...current,
@@ -539,14 +537,14 @@ export function AuthPages() {
                   nhan="Mật khẩu mới"
                   autoComplete="new-password"
                   disabled={busy}
-                  minLength="6"
+                  apDungQuyTac
                   onChange={(event) =>
                     setReset((current) => ({
                       ...current,
                       password: event.target.value,
                     }))
                   }
-                  placeholder="Ít nhất 6 ký tự"
+                  placeholder="Tạo mật khẩu mới"
                   required
                   value={reset.password}
                 />
@@ -554,7 +552,8 @@ export function AuthPages() {
                   nhan="Xác nhận mật khẩu mới"
                   autoComplete="new-password"
                   disabled={busy}
-                  minLength="6"
+                  minLength={DO_DAI_MAT_KHAU_TOI_THIEU}
+                  maxLength={DO_DAI_MAT_KHAU_TOI_DA}
                   onChange={(event) =>
                     setReset((current) => ({
                       ...current,

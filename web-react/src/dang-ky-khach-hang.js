@@ -1,3 +1,5 @@
+import { kiemTraMatKhau } from "./quy-tac-mat-khau.js";
+
 /** Chuẩn số điện thoại dùng chung với PhoneNumberNormalizer của API. */
 export function chuanHoaSoDienThoai(value) {
   const raw = String(value ?? "").trim();
@@ -23,7 +25,8 @@ export function kiemTraThongTinDangKy({ fullName, email, phone, password }) {
   if (address.length > 100 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(address))
     throw new Error("Email phải đúng định dạng và không quá 100 ký tự.");
   if (!normalizedPhone) throw new Error("Số điện thoại Việt Nam không hợp lệ.");
-  if (String(password ?? "").length < 6) throw new Error("Mật khẩu cần có ít nhất 6 ký tự.");
+  const loiMatKhau = kiemTraMatKhau(password);
+  if (loiMatKhau) throw new Error(loiMatKhau);
   return { fullName: name, email: address, phone: normalizedPhone, password: String(password) };
 }
 

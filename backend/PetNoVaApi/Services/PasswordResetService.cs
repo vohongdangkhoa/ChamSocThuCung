@@ -417,16 +417,12 @@ public sealed class PasswordResetService : IPasswordResetService
         CancellationToken cancellationToken = default
     )
     {
-        // Firebase yêu cầu tối thiểu 6 ký tự; giới hạn trên tránh payload bất thường.
-        if (
-            string.IsNullOrWhiteSpace(newPassword)
-            || newPassword.Length < 6
-            || newPassword.Length > 128
-        )
+        // Từ chối trước khi đọc challenge hoặc tiêu thụ reset token để người dùng
+        // có thể sửa mật khẩu yếu ngay trong cùng phiên OTP đã xác minh.
+        var passwordError = QuyTacMatKhau.KiemTra(newPassword);
+        if (passwordError is not null)
         {
-            throw new PasswordResetValidationException(
-                "Mật khẩu mới phải có từ 6 đến 128 ký tự."
-            );
+            throw new PasswordResetValidationException(passwordError);
         }
 
         // Token rỗng dùng cùng lỗi phiên hết hạn, không tiết lộ chi tiết kiểm tra.

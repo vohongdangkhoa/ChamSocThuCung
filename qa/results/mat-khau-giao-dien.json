@@ -1,0 +1,50 @@
+{
+  "observedAtUtc": "2026-10-27T03:30:58.245Z",
+  "environment": "Form đăng ký trống; chỉ nhập chuỗi QA vào ô mật khẩu, không gửi form/tạo tài khoản/đổi mật khẩu thật",
+  "results": [
+    {
+      "id": "short",
+      "expectedMet": 5,
+      "observation": {
+        "message": "",
+        "met": 5,
+        "total": 6,
+        "valid": false
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "valid",
+      "expectedMet": 6,
+      "observation": {
+        "message": "",
+        "met": 6,
+        "total": 6,
+        "valid": true
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "missing-upper",
+      "expectedMet": 5,
+      "observation": {
+        "message": "",
+        "met": 5,
+        "total": 6,
+        "valid": false
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "unicode",
+      "expectedMet": 5,
+      "observation": {
+        "message": "",
+        "met": 5,
+        "total": 6,
+        "valid": false
+      },
+      "status": "PASS"
+    }
+  ]
+}

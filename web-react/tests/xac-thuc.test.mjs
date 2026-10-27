@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { chuanHoaSoDienThoai, dangKyKhachHang } from '../src/dang-ky-khach-hang.js';
 
-const input = { fullName: '  Khách QA  ', email: 'qa@petnova.invalid', phone: '0123456789', password: 'qa123456' };
+const input = { fullName: '  Khách QA  ', email: 'qa@petnova.invalid', phone: '0123456789', password: 'QaTestOnly12!' };
 function fixture(overrides = {}) {
   const calls = [];
   const user = { uid: 'qa-new-identity', email: input.email };

@@ -36,6 +36,7 @@ migrate_working_dir/
 /build/
 /coverage/
 /.codex_tmp/qa-20261026/
+/.codex_tmp/qa-20261027/
 
 # Local SQL export contains customer/account data; never commit it.
 /backend/PetNoVaApi/Database/PetNoVaDB_khoi_phuc_du_lieu.sql

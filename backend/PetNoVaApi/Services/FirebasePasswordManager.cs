@@ -78,6 +78,9 @@ public sealed class FirebasePasswordManager : IFirebasePasswordManager
     public async Task<string> CreateStaffIdentityAsync(string email, string password, string fullName,
         CancellationToken cancellationToken = default)
     {
+        var passwordError = QuyTacMatKhau.KiemTra(password);
+        if (passwordError is not null) throw new ArgumentException(passwordError, nameof(password));
+
         var user = await _firebaseAuth.Value.CreateUserAsync(new UserRecordArgs
         {
             Email = email, Password = password, DisplayName = fullName, EmailVerified = false
@@ -143,6 +146,11 @@ public sealed class FirebasePasswordManager : IFirebasePasswordManager
         CancellationToken cancellationToken = default
     )
     {
+        // Guard ở đầu manager để mọi caller đều bị kiểm tra trước khi đọc khóa
+        // hoặc khởi tạo Firebase, kể cả khi caller không đi qua controller.
+        var passwordError = QuyTacMatKhau.KiemTra(newPassword);
+        if (passwordError is not null) throw new ArgumentException(passwordError, nameof(newPassword));
+
         try
         {
             // Việc truy cập Lazy.Value cũng đồng thời xác nhận cấu hình Firebase Admin hợp lệ.
