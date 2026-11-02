@@ -1,0 +1,8 @@
+{"schema":"openai.presentation.layout/v5","unit":"px","slide":{"id":"sl/szxz1r","index":25,"layout":{"id":"ly/uxove9ob","name":"Blank"},"backgroundColor":"rgba(248,245,237,1)","position":{"left":0,"top":0,"width":1920,"height":1080}},
+"elements":[
+{"id":"sh/e58je9o3","kind":"textbox","name":"page-26","position":{"left":1718,"top":1004,"width":90,"height":42},"text":"26","style":{"fontSize":24,"typeface":"Arial","color":"#496272","alignment":"right"},"geometry":"rect","lineWidth":0},
+{"id":"sh/1sz29o7e","kind":"textbox","name":"title-26","position":{"left":128,"top":90,"width":1660,"height":88},"text":"kiểm thử tự động","style":{"fontSize":58,"typeface":"Arial","color":"#17364B","bold":true,"alignment":"left"},"geometry":"rect","lineWidth":0},
+{"id":"sh/g7q1gj69","kind":"textbox","name":"source-block-46","position":{"left":128,"top":244,"width":1664,"height":127},"text":"“Nhóm có bộ kiểm thử tự động gọi phần xử lý đặt lịch phía máy chủ, sau đó kiểm tra dữ liệu trong SQL. Ba kiểm tra này đã có kết quả PASS được lưu lại.”","style":{"fontSize":42,"typeface":"Arial","color":"#17364B","alignment":"left"},"geometry":"rect","lineWidth":0},
+{"id":"im/exk3i5kz","kind":"image","position":{"left":128,"top":491.63,"width":1664,"height":223.36},"fit":"contain","alt":"image11.png"},
+{"id":"im/zitkbalk","kind":"image","position":{"left":136.38,"top":738.98,"width":1647.25,"height":142.39},"fit":"contain","alt":"image12.png"}
+]}

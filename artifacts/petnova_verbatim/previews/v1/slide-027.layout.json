@@ -1,0 +1,6 @@
+{"schema":"openai.presentation.layout/v5","unit":"px","slide":{"id":"sl/1woe6x","index":26,"layout":{"id":"ly/uxove9ob","name":"Blank"},"backgroundColor":"rgba(255,255,255,1)","position":{"left":0,"top":0,"width":1920,"height":1080}},
+"elements":[
+{"id":"sh/cfepgnmd","kind":"textbox","name":"page-27","position":{"left":1718,"top":1004,"width":90,"height":42},"text":"27","style":{"fontSize":24,"typeface":"Arial","color":"#496272","alignment":"right"},"geometry":"rect","lineWidth":0},
+{"id":"sh/be5o7i5s","kind":"textbox","name":"title-27","position":{"left":128,"top":90,"width":1660,"height":88},"text":"Về UI","style":{"fontSize":58,"typeface":"Arial","color":"#17364B","bold":true,"alignment":"left"},"geometry":"rect","lineWidth":0},
+{"id":"sh/atw7ed47","kind":"textbox","name":"source-block-49","position":{"left":128,"top":244,"width":1664,"height":269},"text":"Về UI, Kiểm tra hiển thị dịch vụ đã chọn, tổng thời lượng, tổng tiền, giờ còn trống và lỗi nhập liệu. Khi đổi lịch, thời gian mới cần được phản ánh sau tải lại. Khi bấm hủy rồi không xác nhận, dữ liệu cần giữ nguyên. Các scenario đổi, hủy còn đối chiếu thanh toán và thông báo liên quan.","style":{"fontSize":46,"typeface":"Arial","color":"#17364B","alignment":"left"},"geometry":"rect","lineWidth":0}
+]}

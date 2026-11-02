@@ -1,0 +1,7 @@
+{"schema":"openai.presentation.layout/v5","unit":"px","slide":{"id":"sl/o18moj","index":13,"layout":{"id":"ly/uxove9ob","name":"Blank"},"backgroundColor":"rgba(16,44,64,1)","position":{"left":0,"top":0,"width":1920,"height":1080}},
+"elements":[
+{"id":"sh/kfalczqd","kind":"textbox","name":"page-14","position":{"left":1718,"top":1004,"width":90,"height":42},"text":"14","style":{"fontSize":24,"typeface":"Arial","color":"#C5D9DD","alignment":"right"},"geometry":"rect","lineWidth":0},
+{"id":"sh/je143ups","kind":"textbox","name":"title-14","position":{"left":128,"top":90,"width":1660,"height":88},"text":"Võ Hồng Đăng Khoa — F4, F5, F7, F8","style":{"fontSize":58,"typeface":"Arial","color":"#FFFFFF","bold":true,"alignment":"left"},"geometry":"rect","lineWidth":0},
+{"id":"sh/yds3a987","kind":"textbox","name":"source-block-29","position":{"left":128,"top":456,"width":1664,"height":68},"text":"[Hiển thị form đặt lịch và một sơ đồ Lịch hẹn → Chi tiết dịch vụ → Thanh toán → Thông báo.]","style":{"fontSize":38,"typeface":"Arial","color":"#C5D9DD","italic":true,"alignment":"left"},"geometry":"rect","lineWidth":0},
+{"id":"sh/xczm147m","kind":"textbox","name":"source-block-30","position":{"left":128,"top":558,"width":1664,"height":198},"text":"Em là Võ Hồng Đăng Khoa. Phạm vi em trình bày gồm F4 quản lý lịch hẹn, F5 thanh toán, F7 thông báo và F8 tài khoản khách hàng, tổng cộng 79 ca chức năng được thiết kế.","style":{"fontSize":44,"typeface":"Arial","color":"#FFFFFF","alignment":"left"},"geometry":"rect","lineWidth":0}
+]}

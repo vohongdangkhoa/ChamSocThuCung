@@ -1,0 +1,6 @@
+{"schema":"openai.presentation.layout/v5","unit":"px","slide":{"id":"sl/5s3y4h","index":39,"layout":{"id":"ly/uxove9ob","name":"Blank"},"backgroundColor":"rgba(255,255,255,1)","position":{"left":0,"top":0,"width":1920,"height":1080}},
+"elements":[
+{"id":"sh/e5c3qd8v","kind":"textbox","name":"page-40","position":{"left":1718,"top":1004,"width":90,"height":42},"text":"40","style":{"fontSize":24,"typeface":"Arial","color":"#496272","alignment":"right"},"geometry":"rect","lineWidth":0},
+{"id":"sh/1s32l8rm","kind":"textbox","name":"title-40","position":{"left":128,"top":90,"width":1660,"height":126},"text":"F5","style":{"fontSize":84,"typeface":"Arial","color":"#17364B","bold":true,"alignment":"left"},"geometry":"rect","lineWidth":0},
+{"id":"im/t8jilkfq","kind":"image","position":{"left":196.26,"top":270,"width":1527.47,"height":698},"fit":"contain","alt":"image24.png"}
+]}

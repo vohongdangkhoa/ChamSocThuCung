@@ -1,0 +1,4479 @@
+{
+  "sheets": {
+    "Testcase_F1": {
+      "maxRow": 90,
+      "firstCase": 23,
+      "cases": [
+        {
+          "id": "F1_01",
+          "start": 23,
+          "end": 25,
+          "steps": [
+            23,
+            24,
+            25
+          ],
+          "status": "Passed",
+          "note": "Dữ liệu mới cho riêng ca này; kiểm tra tài khoản thực sự được tạo khi chạy. Không coi việc có mã nguồn là kết quả chạy."
+        },
+        {
+          "id": "F1_02",
+          "start": 26,
+          "end": 27,
+          "steps": [
+            26,
+            27
+          ],
+          "status": "Passed",
+          "note": "Dùng số mới để cô lập lỗi trùng email."
+        },
+        {
+          "id": "F1_03",
+          "start": 28,
+          "end": 29,
+          "steps": [
+            28,
+            29
+          ],
+          "status": "Failed",
+          "note": "Luồng tạo Firebase xảy ra trước khi tạo hồ sơ SQL; nếu còn danh tính Firebase chưa có hồ sơ thì ghi nhận riêng khi chạy. Không khẳng định toàn bộ thao tác đã rollback."
+        },
+        {
+          "id": "F1_04",
+          "start": 30,
+          "end": 31,
+          "steps": [
+            30,
+            31
+          ],
+          "status": "Failed",
+          "note": "Lặp lại đủ ba bộ dữ liệu; ghi kết quả riêng từng lượt lúc thực thi. Nội dung thông báo mặc định của trình duyệt có thể theo ngôn ngữ trình duyệt.\n"
+        },
+        {
+          "id": "F1_05",
+          "start": 32,
+          "end": 33,
+          "steps": [
+            32,
+            33
+          ],
+          "status": "Failed",
+          "note": "Lượt số điện thoại sai có thể tạo danh tính Firebase trước khi API từ chối hồ sơ; dùng email mới cho từng lượt.\n"
+        },
+        {
+          "id": "F1.2_01",
+          "start": 34,
+          "end": 35,
+          "steps": [
+            34,
+            35
+          ],
+          "status": "Failed",
+          "note": "Ca biên theo minLength=6 và kiểm tra register; không đưa mật khẩu thật vào tài liệu.\n"
+        },
+        {
+          "id": "F1.2_02",
+          "start": 36,
+          "end": 37,
+          "steps": [
+            36,
+            37
+          ],
+          "status": "Failed",
+          "note": "Không gộp lỗi này với email trùng hay số điện thoại trùng.\n"
+        },
+        {
+          "id": "F1.2_03",
+          "start": 38,
+          "end": 39,
+          "steps": [
+            38,
+            39
+          ],
+          "status": "Failed",
+          "note": "Ca kiểm tra độ dài, không dùng một chuỗi khác nhau giữa hai ô.\n"
+        },
+        {
+          "id": "F1.3_01",
+          "start": 40,
+          "end": 42,
+          "steps": [
+            40,
+            41,
+            42
+          ],
+          "status": "Failed",
+          "note": "Lặp đủ bốn vai trò; không ghi email/mật khẩu thật vào workbook.\n"
+        },
+        {
+          "id": "F1.3_02",
+          "start": 43,
+          "end": 44,
+          "steps": [
+            43,
+            44
+          ],
+          "status": "Failed",
+          "note": "Dừng trước ngưỡng chống thử quá nhiều của Firebase; ca này kiểm tra sai mật khẩu.\n"
+        },
+        {
+          "id": "F1.3_03",
+          "start": 45,
+          "end": 46,
+          "steps": [
+            45,
+            46
+          ],
+          "status": "Failed",
+          "note": "Không kỳ vọng thông báo tiết lộ riêng email có tồn tại hay không.\n"
+        },
+        {
+          "id": "F1.3_04",
+          "start": 47,
+          "end": 48,
+          "steps": [
+            47,
+            48
+          ],
+          "status": "Failed",
+          "note": "Lặp ba lượt; không yêu cầu nguyên văn thông báo native của trình duyệt.\n"
+        },
+        {
+          "id": "F1.4_01",
+          "start": 49,
+          "end": 50,
+          "steps": [
+            49,
+            50
+          ],
+          "status": "Failed",
+          "note": "Dùng tài khoản thử riêng. Không yêu cầu Firebase phải từ chối đăng nhập vì khóa đang ở hồ sơ PetNoVa.\n"
+        },
+        {
+          "id": "F1.4_02",
+          "start": 51,
+          "end": 52,
+          "steps": [
+            51,
+            52
+          ],
+          "status": "Failed",
+          "note": "Dữ liệu đã tải có thể còn trên màn hình đến khi phát sinh yêu cầu; không kỳ vọng tự đẩy ra ngay nếu chưa có yêu cầu. Hoàn nguyên trạng thái fixture sau ca.\n"
+        },
+        {
+          "id": "F1.5_01",
+          "start": 53,
+          "end": 55,
+          "steps": [
+            53,
+            54,
+            55
+          ],
+          "status": "Failed",
+          "note": "Chỉ thực thi khi có email kiểm thử được phép nhận; không coi thông báo giao diện là bằng chứng email đã giao thành công.\n"
+        },
+        {
+          "id": "F1.5_02",
+          "start": 56,
+          "end": 57,
+          "steps": [
+            56,
+            57
+          ],
+          "status": "Failed",
+          "note": "Lượt 1 kiểm tra độ dài giao diện, lượt 2 kiểm tra chuẩn hóa máy chủ; không tự đặt giới hạn đầu số ngoài nguồn.\n"
+        },
+        {
+          "id": "F1.5_03",
+          "start": 58,
+          "end": 59,
+          "steps": [
+            58,
+            59
+          ],
+          "status": "Failed",
+          "note": "Đây là hành vi chống dò tài khoản trong nguồn; không ghi lỗi chỉ vì giao diện vẫn nói đã xử lý yêu cầu gửi mã.\n"
+        },
+        {
+          "id": "F1.5_04",
+          "start": 60,
+          "end": 61,
+          "steps": [
+            60,
+            61
+          ],
+          "status": "Failed",
+          "note": "Không cố định số giây trong ca: dùng cấu hình thực tế và giá trị trả về; mặc định nguồn có thể bị môi trường ghi đè.\n"
+        },
+        {
+          "id": "F1.6_01",
+          "start": 62,
+          "end": 63,
+          "steps": [
+            62,
+            63
+          ],
+          "status": "Failed",
+          "note": "Cần SMTP và Firebase Admin hoạt động; không viết một OTP cố định vào file vì mã được sinh ngẫu nhiên.\n"
+        },
+        {
+          "id": "F1.6_02",
+          "start": 64,
+          "end": 65,
+          "steps": [
+            64,
+            65
+          ],
+          "status": "Failed",
+          "note": "Input lọc ký tự không phải số và cắt tối đa 6; không giả định chữ cái sẽ được giữ nguyên trong ô OTP.\n"
+        },
+        {
+          "id": "F1.6_03",
+          "start": 66,
+          "end": 67,
+          "steps": [
+            66,
+            67
+          ],
+          "status": "Failed",
+          "note": "Dùng challenge riêng cho ca để không ảnh hưởng số lần thử của ca khác.\n"
+        },
+        {
+          "id": "F1.6_04",
+          "start": 68,
+          "end": 69,
+          "steps": [
+            68,
+            69
+          ],
+          "status": "Failed",
+          "note": "Không tự sửa đồng hồ máy cá nhân để giả lập hạn máy chủ; có thể chuẩn bị challenge hết hạn trong dữ liệu kiểm thử.\n"
+        },
+        {
+          "id": "F1.6_05",
+          "start": 70,
+          "end": 72,
+          "steps": [
+            70,
+            71,
+            72
+          ],
+          "status": "Failed",
+          "note": "Nếu mã ngẫu nhiên hai lần tình cờ giống nhau, chuẩn bị lại fixture để kiểm tra được mã cũ khác mã mới.\n"
+        },
+        {
+          "id": "F1.7_01",
+          "start": 73,
+          "end": 75,
+          "steps": [
+            73,
+            74,
+            75
+          ],
+          "status": "Failed",
+          "note": "Ca thay đổi dữ liệu: cập nhật mật khẩu fixture sau khi chạy. Không đưa mật khẩu thật vào tài liệu.\n"
+        },
+        {
+          "id": "F1.7_02",
+          "start": 76,
+          "end": 77,
+          "steps": [
+            76,
+            77
+          ],
+          "status": "Failed",
+          "note": "Giữ token còn hạn để cô lập kiểm tra xác nhận.\n"
+        },
+        {
+          "id": "F1.7_03",
+          "start": 78,
+          "end": 79,
+          "steps": [
+            78,
+            79
+          ],
+          "status": "Failed",
+          "note": "Giới hạn 6–128 lấy từ submitNewPassword và PasswordResetService; không áp quy tắc 8 ký tự của trang tài khoản cho reset.\n"
+        },
+        {
+          "id": "F1.7_04",
+          "start": 80,
+          "end": 81,
+          "steps": [
+            80,
+            81
+          ],
+          "status": "Failed",
+          "note": "Dùng hạn thực tế của reset token, khác thời hạn OTP; không tự ấn định số phút.\n"
+        },
+        {
+          "id": "F1.8_01",
+          "start": 82,
+          "end": 83,
+          "steps": [
+            82,
+            83
+          ],
+          "status": "Failed",
+          "note": "Mã hiện tại đăng xuất trực tiếp, chưa có hộp xác nhận; không đặt hộp xác nhận thành kết quả bắt buộc.\n"
+        },
+        {
+          "id": "F1.8_02",
+          "start": 84,
+          "end": 86,
+          "steps": [
+            84,
+            85
+          ],
+          "status": "Failed",
+          "note": "Mục tiêu là kiểm tra bảo vệ truy cập sau đăng xuất; ghi rõ nếu trình duyệt hiển thị ảnh chụp cache tạm thời khi quay lại.\n"
+        },
+        {
+          "id": "F1.3_05",
+          "start": 87,
+          "end": 88,
+          "steps": [
+            87,
+            88
+          ],
+          "status": "Failed",
+          "note": "Nguồn giao diện: web-react/src/trang-dang-nhap.jsx. Kiểm tra hình thức; chưa có kết quả chạy.\n"
+        },
+        {
+          "id": "F1.3_06",
+          "start": 89,
+          "end": 90,
+          "steps": [
+            89,
+            90
+          ],
+          "status": "Failed",
+          "note": "Kích thước trên là dữ liệu kiểm tra, không tuyên bố là ma trận trình duyệt được hỗ trợ chính thức. Nguồn: web-react/src/trang-dang-nhap.jsx.\n"
+        }
+      ],
+      "badMerges": [],
+      "nonStepResults": [
+        86
+      ],
+      "imageCount": 3
+    },
+    "Testcase_F2": {
+      "maxRow": 35,
+      "firstCase": 23,
+      "cases": [
+        {
+          "id": "F2_01",
+          "start": 23,
+          "end": 25,
+          "steps": [
+            23,
+            24,
+            25
+          ],
+          "status": "Passed",
+          "note": "Số liệu là số bản ghi, không phải tổng tiền. Không tự đặt trước con số khi chưa chuẩn bị fixture.\nChưa thực thi."
+        },
+        {
+          "id": "F2_02",
+          "start": 26,
+          "end": 27,
+          "steps": [
+            26,
+            27
+          ],
+          "status": "Passed",
+          "note": "Không coi lỗi API là trạng thái không có dữ liệu; môi trường và API phải sẵn sàng.\nChưa thực thi."
+        },
+        {
+          "id": "F2_03",
+          "start": 28,
+          "end": 31,
+          "steps": [
+            28,
+            29,
+            30
+          ],
+          "status": "Failed",
+          "note": "So sánh số trước/sau khi chạy; không ghi số lượng tuyệt đối chưa quan sát.\nChưa thực thi."
+        },
+        {
+          "id": "F2_04",
+          "start": 32,
+          "end": 33,
+          "steps": [
+            32,
+            33
+          ],
+          "status": "Failed",
+          "note": "Nguồn giao diện: web-react/src/cong-khach-hang.jsx. Kiểm tra hình thức; chưa có kết quả chạy.\nChưa thực thi."
+        },
+        {
+          "id": "F2_05",
+          "start": 34,
+          "end": 35,
+          "steps": [
+            34,
+            35
+          ],
+          "status": "Failed",
+          "note": "Kích thước trên là dữ liệu kiểm tra, không tuyên bố là ma trận trình duyệt được hỗ trợ chính thức. Nguồn: web-react/src/cong-khach-hang.jsx.\nChưa thực thi."
+        }
+      ],
+      "badMerges": [],
+      "nonStepResults": [
+        31
+      ],
+      "imageCount": 1
+    },
+    "Testcase_F3": {
+      "maxRow": 68,
+      "firstCase": 23,
+      "cases": [
+        {
+          "id": "F3_01",
+          "start": 23,
+          "end": 24,
+          "steps": [
+            23,
+            24
+          ],
+          "status": "Passed",
+          "note": "Không yêu cầu thứ tự cố định ở endpoint user vì nguồn không sắp xếp endpoint này.\nChưa thực thi."
+        },
+        {
+          "id": "F3_02",
+          "start": 25,
+          "end": 26,
+          "steps": [
+            25,
+            26
+          ],
+          "status": "Passed",
+          "note": "Chuẩn bị dữ liệu rỗng thật; không dùng trường hợp API bị lỗi thay cho danh sách rỗng.\nChưa thực thi."
+        },
+        {
+          "id": "F3_03",
+          "start": 27,
+          "end": 28,
+          "steps": [
+            27,
+            28
+          ],
+          "status": "Passed",
+          "note": "Kiểm tra tách biệt dữ liệu giao diện; quyền máy chủ được kiểm riêng ở ca sửa hồ sơ khác chủ.\nChưa thực thi."
+        },
+        {
+          "id": "F3.2_01",
+          "start": 29,
+          "end": 31,
+          "steps": [
+            29,
+            30,
+            31
+          ],
+          "status": "Passed",
+          "note": "Không tự đặt mã petId; máy chủ sinh mã hồ sơ.\nChưa thực thi."
+        },
+        {
+          "id": "F3.2_02",
+          "start": 32,
+          "end": 33,
+          "steps": [
+            32,
+            33
+          ],
+          "status": "Passed",
+          "note": "Đây là biên giao diện được hỗ trợ; không suy diễn mọi số dương dưới 0.1 đều nhập được từ form.\nChưa thực thi."
+        },
+        {
+          "id": "F3.2_03",
+          "start": 34,
+          "end": 35,
+          "steps": [
+            34,
+            35
+          ],
+          "status": "Passed",
+          "note": "Giới hạn lấy từ Valid(Pet); không tự bịa giới hạn cân nặng riêng cho loài.\nChưa thực thi."
+        },
+        {
+          "id": "F3.2_04",
+          "start": 36,
+          "end": 37,
+          "steps": [
+            36,
+            37
+          ],
+          "status": "Passed",
+          "note": "Chọn ngày tương đối tại lúc chạy; không dùng một ngày cố định sau này trở thành quá khứ.\nChưa thực thi."
+        },
+        {
+          "id": "F3.2_05",
+          "start": 38,
+          "end": 39,
+          "steps": [
+            38,
+            39
+          ],
+          "status": "Passed",
+          "note": "Giống bắt buộc theo Valid(Pet) phía máy chủ dù form hiện không kiểm rỗng giống. Không đặt điều kiện giống chỉ được chữ vì nguồn chưa quy định.\nChưa thực thi."
+        },
+        {
+          "id": "F3.3_01",
+          "start": 40,
+          "end": 42,
+          "steps": [
+            40,
+            41,
+            42
+          ],
+          "status": "Passed",
+          "note": "Không đổi chủ sở hữu qua form; máy chủ chỉ sửa các trường được phép.\nChưa thực thi."
+        },
+        {
+          "id": "F3.3_02",
+          "start": 43,
+          "end": 44,
+          "steps": [
+            43,
+            44
+          ],
+          "status": "Passed",
+          "note": "Dùng nút Hủy sẵn có; không suy diễn hệ thống có cảnh báo mất thay đổi.\nChưa thực thi."
+        },
+        {
+          "id": "F3.3_03",
+          "start": 45,
+          "end": 46,
+          "steps": [
+            45,
+            46
+          ],
+          "status": "Passed",
+          "note": "Ca phân quyền API vì giao diện KH_A không liệt kê PET_B. Không ghi token thật trong workbook; không chỉ dựa vào việc ẩn nút trên giao diện.\nChưa thực thi."
+        },
+        {
+          "id": "F3.4_01",
+          "start": 47,
+          "end": 49,
+          "steps": [
+            47,
+            48,
+            49
+          ],
+          "status": "Passed",
+          "note": "Lặp độc lập ba định dạng. Giới hạn máy chủ là 5×1024×1024 byte; dùng ảnh thật có chữ ký đúng.\nChưa thực thi."
+        },
+        {
+          "id": "F3.4_02",
+          "start": 50,
+          "end": 51,
+          "steps": [
+            50,
+            51
+          ],
+          "status": "Passed",
+          "note": "Nếu bộ chọn tệp chặn hoàn toàn loại tệp này, ghi rõ chặn ở bước chọn khi thực thi.\nChưa thực thi."
+        },
+        {
+          "id": "F3.4_03",
+          "start": 52,
+          "end": 54,
+          "steps": [
+            52,
+            53,
+            54
+          ],
+          "status": "Passed",
+          "note": "Bất nhất cần xác nhận: giao diện nói 6 MB, ImageUploadValidator giới hạn 5 MiB. Hồ sơ chữ được lưu trước upload, nên không kỳ vọng tự rollback mọi thay đổi thông tin khi ảnh thất bại.\nChưa thực thi."
+        },
+        {
+          "id": "F3.4_04",
+          "start": 55,
+          "end": 56,
+          "steps": [
+            55,
+            56
+          ],
+          "status": "Passed",
+          "note": "Kiểm tra API có căn cứ ImageUploadValidator; không suy diễn đổi phần mở rộng là đủ để tệp hợp lệ. Không lưu token thật trong file.\nChưa thực thi."
+        },
+        {
+          "id": "F3.5_01",
+          "start": 57,
+          "end": 59,
+          "steps": [
+            57,
+            58,
+            59
+          ],
+          "status": "Passed",
+          "note": "Không kỳ vọng hồ sơ lưu trữ còn xuất hiện ở bộ chọn hồ sơ sức khỏe hiện tại vì danh sách khách hàng chỉ tải hồ sơ chưa lưu trữ.\nChưa thực thi."
+        },
+        {
+          "id": "F3.5_02",
+          "start": 60,
+          "end": 61,
+          "steps": [
+            60,
+            61
+          ],
+          "status": "Passed",
+          "note": "Hủy ở hộp xác nhận của trình duyệt, không nhầm với nút hủy lịch hẹn.\nChưa thực thi."
+        },
+        {
+          "id": "F3.5_03",
+          "start": 62,
+          "end": 64,
+          "steps": [
+            62,
+            63
+          ],
+          "status": "Passed",
+          "note": "Điều kiện nguồn: mọi trạng thái khác COMPLETED và CANCELLED đều chặn lưu trữ.\nChưa thực thi."
+        },
+        {
+          "id": "F3.2_06",
+          "start": 65,
+          "end": 66,
+          "steps": [
+            65,
+            66
+          ],
+          "status": "Passed",
+          "note": "Nguồn giao diện: web-react/src/cong-khach-hang.jsx. Kiểm tra hình thức; chưa có kết quả chạy.\nChưa thực thi."
+        },
+        {
+          "id": "F3.2_07",
+          "start": 67,
+          "end": 68,
+          "steps": [
+            67,
+            68
+          ],
+          "status": "Passed",
+          "note": "Kích thước trên là dữ liệu kiểm tra, không tuyên bố là ma trận trình duyệt được hỗ trợ chính thức. Nguồn: web-react/src/cong-khach-hang.jsx.\nChưa thực thi."
+        }
+      ],
+      "badMerges": [],
+      "nonStepResults": [
+        64
+      ],
+      "imageCount": 1
+    },
+    "Testcase_F4": {
+      "maxRow": 101,
+      "firstCase": 23,
+      "cases": [
+        {
+          "id": "F4_01",
+          "start": 23,
+          "end": 24,
+          "steps": [
+            23,
+            24
+          ],
+          "status": "Passed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F4_02",
+          "start": 25,
+          "end": 26,
+          "steps": [
+            25,
+            26
+          ],
+          "status": "Passed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F4_03",
+          "start": 27,
+          "end": 28,
+          "steps": [
+            27,
+            28
+          ],
+          "status": "Passed",
+          "note": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật.\nChưa thực thi."
+        },
+        {
+          "id": "F4.2_01",
+          "start": 29,
+          "end": 30,
+          "steps": [
+            29,
+            30
+          ],
+          "status": "Passed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F4.2_02",
+          "start": 31,
+          "end": 32,
+          "steps": [
+            31,
+            32
+          ],
+          "status": "Passed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F4.3_01",
+          "start": 33,
+          "end": 34,
+          "steps": [
+            33,
+            34
+          ],
+          "status": "Passed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F4.3_02",
+          "start": 35,
+          "end": 36,
+          "steps": [
+            35,
+            36
+          ],
+          "status": "Passed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F4.3_03",
+          "start": 37,
+          "end": 38,
+          "steps": [
+            37,
+            38
+          ],
+          "status": "Passed",
+          "note": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật.\nChưa thực thi."
+        },
+        {
+          "id": "F4.3_04",
+          "start": 39,
+          "end": 40,
+          "steps": [
+            39,
+            40
+          ],
+          "status": "Passed",
+          "note": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật.\nChưa thực thi."
+        },
+        {
+          "id": "F4.4_01",
+          "start": 41,
+          "end": 42,
+          "steps": [
+            41,
+            42
+          ],
+          "status": "Passed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F4.4_02",
+          "start": 43,
+          "end": 44,
+          "steps": [
+            43,
+            44
+          ],
+          "status": "Passed",
+          "note": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật. Tính bằng phép cộng tháng lịch như máy chủ, không quy đổi 6 tháng thành 180 ngày.\nChưa thực thi."
+        },
+        {
+          "id": "F4.4_03",
+          "start": 45,
+          "end": 46,
+          "steps": [
+            45,
+            46
+          ],
+          "status": "Passed",
+          "note": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật. Khi máy khách khác múi giờ máy chủ, dùng UTC+7 để xác định D.\nChưa thực thi."
+        },
+        {
+          "id": "F4.4_04",
+          "start": 47,
+          "end": 48,
+          "steps": [
+            47,
+            48
+          ],
+          "status": "Passed",
+          "note": "Cần người chuẩn bị dữ liệu kiểm thử tạo fixture; không giả định website luôn có công suất 3.\nChưa thực thi."
+        },
+        {
+          "id": "F4.5_01",
+          "start": 49,
+          "end": 51,
+          "steps": [
+            49,
+            50,
+            51
+          ],
+          "status": "Passed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F4.5_02",
+          "start": 52,
+          "end": 53,
+          "steps": [
+            52,
+            53
+          ],
+          "status": "Passed",
+          "note": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật. Không tạo requestId mới cho lần phát lại; đây là điều kiện chống lặp được triển khai.\nChưa thực thi."
+        },
+        {
+          "id": "F4.5_03",
+          "start": 54,
+          "end": 55,
+          "steps": [
+            54,
+            55
+          ],
+          "status": "Passed",
+          "note": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật. Các trường giá không thuộc DTO tạo lịch; kiểm tra quyền quyết định giá của máy chủ.\nChưa thực thi."
+        },
+        {
+          "id": "F4.6_01",
+          "start": 56,
+          "end": 57,
+          "steps": [
+            56,
+            57
+          ],
+          "status": "Passed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F4.6_02",
+          "start": 58,
+          "end": 59,
+          "steps": [
+            58,
+            59
+          ],
+          "status": "Passed",
+          "note": "Ca tích hợp phụ thuộc cấu hình được người phụ trách cung cấp; không giả định PayOS có sandbox; không chuyển tiền thật.\nChưa thực thi."
+        },
+        {
+          "id": "F4.6_03",
+          "start": 60,
+          "end": 61,
+          "steps": [
+            60,
+            61
+          ],
+          "status": "Passed",
+          "note": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật. Chỉ thay cấu hình trong môi trường kiểm thử do người phụ trách chuẩn bị.\nChưa thực thi."
+        },
+        {
+          "id": "F4.7_01",
+          "start": 62,
+          "end": 63,
+          "steps": [
+            62,
+            63
+          ],
+          "status": "Passed",
+          "note": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật.\nChưa thực thi."
+        },
+        {
+          "id": "F4.7_02",
+          "start": 64,
+          "end": 65,
+          "steps": [
+            64,
+            65
+          ],
+          "status": "Passed",
+          "note": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật. Hai dữ liệu phủ cùng điều kiện sở hữu và !isArchived; kiểm tra riêng từng phản hồi.\nChưa thực thi."
+        },
+        {
+          "id": "F4.7_03",
+          "start": 66,
+          "end": 67,
+          "steps": [
+            66,
+            67
+          ],
+          "status": "Passed",
+          "note": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật.\nChưa thực thi."
+        },
+        {
+          "id": "F4.7_04",
+          "start": 68,
+          "end": 69,
+          "steps": [
+            68,
+            69
+          ],
+          "status": "Passed",
+          "note": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật.\nChưa thực thi."
+        },
+        {
+          "id": "F4.7_05",
+          "start": 70,
+          "end": 71,
+          "steps": [
+            70,
+            71
+          ],
+          "status": "Passed",
+          "note": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật. Chuẩn bị fixture độc lập để không nhầm lỗi trùng thú cưng với lỗi vượt giờ đóng cửa.\nChưa thực thi."
+        },
+        {
+          "id": "F4.7_06",
+          "start": 72,
+          "end": 73,
+          "steps": [
+            72,
+            73
+          ],
+          "status": "Passed",
+          "note": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật. Nguồn hiện tại: textarea cho 1000 ký tự nhưng hàm gửi cắt còn 255; ca này kiểm API. Cần xác nhận yêu cầu UX cho phần bị cắt, không ghi rằng web chắc chắn báo lỗi 256 ký tự.\nChưa thực thi."
+        },
+        {
+          "id": "F4.8_01",
+          "start": 74,
+          "end": 75,
+          "steps": [
+            74,
+            75
+          ],
+          "status": "Passed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F4.8_02",
+          "start": 76,
+          "end": 77,
+          "steps": [
+            76,
+            77
+          ],
+          "status": "Passed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F4.8_03",
+          "start": 78,
+          "end": 79,
+          "steps": [
+            78,
+            79
+          ],
+          "status": "Passed",
+          "note": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật.\nChưa thực thi."
+        },
+        {
+          "id": "F4.8_04",
+          "start": 80,
+          "end": 81,
+          "steps": [
+            80,
+            81
+          ],
+          "status": "Passed",
+          "note": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật. Chạy độc lập cho từng trạng thái; ghi kết quả từng dữ liệu khi thực thi.\nChưa thực thi."
+        },
+        {
+          "id": "F4.9_01",
+          "start": 82,
+          "end": 83,
+          "steps": [
+            82,
+            83
+          ],
+          "status": "Passed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F4.9_02",
+          "start": 84,
+          "end": 85,
+          "steps": [
+            84,
+            85
+          ],
+          "status": "Passed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F4.9_03",
+          "start": 86,
+          "end": 87,
+          "steps": [
+            86,
+            87
+          ],
+          "status": "Passed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F4.9_04",
+          "start": 88,
+          "end": 89,
+          "steps": [
+            88,
+            89
+          ],
+          "status": "Passed",
+          "note": "Ca API bổ sung: dùng công cụ gửi HTTP với phiên/tokens thử nghiệm tương ứng; không thay dữ liệu thật.\nChưa thực thi."
+        },
+        {
+          "id": "F4.7_07",
+          "start": 90,
+          "end": 91,
+          "steps": [
+            90,
+            91
+          ],
+          "status": "Passed",
+          "note": "Ca API bổ sung; dùng công cụ gửi HTTP với phiên/tokens thử nghiệm, chỉ trên CSDL kiểm thử. Nếu đang trước giờ mở cửa, chuẩn bị đồng hồ kiểm thử hoặc dời riêng dữ liệu quá khứ sang sau 08:00; không đổi giờ máy thật.\nChưa thực thi."
+        },
+        {
+          "id": "F4.7_08",
+          "start": 92,
+          "end": 93,
+          "steps": [
+            92,
+            93
+          ],
+          "status": "Passed",
+          "note": "Ca API bổ sung; dùng công cụ gửi HTTP với phiên/tokens thử nghiệm, chỉ trên CSDL kiểm thử. Đây là dữ liệu biên do người phụ trách chuẩn bị trước, không tuyên bố hiện đã có dịch vụ dài 1 hoặc 480 phút.\nChưa thực thi."
+        },
+        {
+          "id": "F4.7_09",
+          "start": 94,
+          "end": 96,
+          "steps": [
+            94,
+            95
+          ],
+          "status": "Passed",
+          "note": "Ca API bổ sung; dùng công cụ gửi HTTP với phiên/tokens thử nghiệm, chỉ trên CSDL kiểm thử. Nếu cấu trúc CSDL cấm tạo fixture 0 phút/0 đồng, cần người phụ trách chuẩn bị môi trường giả lập phù hợp; chưa đánh dấu đã thực hiện.\nChưa thực thi."
+        },
+        {
+          "id": "F4.3_05",
+          "start": 97,
+          "end": 98,
+          "steps": [
+            97,
+            98
+          ],
+          "status": "Passed",
+          "note": "Nguồn giao diện: web-react/src/lich-hen-khach-hang.jsx. Kiểm tra hình thức; chưa có kết quả chạy.\nChưa thực thi."
+        },
+        {
+          "id": "F4.3_06",
+          "start": 99,
+          "end": 101,
+          "steps": [
+            99,
+            100
+          ],
+          "status": "Passed",
+          "note": "Kích thước trên là dữ liệu kiểm tra, không tuyên bố là ma trận trình duyệt được hỗ trợ chính thức. Nguồn: web-react/src/lich-hen-khach-hang.jsx.\nChưa thực thi."
+        }
+      ],
+      "badMerges": [],
+      "nonStepResults": [
+        96
+      ],
+      "imageCount": 1
+    },
+    "Testcase_F5": {
+      "maxRow": 51,
+      "firstCase": 23,
+      "cases": [
+        {
+          "id": "F5_01",
+          "start": 23,
+          "end": 24,
+          "steps": [
+            23,
+            24
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F5_02",
+          "start": 25,
+          "end": 26,
+          "steps": [
+            25,
+            26
+          ],
+          "status": "Not Executed",
+          "note": "Ngày dùng để lọc là paymentDate, nếu chưa có thì bookingDate theo nguồn giao diện.\nChưa thực thi."
+        },
+        {
+          "id": "F5_03",
+          "start": 27,
+          "end": 28,
+          "steps": [
+            27,
+            28
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F5_04",
+          "start": 29,
+          "end": 30,
+          "steps": [
+            29,
+            30
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung; dùng công cụ gửi HTTP với phiên/tokens thử nghiệm, chỉ trên CSDL kiểm thử.\nChưa thực thi."
+        },
+        {
+          "id": "F5.2_01",
+          "start": 31,
+          "end": 32,
+          "steps": [
+            31,
+            32
+          ],
+          "status": "Not Executed",
+          "note": "Ca tích hợp chỉ thực hiện khi đã có cấu hình/bộ giả lập; không giả định PayOS cung cấp sandbox.\nChưa thực thi."
+        },
+        {
+          "id": "F5.2_02",
+          "start": 33,
+          "end": 34,
+          "steps": [
+            33,
+            34
+          ],
+          "status": "Not Executed",
+          "note": "Chạy mỗi trạng thái trên fixture riêng; nguồn chỉ đổi trạng thái thanh toán, không hủy lịch tự động.\nChưa thực thi."
+        },
+        {
+          "id": "F5.2_03",
+          "start": 35,
+          "end": 36,
+          "steps": [
+            35,
+            36
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung; dùng công cụ gửi HTTP với phiên/tokens thử nghiệm, chỉ trên CSDL kiểm thử. Không bịa hoặc dùng secret thật trong file; cần người phụ trách cung cấp bộ giả lập chữ ký. Các chuỗi return URL không thay thế xác minh webhook.\nChưa thực thi."
+        },
+        {
+          "id": "F5.2_04",
+          "start": 37,
+          "end": 38,
+          "steps": [
+            37,
+            38
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung; dùng công cụ gửi HTTP với phiên/tokens thử nghiệm, chỉ trên CSDL kiểm thử. Cần bộ giả lập/cấu hình thử nghiệm; đây là thiết kế, chưa gửi webhook hoặc chuyển tiền.\nChưa thực thi."
+        },
+        {
+          "id": "F5.3_01",
+          "start": 39,
+          "end": 40,
+          "steps": [
+            39,
+            40
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F5.3_02",
+          "start": 41,
+          "end": 42,
+          "steps": [
+            41,
+            42
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung; dùng công cụ gửi HTTP với phiên/tokens thử nghiệm, chỉ trên CSDL kiểm thử.\nChưa thực thi."
+        },
+        {
+          "id": "F5.3_03",
+          "start": 43,
+          "end": 44,
+          "steps": [
+            43,
+            44
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung; dùng công cụ gửi HTTP với phiên/tokens thử nghiệm, chỉ trên CSDL kiểm thử. Giao diện hiện có thể còn hiện nút cho FAILED; kết quả chặn được xác định tại máy chủ, không lấy sự có mặt của nút làm bằng chứng cho phép.\nChưa thực thi."
+        },
+        {
+          "id": "F5.3_04",
+          "start": 45,
+          "end": 47,
+          "steps": [
+            45,
+            46
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung; dùng công cụ gửi HTTP với phiên/tokens thử nghiệm, chỉ trên CSDL kiểm thử.\nChưa thực thi."
+        },
+        {
+          "id": "F5_05",
+          "start": 48,
+          "end": 49,
+          "steps": [
+            48,
+            49
+          ],
+          "status": "Not Executed",
+          "note": "Nguồn giao diện: web-react/src/lich-hen-khach-hang.jsx. Kiểm tra hình thức; chưa có kết quả chạy.\nChưa thực thi."
+        },
+        {
+          "id": "F5_06",
+          "start": 50,
+          "end": 51,
+          "steps": [
+            50,
+            51
+          ],
+          "status": "Not Executed",
+          "note": "Kích thước trên là dữ liệu kiểm tra, không tuyên bố là ma trận trình duyệt được hỗ trợ chính thức. Nguồn: web-react/src/lich-hen-khach-hang.jsx.\nChưa thực thi."
+        }
+      ],
+      "badMerges": [
+        "L24:L28",
+        "K24:K28",
+        "M24:M28"
+      ],
+      "nonStepResults": [],
+      "imageCount": 1
+    },
+    "Testcase_F6": {
+      "maxRow": 41,
+      "firstCase": 23,
+      "cases": [
+        {
+          "id": "F6_01",
+          "start": 23,
+          "end": 24,
+          "steps": [
+            23,
+            24
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F6_02",
+          "start": 25,
+          "end": 26,
+          "steps": [
+            25,
+            26
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F6_03",
+          "start": 27,
+          "end": 28,
+          "steps": [
+            27,
+            28
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F6_04",
+          "start": 29,
+          "end": 30,
+          "steps": [
+            29,
+            30
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F6_05",
+          "start": 31,
+          "end": 32,
+          "steps": [
+            31,
+            32
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F6_06",
+          "start": 33,
+          "end": 34,
+          "steps": [
+            33,
+            34
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F6_07",
+          "start": 35,
+          "end": 37,
+          "steps": [
+            35,
+            36
+          ],
+          "status": "Not Executed",
+          "note": "Dùng đúng petId được chuẩn bị trong môi trường thử; không suy ra quyền từ việc ẩn tab.\nChưa thực thi."
+        },
+        {
+          "id": "F6_08",
+          "start": 38,
+          "end": 39,
+          "steps": [
+            38,
+            39
+          ],
+          "status": "Not Executed",
+          "note": "Nguồn giao diện: web-react/src/cong-khach-hang.jsx. Kiểm tra hình thức; chưa có kết quả chạy.\nChưa thực thi."
+        },
+        {
+          "id": "F6_09",
+          "start": 40,
+          "end": 41,
+          "steps": [
+            40,
+            41
+          ],
+          "status": "Not Executed",
+          "note": "Kích thước trên là dữ liệu kiểm tra, không tuyên bố là ma trận trình duyệt được hỗ trợ chính thức. Nguồn: web-react/src/cong-khach-hang.jsx.\nChưa thực thi."
+        }
+      ],
+      "badMerges": [
+        "M24:M28",
+        "K24:K28",
+        "L24:L28"
+      ],
+      "nonStepResults": [],
+      "imageCount": 1
+    },
+    "Testcase_F7": {
+      "maxRow": 44,
+      "firstCase": 23,
+      "cases": [
+        {
+          "id": "F7_01",
+          "start": 23,
+          "end": 24,
+          "steps": [
+            23,
+            24
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F7_02",
+          "start": 25,
+          "end": 26,
+          "steps": [
+            25,
+            26
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F7_03",
+          "start": 27,
+          "end": 28,
+          "steps": [
+            27,
+            28
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F7_04",
+          "start": 29,
+          "end": 30,
+          "steps": [
+            29,
+            30
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F7_05",
+          "start": 31,
+          "end": 32,
+          "steps": [
+            31,
+            32
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F7_06",
+          "start": 33,
+          "end": 34,
+          "steps": [
+            33,
+            34
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F7_07",
+          "start": 35,
+          "end": 37,
+          "steps": [
+            35,
+            36,
+            37
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F7_08",
+          "start": 38,
+          "end": 40,
+          "steps": [
+            38,
+            39
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F7_09",
+          "start": 41,
+          "end": 42,
+          "steps": [
+            41,
+            42
+          ],
+          "status": "Not Executed",
+          "note": "Nguồn giao diện: web-react/src/cong-khach-hang.jsx. Kiểm tra hình thức; chưa có kết quả chạy.\nChưa thực thi."
+        },
+        {
+          "id": "F7_10",
+          "start": 43,
+          "end": 44,
+          "steps": [
+            43,
+            44
+          ],
+          "status": "Not Executed",
+          "note": "Kích thước trên là dữ liệu kiểm tra, không tuyên bố là ma trận trình duyệt được hỗ trợ chính thức. Nguồn: web-react/src/cong-khach-hang.jsx.\nChưa thực thi."
+        }
+      ],
+      "badMerges": [
+        "M24:M28",
+        "K24:K28",
+        "L24:L28"
+      ],
+      "nonStepResults": [],
+      "imageCount": 1
+    },
+    "Testcase_F8": {
+      "maxRow": 60,
+      "firstCase": 23,
+      "cases": [
+        {
+          "id": "F8_01",
+          "start": 23,
+          "end": 25,
+          "steps": [
+            23,
+            24,
+            25
+          ],
+          "status": "Not Executed",
+          "note": "Chuẩn bị số thử chưa dùng; không kỳ vọng giữ nguyên mọi dấu cách/dấu phân cách của số nhập.\nChưa thực thi."
+        },
+        {
+          "id": "F8_02",
+          "start": 26,
+          "end": 27,
+          "steps": [
+            26,
+            27
+          ],
+          "status": "Not Executed",
+          "note": "Lặp độc lập hai bộ dữ liệu.\nChưa thực thi."
+        },
+        {
+          "id": "F8_03",
+          "start": 28,
+          "end": 29,
+          "steps": [
+            28,
+            29
+          ],
+          "status": "Not Executed",
+          "note": "Không giả định một quy tắc 'chỉ chữ' vì mã hiện tại không quy định.\nChưa thực thi."
+        },
+        {
+          "id": "F8_04",
+          "start": 30,
+          "end": 31,
+          "steps": [
+            30,
+            31
+          ],
+          "status": "Not Executed",
+          "note": "Kiểm tra cả giao diện và quy tắc chuẩn hóa Việt Nam, không chỉ đếm số ký tự.\nChưa thực thi."
+        },
+        {
+          "id": "F8_05",
+          "start": 32,
+          "end": 33,
+          "steps": [
+            32,
+            33
+          ],
+          "status": "Not Executed",
+          "note": "Không gộp ca này với số sai định dạng: phone_B phải là số hợp lệ.\nChưa thực thi."
+        },
+        {
+          "id": "F8_06",
+          "start": 34,
+          "end": 35,
+          "steps": [
+            34,
+            35
+          ],
+          "status": "Not Executed",
+          "note": "Endpoint avatar lưu ngay khi chọn tệp, không cần bấm Lưu thông tin liên hệ.\nChưa thực thi."
+        },
+        {
+          "id": "F8_07",
+          "start": 36,
+          "end": 37,
+          "steps": [
+            36,
+            37
+          ],
+          "status": "Not Executed",
+          "note": "Giao diện kiểm 6 MiB nhưng máy chủ chỉ chấp nhận tối đa 5 MiB; cần ghi nhận sự chưa thống nhất khi chạy, không tự sửa ngưỡng trong đặc tả.\nChưa thực thi."
+        },
+        {
+          "id": "F8.2_01",
+          "start": 38,
+          "end": 40,
+          "steps": [
+            38,
+            39,
+            40
+          ],
+          "status": "Not Executed",
+          "note": "Trang tài khoản yêu cầu ít nhất 8 ký tự, khác đăng ký/khôi phục. Cập nhật fixture sau khi thực thi.\nChưa thực thi."
+        },
+        {
+          "id": "F8.2_02",
+          "start": 41,
+          "end": 42,
+          "steps": [
+            41,
+            42
+          ],
+          "status": "Not Executed",
+          "note": "Không dùng mật khẩu mới dưới giới hạn vì sẽ bị chặn trước bước xác thực lại.\nChưa thực thi."
+        },
+        {
+          "id": "F8.2_03",
+          "start": 43,
+          "end": 44,
+          "steps": [
+            43,
+            44
+          ],
+          "status": "Not Executed",
+          "note": "Dùng dữ liệu khác mật khẩu hiện tại để cô lập lỗi xác nhận.\nChưa thực thi."
+        },
+        {
+          "id": "F8.2_04",
+          "start": 45,
+          "end": 46,
+          "steps": [
+            45,
+            46
+          ],
+          "status": "Not Executed",
+          "note": "Ca biên của chức năng trong tài khoản, không áp mốc 6 ký tự ở đăng ký.\nChưa thực thi."
+        },
+        {
+          "id": "F8.2_05",
+          "start": 47,
+          "end": 48,
+          "steps": [
+            47,
+            48
+          ],
+          "status": "Not Executed",
+          "note": "Dùng fixture mật khẩu hiện tại ít nhất 8 ký tự để không bị lỗi độ dài che mất điều kiện này.\nChưa thực thi."
+        },
+        {
+          "id": "F8.2_06",
+          "start": 49,
+          "end": 51,
+          "steps": [
+            49,
+            50,
+            51
+          ],
+          "status": "Not Executed",
+          "note": "Cần hộp thư kiểm thử thật được phép dùng và Firebase hoạt động. Cập nhật email fixture sau khi chạy; không khẳng định đã nhận email nếu chưa kiểm hộp thư.\nChưa thực thi."
+        },
+        {
+          "id": "F8.2_07",
+          "start": 52,
+          "end": 53,
+          "steps": [
+            52,
+            53
+          ],
+          "status": "Not Executed",
+          "note": "So sánh email hiện tại không phân biệt hoa/thường; tách riêng ghi chú kết quả mỗi lượt khi chạy.\nChưa thực thi."
+        },
+        {
+          "id": "F8.2_08",
+          "start": 54,
+          "end": 56,
+          "steps": [
+            54,
+            55
+          ],
+          "status": "Not Executed",
+          "note": "Dùng email hợp lệ khác email hiện tại để lỗi xác thực không bị điều kiện email che khuất.\nChưa thực thi."
+        },
+        {
+          "id": "F8_08",
+          "start": 57,
+          "end": 58,
+          "steps": [
+            57,
+            58
+          ],
+          "status": "Not Executed",
+          "note": "Nguồn giao diện: web-react/src/cong-khach-hang.jsx. Kiểm tra hình thức; chưa có kết quả chạy.\nChưa thực thi."
+        },
+        {
+          "id": "F8_09",
+          "start": 59,
+          "end": 60,
+          "steps": [
+            59,
+            60
+          ],
+          "status": "Not Executed",
+          "note": "Kích thước trên là dữ liệu kiểm tra, không tuyên bố là ma trận trình duyệt được hỗ trợ chính thức. Nguồn: web-react/src/cong-khach-hang.jsx.\nChưa thực thi."
+        }
+      ],
+      "badMerges": [
+        "K24:K28",
+        "M24:M28",
+        "L24:L28"
+      ],
+      "nonStepResults": [],
+      "imageCount": 1
+    },
+    "Testcase_F9": {
+      "maxRow": 82,
+      "firstCase": 23,
+      "cases": [
+        {
+          "id": "F9_01",
+          "start": 23,
+          "end": 25,
+          "steps": [
+            23,
+            24,
+            25
+          ],
+          "status": "Not Executed",
+          "note": "Nguồn hiện tại tìm theo bookingId/petId/userId/careTypeId; chưa có căn cứ khẳng định tìm được họ tên khách hoặc tên thú cưng.\nChưa thực thi."
+        },
+        {
+          "id": "F9_02",
+          "start": 26,
+          "end": 27,
+          "steps": [
+            26,
+            27
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F9.2_01",
+          "start": 28,
+          "end": 29,
+          "steps": [
+            28,
+            29
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F9.3_01",
+          "start": 30,
+          "end": 31,
+          "steps": [
+            30,
+            31
+          ],
+          "status": "Not Executed",
+          "note": "Nguồn kiểm tra ACTIVE và trùng giờ; không có quy tắc ghép chuyên khoa với dịch vụ, không ghi kỳ vọng chặn vì sai chuyên khoa.\nChưa thực thi."
+        },
+        {
+          "id": "F9.3_02",
+          "start": 32,
+          "end": 33,
+          "steps": [
+            32,
+            33
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung; dùng công cụ HTTP với phiên thử nghiệm STAFF, không thao tác dữ liệu thật.\nChưa thực thi."
+        },
+        {
+          "id": "F9.3_03",
+          "start": 34,
+          "end": 35,
+          "steps": [
+            34,
+            35
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung; dùng công cụ HTTP với phiên thử nghiệm STAFF, không thao tác dữ liệu thật.\nChưa thực thi."
+        },
+        {
+          "id": "F9.3_04",
+          "start": 36,
+          "end": 37,
+          "steps": [
+            36,
+            37
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung; dùng công cụ HTTP với phiên thử nghiệm STAFF, không thao tác dữ liệu thật. Không coi select còn hiển thị ở UI là quyền cho phép thay đổi; kiểm tra quyết định máy chủ.\nChưa thực thi."
+        },
+        {
+          "id": "F9.4_01",
+          "start": 38,
+          "end": 39,
+          "steps": [
+            38,
+            39
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F9.4_02",
+          "start": 40,
+          "end": 41,
+          "steps": [
+            40,
+            41
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung; dùng công cụ HTTP với phiên thử nghiệm STAFF, không thao tác dữ liệu thật. C lấy từ cấu hình thực tế đã chuẩn bị, mặc định3 nếu chưa cấu hình.\nChưa thực thi."
+        },
+        {
+          "id": "F9.4_03",
+          "start": 42,
+          "end": 43,
+          "steps": [
+            42,
+            43
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung; dùng công cụ HTTP với phiên thử nghiệm STAFF, không thao tác dữ liệu thật.\nChưa thực thi."
+        },
+        {
+          "id": "F9.5_01",
+          "start": 44,
+          "end": 45,
+          "steps": [
+            44,
+            45
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F9.5_02",
+          "start": 46,
+          "end": 47,
+          "steps": [
+            46,
+            47
+          ],
+          "status": "Not Executed",
+          "note": "Nếu nhãn nút bản chạy khác, chọn hành động tương ứng trạng thái IN_PROGRESS, không suy đoán ngày giờ là điều kiện nguồn chưa có.\nChưa thực thi."
+        },
+        {
+          "id": "F9.5_03",
+          "start": 48,
+          "end": 49,
+          "steps": [
+            48,
+            49
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F9.5_04",
+          "start": 50,
+          "end": 51,
+          "steps": [
+            50,
+            51
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung; dùng công cụ HTTP với phiên thử nghiệm STAFF, không thao tác dữ liệu thật.\nChưa thực thi."
+        },
+        {
+          "id": "F9.6_01",
+          "start": 52,
+          "end": 53,
+          "steps": [
+            52,
+            53
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung; dùng công cụ HTTP với phiên thử nghiệm STAFF, không thao tác dữ liệu thật.\nChưa thực thi."
+        },
+        {
+          "id": "F9.6_02",
+          "start": 54,
+          "end": 55,
+          "steps": [
+            54,
+            55
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung; dùng công cụ HTTP với phiên thử nghiệm STAFF, không thao tác dữ liệu thật.\nChưa thực thi."
+        },
+        {
+          "id": "F9.6_03",
+          "start": 56,
+          "end": 57,
+          "steps": [
+            56,
+            57
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F9.7_01",
+          "start": 58,
+          "end": 59,
+          "steps": [
+            58,
+            59
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F9.7_02",
+          "start": 60,
+          "end": 61,
+          "steps": [
+            60,
+            61
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung; dùng công cụ HTTP với phiên thử nghiệm STAFF, không thao tác dữ liệu thật.\nChưa thực thi."
+        },
+        {
+          "id": "F9.7_03",
+          "start": 62,
+          "end": 63,
+          "steps": [
+            62,
+            63
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung; dùng công cụ HTTP với phiên thử nghiệm STAFF, không thao tác dữ liệu thật.\nChưa thực thi."
+        },
+        {
+          "id": "F9.8_01",
+          "start": 64,
+          "end": 65,
+          "steps": [
+            64,
+            65
+          ],
+          "status": "Not Executed",
+          "note": "Phụ thuộc cấu hình/bộ giả lập do người phụ trách chuẩn bị; không tự gán PAID ở bảng dữ liệu để thay việc kiểm API.\nChưa thực thi."
+        },
+        {
+          "id": "F9.8_02",
+          "start": 66,
+          "end": 67,
+          "steps": [
+            66,
+            67
+          ],
+          "status": "Not Executed",
+          "note": "Bộ giả lập phải trả dữ liệu qua cùng lớp tích hợp PayOS; chưa thực hiện trong phạm vi thiết kế.\nChưa thực thi."
+        },
+        {
+          "id": "F9.8_03",
+          "start": 68,
+          "end": 69,
+          "steps": [
+            68,
+            69
+          ],
+          "status": "Not Executed",
+          "note": "Không ngắt mạng/cấu hình môi trường dùng chung chưa được chuẩn bị; lỗi tích hợp kiểm soát ở môi trường thử nghiệm.\nChưa thực thi."
+        },
+        {
+          "id": "F9.9_01",
+          "start": 70,
+          "end": 71,
+          "steps": [
+            70,
+            71
+          ],
+          "status": "Not Executed",
+          "note": "Chứng từ là fixture mô phỏng được chuẩn bị; không khai đã hoàn tiền thật hoặc dùng thao tác này để gửi tiền.\nChưa thực thi."
+        },
+        {
+          "id": "F9.9_02",
+          "start": 72,
+          "end": 73,
+          "steps": [
+            72,
+            73
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung; dùng công cụ HTTP với phiên thử nghiệm STAFF, không thao tác dữ liệu thật.\nChưa thực thi."
+        },
+        {
+          "id": "F9.9_03",
+          "start": 74,
+          "end": 75,
+          "steps": [
+            74,
+            75
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung; dùng công cụ HTTP với phiên thử nghiệm STAFF, không thao tác dữ liệu thật.\nChưa thực thi."
+        },
+        {
+          "id": "F9.9_04",
+          "start": 76,
+          "end": 78,
+          "steps": [
+            76,
+            77
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung; dùng công cụ HTTP với phiên thử nghiệm STAFF, không thao tác dữ liệu thật.\nChưa thực thi."
+        },
+        {
+          "id": "F9_03",
+          "start": 79,
+          "end": 80,
+          "steps": [
+            79,
+            80
+          ],
+          "status": "Not Executed",
+          "note": "Nguồn giao diện: web-react/src/cong-van-hanh.jsx. Kiểm tra hình thức; chưa có kết quả chạy.\nChưa thực thi."
+        },
+        {
+          "id": "F9_04",
+          "start": 81,
+          "end": 82,
+          "steps": [
+            81,
+            82
+          ],
+          "status": "Not Executed",
+          "note": "Kích thước trên là dữ liệu kiểm tra, không tuyên bố là ma trận trình duyệt được hỗ trợ chính thức. Nguồn: web-react/src/cong-van-hanh.jsx.\nChưa thực thi."
+        }
+      ],
+      "badMerges": [
+        "K24:K28",
+        "M24:M28",
+        "L24:L28"
+      ],
+      "nonStepResults": [],
+      "imageCount": 1
+    },
+    "Testcase_F10": {
+      "maxRow": 87,
+      "firstCase": 23,
+      "cases": [
+        {
+          "id": "F10_01",
+          "start": 23,
+          "end": 24,
+          "steps": [
+            23,
+            24
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F10_02",
+          "start": 25,
+          "end": 26,
+          "steps": [
+            25,
+            26
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F10_03",
+          "start": 27,
+          "end": 28,
+          "steps": [
+            27,
+            28
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F10.2_01",
+          "start": 29,
+          "end": 31,
+          "steps": [
+            29,
+            30,
+            31
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F10.2_02",
+          "start": 32,
+          "end": 33,
+          "steps": [
+            32,
+            33
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F10.2_03",
+          "start": 34,
+          "end": 35,
+          "steps": [
+            34,
+            35
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F10.3_01",
+          "start": 36,
+          "end": 38,
+          "steps": [
+            36,
+            37,
+            38
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F10.3_02",
+          "start": 39,
+          "end": 41,
+          "steps": [
+            39,
+            40,
+            41
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F10.3_03",
+          "start": 42,
+          "end": 44,
+          "steps": [
+            42,
+            43,
+            44
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F10.3_04",
+          "start": 45,
+          "end": 46,
+          "steps": [
+            45,
+            46
+          ],
+          "status": "Not Executed",
+          "note": "Lặp với từng dữ liệu độc lập. Giới hạn API hiện là >0 và <1000, khác giới hạn form; chưa có đặc tả thống nhất để kết luận biên API 0.01–999.\nChưa thực thi."
+        },
+        {
+          "id": "F10.3_05",
+          "start": 47,
+          "end": 48,
+          "steps": [
+            47,
+            48
+          ],
+          "status": "Not Executed",
+          "note": "UI có required; Pets API chỉ yêu cầu healthStatus không null và dài <=255, không cấm chuỗi rỗng. Cần xác nhận yêu cầu thống nhất nếu kiểm tra trực tiếp API.\nChưa thực thi."
+        },
+        {
+          "id": "F10.4_01",
+          "start": 49,
+          "end": 51,
+          "steps": [
+            49,
+            50,
+            51
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F10.4_02",
+          "start": 52,
+          "end": 53,
+          "steps": [
+            52,
+            53
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F10.4_03",
+          "start": 54,
+          "end": 55,
+          "steps": [
+            54,
+            55
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F10.4_04",
+          "start": 56,
+          "end": 57,
+          "steps": [
+            56,
+            57
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.\nChưa thực thi."
+        },
+        {
+          "id": "F10.5_01",
+          "start": 58,
+          "end": 60,
+          "steps": [
+            58,
+            59,
+            60
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.\nChưa thực thi."
+        },
+        {
+          "id": "F10.5_02",
+          "start": 61,
+          "end": 62,
+          "steps": [
+            61,
+            62
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F10.5_03",
+          "start": 63,
+          "end": 64,
+          "steps": [
+            63,
+            64
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện. Không ấn định 403/404 cho ca này: controller hiện gộp sai tác giả vào 400.\nChưa thực thi."
+        },
+        {
+          "id": "F10.5_04",
+          "start": 65,
+          "end": 66,
+          "steps": [
+            65,
+            66
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F10.6_01",
+          "start": 67,
+          "end": 69,
+          "steps": [
+            67,
+            68,
+            69
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F10.6_02",
+          "start": 70,
+          "end": 72,
+          "steps": [
+            70,
+            71,
+            72
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.\nChưa thực thi."
+        },
+        {
+          "id": "F10.6_03",
+          "start": 73,
+          "end": 74,
+          "steps": [
+            73,
+            74
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F10.6_04",
+          "start": 75,
+          "end": 76,
+          "steps": [
+            75,
+            76
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F10.6_05",
+          "start": 77,
+          "end": 78,
+          "steps": [
+            77,
+            78
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F10.7_01",
+          "start": 79,
+          "end": 80,
+          "steps": [
+            79,
+            80
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.\nChưa thực thi."
+        },
+        {
+          "id": "F10.7_02",
+          "start": 81,
+          "end": 83,
+          "steps": [
+            81,
+            82
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.\nChưa thực thi."
+        },
+        {
+          "id": "F10.4_05",
+          "start": 84,
+          "end": 85,
+          "steps": [
+            84,
+            85
+          ],
+          "status": "Not Executed",
+          "note": "Nguồn giao diện: web-react/src/cong-van-hanh.jsx. Kiểm tra hình thức; chưa có kết quả chạy.\nChưa thực thi."
+        },
+        {
+          "id": "F10.4_06",
+          "start": 86,
+          "end": 87,
+          "steps": [
+            86,
+            87
+          ],
+          "status": "Not Executed",
+          "note": "Kích thước trên là dữ liệu kiểm tra, không tuyên bố là ma trận trình duyệt được hỗ trợ chính thức. Nguồn: web-react/src/cong-van-hanh.jsx.\nChưa thực thi."
+        }
+      ],
+      "badMerges": [
+        "K24:K28",
+        "M24:M28",
+        "L24:L28"
+      ],
+      "nonStepResults": [],
+      "imageCount": 1
+    },
+    "Testcase_F11": {
+      "maxRow": 166,
+      "firstCase": 35,
+      "cases": [
+        {
+          "id": "F11_01",
+          "start": 35,
+          "end": 36,
+          "steps": [
+            35,
+            36
+          ],
+          "status": "Not Executed",
+          "note": "Không dùng netCollected trong Reports làm số đối chiếu: dashboard chỉ cộng giao dịch status PAID.\nChưa thực thi."
+        },
+        {
+          "id": "F11_02",
+          "start": 37,
+          "end": 38,
+          "steps": [
+            37,
+            38
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.2_01",
+          "start": 39,
+          "end": 40,
+          "steps": [
+            39,
+            40
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.2_02",
+          "start": 41,
+          "end": 42,
+          "steps": [
+            41,
+            42
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.3_01",
+          "start": 43,
+          "end": 45,
+          "steps": [
+            43,
+            44,
+            45
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.3_02",
+          "start": 46,
+          "end": 47,
+          "steps": [
+            46,
+            47
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.\nChưa thực thi."
+        },
+        {
+          "id": "F11.3_03",
+          "start": 48,
+          "end": 49,
+          "steps": [
+            48,
+            49
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.3_04",
+          "start": 50,
+          "end": 51,
+          "steps": [
+            50,
+            51
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.4_01",
+          "start": 52,
+          "end": 54,
+          "steps": [
+            52,
+            53,
+            54
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.4_02",
+          "start": 55,
+          "end": 56,
+          "steps": [
+            55,
+            56
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.4_03",
+          "start": 57,
+          "end": 58,
+          "steps": [
+            57,
+            58
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.\nChưa thực thi."
+        },
+        {
+          "id": "F11.4_04",
+          "start": 59,
+          "end": 60,
+          "steps": [
+            59,
+            60
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.5_01",
+          "start": 61,
+          "end": 63,
+          "steps": [
+            61,
+            62,
+            63
+          ],
+          "status": "Not Executed",
+          "note": "Email và số điện thoại là dữ liệu fixture phải chuẩn bị; không giả định các ký hiệu này là địa chỉ đăng nhập thật.\nChưa thực thi."
+        },
+        {
+          "id": "F11.5_02",
+          "start": 64,
+          "end": 65,
+          "steps": [
+            64,
+            65
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.5_03",
+          "start": 66,
+          "end": 67,
+          "steps": [
+            66,
+            67
+          ],
+          "status": "Not Executed",
+          "note": "Biên12–128 được định nghĩa trong cả UI và API; có thể bổ sung hai biên chấp nhận khi mở rộng bộ kiểm thử.\nChưa thực thi."
+        },
+        {
+          "id": "F11.5_04",
+          "start": 68,
+          "end": 69,
+          "steps": [
+            68,
+            69
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện. Không tự đặt quy tắc số điện thoại trùng khi tạo Staff: controller hiện không có kiểm tra uniqueness rõ ràng cho phone.\nChưa thực thi."
+        },
+        {
+          "id": "F11.6_01",
+          "start": 70,
+          "end": 71,
+          "steps": [
+            70,
+            71
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.6_02",
+          "start": 72,
+          "end": 73,
+          "steps": [
+            72,
+            73
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.6_03",
+          "start": 74,
+          "end": 75,
+          "steps": [
+            74,
+            75
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.7_01",
+          "start": 76,
+          "end": 78,
+          "steps": [
+            76,
+            77,
+            78
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.7_02",
+          "start": 79,
+          "end": 80,
+          "steps": [
+            79,
+            80
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.7_03",
+          "start": 81,
+          "end": 82,
+          "steps": [
+            81,
+            82
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.8_01",
+          "start": 83,
+          "end": 84,
+          "steps": [
+            83,
+            84
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.8_02",
+          "start": 85,
+          "end": 87,
+          "steps": [
+            85,
+            86,
+            87
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.8_03",
+          "start": 88,
+          "end": 89,
+          "steps": [
+            88,
+            89
+          ],
+          "status": "Not Executed",
+          "note": "API không idempotent: mỗi PUT add-violation được chấp nhận đều tăng1; không kỳ vọng gửi lặp vẫn chỉ tăng1.\nChưa thực thi."
+        },
+        {
+          "id": "F11.9_01",
+          "start": 90,
+          "end": 92,
+          "steps": [
+            90,
+            91,
+            92
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.9_02",
+          "start": 93,
+          "end": 94,
+          "steps": [
+            93,
+            94
+          ],
+          "status": "Not Executed",
+          "note": "API cũng chặn nếu có MedicalRecord hoặc Vaccination; không chỉ lịch đang hoạt động.\nChưa thực thi."
+        },
+        {
+          "id": "F11.9_03",
+          "start": 95,
+          "end": 96,
+          "steps": [
+            95,
+            96
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.10_01",
+          "start": 97,
+          "end": 98,
+          "steps": [
+            97,
+            98
+          ],
+          "status": "Not Executed",
+          "note": "Dùng gói thử riêng, không dùng dịch vụ thật.\nChưa thực thi."
+        },
+        {
+          "id": "F11.10_02",
+          "start": 99,
+          "end": 100,
+          "steps": [
+            99,
+            100
+          ],
+          "status": "Not Executed",
+          "note": "API cũng yêu cầu duration > 0; chưa có căn cứ áp dụng giới hạn riêng cao nhất cho từng dịch vụ.\nChưa thực thi."
+        },
+        {
+          "id": "F11.10_03",
+          "start": 101,
+          "end": 103,
+          "steps": [
+            101,
+            102,
+            103
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.10_04",
+          "start": 104,
+          "end": 105,
+          "steps": [
+            104,
+            105
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.10_05",
+          "start": 106,
+          "end": 107,
+          "steps": [
+            106,
+            107
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.10_06",
+          "start": 108,
+          "end": 109,
+          "steps": [
+            108,
+            109
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.10_07",
+          "start": 110,
+          "end": 111,
+          "steps": [
+            110,
+            111
+          ],
+          "status": "Not Executed",
+          "note": "Có thể tạm ngưng theo F11.11. Chưa thiết kế kỳ vọng trùng tên dịch vụ bị chặn vì nguồn không định nghĩa uniqueness.\nChưa thực thi."
+        },
+        {
+          "id": "F11.11_01",
+          "start": 112,
+          "end": 114,
+          "steps": [
+            112,
+            113,
+            114
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.\nChưa thực thi."
+        },
+        {
+          "id": "F11.11_02",
+          "start": 115,
+          "end": 116,
+          "steps": [
+            115,
+            116
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.11_03",
+          "start": 117,
+          "end": 118,
+          "steps": [
+            117,
+            118
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.12_01",
+          "start": 119,
+          "end": 120,
+          "steps": [
+            119,
+            120
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.12_02",
+          "start": 121,
+          "end": 122,
+          "steps": [
+            121,
+            122
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.12_03",
+          "start": 123,
+          "end": 124,
+          "steps": [
+            123,
+            124
+          ],
+          "status": "Not Executed",
+          "note": "Không ghi kỳ vọng tên trùng bị chặn: controller chưa có kiểm tra tên trùng; cần xác nhận đặc tả nếu muốn bổ sung.\nChưa thực thi."
+        },
+        {
+          "id": "F11.12_04",
+          "start": 125,
+          "end": 127,
+          "steps": [
+            125,
+            126,
+            127
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.\nChưa thực thi."
+        },
+        {
+          "id": "F11.13_01",
+          "start": 128,
+          "end": 129,
+          "steps": [
+            128,
+            129
+          ],
+          "status": "Not Executed",
+          "note": "UI hiện không có ô tìm/lọc hay nút chi tiết/cập nhật tại bảng admin; không đưa thao tác UI chưa tồn tại vào test case.\nChưa thực thi."
+        },
+        {
+          "id": "F11.13_02",
+          "start": 130,
+          "end": 131,
+          "steps": [
+            130,
+            131
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện. Chỉ chạy nếu bài yêu cầu phạm vi API; giao diện admin hiện không có nút này.\nChưa thực thi."
+        },
+        {
+          "id": "F11.14_01",
+          "start": 132,
+          "end": 134,
+          "steps": [
+            132,
+            133,
+            134
+          ],
+          "status": "Not Executed",
+          "note": "Không tự đặt số tổng khi chưa chuẩn bị dữ liệu; điền giá trị đối chiếu thực từ bộ dữ liệu thử trước khi chạy.\nChưa thực thi."
+        },
+        {
+          "id": "F11.14_02",
+          "start": 135,
+          "end": 136,
+          "steps": [
+            135,
+            136
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.14_03",
+          "start": 137,
+          "end": 138,
+          "steps": [
+            137,
+            138
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện. UI dùng min/max để ngăn khoảng ngược; API vẫn cần ca trực tiếp.\nChưa thực thi."
+        },
+        {
+          "id": "F11.14_04",
+          "start": 139,
+          "end": 140,
+          "steps": [
+            139,
+            140
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.\nChưa thực thi."
+        },
+        {
+          "id": "F11.15_01",
+          "start": 141,
+          "end": 143,
+          "steps": [
+            141,
+            142,
+            143
+          ],
+          "status": "Not Executed",
+          "note": "Không thiết kế ca nhập '=,+,-,@' bằng tên khách để kiểm tra CSV vì CSV hiện chỉ có ngày và số; hàm escape có phòng ngừa nhưng đường nhập đó không tới CSV này.\nChưa thực thi."
+        },
+        {
+          "id": "F11.15_02",
+          "start": 144,
+          "end": 145,
+          "steps": [
+            144,
+            145
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.16_01",
+          "start": 146,
+          "end": 148,
+          "steps": [
+            146,
+            147,
+            148
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.16_02",
+          "start": 149,
+          "end": 150,
+          "steps": [
+            149,
+            150
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.16_03",
+          "start": 151,
+          "end": 152,
+          "steps": [
+            151,
+            152
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11.16_04",
+          "start": 153,
+          "end": 154,
+          "steps": [
+            153,
+            154
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.\nChưa thực thi."
+        },
+        {
+          "id": "F11.17_01",
+          "start": 155,
+          "end": 157,
+          "steps": [
+            155,
+            156,
+            157
+          ],
+          "status": "Not Executed",
+          "note": "Không đòi nhật ký chỉ có ADMIN: bộ lọc ghi cả non-GET thành công của các role được phép.\nChưa thực thi."
+        },
+        {
+          "id": "F11.17_02",
+          "start": 158,
+          "end": 159,
+          "steps": [
+            158,
+            159
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.\nChưa thực thi."
+        },
+        {
+          "id": "F11.17_03",
+          "start": 160,
+          "end": 162,
+          "steps": [
+            160,
+            161
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F11_03",
+          "start": 163,
+          "end": 164,
+          "steps": [
+            163,
+            164
+          ],
+          "status": "Not Executed",
+          "note": "Nguồn giao diện: web-react/src/cong-van-hanh.jsx. Kiểm tra hình thức; chưa có kết quả chạy.\nChưa thực thi."
+        },
+        {
+          "id": "F11_04",
+          "start": 165,
+          "end": 166,
+          "steps": [
+            165,
+            166
+          ],
+          "status": "Not Executed",
+          "note": "Kích thước trên là dữ liệu kiểm tra, không tuyên bố là ma trận trình duyệt được hỗ trợ chính thức. Nguồn: web-react/src/cong-van-hanh.jsx.\nChưa thực thi."
+        }
+      ],
+      "badMerges": [
+        "L36:L40",
+        "M36:M40",
+        "K36:K40"
+      ],
+      "nonStepResults": [],
+      "imageCount": 1
+    },
+    "Testcase_F12": {
+      "maxRow": 50,
+      "firstCase": 23,
+      "cases": [
+        {
+          "id": "F12_01",
+          "start": 23,
+          "end": 24,
+          "steps": [
+            23,
+            24
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.\nChưa thực thi."
+        },
+        {
+          "id": "F12_02",
+          "start": 25,
+          "end": 26,
+          "steps": [
+            25,
+            26
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.\nChưa thực thi."
+        },
+        {
+          "id": "F12_03",
+          "start": 27,
+          "end": 28,
+          "steps": [
+            27,
+            28
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F12.2_01",
+          "start": 29,
+          "end": 30,
+          "steps": [
+            29,
+            30
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.\nChưa thực thi."
+        },
+        {
+          "id": "F12.2_02",
+          "start": 31,
+          "end": 32,
+          "steps": [
+            31,
+            32
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.\nChưa thực thi."
+        },
+        {
+          "id": "F12.2_03",
+          "start": 33,
+          "end": 34,
+          "steps": [
+            33,
+            34
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.\nChưa thực thi."
+        },
+        {
+          "id": "F12.2_04",
+          "start": 35,
+          "end": 37,
+          "steps": [
+            35,
+            36,
+            37
+          ],
+          "status": "Not Executed",
+          "note": "Ca API bổ sung: dùng token đúng tài khoản; ghi mã HTTP sau khi thực hiện.\nChưa thực thi."
+        },
+        {
+          "id": "F12.3_01",
+          "start": 38,
+          "end": 39,
+          "steps": [
+            38,
+            39
+          ],
+          "status": "Not Executed",
+          "note": "Ca chưa thực thi; nội dung cụ thể thông báo ghi theo quan sát, không tự đặt nguyên văn.\nChưa thực thi."
+        },
+        {
+          "id": "F12.3_02",
+          "start": 40,
+          "end": 42,
+          "steps": [
+            40,
+            41
+          ],
+          "status": "Not Executed",
+          "note": "Chưa thực thi."
+        },
+        {
+          "id": "F12.4_01",
+          "start": 43,
+          "end": 44,
+          "steps": [
+            43,
+            44
+          ],
+          "status": "Not Executed",
+          "note": "Nguồn giao diện: web-react/src/ung-dung.jsx. Kiểm tra hình thức; chưa có kết quả chạy.\nChưa thực thi."
+        },
+        {
+          "id": "F12.4_02",
+          "start": 45,
+          "end": 46,
+          "steps": [
+            45,
+            46
+          ],
+          "status": "Not Executed",
+          "note": "Kích thước trên là dữ liệu kiểm tra, không tuyên bố là ma trận trình duyệt được hỗ trợ chính thức. Nguồn: web-react/src/ung-dung.jsx.\nChưa thực thi."
+        },
+        {
+          "id": "F12.4_03",
+          "start": 47,
+          "end": 48,
+          "steps": [
+            47,
+            48
+          ],
+          "status": "Not Executed",
+          "note": "1366×768 là cấu hình kiểm tra đề xuất, không phải giới hạn được đặc tả. Ca chỉ thiết kế, chưa kết luận đạt.\nChưa thực thi."
+        },
+        {
+          "id": "F12.4_04",
+          "start": 49,
+          "end": 50,
+          "steps": [
+            49,
+            50
+          ],
+          "status": "Not Executed",
+          "note": "390×844 là kích thước đại diện đề xuất. Root có thể chuyển ca này sang nhóm Look and Feel (GUI) trong mẫu; gui=false theo phân công nội dung.\nChưa thực thi."
+        }
+      ],
+      "badMerges": [
+        "K24:K28",
+        "M24:M28",
+        "L24:L28"
+      ],
+      "nonStepResults": [],
+      "imageCount": 0
+    }
+  },
+  "requirements": [
+    {
+      "row": 4,
+      "id": "F1",
+      "sheet": "Testcase_F1",
+      "count": 31,
+      "pattern": "F*",
+      "status": "Failed",
+      "caseIds": [
+        "F1_01",
+        "F1_02",
+        "F1_03",
+        "F1_04",
+        "F1_05",
+        "F1.2_01",
+        "F1.2_02",
+        "F1.2_03",
+        "F1.3_01",
+        "F1.3_02",
+        "F1.3_03",
+        "F1.3_04",
+        "F1.4_01",
+        "F1.4_02",
+        "F1.5_01",
+        "F1.5_02",
+        "F1.5_03",
+        "F1.5_04",
+        "F1.6_01",
+        "F1.6_02",
+        "F1.6_03",
+        "F1.6_04",
+        "F1.6_05",
+        "F1.7_01",
+        "F1.7_02",
+        "F1.7_03",
+        "F1.7_04",
+        "F1.8_01",
+        "F1.8_02",
+        "F1.3_05",
+        "F1.3_06"
+      ]
+    },
+    {
+      "row": 5,
+      "id": "F1.1",
+      "sheet": "Testcase_F1",
+      "count": 5,
+      "pattern": "F1_*",
+      "status": "Failed",
+      "caseIds": [
+        "F1_01",
+        "F1_02",
+        "F1_03",
+        "F1_04",
+        "F1_05"
+      ]
+    },
+    {
+      "row": 6,
+      "id": "F1.2",
+      "sheet": "Testcase_F1",
+      "count": 3,
+      "pattern": "F1.2_*",
+      "status": "Failed",
+      "caseIds": [
+        "F1.2_01",
+        "F1.2_02",
+        "F1.2_03"
+      ]
+    },
+    {
+      "row": 7,
+      "id": "F1.3",
+      "sheet": "Testcase_F1",
+      "count": 6,
+      "pattern": "F1.3_*",
+      "status": "Failed",
+      "caseIds": [
+        "F1.3_01",
+        "F1.3_02",
+        "F1.3_03",
+        "F1.3_04",
+        "F1.3_05",
+        "F1.3_06"
+      ]
+    },
+    {
+      "row": 8,
+      "id": "F1.4",
+      "sheet": "Testcase_F1",
+      "count": 2,
+      "pattern": "F1.4_*",
+      "status": "Failed",
+      "caseIds": [
+        "F1.4_01",
+        "F1.4_02"
+      ]
+    },
+    {
+      "row": 9,
+      "id": "F1.5",
+      "sheet": "Testcase_F1",
+      "count": 4,
+      "pattern": "F1.5_*",
+      "status": "Failed",
+      "caseIds": [
+        "F1.5_01",
+        "F1.5_02",
+        "F1.5_03",
+        "F1.5_04"
+      ]
+    },
+    {
+      "row": 10,
+      "id": "F1.6",
+      "sheet": "Testcase_F1",
+      "count": 5,
+      "pattern": "F1.6_*",
+      "status": "Failed",
+      "caseIds": [
+        "F1.6_01",
+        "F1.6_02",
+        "F1.6_03",
+        "F1.6_04",
+        "F1.6_05"
+      ]
+    },
+    {
+      "row": 11,
+      "id": "F1.7",
+      "sheet": "Testcase_F1",
+      "count": 4,
+      "pattern": "F1.7_*",
+      "status": "Failed",
+      "caseIds": [
+        "F1.7_01",
+        "F1.7_02",
+        "F1.7_03",
+        "F1.7_04"
+      ]
+    },
+    {
+      "row": 12,
+      "id": "F1.8",
+      "sheet": "Testcase_F1",
+      "count": 2,
+      "pattern": "F1.8_*",
+      "status": "Failed",
+      "caseIds": [
+        "F1.8_01",
+        "F1.8_02"
+      ]
+    },
+    {
+      "row": 13,
+      "id": "F2",
+      "sheet": "Testcase_F2",
+      "count": 5,
+      "pattern": "F*",
+      "status": "Failed",
+      "caseIds": [
+        "F2_01",
+        "F2_02",
+        "F2_03",
+        "F2_04",
+        "F2_05"
+      ]
+    },
+    {
+      "row": 14,
+      "id": "F3",
+      "sheet": "Testcase_F3",
+      "count": 20,
+      "pattern": "F*",
+      "status": "Passed",
+      "caseIds": [
+        "F3_01",
+        "F3_02",
+        "F3_03",
+        "F3.2_01",
+        "F3.2_02",
+        "F3.2_03",
+        "F3.2_04",
+        "F3.2_05",
+        "F3.3_01",
+        "F3.3_02",
+        "F3.3_03",
+        "F3.4_01",
+        "F3.4_02",
+        "F3.4_03",
+        "F3.4_04",
+        "F3.5_01",
+        "F3.5_02",
+        "F3.5_03",
+        "F3.2_06",
+        "F3.2_07"
+      ]
+    },
+    {
+      "row": 15,
+      "id": "F3.1",
+      "sheet": "Testcase_F3",
+      "count": 3,
+      "pattern": "F3_*",
+      "status": "Passed",
+      "caseIds": [
+        "F3_01",
+        "F3_02",
+        "F3_03"
+      ]
+    },
+    {
+      "row": 16,
+      "id": "F3.2",
+      "sheet": "Testcase_F3",
+      "count": 7,
+      "pattern": "F3.2_*",
+      "status": "Passed",
+      "caseIds": [
+        "F3.2_01",
+        "F3.2_02",
+        "F3.2_03",
+        "F3.2_04",
+        "F3.2_05",
+        "F3.2_06",
+        "F3.2_07"
+      ]
+    },
+    {
+      "row": 17,
+      "id": "F3.3",
+      "sheet": "Testcase_F3",
+      "count": 3,
+      "pattern": "F3.3_*",
+      "status": "Passed",
+      "caseIds": [
+        "F3.3_01",
+        "F3.3_02",
+        "F3.3_03"
+      ]
+    },
+    {
+      "row": 18,
+      "id": "F3.4",
+      "sheet": "Testcase_F3",
+      "count": 4,
+      "pattern": "F3.4_*",
+      "status": "Passed",
+      "caseIds": [
+        "F3.4_01",
+        "F3.4_02",
+        "F3.4_03",
+        "F3.4_04"
+      ]
+    },
+    {
+      "row": 19,
+      "id": "F3.5",
+      "sheet": "Testcase_F3",
+      "count": 3,
+      "pattern": "F3.5_*",
+      "status": "Passed",
+      "caseIds": [
+        "F3.5_01",
+        "F3.5_02",
+        "F3.5_03"
+      ]
+    },
+    {
+      "row": 20,
+      "id": "F4",
+      "sheet": "Testcase_F4",
+      "count": 38,
+      "pattern": "F*",
+      "status": "Passed",
+      "caseIds": [
+        "F4_01",
+        "F4_02",
+        "F4_03",
+        "F4.2_01",
+        "F4.2_02",
+        "F4.3_01",
+        "F4.3_02",
+        "F4.3_03",
+        "F4.3_04",
+        "F4.4_01",
+        "F4.4_02",
+        "F4.4_03",
+        "F4.4_04",
+        "F4.5_01",
+        "F4.5_02",
+        "F4.5_03",
+        "F4.6_01",
+        "F4.6_02",
+        "F4.6_03",
+        "F4.7_01",
+        "F4.7_02",
+        "F4.7_03",
+        "F4.7_04",
+        "F4.7_05",
+        "F4.7_06",
+        "F4.8_01",
+        "F4.8_02",
+        "F4.8_03",
+        "F4.8_04",
+        "F4.9_01",
+        "F4.9_02",
+        "F4.9_03",
+        "F4.9_04",
+        "F4.7_07",
+        "F4.7_08",
+        "F4.7_09",
+        "F4.3_05",
+        "F4.3_06"
+      ]
+    },
+    {
+      "row": 21,
+      "id": "F4.1",
+      "sheet": "Testcase_F4",
+      "count": 3,
+      "pattern": "F4_*",
+      "status": "Passed",
+      "caseIds": [
+        "F4_01",
+        "F4_02",
+        "F4_03"
+      ]
+    },
+    {
+      "row": 22,
+      "id": "F4.2",
+      "sheet": "Testcase_F4",
+      "count": 2,
+      "pattern": "F4.2_*",
+      "status": "Passed",
+      "caseIds": [
+        "F4.2_01",
+        "F4.2_02"
+      ]
+    },
+    {
+      "row": 23,
+      "id": "F4.3",
+      "sheet": "Testcase_F4",
+      "count": 6,
+      "pattern": "F4.3_*",
+      "status": "Passed",
+      "caseIds": [
+        "F4.3_01",
+        "F4.3_02",
+        "F4.3_03",
+        "F4.3_04",
+        "F4.3_05",
+        "F4.3_06"
+      ]
+    },
+    {
+      "row": 24,
+      "id": "F4.4",
+      "sheet": "Testcase_F4",
+      "count": 4,
+      "pattern": "F4.4_*",
+      "status": "Passed",
+      "caseIds": [
+        "F4.4_01",
+        "F4.4_02",
+        "F4.4_03",
+        "F4.4_04"
+      ]
+    },
+    {
+      "row": 25,
+      "id": "F4.5",
+      "sheet": "Testcase_F4",
+      "count": 3,
+      "pattern": "F4.5_*",
+      "status": "Passed",
+      "caseIds": [
+        "F4.5_01",
+        "F4.5_02",
+        "F4.5_03"
+      ]
+    },
+    {
+      "row": 26,
+      "id": "F4.6",
+      "sheet": "Testcase_F4",
+      "count": 3,
+      "pattern": "F4.6_*",
+      "status": "Passed",
+      "caseIds": [
+        "F4.6_01",
+        "F4.6_02",
+        "F4.6_03"
+      ]
+    },
+    {
+      "row": 27,
+      "id": "F4.7",
+      "sheet": "Testcase_F4",
+      "count": 9,
+      "pattern": "F4.7_*",
+      "status": "Passed",
+      "caseIds": [
+        "F4.7_01",
+        "F4.7_02",
+        "F4.7_03",
+        "F4.7_04",
+        "F4.7_05",
+        "F4.7_06",
+        "F4.7_07",
+        "F4.7_08",
+        "F4.7_09"
+      ]
+    },
+    {
+      "row": 28,
+      "id": "F4.8",
+      "sheet": "Testcase_F4",
+      "count": 4,
+      "pattern": "F4.8_*",
+      "status": "Passed",
+      "caseIds": [
+        "F4.8_01",
+        "F4.8_02",
+        "F4.8_03",
+        "F4.8_04"
+      ]
+    },
+    {
+      "row": 29,
+      "id": "F4.9",
+      "sheet": "Testcase_F4",
+      "count": 4,
+      "pattern": "F4.9_*",
+      "status": "Passed",
+      "caseIds": [
+        "F4.9_01",
+        "F4.9_02",
+        "F4.9_03",
+        "F4.9_04"
+      ]
+    },
+    {
+      "row": 30,
+      "id": "F5",
+      "sheet": "Testcase_F5",
+      "count": 14,
+      "pattern": "F*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F5_01",
+        "F5_02",
+        "F5_03",
+        "F5_04",
+        "F5.2_01",
+        "F5.2_02",
+        "F5.2_03",
+        "F5.2_04",
+        "F5.3_01",
+        "F5.3_02",
+        "F5.3_03",
+        "F5.3_04",
+        "F5_05",
+        "F5_06"
+      ]
+    },
+    {
+      "row": 31,
+      "id": "F5.1",
+      "sheet": "Testcase_F5",
+      "count": 6,
+      "pattern": "F5_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F5_01",
+        "F5_02",
+        "F5_03",
+        "F5_04",
+        "F5_05",
+        "F5_06"
+      ]
+    },
+    {
+      "row": 32,
+      "id": "F5.2",
+      "sheet": "Testcase_F5",
+      "count": 4,
+      "pattern": "F5.2_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F5.2_01",
+        "F5.2_02",
+        "F5.2_03",
+        "F5.2_04"
+      ]
+    },
+    {
+      "row": 33,
+      "id": "F5.3",
+      "sheet": "Testcase_F5",
+      "count": 4,
+      "pattern": "F5.3_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F5.3_01",
+        "F5.3_02",
+        "F5.3_03",
+        "F5.3_04"
+      ]
+    },
+    {
+      "row": 34,
+      "id": "F6",
+      "sheet": "Testcase_F6",
+      "count": 9,
+      "pattern": "F*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F6_01",
+        "F6_02",
+        "F6_03",
+        "F6_04",
+        "F6_05",
+        "F6_06",
+        "F6_07",
+        "F6_08",
+        "F6_09"
+      ]
+    },
+    {
+      "row": 35,
+      "id": "F7",
+      "sheet": "Testcase_F7",
+      "count": 10,
+      "pattern": "F*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F7_01",
+        "F7_02",
+        "F7_03",
+        "F7_04",
+        "F7_05",
+        "F7_06",
+        "F7_07",
+        "F7_08",
+        "F7_09",
+        "F7_10"
+      ]
+    },
+    {
+      "row": 36,
+      "id": "F8",
+      "sheet": "Testcase_F8",
+      "count": 17,
+      "pattern": "F*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F8_01",
+        "F8_02",
+        "F8_03",
+        "F8_04",
+        "F8_05",
+        "F8_06",
+        "F8_07",
+        "F8.2_01",
+        "F8.2_02",
+        "F8.2_03",
+        "F8.2_04",
+        "F8.2_05",
+        "F8.2_06",
+        "F8.2_07",
+        "F8.2_08",
+        "F8_08",
+        "F8_09"
+      ]
+    },
+    {
+      "row": 37,
+      "id": "F8.1",
+      "sheet": "Testcase_F8",
+      "count": 9,
+      "pattern": "F8_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F8_01",
+        "F8_02",
+        "F8_03",
+        "F8_04",
+        "F8_05",
+        "F8_06",
+        "F8_07",
+        "F8_08",
+        "F8_09"
+      ]
+    },
+    {
+      "row": 38,
+      "id": "F8.2",
+      "sheet": "Testcase_F8",
+      "count": 8,
+      "pattern": "F8.2_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F8.2_01",
+        "F8.2_02",
+        "F8.2_03",
+        "F8.2_04",
+        "F8.2_05",
+        "F8.2_06",
+        "F8.2_07",
+        "F8.2_08"
+      ]
+    },
+    {
+      "row": 40,
+      "id": "F9",
+      "sheet": "Testcase_F9",
+      "count": 29,
+      "pattern": "F*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F9_01",
+        "F9_02",
+        "F9.2_01",
+        "F9.3_01",
+        "F9.3_02",
+        "F9.3_03",
+        "F9.3_04",
+        "F9.4_01",
+        "F9.4_02",
+        "F9.4_03",
+        "F9.5_01",
+        "F9.5_02",
+        "F9.5_03",
+        "F9.5_04",
+        "F9.6_01",
+        "F9.6_02",
+        "F9.6_03",
+        "F9.7_01",
+        "F9.7_02",
+        "F9.7_03",
+        "F9.8_01",
+        "F9.8_02",
+        "F9.8_03",
+        "F9.9_01",
+        "F9.9_02",
+        "F9.9_03",
+        "F9.9_04",
+        "F9_03",
+        "F9_04"
+      ]
+    },
+    {
+      "row": 41,
+      "id": "F9.1",
+      "sheet": "Testcase_F9",
+      "count": 4,
+      "pattern": "F9_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F9_01",
+        "F9_02",
+        "F9_03",
+        "F9_04"
+      ]
+    },
+    {
+      "row": 42,
+      "id": "F9.2",
+      "sheet": "Testcase_F9",
+      "count": 1,
+      "pattern": "F9.2_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F9.2_01"
+      ]
+    },
+    {
+      "row": 43,
+      "id": "F9.3",
+      "sheet": "Testcase_F9",
+      "count": 4,
+      "pattern": "F9.3_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F9.3_01",
+        "F9.3_02",
+        "F9.3_03",
+        "F9.3_04"
+      ]
+    },
+    {
+      "row": 44,
+      "id": "F9.4",
+      "sheet": "Testcase_F9",
+      "count": 3,
+      "pattern": "F9.4_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F9.4_01",
+        "F9.4_02",
+        "F9.4_03"
+      ]
+    },
+    {
+      "row": 45,
+      "id": "F9.5",
+      "sheet": "Testcase_F9",
+      "count": 4,
+      "pattern": "F9.5_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F9.5_01",
+        "F9.5_02",
+        "F9.5_03",
+        "F9.5_04"
+      ]
+    },
+    {
+      "row": 46,
+      "id": "F9.6",
+      "sheet": "Testcase_F9",
+      "count": 3,
+      "pattern": "F9.6_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F9.6_01",
+        "F9.6_02",
+        "F9.6_03"
+      ]
+    },
+    {
+      "row": 47,
+      "id": "F9.7",
+      "sheet": "Testcase_F9",
+      "count": 3,
+      "pattern": "F9.7_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F9.7_01",
+        "F9.7_02",
+        "F9.7_03"
+      ]
+    },
+    {
+      "row": 48,
+      "id": "F9.8",
+      "sheet": "Testcase_F9",
+      "count": 3,
+      "pattern": "F9.8_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F9.8_01",
+        "F9.8_02",
+        "F9.8_03"
+      ]
+    },
+    {
+      "row": 49,
+      "id": "F9.9",
+      "sheet": "Testcase_F9",
+      "count": 4,
+      "pattern": "F9.9_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F9.9_01",
+        "F9.9_02",
+        "F9.9_03",
+        "F9.9_04"
+      ]
+    },
+    {
+      "row": 51,
+      "id": "F10",
+      "sheet": "Testcase_F10",
+      "count": 28,
+      "pattern": "F*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F10_01",
+        "F10_02",
+        "F10_03",
+        "F10.2_01",
+        "F10.2_02",
+        "F10.2_03",
+        "F10.3_01",
+        "F10.3_02",
+        "F10.3_03",
+        "F10.3_04",
+        "F10.3_05",
+        "F10.4_01",
+        "F10.4_02",
+        "F10.4_03",
+        "F10.4_04",
+        "F10.5_01",
+        "F10.5_02",
+        "F10.5_03",
+        "F10.5_04",
+        "F10.6_01",
+        "F10.6_02",
+        "F10.6_03",
+        "F10.6_04",
+        "F10.6_05",
+        "F10.7_01",
+        "F10.7_02",
+        "F10.4_05",
+        "F10.4_06"
+      ]
+    },
+    {
+      "row": 52,
+      "id": "F10.1",
+      "sheet": "Testcase_F10",
+      "count": 3,
+      "pattern": "F10_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F10_01",
+        "F10_02",
+        "F10_03"
+      ]
+    },
+    {
+      "row": 53,
+      "id": "F10.2",
+      "sheet": "Testcase_F10",
+      "count": 3,
+      "pattern": "F10.2_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F10.2_01",
+        "F10.2_02",
+        "F10.2_03"
+      ]
+    },
+    {
+      "row": 54,
+      "id": "F10.3",
+      "sheet": "Testcase_F10",
+      "count": 5,
+      "pattern": "F10.3_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F10.3_01",
+        "F10.3_02",
+        "F10.3_03",
+        "F10.3_04",
+        "F10.3_05"
+      ]
+    },
+    {
+      "row": 55,
+      "id": "F10.4",
+      "sheet": "Testcase_F10",
+      "count": 6,
+      "pattern": "F10.4_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F10.4_01",
+        "F10.4_02",
+        "F10.4_03",
+        "F10.4_04",
+        "F10.4_05",
+        "F10.4_06"
+      ]
+    },
+    {
+      "row": 56,
+      "id": "F10.5",
+      "sheet": "Testcase_F10",
+      "count": 4,
+      "pattern": "F10.5_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F10.5_01",
+        "F10.5_02",
+        "F10.5_03",
+        "F10.5_04"
+      ]
+    },
+    {
+      "row": 57,
+      "id": "F10.6",
+      "sheet": "Testcase_F10",
+      "count": 5,
+      "pattern": "F10.6_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F10.6_01",
+        "F10.6_02",
+        "F10.6_03",
+        "F10.6_04",
+        "F10.6_05"
+      ]
+    },
+    {
+      "row": 58,
+      "id": "F10.7",
+      "sheet": "Testcase_F10",
+      "count": 2,
+      "pattern": "F10.7_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F10.7_01",
+        "F10.7_02"
+      ]
+    },
+    {
+      "row": 60,
+      "id": "F11",
+      "sheet": "Testcase_F11",
+      "count": 59,
+      "pattern": "F*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F11_01",
+        "F11_02",
+        "F11.2_01",
+        "F11.2_02",
+        "F11.3_01",
+        "F11.3_02",
+        "F11.3_03",
+        "F11.3_04",
+        "F11.4_01",
+        "F11.4_02",
+        "F11.4_03",
+        "F11.4_04",
+        "F11.5_01",
+        "F11.5_02",
+        "F11.5_03",
+        "F11.5_04",
+        "F11.6_01",
+        "F11.6_02",
+        "F11.6_03",
+        "F11.7_01",
+        "F11.7_02",
+        "F11.7_03",
+        "F11.8_01",
+        "F11.8_02",
+        "F11.8_03",
+        "F11.9_01",
+        "F11.9_02",
+        "F11.9_03",
+        "F11.10_01",
+        "F11.10_02",
+        "F11.10_03",
+        "F11.10_04",
+        "F11.10_05",
+        "F11.10_06",
+        "F11.10_07",
+        "F11.11_01",
+        "F11.11_02",
+        "F11.11_03",
+        "F11.12_01",
+        "F11.12_02",
+        "F11.12_03",
+        "F11.12_04",
+        "F11.13_01",
+        "F11.13_02",
+        "F11.14_01",
+        "F11.14_02",
+        "F11.14_03",
+        "F11.14_04",
+        "F11.15_01",
+        "F11.15_02",
+        "F11.16_01",
+        "F11.16_02",
+        "F11.16_03",
+        "F11.16_04",
+        "F11.17_01",
+        "F11.17_02",
+        "F11.17_03",
+        "F11_03",
+        "F11_04"
+      ]
+    },
+    {
+      "row": 61,
+      "id": "F11.1",
+      "sheet": "Testcase_F11",
+      "count": 4,
+      "pattern": "F11_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F11_01",
+        "F11_02",
+        "F11_03",
+        "F11_04"
+      ]
+    },
+    {
+      "row": 62,
+      "id": "F11.2",
+      "sheet": "Testcase_F11",
+      "count": 2,
+      "pattern": "F11.2_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F11.2_01",
+        "F11.2_02"
+      ]
+    },
+    {
+      "row": 63,
+      "id": "F11.3",
+      "sheet": "Testcase_F11",
+      "count": 4,
+      "pattern": "F11.3_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F11.3_01",
+        "F11.3_02",
+        "F11.3_03",
+        "F11.3_04"
+      ]
+    },
+    {
+      "row": 64,
+      "id": "F11.4",
+      "sheet": "Testcase_F11",
+      "count": 4,
+      "pattern": "F11.4_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F11.4_01",
+        "F11.4_02",
+        "F11.4_03",
+        "F11.4_04"
+      ]
+    },
+    {
+      "row": 65,
+      "id": "F11.5",
+      "sheet": "Testcase_F11",
+      "count": 4,
+      "pattern": "F11.5_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F11.5_01",
+        "F11.5_02",
+        "F11.5_03",
+        "F11.5_04"
+      ]
+    },
+    {
+      "row": 66,
+      "id": "F11.6",
+      "sheet": "Testcase_F11",
+      "count": 3,
+      "pattern": "F11.6_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F11.6_01",
+        "F11.6_02",
+        "F11.6_03"
+      ]
+    },
+    {
+      "row": 67,
+      "id": "F11.7",
+      "sheet": "Testcase_F11",
+      "count": 3,
+      "pattern": "F11.7_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F11.7_01",
+        "F11.7_02",
+        "F11.7_03"
+      ]
+    },
+    {
+      "row": 68,
+      "id": "F11.8",
+      "sheet": "Testcase_F11",
+      "count": 3,
+      "pattern": "F11.8_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F11.8_01",
+        "F11.8_02",
+        "F11.8_03"
+      ]
+    },
+    {
+      "row": 69,
+      "id": "F11.9",
+      "sheet": "Testcase_F11",
+      "count": 3,
+      "pattern": "F11.9_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F11.9_01",
+        "F11.9_02",
+        "F11.9_03"
+      ]
+    },
+    {
+      "row": 70,
+      "id": "F11.10",
+      "sheet": "Testcase_F11",
+      "count": 7,
+      "pattern": "F11.10_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F11.10_01",
+        "F11.10_02",
+        "F11.10_03",
+        "F11.10_04",
+        "F11.10_05",
+        "F11.10_06",
+        "F11.10_07"
+      ]
+    },
+    {
+      "row": 71,
+      "id": "F11.11",
+      "sheet": "Testcase_F11",
+      "count": 3,
+      "pattern": "F11.11_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F11.11_01",
+        "F11.11_02",
+        "F11.11_03"
+      ]
+    },
+    {
+      "row": 72,
+      "id": "F11.12",
+      "sheet": "Testcase_F11",
+      "count": 4,
+      "pattern": "F11.12_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F11.12_01",
+        "F11.12_02",
+        "F11.12_03",
+        "F11.12_04"
+      ]
+    },
+    {
+      "row": 73,
+      "id": "F11.13",
+      "sheet": "Testcase_F11",
+      "count": 2,
+      "pattern": "F11.13_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F11.13_01",
+        "F11.13_02"
+      ]
+    },
+    {
+      "row": 74,
+      "id": "F11.14",
+      "sheet": "Testcase_F11",
+      "count": 4,
+      "pattern": "F11.14_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F11.14_01",
+        "F11.14_02",
+        "F11.14_03",
+        "F11.14_04"
+      ]
+    },
+    {
+      "row": 75,
+      "id": "F11.15",
+      "sheet": "Testcase_F11",
+      "count": 2,
+      "pattern": "F11.15_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F11.15_01",
+        "F11.15_02"
+      ]
+    },
+    {
+      "row": 76,
+      "id": "F11.16",
+      "sheet": "Testcase_F11",
+      "count": 4,
+      "pattern": "F11.16_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F11.16_01",
+        "F11.16_02",
+        "F11.16_03",
+        "F11.16_04"
+      ]
+    },
+    {
+      "row": 77,
+      "id": "F11.17",
+      "sheet": "Testcase_F11",
+      "count": 3,
+      "pattern": "F11.17_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F11.17_01",
+        "F11.17_02",
+        "F11.17_03"
+      ]
+    },
+    {
+      "row": 79,
+      "id": "F12",
+      "sheet": "Testcase_F12",
+      "count": 13,
+      "pattern": "F*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F12_01",
+        "F12_02",
+        "F12_03",
+        "F12.2_01",
+        "F12.2_02",
+        "F12.2_03",
+        "F12.2_04",
+        "F12.3_01",
+        "F12.3_02",
+        "F12.4_01",
+        "F12.4_02",
+        "F12.4_03",
+        "F12.4_04"
+      ]
+    },
+    {
+      "row": 80,
+      "id": "F12.1",
+      "sheet": "Testcase_F12",
+      "count": 3,
+      "pattern": "F12_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F12_01",
+        "F12_02",
+        "F12_03"
+      ]
+    },
+    {
+      "row": 81,
+      "id": "F12.2",
+      "sheet": "Testcase_F12",
+      "count": 4,
+      "pattern": "F12.2_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F12.2_01",
+        "F12.2_02",
+        "F12.2_03",
+        "F12.2_04"
+      ]
+    },
+    {
+      "row": 82,
+      "id": "F12.3",
+      "sheet": "Testcase_F12",
+      "count": 2,
+      "pattern": "F12.3_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F12.3_01",
+        "F12.3_02"
+      ]
+    },
+    {
+      "row": 83,
+      "id": "F12.4",
+      "sheet": "Testcase_F12",
+      "count": 4,
+      "pattern": "F12.4_*",
+      "status": "Not Executed",
+      "caseIds": [
+        "F12.4_01",
+        "F12.4_02",
+        "F12.4_03",
+        "F12.4_04"
+      ]
+    }
+  ]
+}

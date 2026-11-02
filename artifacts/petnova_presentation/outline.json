@@ -1,0 +1,189 @@
+{
+  "sections": [
+    {
+      "title": "KIỂM THỬ PHẦN MỀM PETNOVA",
+      "description": "Trang bìa tối giản cho báo cáo học phần của Nhóm 09. Ghi chú trình bày: chào thầy cô và các bạn, giới thiệu ba thành viên. Toàn bộ bài nói dự kiến 20 phút, gồm chuyển trang và chỉ vào dữ liệu minh họa.",
+      "points": ["Website quản lý chăm sóc thú cưng", "Nhóm 09", "Bùi Quang Huy · Võ Hồng Đăng Khoa · Nguyễn Thanh Bình", "Kịch bản báo cáo 20 phút"]
+    },
+    {
+      "title": "PetNova và bốn vai trò",
+      "description": "Phần Bùi Quang Huy, mở đầu 00:00–02:00. Minh họa luồng chăm sóc thú cưng bằng sơ đồ đơn giản có nhãn chỉnh sửa được.",
+      "points": ["Khách tạo hồ sơ thú cưng, đặt dịch vụ và thanh toán", "Nhân viên tiếp nhận, phân công và theo dõi tiến độ", "Bác sĩ thú y cập nhật bệnh án, sức khỏe và tiêm chủng", "Quản trị viên quản lý hệ thống", "Bốn vai trò có giao diện và quyền truy cập riêng"]
+    },
+    {
+      "title": "Kiến trúc và các điểm tích hợp",
+      "description": "Sơ đồ kiến trúc React, ASP.NET Core API, SQL Server. Kết nối dịch vụ bên ngoài với đúng chức năng. Ghi chú: quan tâm cả tính đúng đắn của chức năng và sự đồng bộ giữa các thành phần.",
+      "points": ["React: giao diện website", "ASP.NET Core: API xử lý nghiệp vụ", "SQL Server: dữ liệu hệ thống", "Firebase: xác thực tài khoản", "SMTP: gửi OTP qua email", "PayOS: thanh toán trực tuyến; Cloudinary: lưu ảnh"]
+    },
+    {
+      "title": "Phạm vi và phân công trình bày",
+      "description": "Dùng bảng chỉnh sửa được với các cột thời gian, thành viên, phạm vi, số ca thiết kế. Đây là phân công trình bày, không phải bằng chứng ai đã thực thi kết quả.",
+      "points": ["12 nhóm chức năng F1–F12, tổng cộng 273 ca chức năng thiết kế", "00:00–07:00 — Bùi Quang Huy: giới thiệu, phương pháp, F1/F2/F3/F6; 65 ca", "07:00–13:00 — Võ Hồng Đăng Khoa: F4/F5/F7/F8; 79 ca", "13:00–20:00 — Nguyễn Thanh Bình: F9/F10/F11/F12, kết quả và kết luận; 129 ca", "69 ca tích hợp FI_01–FI_69 đang ghi Not Executed", "88 kiểm tra tự động đạt thuộc báo cáo 26/10/2026, không quy đổi thành số ca Excel Passed"]
+    },
+    {
+      "title": "Scenario, test case và phương pháp hộp đen",
+      "description": "Trình bày ví dụ đặt lịch và quy trình thiết kế kiểm thử. Phân biệt rõ tình huống nghiệp vụ với ca cụ thể.",
+      "points": ["Scenario: tình huống nghiệp vụ, ví dụ khách đặt lịch chăm sóc thú cưng", "Test case: tiền điều kiện, dữ liệu, bước thao tác và kết quả mong đợi", "Một scenario có nhiều test case: thành công, thiếu dịch vụ, hết chỗ, thú cưng khác chủ", "Quy trình: xác định quy tắc, chia dữ liệu hợp lệ/không hợp lệ, chọn biên, thực hiện, đối chiếu và lưu bằng chứng", "Kỹ thuật: phân vùng tương đương, giá trị biên, bảng quyết định và chuyển trạng thái"]
+    },
+    {
+      "title": "F1 — Xác thực và dữ liệu kiểm thử",
+      "description": "Bùi Quang Huy trình bày F1/F2/F3/F6 trong 02:00–07:00. Ghi chú minh họa: mở trang xác thực, tổng quan, danh sách thú cưng và sổ sức khỏe nếu có dữ liệu chuẩn bị.",
+      "points": ["Đăng ký, đăng nhập theo vai trò, tài khoản khóa, quên mật khẩu, OTP và đăng xuất", "Mục tiêu: đúng cổng truy cập, đúng vai trò, hồ sơ còn hoạt động", "Email hợp lệ/sai định dạng, mới/trùng, trường đủ/bỏ trống", "Mật khẩu hiện tại: 12–128 ký tự ASCII, có hoa, thường, số và ký tự đặc biệt", "Biên độ dài: 11, 12, 128, 129; kiểm tra riêng từng thành phần bị thiếu", "Mỗi lần chỉ làm sai một điều kiện để xác định nguyên nhân từ chối"]
+    },
+    {
+      "title": "F1 — Tích hợp xác thực và giao diện",
+      "description": "Phân biệt kịch bản tích hợp thiết kế với bằng chứng đã quan sát. Không gán Passed cho FI_01/02/03.",
+      "points": ["FI_01: Firebase phải ghép đúng hồ sơ SQL, vai trò và trạng thái", "FI_02: hồ sơ SQL bị khóa vẫn phải bị từ chối dù token Firebase còn hiệu lực", "Quên mật khẩu: số điện thoại tìm tài khoản, OTP gửi đến email liên kết", "FI_03: yêu cầu OTP, xác minh, đặt mật khẩu mới rồi đăng nhập lại; luồng OTP thật cần xác nhận riêng", "UI: nhãn, lỗi tiếng Việt, hiện/ẩn mật khẩu, điều hướng và trạng thái chờ", "Đã lưu quan sát bấm form rỗng và hiện/ẩn mật khẩu trên đăng nhập, đăng ký; có bằng chứng validation/helper"]
+    },
+    {
+      "title": "F2 — Tổng quan khách hàng",
+      "description": "Nhấn mạnh điều kiện được tính vào các chỉ số và tích hợp với thao tác nghiệp vụ.",
+      "points": ["Số thú cưng chưa lưu trữ, lịch sắp tới chưa hoàn thành/hủy, giao dịch chờ và thông báo chưa đọc", "Dữ liệu: không có, một và nhiều bản ghi ở các trạng thái khác nhau", "FI_38: thêm thú cưng rồi tải lại, bộ đếm phải tăng đúng một", "FI_40: đánh dấu thông báo đã đọc rồi đối chiếu bộ đếm", "UI rỗng phải dễ hiểu; API lỗi phải hiển thị lỗi tải dữ liệu"]
+    },
+    {
+      "title": "F3 — Hồ sơ thú cưng và ảnh",
+      "description": "Kết hợp kiểm thử dữ liệu, điểm nối dữ liệu và giao diện; nếu minh họa ảnh chỉ sử dụng hình minh họa, không giả làm ảnh chụp hệ thống thật.",
+      "points": ["Danh sách, thêm, sửa, ảnh và lưu trữ hồ sơ thú cưng", "Dữ liệu sai: thiếu tên, ngày sinh tương lai, cân nặng không hợp lệ, sai định dạng ảnh", "Giới hạn ảnh 5 MiB: kiểm tra dưới, đúng và vượt giới hạn; tệp giả ảnh phải bị từ chối", "FI_05: thú cưng mới xuất hiện khi đặt lịch và thuộc đúng chủ", "FI_07: upload Cloudinary thành công rồi mới lưu tham chiếu; FI_06: còn lịch mở thì không được lưu trữ, lịch sử phải được giữ", "UI: xem trước ảnh, form thêm/sửa, thông báo lưu, nút hủy. SQL đã chặn A đọc/sửa thú cưng B; upload Cloudinary thật chưa xác nhận trong báo cáo 26/10"]
+    },
+    {
+      "title": "F6 — Xem hồ sơ sức khỏe",
+      "description": "Ghi chú chuyển người: Huy kết thúc phần nền tảng tài khoản, dữ liệu thú cưng và xem thông tin; mời Võ Hồng Đăng Khoa trình bày đặt lịch, thanh toán và chức năng khách hàng.",
+      "points": ["Khách xem bệnh án và lịch tiêm của thú cưng thuộc tài khoản", "Scenario: có/chưa có hồ sơ, đổi thú cưng, truy cập hồ sơ khác chủ", "FI_27: bác sĩ thêm bệnh án và chủ thấy đúng lịch sử; FI_58: mũi tiêm mới xuất hiện trong sổ sức khỏe", "UI luôn chỉ rõ thú cưng đang xem; phản hồi cũ không ghi đè hồ sơ mới khi đổi lựa chọn", "Đã kiểm tra logic phản hồi chậm và SQL từ chối hồ sơ khác chủ", "Luồng đầy đủ giữa bác sĩ và khách trên trình duyệt vẫn cần chạy"]
+    },
+    {
+      "title": "F4 — Đặt lịch và các giá trị biên",
+      "description": "Võ Hồng Đăng Khoa, 07:00–13:00, trình bày F4/F5/F7/F8 với 79 ca chức năng thiết kế. Ghi chú minh họa: form đặt lịch.",
+      "points": ["Đặt, đổi và hủy lịch; chọn thú cưng, hình thức chăm sóc, dịch vụ, ngày giờ, ghi chú, phương thức thanh toán", "Kết quả phải rõ chủ lịch, dịch vụ, thời lượng và tổng tiền", "Số dịch vụ: 0, 1, 10, 11; hợp lệ từ 1 đến 10", "Ghi chú: 255 và 256 ký tự", "Ngày đặt: giới hạn sáu tháng và vượt một ngày", "Giờ bắt đầu theo bước 30 phút, từ 08:00; kết thúc chậm nhất 18:00. Kiểm tra lịch thú cưng trùng và công suất phục vụ"]
+    },
+    {
+      "title": "F4 — Scenario đặt lịch và chống tạo trùng",
+      "description": "Minh họa chuỗi Lịch hẹn, Chi tiết dịch vụ, Thanh toán, Thông báo bằng sơ đồ có nhãn. Tách mong đợi thiết kế khỏi bằng chứng controller/SQL.",
+      "points": ["17:00 + dịch vụ 60 phút: vừa giờ đóng cửa; 17:00 + 90 phút: phải từ chối", "FI_11: lịch tiền mặt hợp lệ tạo lịch PENDING, đủ chi tiết dịch vụ, thanh toán tiền mặt chờ và thông báo đúng khách", "FI_12: gửi lại cùng requestId phải nhận diện lặp, không tạo hai bộ dữ liệu", "Đã có bằng chứng controller + SQL: tạo đồng bộ lịch/chi tiết/thanh toán, phát lại requestId, biên ghi chú 255/256", "Bằng chứng này chưa bao phủ mọi thao tác trình duyệt trong testcase gốc"]
+    },
+    {
+      "title": "F4 — Giao diện, đổi lịch và hủy lịch",
+      "description": "Có thể chỉ vào form/dữ liệu chuẩn bị. Không tạo ảnh màn hình giả như bằng chứng thực thi.",
+      "points": ["UI hiển thị dịch vụ đã chọn, tổng thời lượng, tổng tiền và giờ còn trống", "Lỗi nhập liệu phải chỉ rõ trường cần sửa", "Đổi lịch: thời gian mới phải giữ đúng sau khi tải lại", "Bấm hủy nhưng không xác nhận: dữ liệu giữ nguyên", "Scenario đổi/hủy còn đối chiếu thanh toán và thông báo liên quan"]
+    },
+    {
+      "title": "F5 — Thanh toán và xác minh PayOS",
+      "description": "Ghi chú minh họa: chuyển sang lịch sử thanh toán và các trạng thái giao dịch. Các FI là kịch bản đã thiết kế.",
+      "points": ["Phạm vi: lịch sử thanh toán, đối soát PayOS và thử lại giao dịch thất bại", "Khách quay lại website chưa đủ kết luận thanh toán thành công", "Cần xác minh phản hồi, chữ ký, mã giao dịch và số tiền", "FI_51: sai chữ ký hoặc sai số tiền không được ghi PAID", "FI_52: thông báo thanh toán lặp không tạo hai thông báo cho khách", "FAILED chỉ được thử lại khi lịch đủ điều kiện, không có PENDING hoặc PAID cản trở; hai yêu cầu đồng thời chỉ tạo một PENDING mới"]
+    },
+    {
+      "title": "F5 — Bằng chứng và giao diện thanh toán",
+      "description": "Nhấn mạnh giới hạn của kiểm tra cục bộ so với thanh toán thật từ đầu đến cuối.",
+      "points": ["SQL đã xác nhận thử lại đồng thời chỉ tạo một PENDING", "Xác nhận tiền mặt đồng thời chỉ được ghi nhận một lần", "Webhook dùng SDK kiểm tra chữ ký cục bộ với khóa QA giả", "Chưa dùng kết quả cục bộ để khẳng định PayOS thật đã hoàn tất end-to-end", "UI: đúng số tiền VND, phương thức, thời gian, trạng thái và thao tác thử lại phù hợp", "Khách không được xem giao dịch người khác bằng cách thay mã giao dịch"]
+    },
+    {
+      "title": "F7 — Thông báo cá nhân",
+      "description": "Đối chiếu điểm nối lịch hẹn, thanh toán, thông báo và tổng quan.",
+      "points": ["Danh sách, đánh dấu một/tất cả đã đọc, bộ đếm chưa đọc, mở lịch hẹn liên quan", "Scenario: nhận thông báo, đọc, kiểm tra bộ đếm, thực hiện lại thao tác đọc", "Thay đổi nghiệp vụ phải tạo thông báo đúng người; đọc phải đồng bộ trạng thái và bộ đếm", "SQL đã kiểm tra lưu trạng thái đã đọc, đọc lặp, từ chối khách khác đọc hoặc đánh dấu", "UI phân biệt đã đọc/chưa đọc, có phản hồi rõ khi danh sách rỗng"]
+    },
+    {
+      "title": "F8 — Tài khoản khách hàng",
+      "description": "Ghi chú chuyển người: Khoa kết thúc phần nhất quán của lịch, tiền, thông báo, tài khoản; mời Nguyễn Thanh Bình trình bày vận hành, bác sĩ, quản trị và kiểm soát toàn hệ thống.",
+      "points": ["Cập nhật họ tên, số điện thoại, ảnh đại diện, mật khẩu và email", "Kiểm tra tên rỗng/toàn khoảng trắng, 100/101 ký tự; điện thoại hợp lệ/sai/trùng", "SQL đã lưu được tên 100, chặn 101 và từ chối tên toàn khoảng trắng", "Tích hợp SQL, Firebase và Cloudinary", "Đổi email cần xác nhận sở hữu, đồng bộ email; đổi mật khẩu cần xác thực lại rồi đăng nhập bằng thông tin mới. Luồng thật cần bằng chứng riêng", "UI chỉ rõ trường sai, không báo thành công khi máy chủ từ chối"]
+    },
+    {
+      "title": "F9 — Vận hành và chuyển trạng thái lịch",
+      "description": "Nguyễn Thanh Bình trình bày F9–F12 trong 13:00–18:30, gồm 129 ca chức năng thiết kế. Minh họa luồng trạng thái lịch hẹn.",
+      "points": ["Tìm/lọc lịch, xem chi tiết, phân công, đổi lịch tại quầy, tiến độ, tiền mặt và ghi nhận hoàn tiền", "Luồng chính: PENDING, CONFIRMED, IN_PROGRESS, COMPLETED", "Kiểm thử chuyển đúng, bỏ bước và chuyển ngược; SQL đã chặn PENDING sang thẳng COMPLETED", "Bảng quyết định kết hợp trạng thái lịch với trạng thái thanh toán", "Lịch đang thực hiện nhưng chưa có PAID thì chưa được hoàn thành", "FI_25: bị chặn khi chưa thu tiền, xác nhận tiền mặt hợp lệ, sau đó mới hoàn thành"]
+    },
+    {
+      "title": "F9 — Phân công, giao diện và hoàn tiền",
+      "description": "Tách rõ ghi nhận hoàn tiền bên ngoài với thao tác chuyển tiền. Minh họa bằng nội dung nghiệp vụ, không giả lập chứng từ thật.",
+      "points": ["Nhân sự phải đang hoạt động và không trùng giờ", "FI_23: phân công xong, bác sĩ thấy đúng ca và khách nhận thông báo", "SQL đã kiểm tra phân công nhân sự đang hoạt động, còn trống", "UI bảng vận hành: tìm/lọc theo điều kiện; chi tiết đủ dịch vụ và giao dịch", "Hoàn tiền trong dự án là ghi nhận khoản đã hoàn bên ngoài hệ thống, có lý do và tham chiếu", "Đối chiếu chứng từ và dữ liệu ghi nhận; nút này không tự chuyển tiền qua ngân hàng"]
+    },
+    {
+      "title": "F10 — Hồ sơ thú y",
+      "description": "Ghi chú minh họa: chuyển sang hồ sơ bác sĩ. Luôn tách mong đợi khỏi phạm vi bằng chứng SQL.",
+      "points": ["Bác sĩ xem ca được phân công, cập nhật sức khỏe, thêm/sửa bệnh án, quản lý tiêm chủng", "Kiểm tra thiếu chẩn đoán/điều trị, chẩn đoán 255/256 ký tự", "Kiểm tra ngày tiêm tương lai, ngày nhắc lại không sau ngày tiêm", "Sửa bệnh án cần lý do và giữ nội dung trước sửa", "SQL đã kiểm tra đúng tác giả được phân công, từ chối bác sĩ ngoài phạm vi, lý do và bản trước sửa, cùng một số quy tắc ngày tiêm", "Tích hợp bác sĩ, phân công, thú cưng, bệnh án, sổ sức khỏe khách. UI chỉ rõ thú cưng, không giữ dữ liệu cũ khi chuyển hồ sơ"]
+    },
+    {
+      "title": "F11 — Quản trị và quy tắc liên chức năng",
+      "description": "Ghi chú minh họa: chuyển sang trang quản trị. Ưu tiên quy tắc ảnh hưởng nhiều chức năng.",
+      "points": ["Quản trị tài khoản, nhân sự, dịch vụ, danh mục, báo cáo, thông báo chung và nhật ký", "FI_10: dịch vụ bị ngưng không được dùng đặt lịch mới, kể cả gửi mã dịch vụ cũ", "FI_48: lịch đã tạo vẫn đọc được chi tiết sau khi dịch vụ bị ngưng", "Kiểm tra quy tắc hiện tại đồng thời bảo toàn lịch sử", "Nhân sự: vi phạm từ hai lên ba lần, đối chiếu đình chỉ và trạng thái tài khoản liên kết"]
+    },
+    {
+      "title": "F11 — Báo cáo và giao diện quản trị",
+      "description": "Phân biệt các đại lượng tài chính/nghiệp vụ theo đúng kịch bản. Các scenario báo cáo đầy đủ cần dữ liệu đối chiếu có kiểm soát.",
+      "points": ["Khoảng ngày đúng, ngày bắt đầu sau ngày kết thúc, vượt ba năm; SQL đã từ chối hai khoảng ngày sai", "FI_35/FI_67: đối chiếu nghiệp vụ với báo cáo", "Phân biệt số lịch, giá trị đặt, tiền đã thu và khoản hoàn", "Tiền thu tính theo ngày thanh toán; khoản hoàn theo ngày ghi nhận hoàn", "CSV phải khớp bảng đang xem; cần dữ liệu kiểm soát khi chạy đầy đủ", "UI quản trị: bộ lọc, bảng, xác nhận, tiền, báo cáo rỗng/lỗi tải; cần chạy trên trình duyệt bằng tài khoản quản trị"]
+    },
+    {
+      "title": "F12 — Xác thực, phân quyền và cô lập dữ liệu",
+      "description": "Nêu khác biệt giữa xác thực danh tính và quyền thực hiện thao tác. Dữ liệu A/B là thiết kế kiểm thử quyền sở hữu.",
+      "points": ["Xác thực: đã đăng nhập hợp lệ chưa? Phân quyền: tài khoản có quyền thao tác không?", "Đăng nhập đúng vẫn có thể bị từ chối vì sai vai trò, bị khóa hoặc xem dữ liệu người khác", "Tạo hai khách A/B với dữ liệu riêng; dùng B thử truy cập thú cưng, lịch, thanh toán, thông báo của A", "SQL đã có kiểm tra cô lập dữ liệu; HTTP đã kiểm tra thiếu token và token không hợp lệ", "Có kiểm tra chính sách route; ẩn nút UI phải đi cùng kiểm soát tại API"]
+    },
+    {
+      "title": "F12 — Checklist giao diện toàn hệ thống",
+      "description": "Không tự bịa ra danh sách đủ 20 mục khi tài liệu chỉ nêu các nhóm tiêu biểu. Dấu đánh dấu trong checklist là phạm vi, không phải kết quả đạt.",
+      "points": ["Checklist có 20 mục về giao diện và tương tác", "Nhóm tiêu biểu: màu, font, căn lề nhất quán; nhãn trường và lỗi nhập liệu", "Trạng thái đang tải, rỗng và lỗi", "Điều hướng, thao tác bàn phím, màn hình hẹp", "Đợt báo cáo có một số quan sát UI khách hàng và form xác thực", "Chưa kết luận đạt cho mọi vai trò, thiết bị và kích thước màn hình"]
+    },
+    {
+      "title": "88 kiểm tra tự động đạt ngày 26/10/2026",
+      "description": "Nguyễn Thanh Bình, kết quả và kết thúc 18:30–20:00. Dùng bảng hoặc biểu đồ chỉnh sửa được, tổng đúng 88. Giữ ngày và phạm vi từng bộ ngay trên slide.",
+      "points": ["React và JavaScript: 19 kiểm tra", "Logic API: 16 kiểm tra", "Controller kết hợp SQL bản sao: 34 kiểm tra", "HTTP: 19 kiểm tra", "Bằng chứng xác nhận một số quy tắc dữ liệu, quyền sở hữu, chống lặp và yêu cầu đồng thời", "Ví dụ sửa lỗi: trước sửa, hai xác nhận tiền mặt đồng thời có thể cùng thành công; sau sửa, chỉ một được chấp nhận, không thu trùng"]
+    },
+    {
+      "title": "Mức độ bao phủ và giới hạn bằng chứng",
+      "description": "Thể hiện các tập số liệu riêng, không cộng chúng thành tổng ca đã chạy và không tô xanh toàn bộ ca chức năng.",
+      "points": ["273 ca chức năng Excel đã thiết kế", "66 ca có bằng chứng một phần; 207 ca chưa có bằng chứng được đối chiếu", "Chưa ca Excel nào được chứng minh đủ mọi bước theo báo cáo này", "69 ca tích hợp trong tài liệu vẫn Not Executed", "88 kiểm tra tự động thuộc bốn phạm vi QA riêng, không có nghĩa 88 ca Excel Passed", "66, 207 và 88 thuộc báo cáo 26/10/2026, không bao gồm mọi kiểm tra mật khẩu bổ sung sau đó"]
+    },
+    {
+      "title": "Công việc tiếp tục và kết luận",
+      "description": "Kết phần chính của bài nói 20 phút. Lời kết: Nhóm em xin cảm ơn thầy cô và các bạn đã lắng nghe, xin nhận câu hỏi. Các trang tiếp theo là phụ lục khi hỏi sâu, không đọc trong 20 phút.",
+      "points": ["Chạy đủ luồng trình duyệt cho bốn vai trò", "Xác minh OTP/Firebase thật, PayOS thật, upload Cloudinary và nhiều kích thước màn hình", "Mỗi ca lưu tiền điều kiện, dữ liệu, kết quả thực tế và bằng chứng trước khi kết luận đạt", "Qua PetNova: chuyển yêu cầu thành scenario/testcase, chọn dữ liệu hộp đen, kiểm tra UI và theo dõi dữ liệu qua các tích hợp", "Cảm ơn thầy cô và các bạn. Nhóm xin nhận câu hỏi"]
+    },
+    {
+      "title": "Phụ lục — Phiếu nhắc nhanh của Huy",
+      "description": "Phụ lục phục vụ tập nói và hỏi đáp, không đọc trong 20 phút. Các FI là mã thiết kế, bằng chứng QA khác không chứng minh toàn bộ FI Passed.",
+      "points": ["F1/F2/F3/F6, 65 ca thiết kế, 00:00–07:00", "Tích hợp: FI_01 Firebase–SQL; FI_05 thú cưng–đặt lịch; FI_27 bác sĩ–sổ sức khỏe; FI_38 thú cưng–tổng quan", "Dữ liệu: email sai/trùng; mật khẩu 11/12/128/129; ảnh quanh 5 MiB; hồ sơ A/B", "Bằng chứng có thể dẫn: validation/helper, quan sát form xác thực, SQL chặn đọc/sửa thú cưng và đọc sức khỏe khác chủ", "Phân công trình bày không phải bằng chứng tác giả thực thi"]
+    },
+    {
+      "title": "Phụ lục — Phiếu nhắc nhanh của Khoa",
+      "description": "Phụ lục hỏi đáp. Chỉ dẫn thuyết trình: có thể chỉ vào ảnh hoặc dữ liệu đã chuẩn bị. Chỉ một scenario chính cho mỗi người.",
+      "points": ["F4/F5/F7/F8, 79 ca thiết kế, 07:00–13:00", "Tích hợp: FI_11 lịch–chi tiết–thanh toán–thông báo; FI_12 chống tạo trùng; FI_51/52 webhook; FI_40 thông báo–tổng quan", "Dữ liệu: dịch vụ 0/1/10/11; ghi chú 255/256; kết thúc 18:00; tên 100/101", "Bằng chứng: SQL tạo lịch đồng bộ, lặp requestId, biên ghi chú/tên, thử lại thanh toán đồng thời, đọc thông báo"]
+    },
+    {
+      "title": "Phụ lục — Phiếu nhắc nhanh của Bình",
+      "description": "Phụ lục hỏi đáp. Phần F9–F12 13:00–18:30; kết quả và kết thúc 18:30–20:00.",
+      "points": ["F9/F10/F11/F12, 129 ca thiết kế, tổng thời gian 13:00–20:00", "Tích hợp: FI_23 phân công–bác sĩ; FI_25 thu tiền–hoàn thành; FI_10/48 dịch vụ–lịch; FI_35/67 nghiệp vụ–báo cáo", "Dữ liệu: chuyển đúng/sai trạng thái; bác sĩ trong/ngoài phân công; chẩn đoán 255/256; báo cáo đảo ngày/quá ba năm", "Bằng chứng: SQL phân công, bệnh án, tiêm chủng, chặn bỏ bước; HTTP token sai và chính sách route"]
+    },
+    {
+      "title": "Phụ lục — Test case F4.7_06: chuẩn bị và thao tác",
+      "description": "Mẫu trình bày một testcase khi thầy cô hỏi sâu về giới hạn ghi chú.",
+      "points": ["Mục tiêu: kiểm tra giới hạn ghi chú của đặt lịch", "Tiền điều kiện: khách thử nghiệm hoạt động, thú cưng đúng chủ, dịch vụ hợp lệ, giờ còn trống", "Phân vùng: ghi chú trong giới hạn và vượt giới hạn", "Giá trị biên 254, 255, 256 ký tự; SQL đã có bằng chứng 255/256, còn 254 là giá trị bổ sung", "Giữ các trường khác, chỉ thay độ dài ghi chú", "Ca độc lập dùng requestId mới để tránh lẫn với kiểm tra chống lặp"]
+    },
+    {
+      "title": "Phụ lục — Test case F4.7_06: mong đợi và đối chiếu",
+      "description": "Không viết kết quả thực tế khi chưa quan sát. Phân biệt mức SQL với toàn bộ UI của ca Excel.",
+      "points": ["255 ký tự được chấp nhận", "256 ký tự bị từ chối", "Khi từ chối không để lại lịch, chi tiết hoặc thanh toán dở dang", "Đối chiếu phản hồi API, thông báo UI và dữ liệu liên quan trong phạm vi có quyền kiểm tra", "PASS ở lớp SQL chưa chứng minh đủ bước UI của testcase Excel", "Expected Result: yêu cầu phải có. Actual Result: thực tế quan sát. Chưa chạy thì không chép Expected thành Actual rồi gán Passed"]
+    },
+    {
+      "title": "Phụ lục — Thuật ngữ thiết kế kiểm thử",
+      "description": "Giữ định nghĩa và ví dụ trong tài liệu gốc để trả lời câu hỏi.",
+      "points": ["Scenario: tình huống nghiệp vụ, ví dụ thanh toán tiền mặt rồi hoàn thành lịch", "Test case: điều kiện, dữ liệu, thao tác và kết quả cụ thể", "Ví dụ test case: lịch IN_PROGRESS nhưng Payment PENDING thì yêu cầu hoàn thành bị từ chối", "Hộp đen: thiết kế và đánh giá từ đầu vào, đầu ra, quy tắc nghiệp vụ; áp dụng được ở UI hoặc API", "UI: màn hình và tương tác, gồm bố cục, nhãn, lỗi, điều hướng, tải và bàn phím"]
+    },
+    {
+      "title": "Phụ lục — Tích hợp và end-to-end",
+      "description": "Làm rõ giới hạn của cách thực thi và bằng chứng, không coi controller/SQL là toàn bộ luồng web.",
+      "points": ["Tích hợp: kiểm tra điểm nối giữa thành phần hoặc module", "Ví dụ: lịch–thanh toán–thông báo, Firebase–API–SQL; không chỉ các dịch vụ bên ngoài", "End-to-end: chạy trọn luồng qua các thành phần thuộc phạm vi công bố", "Controller gọi SQL trực tiếp với danh tính giả lập chưa chứng minh toàn bộ web–Firebase–HTTP–SQL", "Các mã FI chỉ biểu thị kịch bản thiết kế; bằng chứng QA một phần không gán Passed cho toàn bộ FI"]
+    },
+    {
+      "title": "Phụ lục — Đồng bộ testcase mật khẩu và ảnh",
+      "description": "Lưu ý chuẩn bị trước buổi báo cáo, theo đúng tình trạng mã được mô tả trong nguồn. Không tự kiểm chứng phiên bản hiện tại hay thêm quy tắc ngoài tài liệu.",
+      "points": ["Excel cũ ghi đăng ký tối thiểu 6 ký tự, đổi mật khẩu 8 ký tự", "Mã được mô tả trong tài liệu áp dụng 12–128 ký tự ASCII, có hoa/thường/số/ký tự đặc biệt", "Đồng bộ testcase và dữ liệu, không dùng 6 hoặc 8 làm biên hợp lệ cho đặt mật khẩu mới", "Đăng nhập sai thông tin hoặc đăng nhập tài khoản cũ là tình huống khác với đặt mật khẩu mới", "FI_08 cũ: UI chọn ảnh 5,5 MiB nhưng API từ chối; UI hiện đã sửa giới hạn 5 MiB", "Chạy lại cần tách UI chặn tệp quá lớn và API trực tiếp vẫn từ chối"]
+    },
+    {
+      "title": "Phụ lục — Quy ước số liệu và tập trình bày",
+      "description": "Tổng hợp các nhắc nhở dùng khi chuẩn bị, không biến thành kết quả thực thi mới.",
+      "points": ["88, 66, 207 thuộc báo cáo 26/10/2026; không gọi 88 là tổng hiện hành của tất cả lần chạy", "Không cộng 273 ca chức năng với 69 ca tích hợp rồi gọi tổng ca đã chạy", "Hai tập tài liệu thiết kế và bằng chứng thực thi có phạm vi riêng", "Giữ 20 phút: mỗi người minh họa một scenario chính, có thể dùng ảnh hoặc dữ liệu đã chuẩn bị", "Nếu demo trực tiếp lâu hơn, rút ví dụ phụ và tập bấm giờ lại", "Chỉ dẫn trong ngoặc vuông của kịch bản là hướng dẫn tập nói, không đọc thành lời"]
+    },
+    {
+      "title": "Phụ lục — Nguồn đối chiếu trong dự án",
+      "description": "Danh mục nguồn theo tài liệu Word. Không tạo đường dẫn hoặc nguồn bên ngoài khi chưa được cung cấp.",
+      "points": ["Bộ chức năng và sheet Integrated: Test Requirements B4:I83", "12 sheet Testcase_F1–Testcase_F12, GUI CHECKLIST, Integrated", "Integration Test Cases: 69 ca FI_01–FI_69, trạng thái Not Executed", "Báo cáo QA ngày 26/10/2026 và phạm vi các bộ QA", "Kết quả controller và SQL", "Quy tắc mật khẩu hiện hành và validation ảnh"]
+    }
+  ]
+}

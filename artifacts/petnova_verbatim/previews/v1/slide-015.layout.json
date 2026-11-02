@@ -1,0 +1,6 @@
+{"schema":"openai.presentation.layout/v5","unit":"px","slide":{"id":"sl/ujl9wo","index":14,"layout":{"id":"ly/uxove9ob","name":"Blank"},"backgroundColor":"rgba(255,255,255,1)","position":{"left":0,"top":0,"width":1920,"height":1080}},
+"elements":[
+{"id":"sh/gzihgzyp","kind":"textbox","name":"page-15","position":{"left":1718,"top":1004,"width":90,"height":42},"text":"15","style":{"fontSize":24,"typeface":"Arial","color":"#496272","alignment":"right"},"geometry":"rect","lineWidth":0},
+{"id":"sh/fy9g7ux4","kind":"textbox","name":"title-15","position":{"left":128,"top":90,"width":1660,"height":126},"text":"F4","style":{"fontSize":84,"typeface":"Arial","color":"#17364B","bold":true,"alignment":"left"},"geometry":"rect","lineWidth":0},
+{"id":"sh/ex0zepgz","kind":"textbox","name":"source-block-32","position":{"left":128,"top":270,"width":1664,"height":269},"text":"là chức năng đặt lịch, đổi lịch và hủy lịch. kiểm tra việc chọn thú cưng, hình thức chăm sóc, dịch vụ, ngày giờ, ghi chú và phương thức thanh toán. Kết quả đúng cần thể hiện được lịch thuộc ai, sử dụng dịch vụ nào, kéo dài bao lâu và có tổng tiền bao nhiêu.","style":{"fontSize":46,"typeface":"Arial","color":"#17364B","alignment":"left"},"geometry":"rect","lineWidth":0}
+]}

@@ -1,0 +1,7 @@
+{"schema":"openai.presentation.layout/v5","unit":"px","slide":{"id":"sl/z8fyul","index":24,"layout":{"id":"ly/uxove9ob","name":"Blank"},"backgroundColor":"rgba(248,245,237,1)","position":{"left":0,"top":0,"width":1920,"height":1080}},
+"elements":[
+{"id":"sh/g7m1onqh","kind":"textbox","name":"page-25","position":{"left":1718,"top":1004,"width":90,"height":42},"text":"25","style":{"fontSize":24,"typeface":"Arial","color":"#496272","alignment":"right"},"geometry":"rect","lineWidth":0},
+{"id":"sh/v6d0v29w","kind":"textbox","name":"title-25","position":{"left":128,"top":90,"width":1660,"height":88},"text":"controller kết hợp SQL","style":{"fontSize":58,"typeface":"Arial","color":"#17364B","bold":true,"alignment":"left"},"geometry":"rect","lineWidth":0},
+{"id":"sh/u54jmx8b","kind":"textbox","name":"source-block-44","position":{"left":128,"top":244,"width":1664,"height":182},"text":"Trong bằng chứng controller kết hợp SQL đã có kiểm tra tạo đồng bộ lịch, chi tiết, thanh toán; phát lại mã yêu cầu; và biên ghi chú 255, 256 ký tự. Đây là bằng chứng ở lớp controller và dữ liệu, chưa bao phủ mọi thao tác trình duyệt trong testcase gốc.","style":{"fontSize":42,"typeface":"Arial","color":"#17364B","alignment":"left"},"geometry":"rect","lineWidth":0},
+{"id":"im/c7eh07mp","kind":"image","position":{"left":128,"top":564.28,"width":1664,"height":299.43},"fit":"contain","alt":"image10.png"}
+]}

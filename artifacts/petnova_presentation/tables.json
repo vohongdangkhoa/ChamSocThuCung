@@ -1,0 +1,54 @@
+[
+  [
+    [
+      "Thời gian",
+      "Người trình bày",
+      "Phạm vi",
+      "Số ca chức năng thiết kế"
+    ],
+    [
+      "00:00–07:00",
+      "Bùi Quang Huy",
+      "Giới thiệu, phương pháp; F1, F2, F3, F6",
+      "65"
+    ],
+    [
+      "07:00–13:00",
+      "Võ Hồng Đăng Khoa",
+      "F4, F5, F7, F8",
+      "79"
+    ],
+    [
+      "13:00–20:00",
+      "Nguyễn Thanh Bình",
+      "F9, F10, F11, F12; kết quả và kết luận",
+      "129"
+    ]
+  ],
+  [
+    [
+      "Thành viên",
+      "Tích hợp nên nhắc",
+      "Dữ liệu hộp đen tiêu biểu",
+      "Bằng chứng thực thi có thể dẫn"
+    ],
+    [
+      "Huy",
+      "FI_01 Firebase–SQL; FI_05 thú cưng–đặt lịch; FI_27 bác sĩ–sổ sức khỏe; FI_38 thú cưng–tổng quan",
+      "Email sai/trùng; mật khẩu 11/12/128/129 theo bản hiện tại; ảnh quanh 5 MiB; hồ sơ A/B",
+      "Validation/helper; quan sát form xác thực; SQL chặn xem/sửa thú cưng và đọc sức khỏe khác chủ"
+    ],
+    [
+      "Khoa",
+      "FI_11 đặt lịch–chi tiết–thanh toán–thông báo; FI_12 chống tạo trùng; FI_51/52 webhook; FI_40 thông báo–tổng quan",
+      "Dịch vụ 0/1/10/11; ghi chú 255/256; giờ kết thúc 18:00; tên 100/101",
+      "SQL tạo lịch đồng bộ, lặp requestId, biên ghi chú/tên, thử lại thanh toán đồng thời và đọc thông báo"
+    ],
+    [
+      "Bình",
+      "FI_23 phân công–bác sĩ; FI_25 thu tiền–hoàn thành lịch; FI_10/48 dịch vụ–lịch; FI_35/67 nghiệp vụ–báo cáo",
+      "Chuyển đúng/sai trạng thái; bác sĩ trong/ngoài phân công; chẩn đoán 255/256; ngày báo cáo đảo ngược/quá 3 năm",
+      "SQL phân công, bệnh án, tiêm chủng, chặn bỏ bước; HTTP token sai; kiểm tra chính sách route"
+    ]
+  ]
+]

@@ -1,0 +1,6 @@
+{"schema":"openai.presentation.layout/v5","unit":"px","slide":{"id":"sl/tc1x1v","index":3,"layout":{"id":"ly/uxove9ob","name":"Blank"},"backgroundColor":"rgba(248,245,237,1)","position":{"left":0,"top":0,"width":1920,"height":1080}},
+"elements":[
+{"id":"sh/vyh8julo","kind":"textbox","name":"page-4","position":{"left":1718,"top":1004,"width":90,"height":42},"text":"04","style":{"fontSize":24,"typeface":"Arial","color":"#496272","alignment":"right"},"geometry":"rect","lineWidth":0},
+{"id":"sh/wzqpsz2t","kind":"textbox","name":"title-4","position":{"left":128,"top":90,"width":1660,"height":88},"text":"273 ca kiểm thử chức năng","style":{"fontSize":58,"typeface":"Arial","color":"#17364B","bold":true,"alignment":"left"},"geometry":"rect","lineWidth":0},
+{"id":"sh/h0zql43e","kind":"textbox","name":"source-block-7","position":{"left":128,"top":244,"width":1664,"height":269},"text":"Nhóm chia tài liệu thành 12 nhóm chức năng, từ F1 đến F12, với 273 ca kiểm thử chức năng. Phần trình bày hôm nay đi theo phân công: em phụ trách F1, F2, F3, F6; bạn Khoa phụ trách F4, F5, F7, F8; bạn Bình phụ trách F9 đến F12.","style":{"fontSize":46,"typeface":"Arial","color":"#17364B","alignment":"left"},"geometry":"rect","lineWidth":0}
+]}

@@ -1,0 +1,7 @@
+{"schema":"openai.presentation.layout/v5","unit":"px","slide":{"id":"sl/oeavrg","index":19,"layout":{"id":"ly/d47e5cfe","name":"Blank"},"backgroundColor":"rgba(248,245,237,1)","position":{"left":0,"top":0,"width":1920,"height":1080}},
+"elements":[
+{"id":"sh/q5obedcb","kind":"textbox","name":"page-20","position":{"left":1718,"top":1004,"width":90,"height":42},"text":"20","style":{"fontSize":24,"typeface":"Arial","color":"#496272","alignment":"right"},"geometry":"rect","lineWidth":0},
+{"id":"sh/d8fap8v2","kind":"textbox","name":"title-20","position":{"left":128,"top":90,"width":1660,"height":126},"text":"F4","style":{"fontSize":84,"typeface":"Arial","color":"#17364B","bold":true,"alignment":"left"},"geometry":"rect","lineWidth":0},
+{"id":"sh/c76tg3uh","kind":"textbox","name":"source-block-38","position":{"left":128,"top":270,"width":1664,"height":236},"text":"Về giờ, lịch bắt đầu theo bước 30 phút, từ 08 giờ và phải kết thúc chậm nhất 18 giờ. Ví dụ bắt đầu lúc 17 giờ với dịch vụ 60 phút thì vừa giờ đóng cửa; cùng giờ bắt đầu nhưng kéo dài 90 phút thì phải bị từ chối. Ngoài biên thời gian, nhóm kiểm tra lịch trùng của thú cưng và công suất phục vụ.","style":{"fontSize":42,"typeface":"Arial","color":"#17364B","alignment":"left"},"geometry":"rect","lineWidth":0},
+{"id":"im/6xwzepgf","kind":"image","position":{"left":128,"top":563.92,"width":1664,"height":380.16},"fit":"contain","alt":"image6.png"}
+]}

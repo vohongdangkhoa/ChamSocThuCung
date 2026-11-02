@@ -1,0 +1,5 @@
+{"schema":"openai.presentation.layout/v5","unit":"px","slide":{"id":"sl/r4p95a","index":0,"layout":{"id":"ly/d47e5cfe","name":"Blank"},"backgroundColor":"rgba(16,44,64,1)","position":{"left":0,"top":0,"width":1920,"height":1080}},
+"elements":[
+{"id":"sh/fmx0zadg","kind":"textbox","name":"page-1","position":{"left":1718,"top":1004,"width":90,"height":42},"text":"01","style":{"fontSize":24,"typeface":"Arial","color":"#C5D9DD","alignment":"right"},"geometry":"rect","lineWidth":0},
+{"id":"sh/gn6hsfu1","kind":"textbox","name":"source-cover","position":{"left":160,"top":396.5,"width":1560,"height":237},"text":"KỊCH BẢN THUYẾT TRÌNH KIỂM THỬ PETNOVA — NHÓM 09","style":{"fontSize":90,"typeface":"Arial","color":"#FFFFFF","bold":true,"alignment":"left"},"geometry":"rect","lineWidth":0}
+]}
