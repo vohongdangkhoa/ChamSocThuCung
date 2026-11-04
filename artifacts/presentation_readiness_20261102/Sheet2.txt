@@ -1,0 +1,347 @@
+A1=No. | B1=Test Requirement ID | C1=Test Case ID | D1=Test Objective/ Test description/ Test Items | E1=Pre-conditions | F1=Step # | G1=Step Action | H1=Test Data | I1=Expected Result | J1=Notes
+A2=Integration TCs
+A3=1 | B3=F1_01-F1.3_01 | C3=FI_01 | D3=Đăng ký Firebase tạo đúng một hồ sơ CUSTOMER trong SQL | E3=Email và số điện thoại thử nghiệm chưa có tài khoản; Firebase và API sẵn sàng. | F3=1 | G3=1. Đăng ký trên web bằng email/số điện thoại thử nghiệm. | H3=Email A, điện thoại A | I3=Firebase tạo danh tính và web nhận phiên đăng nhập. | J3=Nguồn Functional: Testcase_F1!C23, Testcase_F1!C40.
+Điểm nối: Liên kết: F1.1, F1.3, F1.4; UserAccountsController.cs, xac-thuc.jsx. Không nhập thông tin cá nhân thật; dùng dữ liệu thử nghiệm..
+Chưa thực thi.
+F4=2 | G4=2. Tra hồ sơ người dùng bằng tài khoản vừa tạo. | H4=Firebase UID/email A | I4=SQL có đúng một UserAccount gắn UID/email A, role CUSTOMER, status ACTIVE.
+F5=3 | G5=3. Đăng xuất rồi đăng nhập lại. | H5=Email A và mật khẩu đã tạo | I5=Web ghép lại đúng hồ sơ SQL, vào cổng khách hàng.
+A6=2 | B6=F11.4_01-F1.4_02 | C6=FI_02 | D6=Tài khoản SQL bị khóa không vào được cổng dù token Firebase còn hợp lệ | E6=Có tài khoản thử nghiệm ACTIVE đã đăng nhập; ADMIN có quyền đổi trạng thái. | F6=1 | G6=1. ADMIN đổi UserAccount sang INACTIVE. | H6=UserAccount A | I6=SQL lưu status INACTIVE. | J6=Nguồn Functional: Testcase_F11!C52, Testcase_F1!C51.
+Điểm nối: Liên kết: F1.1, F1.3, F1.4; UserAccountsController.cs, xac-thuc.jsx. Kiểm tra cả phiên đang mở và lần đăng nhập lại..
+Chưa thực thi.
+F7=2 | G7=2. Tải lại cổng khách hàng bằng phiên Firebase A. | H7=Token Firebase A còn hợp lệ | I7=Web/API từ chối sử dụng hồ sơ đang INACTIVE.
+F8=3 | G8=3. Đăng xuất và đăng nhập lại tài khoản A. | H8=Email A | I8=Không truy cập được chức năng của cổng khách hàng.
+A9=3 | B9=F1.5_01-F1.6_01-F1.7_01 | C9=FI_03 | D9=Số điện thoại đã liên kết nhận OTP email và đổi mật khẩu Firebase | E9=Có tài khoản thử nghiệm với điện thoại và email truy cập được; dịch vụ email/Firebase cấu hình. | F9=1 | G9=1. Yêu cầu đặt lại mật khẩu bằng số điện thoại. | H9=Điện thoại A | I9=API trả challengeId và email đã che; OTP tới email liên kết. | J9=Nguồn Functional: Testcase_F1!C53, Testcase_F1!C62, Testcase_F1!C73.
+Điểm nối: Liên kết: F1.5–F1.7; PasswordResetController.cs, PasswordResetService.cs. Thực hiện ở môi trường thử nghiệm; không ghi OTP hay mật khẩu thật vào file..
+Chưa thực thi.
+F10=2 | G10=2. Xác minh OTP hợp lệ. | H10=challengeId, OTP từ email A | I10=API trả reset token dùng một lần.
+F11=3 | G11=3. Hoàn tất với mật khẩu mới rồi đăng nhập. | H11=reset token, mật khẩu mới | I11=Firebase chấp nhận mật khẩu mới; mật khẩu cũ không còn dùng được.
+A12=4 | B12=F1.6_03-F1.7_01 | C12=FI_04 | D12=OTP sai hoặc token dùng lại không cập nhật mật khẩu Firebase | E12=Có challenge thử nghiệm còn hạn. | F12=1 | G12=1. Gửi OTP sai với challengeId. | H12=OTP sai | I12=API không cấp reset token. | J12=Nguồn Functional: Testcase_F1!C66, Testcase_F1!C73.
+Điểm nối: Liên kết: F1.5–F1.7; PasswordResetController.cs, PasswordResetService.cs. Không suy diễn gửi email thành công nếu hạ tầng chưa cấu hình..
+Chưa thực thi.
+F13=2 | G13=2. Xác minh bằng OTP đúng và hoàn tất một lần. | H13=OTP đúng, mật khẩu mới | I13=Lần hoàn tất đầu thành công.
+F14=3 | G14=3. Gửi lại cùng reset token với mật khẩu khác. | H14=Token đã dùng | I14=API từ chối; đăng nhập vẫn chỉ dùng mật khẩu của lần hoàn tất đầu.
+A15=5 | B15=F3.2_01-F4.5_01-F12.2_01 | C15=FI_05 | D15=Thú cưng mới được chọn để đặt lịch và liên kết đúng chủ nuôi | E15=Khách hàng A có tài khoản ACTIVE; có gói dịch vụ ACTIVE và ngày/giờ còn chỗ. | F15=1 | G15=1. Khách hàng A tạo thú cưng thử nghiệm. | H15=Pet A | I15=Pet xuất hiện trong danh sách của A, có petId. | J15=Nguồn Functional: Testcase_F3!C29, Testcase_F4!C49, Testcase_F12!C29.
+Điểm nối: Liên kết: F3.2, F3.5, F4.5; ThuCungController.cs, LichHenController.cs. Luồng Pet ↔ Booking..
+Chưa thực thi.
+F16=2 | G16=2. Chọn Pet A khi đặt lịch. | H16=petId của Pet A | I16=Lịch được tạo với petId Pet A, userId của A.
+F17=3 | G17=3. Khách hàng B đọc/thử đặt lịch cho petId A. | H17=Tài khoản B | I17=API không trả hồ sơ hoặc từ chối tạo lịch bằng Pet A.
+A18=6 | B18=F4.5_01-F3.5_03-F3.5_01 | C18=FI_06 | D18=Không lưu trữ thú cưng còn lịch mở; lịch kết thúc thì lưu trữ được | E18=Pet A có lịch PENDING/CONFIRMED thử nghiệm. | F18=1 | G18=1. Lưu trữ Pet A khi còn lịch đang mở. | H18=petId A | I18=API trả xung đột; pet vẫn ACTIVE trong danh sách. | J18=Nguồn Functional: Testcase_F4!C49, Testcase_F3!C62, Testcase_F3!C57.
+Điểm nối: Liên kết: F3.2, F3.5, F4.5; ThuCungController.cs, LichHenController.cs. Archive kiểm tra trạng thái Booking..
+Chưa thực thi.
+F19=2 | G19=2. Hủy hoặc hoàn thành lịch theo quy trình phù hợp. | H19=bookingId liên quan | I19=Lịch chuyển CANCELLED hoặc COMPLETED.
+F20=3 | G20=3. Lưu trữ lại Pet A và mở danh sách đặt lịch. | H20=petId A | I20=Pet được đánh dấu archived và không còn được chọn để tạo lịch mới.
+A21=7 | B21=F3.4_01-F3_01 | C21=FI_07 | D21=Upload ảnh thú cưng cập nhật URL và publicId sau khi Cloudinary thành công | E21=Khách hàng A sở hữu Pet A; Cloudinary được cấu hình; có ảnh thử nghiệm hợp lệ. | F21=1 | G21=1. Upload ảnh hợp lệ cho Pet A. | H21=JPG/PNG hợp lệ | I21=Cloudinary trả ảnh; API trả URL/publicId. | J21=Nguồn Functional: Testcase_F3!C47, Testcase_F3!C23.
+Điểm nối: Liên kết: F3.4; MediaController.cs. MediaController upload trước rồi mới lưu URL SQL..
+Chưa thực thi.
+F22=2 | G22=2. Tải lại hồ sơ Pet A. | H22=petId A | I22=Ảnh hiển thị từ URL đã lưu; imageUrl/imagePublicId gắn với Pet A.
+F23=3 | G23=3. Upload ảnh thay thế. | H23=Ảnh B hợp lệ | I23=Hồ sơ trỏ tới ảnh B; không còn trỏ tới ảnh A.
+A24=8 | B24=F3.4_03-F3_01 | C24=FI_08 | D24=Ảnh 5,5 MiB được chọn trên giao diện nhưng API từ chối, hồ sơ thú cưng giữ ảnh cũ | E24=Khách A sở hữu Pet A có ảnh cũ; chuẩn bị JPEG thật 5,5 MiB và Cloudinary hoạt động. | F24=1 | G24=Chọn ảnh JPEG thật 5,5 MiB trong hồ sơ Pet A. | H24=petId A; tệp 5,5 MiB | I24=Giao diện cho chọn tệp vì ngưỡng chọn hiện tại dưới 6 MiB. | J24=Nguồn Functional: Testcase_F3!C52, Testcase_F3!C23.
+Điểm nối: Giao diện chọn tệp → kiểm tra 5 MiB tại API → dữ liệu Pet; theo F3.4_03..
+Chưa thực thi.
+F25=2 | G25=Thực hiện tải ảnh lên. | H25=Cùng tệp 5,5 MiB | I25=API từ chối vì vượt giới hạn 5 MiB; không trả URL ảnh mới.
+F26=3 | G26=Tải lại danh sách/hồ sơ Pet A. | H26=petId A | I26=imageUrl/publicId và ảnh hiển thị vẫn là ảnh cũ.
+A27=9 | B27=F11.12_01-F11.10_03-F4.3_01 | C27=FI_09 | D27=Gói dịch vụ ACTIVE từ quản trị xuất hiện ở luồng đặt lịch | E27=ADMIN có quyền quản lý danh mục/gói; khách A đăng nhập. | F27=1 | G27=1. ADMIN tạo danh mục ACTIVE và gói ACTIVE. | H27=Danh mục D, gói S giá/thời lượng >0 | I27=Gói S gắn đúng danh mục và lưu ACTIVE. | J27=Nguồn Functional: Testcase_F11!C119, Testcase_F11!C101, Testcase_F4!C33.
+Điểm nối: Liên kết: F4.3, F11.10–F11.12; DanhMucController.cs, ServicePackagesController.cs. Frontend lọc gói ACTIVE; backend cũng kiểm tra khi tạo lịch..
+Chưa thực thi.
+F28=2 | G28=2. Khách A mở màn hình đặt lịch. | H28=Tài khoản A | I28=Gói S hiển thị với giá, thời lượng đã lưu.
+F29=3 | G29=3. Chọn gói S và xem giờ trống. | H29=Pet A, ngày hợp lệ | I29=Thời lượng tổng và giờ trống tính từ thời lượng của S.
+A30=10 | B30=F11.11_01-F4.3_04 | C30=FI_10 | D30=Gói chuyển INACTIVE không thể tạo lịch mới dù dùng ID cũ | E30=Đã có gói S ACTIVE; ADMIN và khách A có tài khoản. | F30=1 | G30=1. ADMIN chuyển gói S sang INACTIVE. | H30=serviceId S | I30=Trạng thái gói được lưu INACTIVE. | J30=Nguồn Functional: Testcase_F11!C112, Testcase_F4!C39.
+Điểm nối: Liên kết: F4.3, F11.10–F11.12; DanhMucController.cs, ServicePackagesController.cs. Kiểm tra cả UI và API để tránh lọt qua bộ lọc giao diện..
+Chưa thực thi.
+F31=2 | G31=2. Khách A tải lại form đặt lịch. | H31=Tài khoản A | I31=Gói S không còn trong danh sách chọn.
+F32=3 | G32=3. Gửi yêu cầu tạo lịch dùng serviceId S cũ. | H32=Pet A, S, ngày/giờ hợp lệ | I32=API từ chối; không phát sinh Booking, BookingDetail, Payment.
+A33=11 | B33=F4.5_01-F5_01-F7_01 | C33=FI_11 | D33=Tạo lịch tiền mặt tạo đầy đủ dữ liệu liên kết | E33=Khách A có Pet A; dịch vụ S ACTIVE; giờ còn chỗ. | F33=1 | G33=1. Khách A đặt lịch tiền mặt. | H33=Pet A, S, CASH, requestId mới | I33=API tạo một Booking PENDING với tổng tiền bằng giá gói. | J33=Nguồn Functional: Testcase_F4!C49, Testcase_F5!C23, Testcase_F7!C23.
+Điểm nối: Liên kết: F4.5–F4.7, F7; LichHenController.cs. Đối chiếu cùng bookingId qua các màn hình/API..
+Chưa thực thi.
+F34=2 | G34=2. Mở chi tiết lịch và thanh toán. | H34=bookingId vừa tạo | I34=BookingDetail chứa S/giá đúng; Payment CASH PENDING có cùng bookingId.
+F35=3 | G35=3. Mở thông báo của khách A. | H35=Tài khoản A | I35=Có thông báo đặt lịch liên kết bookingId; khách khác không thấy.
+A36=12 | B36=F4.5_02-F5_01 | C36=FI_12 | D36=Gửi lại cùng requestId không nhân đôi lịch, thanh toán, thông báo | E36=Đã tạo lịch thử nghiệm thành công với requestId R. | F36=1 | G36=1. Ghi bookingId, số payment và thông báo của lịch R. | H36=requestId R | I36=Có mốc đối chiếu. | J36=Nguồn Functional: Testcase_F4!C52, Testcase_F5!C23.
+Điểm nối: Liên kết: F4.5–F4.7, F7; LichHenController.cs. Idempotency trong BookingsController..
+Chưa thực thi.
+F37=2 | G37=2. Gửi lại POST tạo lịch với cùng requestId R. | H37=Cùng tài khoản và R | I37=API trả lịch cũ thay vì tạo lịch mới.
+F38=3 | G38=3. Đọc lại lịch, payment và thông báo. | H38=bookingId của R | I38=Vẫn chỉ có một Booking và một Payment cho yêu cầu R; không tạo thêm thông báo đặt lịch.
+A39=13 | B39=F4.4_01-F4.5_01 | C39=FI_13 | D39=Đặt lịch chiếm chỗ và chặn lịch trùng của cùng thú cưng | E39=Pet A, S ACTIVE; chọn ngày/giờ trống trong vòng 6 tháng. | F39=1 | G39=1. Kiểm tra khung giờ còn trống cho Pet A. | H39=Ngày D, giờ T, S | I39=Availability báo T còn chọn được. | J39=Nguồn Functional: Testcase_F4!C41, Testcase_F4!C49.
+Điểm nối: Liên kết: F4.4, F4.7; LichHenController.cs. So sánh GET availability và POST Booking..
+Chưa thực thi.
+F40=2 | G40=2. Tạo lịch cho Pet A vào T. | H40=D, T, S | I40=Booking PENDING được tạo.
+F41=3 | G41=3. Kiểm tra và thử đặt thêm lịch chồng giờ cho Pet A. | H41=Cùng Pet A, khung giờ chồng lấn | I41=Availability báo xung đột; POST trả Conflict, không tạo Payment mới.
+A42=14 | B42=F4.3_02-F4.4_01-F4.5_01 | C42=FI_14 | D42=Thời lượng nhiều gói được cộng khi kiểm tra năng lực khung giờ | E42=Có hai gói S1, S2 ACTIVE và Pet A; còn chỗ vào một số khung giờ. | F42=1 | G42=1. Chọn S1 và S2 rồi hỏi availability. | H42=duration S1 + S2 | I42=durationMinutes bằng tổng hai gói. | J42=Nguồn Functional: Testcase_F4!C35, Testcase_F4!C41, Testcase_F4!C49.
+Điểm nối: Liên kết: F4.4, F4.7; LichHenController.cs. Kiểm tra dữ liệu dịch vụ truyền sang availability/booking..
+Chưa thực thi.
+F43=2 | G43=2. Chọn giờ gần cuối ngày không đủ tổng thời lượng. | H43=Ngày D, giờ T | I43=Giờ T bị đánh dấu không khả dụng hoặc POST bị từ chối.
+F44=3 | G44=3. Chọn giờ đủ thời lượng và tạo lịch. | H44=Pet A, S1, S2 | I44=Booking.durationMinutes bằng tổng; có hai BookingDetail với giá tương ứng.
+A45=15 | B45=F4.8_01-F4_01-F7_01 | C45=FI_15 | D45=Đổi lịch hợp lệ cập nhật giờ ở các góc nhìn và tạo thông báo | E45=Khách A có lịch PENDING hoặc CONFIRMED; giờ mới còn chỗ. | F45=1 | G45=1. Ghi thời gian cũ và đổi lịch sang giờ mới. | H45=bookingId, ngày/giờ mới | I45=API cập nhật bookingDate/bookingTime. | J45=Nguồn Functional: Testcase_F4!C74, Testcase_F4!C23, Testcase_F7!C23.
+Điểm nối: Liên kết: F4.8, F7; LichHenController.cs. Luồng Booking ↔ availability ↔ Notifications..
+Chưa thực thi.
+F46=2 | G46=2. Tải lại danh sách lịch của khách và vận hành. | H46=bookingId | I46=Cả hai góc nhìn hiển thị thời gian mới; giờ cũ không còn bị lịch đó chiếm.
+F47=3 | G47=3. Mở thông báo khách A. | H47=bookingId | I47=Có thông báo thay đổi lịch liên kết bookingId.
+A48=16 | B48=F4.8_03-F7_01 | C48=FI_16 | D48=Đổi sang giờ xung đột không thay đổi lịch hay gửi thông báo | E48=Có lịch A và khung giờ mới đã xung đột với Pet A/nhân sự. | F48=1 | G48=1. Ghi thời gian và số thông báo ban đầu của lịch A. | H48=bookingId A | I48=Có mốc đối chiếu. | J48=Nguồn Functional: Testcase_F4!C78, Testcase_F7!C23.
+Điểm nối: Liên kết: F4.8, F7; LichHenController.cs. Kiểm tra tính nhất quán khi API trả Conflict..
+Chưa thực thi.
+F49=2 | G49=2. Đổi lịch A sang giờ xung đột. | H49=Ngày/giờ chồng lấn | I49=API trả Conflict.
+F50=3 | G50=3. Tải lại lịch và thông báo. | H50=bookingId A | I50=Ngày/giờ vẫn như cũ; không có thông báo đổi lịch mới.
+A51=17 | B51=F4.9_01-F5_01-F7_01 | C51=FI_17 | D51=Hủy lịch chưa trả tiền đổi Payment PENDING thành FAILED và giải phóng chỗ | E51=Khách A có lịch PENDING/CONFIRMED và Payment PENDING. | F51=1 | G51=1. Hủy lịch A. | H51=bookingId A | I51=Booking chuyển CANCELLED. | J51=Nguồn Functional: Testcase_F4!C82, Testcase_F5!C23, Testcase_F7!C23.
+Điểm nối: Liên kết: F4.9, F5.1, F7; LichHenController.cs. Luồng Booking ↔ Payment ↔ capacity ↔ Notification..
+Chưa thực thi.
+F52=2 | G52=2. Mở thanh toán và thông báo của A. | H52=bookingId A | I52=Payment PENDING của lịch đổi FAILED; có thông báo hủy.
+F53=3 | G53=3. Hỏi availability tại khung giờ cũ. | H53=Pet A, ngày/giờ cũ | I53=Lịch đã hủy không còn chiếm chỗ.
+A54=18 | B54=F4.9_03-F5_01 | C54=FI_18 | D54=Lịch đã PAID không hủy trực tiếp trước khi xử lý hoàn tiền | E54=Có lịch PENDING/CONFIRMED với Payment PAID. | F54=1 | G54=1. Ghi trạng thái lịch và Payment. | H54=bookingId A | I54=Booking chưa CANCELLED, Payment PAID. | J54=Nguồn Functional: Testcase_F4!C86, Testcase_F5!C23.
+Điểm nối: Liên kết: F4.9, F5.1, F7; LichHenController.cs. Backend trả Conflict và yêu cầu xử lý hoàn tiền trước..
+Chưa thực thi.
+F55=2 | G55=2. Thử hủy lịch A. | H55=bookingId A | I55=API trả Conflict với thông báo xử lý hoàn tiền trước.
+F56=3 | G56=3. Tải lại lịch, thanh toán, thông báo. | H56=bookingId A | I56=Booking/Payment không đổi; không tạo thông báo hủy mới.
+A57=19 | B57=F4.6_02-F5.2_01-F7_01 | C57=FI_19 | D57=PayOS báo PAID làm Payment PAID và gửi thông báo đúng khách | E57=Có lịch BANK_TRANSFER, Payment PENDING; PayOS sandbox/secret cấu hình. | F57=1 | G57=1. Tạo link PayOS cho Payment của lịch A. | H57=paymentId A | I57=Link/QR ứng với số tiền Payment A. | J57=Nguồn Functional: Testcase_F4!C58, Testcase_F5!C31, Testcase_F7!C23.
+Điểm nối: Liên kết: F4.6, F5.2; PaymentsController.cs. Chỉ trạng thái PayOS xác minh mới là nguồn tin cậy..
+Chưa thực thi.
+F58=2 | G58=2. Thanh toán trên PayOS sandbox và gọi đồng bộ/đợi webhook hợp lệ. | H58=orderCode A | I58=Payment A chuyển PAID, có paymentDate.
+F59=3 | G59=3. Mở lịch sử thanh toán và thông báo khách A. | H59=Tài khoản A | I59=Hiện PAID và một thông báo thanh toán liên kết bookingId A.
+A60=20 | B60=F5.2_02-F5_01 | C60=FI_20 | D60=PayOS hủy hoặc hết hạn được đồng bộ thành FAILED, lịch sử không báo PAID | E60=Khách A có Booking BANK_TRANSFER và Payment PENDING; PayOS sandbox hoạt động. | F60=1 | G60=Tạo link PayOS cho Payment A rồi hủy checkout hoặc để hết hạn. | H60=paymentId A | I60=PayOS trả trạng thái CANCELLED hoặc EXPIRED cho orderCode A. | J60=Nguồn Functional: Testcase_F5!C33, Testcase_F5!C23.
+Điểm nối: PayOS → Payment → lịch sử khách hàng; theo F5.2_02..
+Chưa thực thi.
+F61=2 | G61=Đồng bộ trạng thái PayOS trong PetNoVa. | H61=paymentId A | I61=Payment A chuyển FAILED, không chuyển PAID.
+F62=3 | G62=Mở lịch sử thanh toán của khách A. | H62=bookingId A | I62=Giao dịch A hiện FAILED; không có thông báo thanh toán thành công mới.
+A63=21 | B63=F5.3_01-F5_01 | C63=FI_21 | D63=Payment FAILED được retry thành giao dịch PENDING mới cho cùng lịch | E63=Có lịch chưa CANCELLED/COMPLETED với Payment FAILED; chưa có PENDING/PAID khác. | F63=1 | G63=1. Mở Payment FAILED của lịch A. | H63=paymentId cũ | I63=Ghi bookingId và amount hiện tại. | J63=Nguồn Functional: Testcase_F5!C39, Testcase_F5!C23.
+Điểm nối: Liên kết: F5.3; PaymentsController.cs. Luồng retry bảo toàn bookingId và tổng tiền..
+Chưa thực thi.
+F64=2 | G64=2. Gọi retry giao dịch. | H64=paymentId cũ | I64=Tạo paymentId mới, status PENDING, cùng bookingId và amount bằng Booking.totalAmount.
+F65=3 | G65=3. Mở lịch sử thanh toán. | H65=bookingId A | I65=Có cả giao dịch FAILED cũ và PENDING mới; không tạo lịch hẹn mới.
+A66=22 | B66=F5.3_03-F5.3_04 | C66=FI_22 | D66=Không retry nếu lịch đã hủy hoặc có giao dịch còn PENDING/PAID | E66=Có các lịch thử nghiệm CANCELLED và lịch có Payment PENDING/PAID. | F66=1 | G66=1. Gọi retry cho Payment FAILED thuộc lịch CANCELLED. | H66=paymentId A | I66=API trả Conflict, không tạo Payment mới. | J66=Nguồn Functional: Testcase_F5!C43, Testcase_F5!C45.
+Điểm nối: Liên kết: F5.3; PaymentsController.cs. Đối chiếu không phát sinh giao dịch mồ côi..
+Chưa thực thi.
+F67=2 | G67=2. Gọi retry khi cùng bookingId đã có Payment PENDING/PAID. | H67=paymentId B | I67=API trả Conflict.
+F68=3 | G68=3. Mở danh sách Payment của hai lịch. | H68=bookingId A/B | I68=Số Payment không tăng sau các yêu cầu bị từ chối.
+A69=23 | B69=F9.3_01-F10_01-F7_01 | C69=FI_23 | D69=Phân công nhân sự ACTIVE cập nhật lịch của VET và thông báo khách | E69=Có lịch chưa kết thúc; VET A ACTIVE, không xung đột giờ. | F69=1 | G69=1. STAFF/ADMIN phân công VET A cho lịch B. | H69=staffId A, bookingId B | I69=Booking.staffId được cập nhật. | J69=Nguồn Functional: Testcase_F9!C30, Testcase_F10!C23, Testcase_F7!C23.
+Điểm nối: Liên kết: F9.3, F7; LichHenController.cs, StaffsController.cs. Booking.staffId là cầu nối lịch vận hành và cổng VET..
+Chưa thực thi.
+F70=2 | G70=2. VET A tải lịch của mình. | H70=Tài khoản VET A | I70=Lịch B xuất hiện trong danh sách VET A; VET khác không thấy.
+F71=3 | G71=3. Khách chủ lịch mở thông báo. | H71=bookingId B | I71=Có thông báo đã phân công liên kết lịch B.
+A72=24 | B72=F9.3_02-F9.3_03 | C72=FI_24 | D72=Nhân sự INACTIVE hoặc bận giờ không được phân công | E72=Có lịch B; một nhân sự INACTIVE và một nhân sự ACTIVE đã có lịch chồng giờ. | F72=1 | G72=1. Thử phân công nhân sự INACTIVE. | H72=staffId X | I72=API từ chối; bookingId B không đổi staffId. | J72=Nguồn Functional: Testcase_F9!C32, Testcase_F9!C34.
+Điểm nối: Liên kết: F9.3, F7; LichHenController.cs, StaffsController.cs. Kiểm tra ValidateStaff và CheckSlot..
+Chưa thực thi.
+F73=2 | G73=2. Thử phân công nhân sự ACTIVE đang bận. | H73=staffId Y | I73=API trả Conflict; staffId B không đổi.
+F74=3 | G74=3. Kiểm tra thông báo khách. | H74=bookingId B | I74=Không có thông báo phân công mới từ các lần thất bại.
+A75=25 | B75=F9.6_01-F9.7_01-F9.5_03 | C75=FI_25 | D75=Thanh toán tiền mặt cho phép hoàn thành lịch và đồng bộ thông báo | E75=Có lịch CASH ở IN_PROGRESS với Payment PENDING; STAFF/ADMIN hợp lệ. | F75=1 | G75=1. Thử chuyển lịch sang COMPLETED trước thanh toán. | H75=bookingId A | I75=API trả Conflict; lịch vẫn IN_PROGRESS. | J75=Nguồn Functional: Testcase_F9!C52, Testcase_F9!C58, Testcase_F9!C48.
+Điểm nối: Liên kết: F9.5–F9.7, F7; LichHenController.cs, PaymentsController.cs. Có thể chuẩn bị trạng thái qua PENDING→CONFIRMED→IN_PROGRESS..
+Chưa thực thi.
+F76=2 | G76=2. STAFF xác nhận Payment CASH PENDING. | H76=paymentId A | I76=Payment chuyển PAID; khách có thông báo thanh toán.
+F77=3 | G77=3. Chuyển lịch sang COMPLETED. | H77=bookingId A | I77=Booking chuyển COMPLETED; khách có thông báo hoàn thành.
+A78=26 | B78=F9.7_03-F9.6_01 | C78=FI_26 | D78=Giao dịch BANK_TRANSFER không được xác nhận bằng nút tiền mặt | E78=Có lịch BANK_TRANSFER và Payment PENDING; STAFF đăng nhập. | F78=1 | G78=1. Ghi trạng thái Payment BANK_TRANSFER. | H78=paymentId A | I78=Payment PENDING. | J78=Nguồn Functional: Testcase_F9!C62, Testcase_F9!C52.
+Điểm nối: Liên kết: F9.5–F9.7, F7; LichHenController.cs, PaymentsController.cs. Không dùng xác nhận thủ công thay cho trạng thái PayOS..
+Chưa thực thi.
+F79=2 | G79=2. Gọi xác nhận tiền mặt cho Payment A. | H79=paymentId A | I79=API trả BadRequest.
+F80=3 | G80=3. Thử hoàn thành lịch liên quan. | H80=bookingId A | I80=Payment vẫn PENDING; Booking không được chuyển COMPLETED.
+A81=27 | B81=F10.4_01-F6_01 | C81=FI_27 | D81=Bác sĩ tạo hồ sơ khám, cân nặng cập nhật thú cưng và chủ thấy lịch sử | E81=VET được phân công hoặc có quyền với Pet A; khách A là chủ thú cưng. | F81=1 | G81=1. VET tạo hồ sơ khám có cân nặng mới. | H81=Pet A, weight W, chẩn đoán | I81=MedicalRecord được tạo cho Pet A; Pet.weight = W. | J81=Nguồn Functional: Testcase_F10!C49, Testcase_F6!C23.
+Điểm nối: Liên kết: F6, F10.4; HoSoSucKhoeController.cs. Luồng MedicalRecord ↔ Pet ↔ owner view..
+Chưa thực thi.
+F82=2 | G82=2. Chủ A mở hồ sơ sức khỏe của Pet A. | H82=Tài khoản A | I82=Thấy hồ sơ vừa tạo và cân nặng W.
+F83=3 | G83=3. Khách B thử đọc hồ sơ của Pet A. | H83=Tài khoản B | I83=API không trả hồ sơ của A.
+A84=28 | B84=F10.5_01-F6_01 | C84=FI_28 | D84=Sửa hồ sơ khám cập nhật Pet.weight và lưu phiên bản chỉnh sửa | E84=Có hồ sơ khám của Pet A; VET có quyền sửa, lý do chỉnh sửa hợp lệ. | F84=1 | G84=1. VET sửa cân nặng và ghi lý do. | H84=recordId A, weight W2 | I84=MedicalRecord lưu weight W2; Pet.weight cập nhật W2. | J84=Nguồn Functional: Testcase_F10!C58, Testcase_F6!C23.
+Điểm nối: Liên kết: F6, F10.4; HoSoSucKhoeController.cs. Hồ sơ có revisions theo API..
+Chưa thực thi.
+F85=2 | G85=2. Chủ A mở hồ sơ sức khỏe. | H85=Pet A | I85=Hiển thị giá trị mới W2.
+F86=3 | G86=3. Mở lịch sử chỉnh sửa hồ sơ. | H86=recordId A | I86=Có revision phản ánh thay đổi từ giá trị trước đó.
+A87=29 | B87=F10.6_01-F7_01 | C87=FI_29 | D87=Lịch tiêm đến hạn tạo thông báo đúng chủ thú cưng | E87=Có Pet A chưa archived; VET có quyền tạo lịch tiêm; background service hoạt động. | F87=1 | G87=1. VET tạo Vaccination cho Pet A, nextDate trong 7 ngày. | H87=Pet A, vaccine V, nextDate D | I87=Bản ghi tiêm lưu đúng petId và nextDate. | J87=Nguồn Functional: Testcase_F10!C67, Testcase_F7!C23.
+Điểm nối: Liên kết: F7, F10.6; HoSoSucKhoeController.cs, NhacLichTuDong.cs. Nhắc lịch xét nextDate từ hôm nay đến 7 ngày tới; chạy theo giờ..
+Chưa thực thi.
+F88=2 | G88=2. Chờ tác vụ nhắc lịch chạy hoặc kích hoạt trong môi trường test. | H88=D trong 7 ngày | I88=Tạo thông báo nhắc tiêm liên kết vaccinationId.
+F89=3 | G89=3. Khách A/B mở thông báo. | H89=Tài khoản chủ A và B | I89=Chỉ A thấy thông báo có tên Pet A, vaccine V, ngày D.
+A90=30 | B90=F3.5_01-F10.6_01-F7_01 | C90=FI_30 | D90=Tác vụ chạy lặp không nhân đôi nhắc tiêm; Pet archived không được nhắc | E90=Có Vaccination A đến hạn và Pet B archived với lịch tiêm đến hạn. | F90=1 | G90=1. Chạy tác vụ nhắc lịch cho Vaccination A. | H90=vaccinationId A | I90=Tạo một thông báo nhắc tiêm. | J90=Nguồn Functional: Testcase_F3!C57, Testcase_F10!C67, Testcase_F7!C23.
+Điểm nối: Liên kết: F7, F10.6; HoSoSucKhoeController.cs, NhacLichTuDong.cs. Dedupe theo user/title/message/relatedId/relatedType..
+Chưa thực thi.
+F91=2 | G91=2. Chạy lại tác vụ với dữ liệu không đổi. | H91=vaccinationId A | I91=Không tạo thông báo nhắc tiêm thứ hai cho A.
+F92=3 | G92=3. Kiểm tra thông báo của Pet B archived. | H92=vaccinationId B | I92=Không tạo nhắc tiêm cho Pet B archived.
+A93=31 | B93=F11.7_01-F9.3_02-F1.4_01 | C93=FI_31 | D93=Tạm ngưng nhân sự đồng bộ tài khoản và loại khỏi danh sách phân công | E93=Có Staff A ACTIVE gắn UserAccount ACTIVE; ADMIN đăng nhập. | F93=1 | G93=1. ADMIN chuyển Staff A sang INACTIVE. | H93=staffId A | I93=Staff.status INACTIVE, UserAccount.status INACTIVE. | J93=Nguồn Functional: Testcase_F11!C76, Testcase_F9!C32, Testcase_F1!C49.
+Điểm nối: Liên kết: F11.7–F11.8, F9.3; StaffsController.cs, LichHenController.cs. StaffsController đồng bộ status UserAccount..
+Chưa thực thi.
+F94=2 | G94=2. Mở danh sách nhân sự có thể phân công. | H94=Ngày/giờ hợp lệ | I94=Staff A không còn xuất hiện là nhân sự ACTIVE.
+F95=3 | G95=3. Thử phân công staffId A và dùng tài khoản A. | H95=staffId A, token/tài khoản A | I95=API từ chối phân công; tài khoản A không dùng được cổng nhân sự.
+A96=32 | B96=F11.8_02-F1.4_01 | C96=FI_32 | D96=Đạt ba vi phạm đình chỉ nhân sự và chặn đăng nhập/phân công | E96=Staff A có 2 vi phạm và đang ACTIVE; ADMIN có quyền ghi vi phạm. | F96=1 | G96=1. ADMIN ghi vi phạm thứ ba cho Staff A. | H96=staffId A | I96=violationCount = 3, Staff.status SUSPENDED. | J96=Nguồn Functional: Testcase_F11!C85, Testcase_F1!C49.
+Điểm nối: Liên kết: F11.7–F11.8, F9.3; StaffsController.cs, LichHenController.cs. Ngưỡng 3 trong StaffsController..
+Chưa thực thi.
+F97=2 | G97=2. Đọc tài khoản liên kết. | H97=userId của Staff A | I97=UserAccount.status INACTIVE.
+F98=3 | G98=3. Thử đăng nhập và phân công Staff A. | H98=Tài khoản/staffId A | I98=Không dùng được cổng nhân sự và không thể phân công.
+A99=33 | B99=F11.3_01-F12_03 | C99=FI_33 | D99=Đổi role SQL làm thay đổi cổng và quyền API theo phiên kế tiếp | E99=Có tài khoản STAFF ACTIVE đã gắn hồ sơ Staff; ADMIN có quyền đổi role. | F99=1 | G99=1. ADMIN đổi vai trò nhân sự thử nghiệm. | H99=STAFF→VET, userId có hồ sơ Staff | I99=UserAccount.role và Staff.role cùng chuyển VET. | J99=Nguồn Functional: Testcase_F11!C43, Testcase_F12!C27.
+Điểm nối: Liên kết: F11.3–F11.4, F12.1–F12.2; PhienNguoiDung.cs và controllers. Quyền lấy từ SQL; API yêu cầu hồ sơ Staff trước khi gán STAFF/VET..
+Chưa thực thi.
+F100=2 | G100=2. Đăng nhập lại tài khoản vừa đổi. | H100=Firebase UID không đổi | I100=Web mở cổng VET theo role hiện tại trong SQL.
+F101=3 | G101=3. Thử API chỉ dành cho STAFF và API dành cho VET. | H101=Token cùng UID | I101=API kiểm tra quyền theo role mới; chức năng ngoài quyền bị từ chối.
+A102=34 | B102=F12.2_02-F12.2_03-F6_07 | C102=FI_34 | D102=Khách B không đọc được lịch, thanh toán, hồ sơ sức khỏe của khách A | E102=Có hai khách hàng A/B; A có Pet, Booking, Payment, MedicalRecord. | F102=1 | G102=1. Dùng token B gọi GET Booking của A. | H102=bookingId A | I102=Không trả dữ liệu lịch của A. | J102=Nguồn Functional: Testcase_F12!C31, Testcase_F12!C33, Testcase_F6!C35.
+Điểm nối: Liên kết: F11.3–F11.4, F12.1–F12.2; PhienNguoiDung.cs và controllers. Thử trực tiếp API để kiểm tra biên dữ liệu, không chỉ ẩn trên UI..
+Chưa thực thi.
+F103=2 | G103=2. Dùng token B gọi Payment của Booking A. | H103=paymentId/bookingId A | I103=Không trả dữ liệu thanh toán của A.
+F104=3 | G104=3. Dùng token B gọi MedicalRecord của Pet A. | H104=petId/recordId A | I104=Không trả hồ sơ sức khỏe của A.
+A105=35 | B105=F9.7_01-F11.14_01 | C105=FI_35 | D105=Thanh toán PAID phản ánh trong báo cáo, không đếm Payment PENDING | E105=Có ADMIN và hai lịch trong khoảng báo cáo: một PAID, một PENDING. | F105=1 | G105=1. Ghi số liệu báo cáo trước xác nhận thanh toán. | H105=Khoảng ngày D | I105=Có bookedAmount/paidAmount làm mốc. | J105=Nguồn Functional: Testcase_F9!C58, Testcase_F11!C132.
+Điểm nối: Liên kết: F9.9, F11.14; PaymentsController.cs, BaoCaoController.cs. Báo cáo tính paidAmount theo paymentDate..
+Chưa thực thi.
+F106=2 | G106=2. Xác nhận CASH hoặc đồng bộ PayOS cho một Payment. | H106=paymentId A | I106=Payment A chuyển PAID, paymentDate thuộc D.
+F107=3 | G107=3. Tải lại báo cáo cùng khoảng ngày. | H107=D | I107=paidAmount tăng đúng amount A; Payment PENDING còn lại không cộng vào paidAmount.
+A108=36 | B108=F9.9_01-F11.14_01-F7_01 | C108=FI_36 | D108=Ghi nhận hoàn tiền cập nhật báo cáo và thông báo, không xóa lịch sử PAID | E108=Có Payment PAID trong khoảng ngày, ADMIN/STAFF được phép ghi hoàn tiền; khoản hoàn thực tế đã xử lý ngoài hệ thống. | F108=1 | G108=1. Ghi nhận refund với lý do và mã tham chiếu. | H108=paymentId A, reason, reference | I108=Payment chuyển REFUNDED và lưu refundedAt/by. | J108=Nguồn Functional: Testcase_F9!C70, Testcase_F11!C132, Testcase_F7!C23.
+Điểm nối: Liên kết: F9.9, F11.14; PaymentsController.cs, BaoCaoController.cs. API chỉ ghi nhận hoàn tiền, không tự chuyển tiền qua PayOS/ngân hàng..
+Chưa thực thi.
+F109=2 | G109=2. Mở thông báo khách chủ lịch. | H109=bookingId A | I109=Có thông báo ghi nhận hoàn tiền liên kết lịch.
+F110=3 | G110=3. Tải báo cáo có ngày hoàn tiền. | H110=Khoảng ngày D | I110=refundAmount tăng amount A, netCollected = paidAmount − refundAmount; lịch sử booking vẫn còn.
+A111=37 | B111=F1.8_01-F12_01 | C111=FI_37 | D111=Đăng xuất chặn tải mới dữ liệu được bảo vệ | E111=Khách A đang đăng nhập và có dữ liệu thú cưng. | F111=1 | G111=Đăng xuất khỏi cổng khách hàng. | H111=Tài khoản A | I111=Trang xác thực xuất hiện; phiên Firebase kết thúc. | J111=Nguồn Functional: Testcase_F1!C82, Testcase_F12!C23.
+Điểm nối: Firebase logout → API bảo vệ dữ liệu.
+Chưa thực thi.
+F112=2 | G112=Tải lại trang đã lưu của cổng khách hàng. | H112=URL từng mở | I112=Không tải lại dữ liệu nghiệp vụ của A.
+F113=3 | G113=Gọi API thú cưng khi không có token. | H113=GET /api/Pets | I113=API từ chối truy cập; không trả dữ liệu của A.
+A114=38 | B114=F3.2_01-F2_01 | C114=FI_38 | D114=Thêm thú cưng cập nhật số thú cưng trên tổng quan | E114=Khách A ACTIVE; ghi nhận số thú cưng chưa lưu trữ trước khi thêm. | F114=1 | G114=Mở Tổng quan và ghi số thú cưng hiện tại. | H114=Tài khoản A | I114=Có số mốc N. | J114=Nguồn Functional: Testcase_F3!C29, Testcase_F2!C23.
+Điểm nối: Pets → dashboard khách hàng.
+Chưa thực thi.
+F115=2 | G115=Thêm Pet A hợp lệ. | H115=Tên/loài/ngày sinh/cân nặng hợp lệ | I115=Pet A xuất hiện trong danh sách thú cưng.
+F116=3 | G116=Quay lại Tổng quan hoặc tải lại. | H116=Tài khoản A | I116=Số thú cưng tăng từ N lên N+1, không đếm pet đã lưu trữ.
+A117=39 | B117=F4.5_01-F2_01 | C117=FI_39 | D117=Lịch mới cập nhật số lịch đang chờ trên tổng quan khách hàng | E117=Khách A có Pet A và gói ACTIVE; giờ trống. | F117=1 | G117=Ghi số lịch đang chờ trên Tổng quan. | H117=Tài khoản A | I117=Có số mốc N. | J117=Nguồn Functional: Testcase_F4!C49, Testcase_F2!C23.
+Điểm nối: Bookings → dashboard khách hàng.
+Chưa thực thi.
+F118=2 | G118=Đặt một lịch CASH mới còn trong tương lai. | H118=Pet A, gói S, requestId mới | I118=Booking PENDING được tạo.
+F119=3 | G119=Tải lại Tổng quan. | H119=Tài khoản A | I119=Số lịch liên quan tăng đúng một; lịch vừa tạo thuộc A.
+A120=40 | B120=F7_03-F2_01 | C120=FI_40 | D120=Đánh dấu thông báo đã đọc cập nhật số chưa đọc trên Tổng quan | E120=Khách A có ít nhất một thông báo chưa đọc. | F120=1 | G120=Ghi số thông báo chưa đọc trên Tổng quan. | H120=Tài khoản A | I120=Có số mốc N>0. | J120=Nguồn Functional: Testcase_F7!C27, Testcase_F2!C23.
+Điểm nối: Notifications.isRead → dashboard.
+Chưa thực thi.
+F121=2 | G121=Mở Thông báo và đánh dấu một mục chưa đọc. | H121=notificationId A | I121=Mục chuyển sang đã đọc.
+F122=3 | G122=Tải lại Tổng quan. | H122=Tài khoản A | I122=Số chưa đọc giảm đúng một và giữ sau tải lại.
+A123=41 | B123=F8_01-F9.2_01 | C123=FI_41 | D123=Tên/số điện thoại khách cập nhật hiển thị đúng ở chi tiết lịch vận hành | E123=Khách A có Booking B; STAFF có quyền xem chi tiết B. | F123=1 | G123=Khách A sửa họ tên và số điện thoại hợp lệ. | H123=Tên mới, số mới chưa dùng | I123=Hồ sơ của A lưu thông tin mới. | J123=Nguồn Functional: Testcase_F8!C23, Testcase_F9!C28.
+Điểm nối: UserAccount → chi tiết Booking của STAFF.
+Chưa thực thi.
+F124=2 | G124=STAFF làm mới và mở chi tiết Booking B. | H124=bookingId B | I124=Hiển thị đúng khách A với thông tin hiện tại.
+F125=3 | G125=Khách A tải lại trang tài khoản. | H125=Tài khoản A | I125=Tên và số điện thoại mới vẫn được lưu.
+A126=42 | B126=F8.2_06-F1.3_01 | C126=FI_42 | D126=Đổi email đã xác nhận đồng bộ Firebase và hồ sơ SQL để đăng nhập lại | E126=Khách A có email cũ; sở hữu email mới chưa dùng; biết mật khẩu hiện tại. | F126=1 | G126=Yêu cầu đổi email và xác nhận qua email mới. | H126=Email mới A | I126=Firebase xác nhận email mới; chưa coi email chưa xác nhận là đã đồng bộ. | J126=Nguồn Functional: Testcase_F8!C49, Testcase_F1!C40.
+Điểm nối: Firebase email verification → UserAccount sync → login.
+Chưa thực thi.
+F127=2 | G127=Đăng nhập lại và để PetNoVa đồng bộ hồ sơ. | H127=Email mới A | I127=UserAccount.email đổi sang email mới, UID và userId giữ nguyên.
+F128=3 | G128=Đăng xuất rồi đăng nhập bằng email mới. | H128=Email mới A, mật khẩu đúng | I128=Vào lại đúng cổng của A; hồ sơ không bị nhân đôi.
+A129=43 | B129=F8.2_01-F1.3_01 | C129=FI_43 | D129=Đổi mật khẩu tài khoản làm mật khẩu cũ hết hiệu lực ở lần đăng nhập sau | E129=Khách A ACTIVE, biết mật khẩu cũ; mật khẩu mới hợp lệ theo F8.2_01. | F129=1 | G129=Đổi mật khẩu tại trang tài khoản. | H129=Mật khẩu hiện tại đúng, mật khẩu mới ≥8 ký tự | I129=Giao diện xác nhận cập nhật thành công. | J129=Nguồn Functional: Testcase_F8!C38, Testcase_F1!C40.
+Điểm nối: Đổi mật khẩu Firebase → login.
+Chưa thực thi.
+F130=2 | G130=Đăng xuất và thử đăng nhập bằng mật khẩu cũ. | H130=Email A, mật khẩu cũ | I130=Firebase từ chối đăng nhập.
+F131=3 | G131=Đăng nhập bằng mật khẩu mới. | H131=Email A, mật khẩu mới | I131=Vào đúng hồ sơ PetNoVa của A.
+A132=44 | B132=F8_06-F8_01 | C132=FI_44 | D132=Ảnh đại diện tải lên được lưu và hiển thị lại với hồ sơ tài khoản | E132=Khách A có ảnh đại diện cũ hoặc rỗng; Cloudinary đã cấu hình. | F132=1 | G132=Khách A chọn và tải ảnh đại diện hợp lệ. | H132=JPEG/PNG/WebP thật ≤5 MiB | I132=API lưu URL ảnh mới sau khi Cloudinary thành công. | J132=Nguồn Functional: Testcase_F8!C34, Testcase_F8!C23.
+Điểm nối: Media/Cloudinary → UserAccount.avatarUrl → UI tài khoản.
+Chưa thực thi.
+F133=2 | G133=Tải lại trang tài khoản. | H133=Tài khoản A | I133=Ảnh đại diện mới vẫn hiển thị từ URL đã lưu.
+F134=3 | G134=Đăng xuất rồi đăng nhập lại. | H134=Tài khoản A | I134=Ảnh vẫn gắn đúng hồ sơ A, không chuyển sang tài khoản khác.
+A135=45 | B135=F11.12_04-F11.10_03 | C135=FI_45 | D135=Danh mục INACTIVE không được gắn vào gói dịch vụ mới | E135=ADMIN có danh mục D đang ACTIVE; có dữ liệu gói hợp lệ. | F135=1 | G135=ADMIN chuyển danh mục D sang INACTIVE. | H135=categoryId D | I135=Danh mục lưu trạng thái INACTIVE. | J135=Nguồn Functional: Testcase_F11!C125, Testcase_F11!C101.
+Điểm nối: ServiceCategory.status → tạo ServicePackage.
+Chưa thực thi.
+F136=2 | G136=Thử tạo gói mới gắn danh mục D. | H136=Tên/giá/thời lượng hợp lệ; categoryId D | I136=API từ chối vì danh mục không ACTIVE.
+F137=3 | G137=Tải lại danh sách gói. | H137=Tên gói vừa thử | I137=Không có gói mới được tạo từ yêu cầu thất bại.
+A138=46 | B138=F11.10_04-F4.5_03 | C138=FI_46 | D138=Giá/thời lượng gói sau khi sửa được lấy ở lịch mới từ máy chủ | E138=ADMIN có gói S ACTIVE; khách A có Pet A. | F138=1 | G138=ADMIN sửa giá và thời lượng gói S. | H138=Giá P2, thời lượng T2 hợp lệ | I138=Gói S lưu giá/thời lượng mới. | J138=Nguồn Functional: Testcase_F11!C104, Testcase_F4!C54.
+Điểm nối: ServicePackage → BookingDetail/Booking/Payment.
+Chưa thực thi.
+F139=2 | G139=Khách A tải lại form và tạo lịch mới với S. | H139=Pet A, S, giờ đủ T2 | I139=Booking dùng tổng tiền P2 và durationMinutes T2.
+F140=3 | G140=Đọc BookingDetail và Payment của lịch mới. | H140=bookingId mới | I140=Đơn giá chi tiết và số tiền thanh toán bằng P2.
+A141=47 | B141=F11.11_02-F4.3_01 | C141=FI_47 | D141=Bật lại gói dịch vụ cho phép khách chọn và tạo lịch mới | E141=Gói S đang INACTIVE, khách A có Pet A. | F141=1 | G141=ADMIN bật gói S sang ACTIVE. | H141=serviceId S | I141=Trạng thái gói lưu ACTIVE. | J141=Nguồn Functional: Testcase_F11!C115, Testcase_F4!C33.
+Điểm nối: Admin status → catalog khách → Booking.
+Chưa thực thi.
+F142=2 | G142=Khách A tải lại form đặt lịch. | H142=Tài khoản A | I142=Gói S xuất hiện với giá/thời lượng hiện hành.
+F143=3 | G143=Khách A tạo lịch ở giờ còn chỗ. | H143=Pet A, S | I143=Lịch mới chứa BookingDetail gắn S.
+A144=48 | B144=F11.11_03-F4_01 | C144=FI_48 | D144=Tắt gói dịch vụ không làm mất chi tiết lịch đã tạo | E144=Khách A có Booking B từng dùng gói S; ADMIN có quyền đổi trạng thái S. | F144=1 | G144=Ghi dịch vụ và giá trên Booking B. | H144=bookingId B | I144=Có mốc chi tiết lịch cũ. | J144=Nguồn Functional: Testcase_F11!C117, Testcase_F4!C23.
+Điểm nối: ServicePackage status → lịch sử BookingDetail.
+Chưa thực thi.
+F145=2 | G145=ADMIN chuyển gói S sang INACTIVE. | H145=serviceId S | I145=S không còn được chọn khi đặt mới.
+F146=3 | G146=Khách A mở lại Booking B. | H146=bookingId B | I146=Lịch và chi tiết dịch vụ/giá đã lưu vẫn đọc được.
+A147=49 | B147=F4.6_03-F5_01 | C147=FI_49 | D147=Lỗi tạo link PayOS giữ Booking và Payment ở trạng thái chờ | E147=Có Booking BANK_TRANSFER/PENDING, PayOS thiếu cấu hình hoặc trả lỗi thử nghiệm. | F147=1 | G147=Ghi bookingId, paymentId và trạng thái trước khi tạo link. | H147=Booking A | I147=Booking PENDING, Payment PENDING. | J147=Nguồn Functional: Testcase_F4!C60, Testcase_F5!C23.
+Điểm nối: PayOS link failure → Payment history.
+Chưa thực thi.
+F148=2 | G148=Thử tạo link PayOS trong điều kiện lỗi kiểm soát. | H148=paymentId A | I148=API báo lỗi; không tự ghi PAID.
+F149=3 | G149=Tải lại lịch và lịch sử thanh toán. | H149=bookingId A | I149=Lịch vẫn tồn tại; Payment vẫn PENDING, số tiền không đổi.
+A150=50 | B150=F5.2_02-F5.3_01 | C150=FI_50 | D150=PayOS thất bại cho phép retry cùng lịch bằng Payment mới | E150=Booking A chưa hủy/hoàn thành; Payment BANK_TRANSFER đã FAILED sau đối soát. | F150=1 | G150=Mở lịch sử thanh toán của Booking A. | H150=bookingId A | I150=Có Payment cũ FAILED. | J150=Nguồn Functional: Testcase_F5!C33, Testcase_F5!C39.
+Điểm nối: PayOS FAILED → Payments.retry → lịch sử.
+Chưa thực thi.
+F151=2 | G151=Chọn thử lại giao dịch thất bại. | H151=paymentId cũ | I151=Tạo Payment mới PENDING, cùng bookingId và amount.
+F152=3 | G152=Mở lại lịch sử và Booking A. | H152=bookingId A | I152=Có cả FAILED cũ và PENDING mới; Booking không bị nhân đôi.
+A153=51 | B153=F5.2_03-F5_01 | C153=FI_51 | D153=Webhook PayOS sai chữ ký hoặc sai tiền không ghi giao dịch PAID | E153=Payment BANK_TRANSFER PENDING; môi trường test có cách gửi webhook giả/sai tiền. | F153=1 | G153=Ghi trạng thái Payment A trước thử. | H153=paymentId A | I153=Trạng thái PENDING. | J153=Nguồn Functional: Testcase_F5!C35, Testcase_F5!C23.
+Điểm nối: Webhook verification → Payment visible.
+Chưa thực thi.
+F154=2 | G154=Gửi webhook sai chữ ký hoặc số tiền không khớp. | H154=orderCode A, payload thử nghiệm | I154=Webhook bị từ chối hoặc bỏ qua; không gọi cập nhật PAID.
+F155=3 | G155=Tải lại lịch sử thanh toán của A. | H155=paymentId A | I155=Payment không thành PAID; không có thông báo thanh toán thành công.
+A156=52 | B156=F5.2_04-F7_01 | C156=FI_52 | D156=Webhook PayOS thành công lặp không gửi hai thông báo thanh toán | E156=Payment BANK_TRANSFER PENDING; có webhook PAID hợp lệ cho đơn thử. | F156=1 | G156=Gửi webhook PAID hợp lệ một lần. | H156=orderCode/số tiền đúng | I156=Payment chuyển PAID, khách nhận một thông báo. | J156=Nguồn Functional: Testcase_F5!C37, Testcase_F7!C23.
+Điểm nối: PayOS webhook idempotency → Notifications.
+Chưa thực thi.
+F157=2 | G157=Gửi lại đúng webhook ấy. | H157=Cùng payload hợp lệ | I157=Payment vẫn PAID, không tạo thêm thông báo thành công.
+F158=3 | G158=Khách mở danh sách thông báo. | H158=bookingId liên quan | I158=Chỉ có một thông báo thanh toán cho giao dịch này.
+A159=53 | B159=F4.9_01-F4.4_01 | C159=FI_53 | D159=Hủy lịch làm khung giờ được tính lại là còn chỗ | E159=Khách A có lịch chưa trả tiền, giờ T đang bị lịch đó chiếm. | F159=1 | G159=Ghi trạng thái availability ở giờ T. | H159=Pet A, dịch vụ S, ngày D | I159=Giờ T đang bị xung đột bởi lịch A. | J159=Nguồn Functional: Testcase_F4!C82, Testcase_F4!C41.
+Điểm nối: Booking CANCELLED → availability.
+Chưa thực thi.
+F160=2 | G160=Hủy lịch A hợp lệ. | H160=bookingId A | I160=Booking chuyển CANCELLED.
+F161=3 | G161=Hỏi availability lại ở giờ T. | H161=Cùng Pet A, S, D | I161=Lịch A không còn chiếm giờ; trạng thái giờ được tính lại theo các lịch còn lại.
+A162=54 | B162=F9.4_01-F4_01 | C162=FI_54 | D162=Nhân viên đổi giờ lịch, khách thấy đúng giờ mới | E162=Có Booking CONFIRMED thuộc khách A; STAFF và giờ mới còn chỗ. | F162=1 | G162=STAFF đổi Booking A sang ngày/giờ mới. | H162=bookingId A, D2/T2 | I162=API cập nhật Booking, không đổi tiền/dịch vụ. | J162=Nguồn Functional: Testcase_F9!C38, Testcase_F4!C23.
+Điểm nối: Đổi lịch vận hành → lịch khách.
+Chưa thực thi.
+F163=2 | G163=Khách A làm mới danh sách lịch. | H163=Tài khoản A | I163=Booking A hiển thị D2/T2.
+F164=3 | G164=Mở chi tiết ở cả hai cổng. | H164=bookingId A | I164=Ngày/giờ khớp nhau; không còn giờ cũ ở Booking A.
+A165=55 | B165=F11.5_01-F1.3_01 | C165=FI_55 | D165=Tạo nhân sự sinh tài khoản liên kết và mở đúng cổng đăng nhập | E165=ADMIN có thể tạo nhân sự; email/điện thoại thử chưa dùng. | F165=1 | G165=ADMIN tạo nhân sự STAFF/VET với dữ liệu hợp lệ. | H165=Email/số mới, mật khẩu khởi tạo hợp lệ | I165=Staff và UserAccount liên kết cùng userId, role ACTIVE. | J165=Nguồn Functional: Testcase_F11!C61, Testcase_F1!C40.
+Điểm nối: Staff + UserAccount/Firebase → role portal.
+Chưa thực thi.
+F166=2 | G166=Đăng xuất ADMIN; đăng nhập tài khoản nhân sự mới. | H166=Email và mật khẩu khởi tạo | I166=Firebase xác thực; PetNoVa mở cổng theo role.
+F167=3 | G167=Đối chiếu thông tin trong danh sách nhân sự. | H167=staffId mới | I167=Hồ sơ cổng và bản ghi nhân sự trùng người.
+A168=56 | B168=F11.9_01-F1.3_01 | C168=FI_56 | D168=Xóa nhân sự chưa có nghiệp vụ giữ tài khoản ở vai trò CUSTOMER | E168=Staff A chưa có lịch/hồ sơ y tế liên quan; có số Việt Nam hợp lệ duy nhất. | F168=1 | G168=ADMIN xóa Staff A theo quy trình. | H168=staffId A | I168=Bản ghi Staff bị xóa; UserAccount còn lại. | J168=Nguồn Functional: Testcase_F11!C90, Testcase_F1!C40.
+Điểm nối: Delete Staff → UserAccount role/status → portal.
+Chưa thực thi.
+F169=2 | G169=Tải lại tài khoản A ở quản trị. | H169=userId A | I169=role CUSTOMER và status ACTIVE.
+F170=3 | G170=Đăng nhập tài khoản A. | H170=Email/mật khẩu của A | I170=Mở cổng khách hàng, không còn cổng nhân sự.
+A171=57 | B171=F9.5_01-F9.5_02-F7_01 | C171=FI_57 | D171=Mỗi bước tiến độ lịch gửi thông báo tới đúng khách | E171=Booking A PENDING thuộc khách A; STAFF có quyền xử lý. | F171=1 | G171=STAFF chuyển PENDING sang CONFIRMED. | H171=bookingId A | I171=Booking CONFIRMED; khách A có thông báo xác nhận. | J171=Nguồn Functional: Testcase_F9!C44, Testcase_F9!C46, Testcase_F7!C23.
+Điểm nối: Booking.status → Notifications.
+Chưa thực thi.
+F172=2 | G172=STAFF chuyển CONFIRMED sang IN_PROGRESS. | H172=bookingId A | I172=Booking IN_PROGRESS; khách A có thông báo thực hiện.
+F173=3 | G173=Khách B mở thông báo của mình. | H173=Tài khoản B | I173=Không thấy thông báo tiến độ của Booking A.
+A174=58 | B174=F10.6_01-F6_06 | C174=FI_58 | D174=Mũi tiêm mới xuất hiện trong sổ sức khỏe và mốc nhắc tiếp theo | E174=VET có quyền với Pet A; chủ A mở được Sổ sức khỏe. | F174=1 | G174=VET thêm mũi tiêm có nextDate hợp lệ. | H174=Pet A, vaccine V, ngày nhắc D | I174=Vaccination mới gắn đúng petId A. | J174=Nguồn Functional: Testcase_F10!C67, Testcase_F6!C33.
+Điểm nối: Vaccinations → customer health book.
+Chưa thực thi.
+F175=2 | G175=Chủ A mở Sổ sức khỏe của Pet A. | H175=Tài khoản A | I175=Mũi tiêm V hiện trong danh sách.
+F176=3 | G176=Đối chiếu mốc nhắc tiếp theo. | H176=Ngày D | I176=Nếu D là ngày nhắc chưa qua sớm nhất, UI hiển thị D.
+A177=59 | B177=F11.16_01-F7_01 | C177=FI_59 | D177=Thông báo chung từ ADMIN chỉ đến các tài khoản ACTIVE | E177=Môi trường thử có khách A ACTIVE và khách B INACTIVE; ADMIN có quyền gửi broadcast. | F177=1 | G177=ADMIN gửi thông báo SYSTEM với nội dung riêng để nhận diện. | H177=Tiêu đề T, nội dung M | I177=API xác nhận gửi broadcast. | J177=Nguồn Functional: Testcase_F11!C146, Testcase_F7!C23.
+Điểm nối: ADMIN broadcast → Notifications per active user.
+Chưa thực thi.
+F178=2 | G178=Tài khoản A ACTIVE mở thông báo. | H178=Tài khoản A | I178=Có đúng một thông báo T/M.
+F179=3 | G179=Đối chiếu dữ liệu thông báo của B INACTIVE. | H179=Tài khoản B / quản trị | I179=Không phát sinh thông báo T/M cho B.
+A180=60 | B180=F11.10_04-F11.17_01 | C180=FI_60 | D180=Sửa dịch vụ thành công được ghi vào nhật ký quản trị | E180=ADMIN có gói S ACTIVE và quyền xem audit log. | F180=1 | G180=Ghi giá/tên hiện tại của gói S. | H180=serviceId S | I180=Có mốc trước sửa. | J180=Nguồn Functional: Testcase_F11!C104, Testcase_F11!C155.
+Điểm nối: Admin mutation → AuditLogs.
+Chưa thực thi.
+F181=2 | G181=ADMIN sửa gói S bằng dữ liệu hợp lệ. | H181=Giá/tên mới | I181=API lưu thay đổi thành công.
+F182=3 | G182=Mở nhật ký thao tác và lọc đối tượng. | H182=serviceId S | I182=Có mục non-GET thành công, đúng user/role/action/route và thời điểm.
+A183=61 | B183=F11.3_02-F11.17_02 | C183=FI_61 | D183=Yêu cầu đổi vai trò sai bị từ chối không được ghi là thao tác thành công | E183=ADMIN có UserAccount A; biết số lượng audit log trước thử. | F183=1 | G183=Ghi role A và log gần nhất. | H183=userId A | I183=Có mốc đối chiếu. | J183=Nguồn Functional: Testcase_F11!C46, Testcase_F11!C158.
+Điểm nối: Failed mutation → AuditLogs.
+Chưa thực thi.
+F184=2 | G184=Gửi đổi role sang giá trị không hợp lệ. | H184=role không nằm trong 4 vai trò | I184=API từ chối; UserAccount.role không đổi.
+F185=3 | G185=Mở nhật ký. | H185=userId A | I185=Không có log thành công cho yêu cầu bị từ chối.
+A186=62 | B186=F11.14_01-F11.15_01 | C186=FI_62 | D186=CSV xuất từ báo cáo khớp các dòng theo ngày trên màn hình | E186=ADMIN chọn khoảng ngày có Booking; bảng báo cáo đã tải xong. | F186=1 | G186=Ghi bảng theo ngày trên màn hình báo cáo. | H186=Khoảng từ D1 đến D2 | I186=Có Ngày/Số lịch/Hoàn thành/Giá trị đặt làm mốc. | J186=Nguồn Functional: Testcase_F11!C132, Testcase_F11!C141.
+Điểm nối: Reports API → CSV export.
+Chưa thực thi.
+F187=2 | G187=Bấm Xuất CSV. | H187=Cùng khoảng ngày | I187=Tải tệp CSV mở được bằng Excel, tiếng Việt không lỗi mã.
+F188=3 | G188=Đối chiếu từng dòng CSV với màn hình. | H188=D1–D2 | I188=Các cột ngày, số lịch, hoàn thành, giá trị đặt khớp bảng.
+A189=63 | B189=F12.3_01-F2_01 | C189=FI_63 | D189=Dashboard hiển thị lỗi API rồi tải đúng số liệu sau khôi phục | E189=Khách A có dữ liệu thử; có thể dừng/khởi động API trong môi trường test. | F189=1 | G189=Ghi số liệu trên dashboard khi API hoạt động. | H189=Tài khoản A | I189=Có số mốc hiện tại. | J189=Nguồn Functional: Testcase_F12!C38, Testcase_F2!C23.
+Điểm nối: API availability → dashboard refresh.
+Chưa thực thi.
+F190=2 | G190=Ngắt API thử nghiệm rồi tải lại dashboard. | H190=API cổng 5200 | I190=Giao diện báo không tải được, không giả báo thành công.
+F191=3 | G191=Khôi phục API và dùng thao tác làm mới. | H191=Tài khoản A | I191=Dashboard tải lại dữ liệu đúng, không giữ thông báo lỗi cũ.
+A192=64 | B192=F4.5_01-F9.2_01 | C192=FI_64 | D192=Lịch mới có đầy đủ chi tiết dịch vụ và Payment ở cổng vận hành | E192=Khách A có Pet A, hai gói ACTIVE; STAFF có quyền xem lịch. | F192=1 | G192=Khách A tạo lịch với hai gói. | H192=S1, S2, CASH | I192=Booking, hai BookingDetail, Payment PENDING được tạo. | J192=Nguồn Functional: Testcase_F4!C49, Testcase_F9!C28.
+Điểm nối: Customer Booking → operational detail aggregation.
+Chưa thực thi.
+F193=2 | G193=STAFF làm mới danh sách và mở lịch vừa tạo. | H193=bookingId mới | I193=Thấy đúng chủ, Pet, ghi chú, hai dịch vụ và tiền.
+F194=3 | G194=Đối chiếu Payment và tổng tiền. | H194=bookingId mới | I194=Số tiền ở cổng vận hành bằng tổng giá hai chi tiết.
+A195=65 | B195=F4.5_01-F9_02 | C195=FI_65 | D195=Nhân viên làm mới danh sách nhìn thấy lịch khách vừa đặt | E195=STAFF đã mở bàn vận hành; khách A có thể tạo lịch. | F195=1 | G195=STAFF ghi danh sách lịch hiện tại. | H195=Bàn vận hành | I195=Chưa có bookingId mới. | J195=Nguồn Functional: Testcase_F4!C49, Testcase_F9!C26.
+Điểm nối: Customer Booking → operational refresh.
+Chưa thực thi.
+F196=2 | G196=Khách A tạo Booking hợp lệ ở phiên khác. | H196=Pet A, gói S, giờ trống | I196=API tạo bookingId mới.
+F197=3 | G197=STAFF bấm Làm mới. | H197=bookingId mới | I197=Lịch mới xuất hiện với trạng thái PENDING, đúng khách A.
+A198=66 | B198=F11.4_02-F1.3_01 | C198=FI_66 | D198=Kích hoạt lại tài khoản cho phép đăng nhập vào đúng cổng | E198=UserAccount A INACTIVE; ADMIN có quyền đổi trạng thái. | F198=1 | G198=ADMIN chuyển A sang ACTIVE. | H198=userId A | I198=Trạng thái hồ sơ lưu ACTIVE. | J198=Nguồn Functional: Testcase_F11!C55, Testcase_F1!C40.
+Điểm nối: UserAccount status → login/role portal.
+Chưa thực thi.
+F199=2 | G199=A đăng nhập lại bằng thông tin hợp lệ. | H199=Email/mật khẩu của A | I199=Firebase xác thực và API chấp nhận hồ sơ ACTIVE.
+F200=3 | G200=Quan sát cổng được mở. | H200=role hiện tại của A | I200=Cổng đúng role; dữ liệu thuộc đúng userId A.
+A201=67 | B201=F9.5_03-F11.14_01 | C201=FI_67 | D201=Lịch hoàn thành được phản ánh ở số lịch hoàn thành trong báo cáo | E201=Có Booking IN_PROGRESS đã PAID thuộc khoảng báo cáo D. | F201=1 | G201=Ghi báo cáo ngày D trước khi hoàn thành. | H201=Ngày Booking A | I201=Có số completed làm mốc. | J201=Nguồn Functional: Testcase_F9!C48, Testcase_F11!C132.
+Điểm nối: Booking.status → Reports.completed.
+Chưa thực thi.
+F202=2 | G202=STAFF chuyển Booking A sang COMPLETED. | H202=bookingId A | I202=Booking lưu COMPLETED.
+F203=3 | G203=Tải lại báo cáo ngày D. | H203=Cùng khoảng ngày | I203=completed tăng đúng một; tổng số booking giữ nguyên.
+A204=68 | B204=F7_07-F12.2_04 | C204=FI_68 | D204=Khách khác không đọc hoặc đánh dấu thông báo của chủ lịch | E204=Khách A có Notification N của Booking A; khách B đăng nhập riêng. | F204=1 | G204=A ghi trạng thái isRead của Notification N. | H204=notificationId N | I204=Có mốc ban đầu. | J204=Nguồn Functional: Testcase_F7!C35, Testcase_F12!C35.
+Điểm nối: Notification ownership → read state.
+Chưa thực thi.
+F205=2 | G205=B gọi GET N và PUT N/read bằng token B. | H205=notificationId N | I205=API từ chối hoặc không tìm thấy, không trả nội dung A.
+F206=3 | G206=A tải lại thông báo N. | H206=Tài khoản A | I206=Nội dung và isRead không bị yêu cầu của B thay đổi.
+A207=69 | B207=F10.7_02-F6_01 | C207=FI_69 | D207=VET không được phân công không ghi được bệnh án cho pet của người khác | E207=VET A được phân công Pet A; VET B không có ca với Pet A. | F207=1 | G207=VET B gửi tạo MedicalRecord cho Pet A. | H207=Token B, petId A | I207=API từ chối vì Pet A ngoài phạm vi B. | J207=Nguồn Functional: Testcase_F10!C81, Testcase_F6!C23.
+Điểm nối: Booking assignment → MedicalRecords permission → owner view.
+Chưa thực thi.
+F208=2 | G208=Chủ A tải lại Sổ sức khỏe. | H208=Pet A | I208=Không có bệnh án từ yêu cầu bị từ chối.
+F209=3 | G209=VET A tạo bệnh án hợp lệ cho Pet A. | H209=Token A, chẩn đoán/điều trị hợp lệ | I209=Bệnh án xuất hiện trong sổ sức khỏe của chủ A.

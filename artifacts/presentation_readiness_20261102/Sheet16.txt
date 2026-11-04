@@ -1,0 +1,5 @@
+A2=Priority | D2=Status | G2=Type
+A3=High | D3=Not Executed | G3=LooknFeel
+A4=Medium | D4=Passed | G4=Positive
+A5=Low | D5=Failed | G5=Negative
+G6=Boundary

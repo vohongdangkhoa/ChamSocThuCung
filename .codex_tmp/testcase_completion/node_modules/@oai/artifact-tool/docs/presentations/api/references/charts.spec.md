@@ -42,6 +42,7 @@ const chart = slide.charts.add(chartType, {
   view3d,
   scatterOptions,
   radarOptions,
+  surface,
   bubbleOptions,
   xAxis,
   yAxis,
@@ -91,8 +92,8 @@ type ChartConfig = {
   hasLegend?: boolean;
   legend?: ChartLegendConfig;
   barOptions?: { direction?: "bar" | "column"; grouping?: "clustered" | "stacked" | "percentStacked"; varyColors?: boolean; gapWidth?: number; gapDepth?: number; overlap?: number; bar3dShape?: number };
-  lineOptions?: { grouping?: "standard" | "stacked" | "percentStacked"; smooth?: boolean; varyColors?: boolean };
-  areaOptions?: { grouping?: "standard" | "stacked" | "percentStacked"; varyColors?: boolean };
+  lineOptions?: ChartLineOptionsConfig;
+  areaOptions?: { grouping?: "standard" | "stacked" | "percentStacked"; varyColors?: boolean; gapDepth?: number };
   pieOptions?: { firstSliceAngle?: number };
   doughnutOptions?: { holeSize?: number; firstSliceAngle?: number };
   treemapOptions?: { parentLabelLayout?: "none" | "overlapping" | "banner" };
@@ -100,9 +101,17 @@ type ChartConfig = {
   funnelOptions?: { gapWidth?: number };
   boxWhiskerOptions?: { showMeanLine?: boolean; showMeanMarker?: boolean; showNonOutliers?: boolean; showOutliers?: boolean; quartileMethod?: "inclusive" | "exclusive" };
   histogramOptions?: { binWidth?: number | null; binCount?: number | null; underflow?: number | null; overflow?: number | null; intervalClosed?: number; aggregated?: boolean };
-  view3d?: { rotX?: number; rotY?: number; perspective?: number; rightAngleAxes?: boolean };
+  view3d?: { rotX?: number; rotY?: number; perspective?: number; rightAngleAxes?: boolean; heightPercent?: number; depthPercent?: number };
   scatterOptions?: { style?: "line" | "lineWithMarkers" | "marker" | "smooth" | "smoothWithMarkers"; varyColors?: boolean };
   radarOptions?: { style?: "standard" | "marker" | "filled"; varyColors?: boolean };
+  surface?: { // surface and surface3D charts
+    wireframe?: boolean;
+    bandFormats?: { index: number; fill?: FillConfig; stroke?: LineConfig }[];
+    hasBandFormats?: boolean;
+    floor?: { fill?: FillConfig; stroke?: LineConfig };
+    sideWall?: { fill?: FillConfig; stroke?: LineConfig };
+    backWall?: { fill?: FillConfig; stroke?: LineConfig };
+  };
   bubbleOptions?: { scale?: number | null; sizeRepresents?: "area" | "width" | null; showNegative?: boolean | null };
   xAxis?: ChartAxisConfig;
   yAxis?: ChartAxisConfig;
@@ -117,12 +126,76 @@ type ChartConfig = {
   displayBlanksAs?: "zero" | "gap" | "span" | null;
   styleIndex?: number;
 };
+
+type ChartLineOptionsConfig = {
+  gapDepth?: number; // integer from 0 to 500 for 3D lines
+  grouping?: "standard" | "stacked" | "percentStacked";
+  smooth?: boolean;
+  varyColors?: boolean;
+  highLowLine?: LineConfig | null;
+  upDownBars?: {
+    gapWidth?: number | null;
+    upBars?: { fill?: FillConfig | null; stroke?: LineConfig | null } | null;
+    downBars?: { fill?: FillConfig | null; stroke?: LineConfig | null } | null;
+  } | null;
+};
 ```
 
 ## Chart Family Options
 
 `funnelOptions.gapWidth` ranges from 0 to 0.8. `barOptions.gapWidth` is an
 integer from 0 to 500.
+
+### 3D Area Charts
+
+`area3D` renders standard, stacked and 100% stacked filled volumes. Standard
+series occupy separate depth lanes; stacked series share one lane. Depth spacing
+is controlled through `chart.areaOptions.gapDepth`, an integer from 0 to 500
+(default 150). Missing samples are plotted at zero, matching PowerPoint.
+
+```ts
+const area = slide.charts.add("area3D", {
+  categories: ["Q1", "Q2", "Q3"],
+  series: [{ name: "Revenue", values: [12, 18, 15], fill: "#156082" }],
+  areaOptions: { grouping: "standard", gapDepth: 150 },
+  view3d: { rotX: 15, rotY: 20 },
+});
+area.areaOptions.gapDepth = 50;
+```
+
+### Stock Charts
+
+Supply series in High, Low, Close order for HLC, or Open, High, Low, Close
+order for OHLC. New stock charts include high-low lines; HLC charts also show
+Close markers, and OHLC charts include up/down bars. Set `highLowLine` or
+`upDownBars` to `null` to hide it. Set the Close marker's `symbol` to `"none"`
+to hide that marker.
+
+```ts
+const stock = slide.charts.add("stock", {
+  categories,
+  series: [
+    { name: "Open", values: openValues },
+    { name: "High", values: highValues },
+    { name: "Low", values: lowValues },
+    { name: "Close", values: closeValues },
+  ],
+  lineOptions: {
+    highLowLine: { style: "solid", fill: "#475569", width: 1 },
+    upDownBars: {
+      gapWidth: 150,
+      upBars: { fill: "#16a34a", stroke: { style: "solid", fill: "#166534" } },
+      downBars: { fill: "#dc2626", stroke: { style: "solid", fill: "#991b1b" } },
+    },
+  },
+});
+
+stock.lineOptions.highLowLine = { style: "solid", fill: "#334155", width: 2 };
+```
+
+`upDownBars.gapWidth` is an integer from 0 to 500. To include volume, create
+a combo chart with a primary-axis `bar` group for volume and a secondary-axis
+`stock` group for the HLC or OHLC series.
 
 ### Combo Charts
 
@@ -170,8 +243,9 @@ type ChartGroupConfig = {
   dataLabels?: ChartDataLabelsConfig;
 } & (
   | { type: "bar"; barOptions?: { direction?: "column"; grouping?: "clustered" | "stacked" | "percentStacked"; gapWidth?: number; overlap?: number; varyColors?: boolean } }
-  | { type: "line"; lineOptions?: { grouping?: "standard" | "stacked" | "percentStacked"; smooth?: boolean; varyColors?: boolean } }
-  | { type: "area"; areaOptions?: { grouping?: "standard" | "stacked" | "percentStacked"; varyColors?: boolean } }
+  | { type: "line"; lineOptions?: ChartLineOptionsConfig }
+  | { type: "stock"; lineOptions?: ChartLineOptionsConfig }
+  | { type: "area"; areaOptions?: { grouping?: "standard" | "stacked" | "percentStacked"; varyColors?: boolean; gapDepth?: number } }
 );
 ```
 
@@ -211,10 +285,12 @@ chart.dataTable = dataTableConfig;
 ```ts
 chart.dataLabels = { showValue: true, position: "outEnd" };
 chart.dataLabels = { textStyle: { fontSize: 14 } };
+chart.dataLabels.textStyle = { fontSize: "12pt", bold: true };
 chart.dataLabels.showCategoryName = true;
 
 const series = chart.series.getItemAt(seriesIndex);
 series.dataLabels = { showValue: false, showSeriesName: true };
+series.dataLabels.textStyle = { italic: true };
 series.dataLabels.showSeriesName = false;
 ```
 
@@ -471,3 +547,28 @@ slide.charts.add("doughnut", {
   legend: { position: "right" },
 });
 ```
+
+### Surface and contour formatting
+
+```ts
+const chart = slide.charts.add("surface3D", {
+  categories,
+  series,
+  surface: {
+    wireframe: false,
+    floor: { fill: "#eeeeee" },
+    sideWall: { fill: "#ddeeff" },
+    backWall: { fill: "#ddeeff" },
+    bandFormats: [{ index: 0, fill: "#4488cc" }],
+  },
+});
+const surface = chart.surface;
+if (!surface) throw new Error("Expected a surface chart");
+surface.wireframe = true;
+surface.floor.fill = "#ffffff";
+surface.backWall.stroke = { fill: "#444444", width: 1 };
+```
+
+Use `"surface"` for the contour view. The `surface` facade is available for
+`surface` and `surface3D` charts. After changing to another chart family, obtain a
+new facade when returning to a surface chart.

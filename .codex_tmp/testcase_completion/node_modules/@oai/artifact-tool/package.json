@@ -1,11 +1,11 @@
 {
   "name": "@oai/artifact-tool",
-  "version": "2.8.106",
+  "version": "2.8.119",
   "private": true,
   "type": "module",
   "dependencies": {
     "skia-canvas": "^3.0.6",
-    "@oai/walnut": "0.1.269"
+    "@oai/walnut": "0.1.278"
   },
   "exports": {
     ".": "./dist/artifact_tool.mjs",
@@ -40,6 +40,6 @@
     "skia-canvas"
   ],
   "artifactToolBuild": {
-    "granolaVersion": "5.3.52"
+    "granolaVersion": "5.3.79"
   }
 }

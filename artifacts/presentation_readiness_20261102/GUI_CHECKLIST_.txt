@@ -1,0 +1,23 @@
+A1=GUI CHECKLIST — PetNoVa
+A3=x = mục thuộc phạm vi kiểm tra; chưa phải kết quả Passed.
+A5=ID | B5=CheckItem | C5=PetNoVa
+A6=1 | B6=Màu nền, màu chữ và font nhất quán giữa các trang? | C6=x
+A7=2 | B7=Tiêu đề trang và thanh điều hướng cho biết rõ màn hình đang mở? | C7=x
+A8=3 | B8=Chữ và số đủ tương phản, đọc được trên nền sáng/tối? | C8=x
+A9=4 | B9=Nhãn, ô nhập và nút có khoảng cách, căn lề nhất quán? | C9=x
+A10=5 | B10=Mọi ô nhập có nhãn nhìn thấy hoặc tên truy cập được? | C10=x
+A11=6 | B11=Thông báo lỗi đặt gần thao tác gây lỗi, dùng tiếng Việt dễ hiểu? | C11=x
+A12=7 | B12=Không có lỗi chính tả ở nhãn, nút, trạng thái và thông báo? | C12=x
+A13=8 | B13=Dữ liệu tiền tệ hiển thị VND, phân nhóm hàng nghìn nhất quán? | C13=x
+A14=9 | B14=Ngày, giờ hiển thị theo cùng một định dạng dễ hiểu? | C14=x
+A15=10 | B15=Nút không khả dụng có trạng thái disabled rõ và không gửi yêu cầu? | C15=x
+A16=11 | B16=Đang tải dữ liệu có tín hiệu tiến trình; không nhấp lặp gây tạo trùng? | C16=x
+A17=12 | B17=Danh sách rỗng có thông điệp và hành động tiếp theo hợp lý? | C17=x
+A18=13 | B18=Bảng dữ liệu nhiều cột vẫn cuộn được mà không che nội dung? | C18=x
+A19=14 | B19=Modal mở/đóng được; bấm hủy không lưu thay đổi? | C19=x
+A20=15 | B20=Thứ tự Tab bàn phím đi theo thứ tự đọc của form? | C20=x
+A21=16 | B21=Nút đang được focus có viền/trạng thái nhìn thấy? | C21=x
+A22=17 | B22=Ảnh thú cưng và avatar có văn bản thay thế hoặc phần dự phòng? | C22=x
+A23=18 | B23=Form báo trường bắt buộc và giới hạn ký tự trước/sau khi gửi? | C23=x
+A24=19 | B24=Thông báo thành công không bị che và không nhầm với lỗi? | C24=x
+A25=20 | B25=Màn đăng nhập sử dụng được ở chiều rộng điện thoại? | C25=x

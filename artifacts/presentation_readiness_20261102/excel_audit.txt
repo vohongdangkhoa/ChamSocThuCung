@@ -1,0 +1,29 @@
+READ-ONLY EXCEL AUDIT
+273functional cases;69integration cases;groups65/79/129.
+All273functional caseshavePassed.242F2-F12casesalsoexplicitlyChưathựcthi;F1GUIJ87saysnokếtquảchạy.
+
+1. high: 273 functional cases marked Passed;242 cases (F2–F12) explicitly say Chưa thực thi in notes. Workbook cover says designed/not executed.
+Ranges: Sheet1!E7, Testcase_F5!J23:K23, Testcase_F10!J23:K23, Testcase_F11!J35:K35, Testcase_F12!J23:K23
+Code: 
+
+2. high: Valid password cases use6characters for registration/reset or8characters for account change, while current JS/C# minimum is12 and maximum128.
+Ranges: Test Requirements!D6:E6, Test Requirements!D11, Testcase_F1!D34:J35, Testcase_F1!D73:I75, Testcase_F1!D78:J79, Testcase_F8!D38:J38, Sheet2!H129
+Code: web-react/src/quy-tac-mat-khau.js:1, backend/PetNoVaApi/Services/QuyTacMatKhau.cs:6
+
+3. high: F3.4_03/FI_08 still expectUI to accept5.5MiB due6MiB UI threshold, though current UI and API both enforce5MiB.
+Ranges: Testcase_F3!D52:J54, Sheet2!D24:J26
+Code: web-react/src/du-lieu-khach-hang.js:61, backend/PetNoVaApi/Services/ImageUploadValidator.cs:8
+
+4. medium: F4.7_06 notes still describe textarea1000characters then truncation255; current forms maxLength255 and validate255. API boundary testcase255/256 remains valid.
+Ranges: Testcase_F4!J72, Testcase_F4!G72:I73
+Code: web-react/src/lich-hen-khach-hang.jsx:227, web-react/src/lich-hen-khach-hang.jsx:351, web-react/src/lich-hen-khach-hang.jsx:394, web-react/src/lich-hen-khach-hang.jsx:427
+
+5. medium: F1 GUI case also says no execution result while markedPassed.
+Ranges: Testcase_F1!J87:K87
+Code: 
+
+273functional cases;presenter groups65+79+129=273
+69integration casesFI_01–FI_69,all explicitlyChưa thực thi inSheet2notes
+GUI CHECKLIST has20items;A3explicitly saysxisscope,notPassed
+SampleF4.7_06existsatC72andtestsAPI255/256correctlyasidefromstalenotes
+Sheet1authorisNhóm09only;testersHuy/Khoa/Bìnhshortnames;workbookcannotresolvePhạmThanhBìnhvsNguyễnThanhBình.

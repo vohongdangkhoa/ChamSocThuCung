@@ -1,0 +1,174 @@
+
+
+
+
+01
+ PETNOVA
+— NHÓM 09
+02
+24DH113291_Võ Hồng Đăng Khoa24DH110594_Bùi Quang Huy24DH113039_Phạm Thanh Bình
+03
+PetNova
+PetNova hỗ trợ một quy trình từ khi khách hàng tạo hồ sơ thú cưng, đặt dịch vụ, thanh toán, đến khi nhân viên tiếp nhận và bác sĩ cập nhật hồ sơ sức khỏe. Hệ thống có bốn vai trò: khách hàng, nhân viên vận hành, bác sĩ thú y và quản trị viên. Mỗi vai trò có giao diện và quyền truy cập riêng.
+Về kiến trúc, giao diện dùng React, API ASP.NET Core và database được lưu SQL Server. Firebase để xác thực, SMTP để gửi OTP qua email, PayOS để xử lý thanh toán trực tuyến và Cloudinary để lưu ảnh. Vì vậy, nhóm quan tâm cả tính đúng đắn của từng chức năng lẫn sự đồng bộ giữa các thành phần.
+04
+273 ca kiểm thử chức năng
+Nhóm chia tài liệu thành 12 nhóm Function , từ F1 đến F12, với 273 ca kiểm thử chức năng. Phần trình bày hôm nay đi theo phân công: Huy phụ trách F1, F2, F3, F6; Khoa phụ trách F4, F5, F7, F8; Bình phụ trách F9 đến F12.
+
+Bùi Quang Huy
+Trang xác thực, trang tổng quan, danh sách thú cưng và sổ sức khỏe.
+06
+07
+F1
+Xác thực tài khoản. Bộ testcase bao phủ đăng ký, đăng nhập theo vai trò, tài khoản bị khóa, quên mật khẩu, xác minh OTP và đăng xuất. Mục tiêu là xác định người dùng vào đúng cổng và chỉ được sử dụng hồ sơ còn hoạt động.
+Về dữ liệu hộp đen, nhóm chia thành email hợp lệ hoặc sai định dạng, thông tin mới hoặc đã tồn tại, trường đủ hoặc bị bỏ trống. Với mật khẩu của phiên bản hiện tại, nhóm kiểm tra độ dài 11, 12, 128 và 129 ký tự, đồng thời kiểm tra thiếu chữ hoa, chữ thường, số hoặc ký tự đặc biệt. Mỗi lần chỉ làm sai một điều kiện để xác định rõ nguyên nhân bị từ chối.
+F1
+08
+F1
+Tích hợp quan trọng của F1 là Firebase và hồ sơ người dùng trong SQL. Tài khoản được xác thực phải ghép đúng hồ sơ, vai trò và trạng thái. Với quên mật khẩu, số điện thoại dùng để tìm tài khoản; OTP được gửi đến email liên kết. Scenario FI_03 kiểm tra chuỗi yêu cầu OTP, xác minh, đặt mật khẩu mới và đăng nhập lại. FI_02 kiểm tra hồ sơ SQL đã bị khóa dù token Firebase vẫn còn hiệu lực. Đây là các kịch bản tích hợp đã thiết kế; luồng OTP thật cần được xác nhận riêng.
+Về UI, nhóm kiểm tra nhãn trường, thông báo tiếng Việt, che và hiện mật khẩu, điều hướng và trạng thái chờ xử lý. Bằng chứng giao diện đã lưu có việc bấm form rỗng để kiểm tra thông báo và thao tác nút hiện, ẩn mật khẩu trên trang đăng nhập, đăng ký.
+09
+F2
+là tổng quan khách hàng. Phạm vi gồm số thú cưng chưa lưu trữ, lịch sắp tới chưa hoàn thành hoặc hủy, giao dịch đang chờ và thông báo chưa đọc. Nhóm thiết kế dữ liệu không có bản ghi, có một bản ghi và có nhiều bản ghi ở các trạng thái khác nhau để kiểm tra điều kiện được tính.
+Ví dụ FI_38 kiểm tra thêm thú cưng rồi tải lại tổng quan, số thú cưng phải tăng đúng một. FI_40 kiểm tra đánh dấu thông báo đã đọc rồi đối chiếu bộ đếm. Đây là tích hợp giữa thao tác nghiệp vụ và số liệu tổng hợp. Trên UI, khi không có dữ liệu cần có thông báo rỗng dễ hiểu; khi API lỗi cần thể hiện lỗi tải dữ liệu.
+10
+F3
+là quản lý thú cưng, gồm danh sách, thêm, sửa, ảnh và lưu trữ hồ sơ. Những nhóm dữ liệu cần kiểm tra gồm tên bị bỏ trống, ngày sinh tương lai, cân nặng không hợp lệ và tệp ảnh sai định dạng. Với ảnh, giới hạn hiện tại là 5 MiB; nhóm kiểm tra dưới giới hạn, đúng giới hạn và vượt giới hạn. Tệp đổi đuôi thành ảnh nhưng nội dung không phải ảnh cũng thuộc nhóm cần bị từ chối.
+12
+F3
+Về tích hợp, FI_05 kiểm tra thú cưng vừa tạo xuất hiện trong lựa chọn đặt lịch và vẫn thuộc đúng chủ nuôi. FI_07 kiểm tra upload Cloudinary thành công rồi mới lưu tham chiếu ảnh. FI_06 kiểm tra không được lưu trữ thú cưng khi còn lịch mở. Ở đây lưu trữ phải giữ được lịch sử liên quan.
+13
+F6
+là xem hồ sơ sức khỏe. Khách hàng xem bệnh án và lịch tiêm của thú cưng thuộc tài khoản. Scenario chính gồm có hồ sơ, chưa có hồ sơ, đổi thú cưng và thử truy cập hồ sơ của chủ khác.
+Tích hợp của F6 nối phần bác sĩ ở F10 với phần khách hàng. FI_27 mô tả bác sĩ thêm bệnh án và chủ nuôi thấy đúng lịch sử; FI_58 mô tả mũi tiêm mới xuất hiện trong sổ sức khỏe. UI phải cho biết đang xem thú cưng nào; khi đổi lựa chọn, phản hồi cũ không được ghi đè hồ sơ mới. Báo cáo có kiểm tra logic phản hồi chậm và kiểm tra SQL từ chối đọc hồ sơ sức khỏe của khách khác; luồng hai vai trò trên trình duyệt vẫn cần chạy đầy đủ.
+Phần của em bao phủ nền tảng tài khoản, dữ liệu thú cưng và khả năng xem thông tin. Sau đây, bạn Võ Hồng Đăng Khoa sẽ trình bày luồng đặt lịch, thanh toán và các chức năng liên quan của khách hàng.
+14
+Võ Hồng Đăng Khoa 
+Form đặt lịch và một sơ đồ Lịch hẹn → Chi tiết dịch vụ → Thanh toán → Thông báo.
+Phạm vi gồm F4 quản lý lịch hẹn, F5 thanh toán, F7 thông báo và F8 tài khoản khách hàng, tổng cộng 79 ca chức năng được thiết kế.
+15
+F4 Test Cases for 'Quản lý lịch hẹn' function of 
+Chức năng đặt lịch, đổi lịch và hủy lịch. kiểm tra việc chọn thú cưng, hình thức chăm sóc, dịch vụ, ngày giờ, ghi chú và phương thức thanh toán. Kết quả đúng cần thể hiện được lịch thuộc ai, sử dụng dịch vụ nào, kéo dài bao lâu và có tổng tiền bao nhiêu.
+16
+Quản lý lịch hẹn function of PetNoVa
+17
+F4
+Về hộp đen, nhóm chọn các biên dễ phát sinh lỗi. Số dịch vụ được kiểm tra với 0, 1, 10 và 11; hệ thống cho phép từ 1 đến 10 dịch vụ hợp lệ. Ghi chú được kiểm tra với 255 và 256 ký tự. Ngày đặt được kiểm tra ở giới hạn sáu tháng và vượt giới hạn một ngày.
+20
+F4
+Về giờ, lịch bắt đầu theo bước 30 phút, từ 08 giờ và phải kết thúc chậm nhất 18 giờ. Ví dụ bắt đầu lúc 17 giờ với dịch vụ 60 phút thì vừa giờ đóng cửa; cùng giờ bắt đầu nhưng kéo dài 90 phút thì phải bị từ chối. Ngoài biên thời gian, nhóm kiểm tra lịch trùng của thú cưng và công suất phục vụ.
+21
+FI_11
+Scenario tích hợp FI_11 là khách đặt một lịch tiền mặt hợp lệ. Kết quả mong đợi gồm lịch ở trạng thái chờ, đủ các dòng dịch vụ, giao dịch tiền mặt đang chờ và thông báo đúng khách. FI_12 bổ sung trường hợp gửi lại cùng mã yêu cầu: hệ thống phải nhận diện thao tác lặp và không tạo hai bộ dữ liệu.
+22
+FI_11
+23
+FI_11
+24
+FI_12
+25
+Controller
+Trong bằng chứng controller kết hợp SQL đã có kiểm tra tạo đồng bộ lịch, chi tiết, thanh toán; phát lại mã yêu cầu; và biên ghi chú 255, 256 ký tự. 
+Bộ kiểm thử tự động gọi phần xử lý đặt lịch phía máy chủ, sau đó kiểm tra dữ liệu trong SQL. Ba kiểm tra này đã có kết quả PASS được lưu lại.
+27
+Về UI
+Kiểm tra hiển thị dịch vụ đã chọn, tổng thời lượng, tổng tiền, giờ còn trống và lỗi nhập liệu. Khi đổi lịch, thời gian mới cần được phản ánh sau tải lại. Khi bấm hủy rồi không xác nhận, dữ liệu cần giữ nguyên. Các scenario đổi, hủy còn đối chiếu thanh toán và thông báo liên quan.
+29
+F4
+30
+F4
+31
+F5
+Lịch sử thanh toán và các trạng thái giao dịch
+Lịch sử thanh toán, đối soát PayOS và thử lại giao dịch thất bại. Với thanh toán, nhóm đặc biệt kiểm tra điều kiện để giao dịch được ghi nhận đã trả tiền.
+32
+PayOS
+Ở luồng PayOS, việc người dùng quay lại website chưa đủ để kết luận thanh toán thành công. Nhóm thiết kế kiểm tra phản hồi được xác minh, chữ ký, mã giao dịch và số tiền. FI_51 kiểm tra chữ ký hoặc số tiền sai không được ghi PAID; FI_52 kiểm tra thông báo thanh toán lặp không tạo hai thông báo cho khách.
+Nhóm cũng thiết kế dữ liệu theo trạng thái. Giao dịch FAILED chỉ được thử lại khi lịch còn đủ điều kiện và không có giao dịch PENDING hoặc PAID cản trở. Với hai yêu cầu thử lại đồng thời, kết quả mong đợi là chỉ có một giao dịch chờ mới.
+33
+F5
+34
+F5
+35
+F5
+36
+F5
+37
+F5
+38
+F5
+39
+F5
+40
+F5
+41
+F5
+43
+F5
+115 Khách B không đọc được thanh toán của A146 Thử lại thanh toán đồng thời243 Xác nhận tiền mặt đồng thời
+44
+F5
+291 Webhook sai chữ ký hoặc sai số tiền299 Webhook lặp không tạo thông báo trùng
+47
+F7
+Thông báo cá nhân. Phạm vi gồm danh sách, đánh dấu một hoặc tất cả đã đọc, bộ đếm chưa đọc và mở lịch hẹn liên quan. Scenario tiêu biểu là nhận thông báo mới, đọc thông báo, kiểm tra số chưa đọc rồi thực hiện lại thao tác đọc.
+Phần tích hợp nằm ở lịch hẹn, thanh toán và tổng quan. Một thay đổi nghiệp vụ cần tạo thông báo đúng người nhận; đọc thông báo cần đồng bộ trạng thái và bộ đếm. Bằng chứng SQL có kiểm tra lưu trạng thái đã đọc, thao tác đọc lặp và từ chối khách khác đọc hoặc đánh dấu thông báo. Về UI, trạng thái đã đọc, chưa đọc cần dễ phân biệt và danh sách rỗng cần có phản hồi rõ.
+46
+F7
+48
+F7
+50
+F8
+Tài khoản khách hàng, gồm cập nhật họ tên, số điện thoại, ảnh đại diện, mật khẩu và email. Nhóm kiểm tra tên rỗng hoặc toàn khoảng trắng, tên 100 và 101 ký tự, số điện thoại hợp lệ, sai hoặc bị trùng. Bộ SQL đã có bằng chứng tên 100 ký tự được lưu, 101 bị chặn và tên toàn khoảng trắng bị từ chối.
+49
+F8
+51
+F8
+52
+F8
+Tích hợp của F8 gồm dữ liệu hồ sơ trong SQL, thông tin xác thực Firebase và ảnh trên Cloudinary. Scenario đổi email cần xác nhận quyền sở hữu và đồng bộ email; đổi mật khẩu cần xác thực lại rồi kiểm tra đăng nhập bằng thông tin mới. Những luồng thật này cần có bằng chứng thực thi riêng. UI phải thông báo rõ trường sai và không hiển thị thành công khi máy chủ đã từ chối.
+53
+F8
+54
+F8
+55
+Nguyễn Thanh Bình — F9, F10, F11, F12
+[Hiển thị cổng vận hành và luồng trạng thái lịch hẹn.]
+F9 đến F12, gồm 129 ca chức năng được thiết kế. Phần này kiểm tra cách hệ thống xử lý lịch sau khi khách đặt, cập nhật hồ sơ y tế và thực thi quyền của từng vai trò.
+56
+F9
+là vận hành lịch hẹn. Phạm vi gồm tìm và lọc lịch, xem chi tiết, phân công nhân sự, đổi lịch tại quầy, cập nhật tiến độ, xác nhận tiền mặt và ghi nhận hoàn tiền.
+Với tiến độ, nhóm dùng kiểm thử chuyển trạng thái. Luồng chính là PENDING, CONFIRMED, IN_PROGRESS rồi COMPLETED. Nhóm thiết kế cả chuyển đúng lẫn bỏ bước hoặc chuyển ngược. Bằng chứng SQL đã kiểm tra không được chuyển thẳng từ PENDING sang COMPLETED.
+57
+F9
+Nhóm còn kết hợp trạng thái lịch với trạng thái thanh toán bằng bảng quyết định. Lịch đang thực hiện nhưng chưa có thanh toán PAID thì chưa được hoàn thành. Scenario FI_25 kiểm tra chuỗi bị chặn khi chưa thu tiền, xác nhận tiền mặt hợp lệ, sau đó mới hoàn thành lịch.
+Về phân công, nhân sự phải đang hoạt động và không bị trùng giờ. FI_23 kiểm tra sau phân công, bác sĩ nhìn thấy đúng ca và khách nhận thông báo. Trong bằng chứng SQL đã có kiểm tra phân công nhân sự đang hoạt động còn trống.
+Về UI, bảng vận hành cần tìm và lọc được theo điều kiện, chi tiết hiển thị đầy đủ dịch vụ và giao dịch. Riêng chức năng hoàn tiền của dự án là ghi nhận khoản đã hoàn bên ngoài hệ thống, cần có lý do và tham chiếu. Khi trình bày, nhóm kiểm tra chứng từ và dữ liệu ghi nhận, không mô tả nút này là tự chuyển tiền qua ngân hàng.
+58
+F10
+[Chuyển sang hồ sơ bác sĩ.]
+là hồ sơ thú y. Bác sĩ xem ca được phân công, cập nhật sức khỏe, thêm hoặc sửa bệnh án và quản lý tiêm chủng. Mục tiêu là lưu đúng nội dung và bảo vệ phạm vi chuyên môn của từng bác sĩ.
+Về hộp đen, nhóm kiểm tra chẩn đoán hoặc điều trị bị bỏ trống, chẩn đoán 255 và 256 ký tự, ngày tiêm trong tương lai và ngày nhắc lại không sau ngày tiêm. Khi sửa bệnh án phải có lý do và giữ được thông tin trước sửa.
+Tích hợp nối tài khoản bác sĩ, phân công lịch, thú cưng, bệnh án và sổ sức khỏe của khách. Bằng chứng SQL đã kiểm tra bác sĩ được phân công tạo bệnh án đúng tác giả; bác sĩ ngoài phạm vi bị từ chối; sửa bệnh án cần lý do và lưu bản trước sửa; cùng một số quy tắc ngày tiêm. Về UI, nhóm quan tâm việc luôn hiển thị rõ thú cưng đang chọn và không giữ dữ liệu cũ khi chuyển hồ sơ.
+59
+F11
+[Chuyển sang trang quản trị và báo cáo.]
+là quản trị hệ thống, gồm tài khoản, nhân sự, dịch vụ, danh mục, báo cáo, thông báo chung và nhật ký. Do phạm vi rộng, nhóm ưu tiên các quy tắc có ảnh hưởng sang nhiều chức năng.
+Ví dụ FI_10 kiểm tra dịch vụ bị ngưng không được dùng để đặt lịch mới, kể cả khi gửi lại mã dịch vụ cũ. FI_48 kiểm tra lịch đã tạo vẫn đọc được chi tiết sau khi dịch vụ bị ngưng. Điều này giúp kiểm tra cả quy tắc hiện tại lẫn khả năng giữ lịch sử.
+60
+F11
+Với nhân sự, nhóm thiết kế kiểm tra vi phạm từ hai lên ba lần để đối chiếu quy tắc đình chỉ và trạng thái tài khoản liên kết. Với báo cáo, nhóm kiểm tra khoảng ngày đúng, ngày bắt đầu sau ngày kết thúc và vượt giới hạn ba năm. Bằng chứng SQL đã kiểm tra từ chối hai trường hợp khoảng ngày sai này.
+Phần tích hợp báo cáo phải phân biệt số lịch, giá trị đặt, tiền đã thu và khoản hoàn. Tiền thu được đối chiếu theo ngày thanh toán, khoản hoàn theo ngày ghi nhận hoàn. CSV xuất ra cần khớp bảng đang xem. Đây là những scenario đã thiết kế và cần dữ liệu đối chiếu có kiểm soát khi chạy đầy đủ.
+Về UI quản trị, nhóm kiểm tra bộ lọc, bảng, thao tác xác nhận, hiển thị số tiền và phản hồi khi báo cáo rỗng hoặc tải lỗi. Những kiểm tra này cần thực hiện trên trình duyệt bằng tài khoản quản trị.
+61
+F12
+là phân quyền và giao diện toàn hệ thống. Nhóm tách hai câu hỏi: người dùng đã được xác thực hay chưa, và tài khoản đó có quyền thực hiện thao tác hay không. Một tài khoản đăng nhập đúng vẫn có thể bị từ chối vì sai vai trò, bị khóa hoặc đang truy cập dữ liệu của người khác.
+Nhóm thiết kế dùng hai khách hàng A và B, tạo dữ liệu riêng rồi thử dùng tài khoản B truy cập thú cưng, lịch, thanh toán hoặc thông báo của A. Bằng chứng SQL đã kiểm tra các trường hợp cô lập dữ liệu này. Bộ HTTP cũng có kiểm tra thiếu token và token không hợp lệ. Việc ẩn nút ở UI cần đi cùng kiểm soát từ API.
+62
+F12
+Về UI chung, checklist có 20 mục, gồm tính nhất quán của màu, font và căn lề; nhãn và lỗi nhập liệu; trạng thái đang tải, rỗng và lỗi; điều hướng, thao tác bàn phím và màn hình hẹp. Dấu đánh dấu trong checklist chỉ biểu thị phạm vi cần kiểm tra. Đợt báo cáo đã có một số quan sát giao diện khách hàng và form xác thực; chưa có kết luận đạt cho toàn bộ vai trò, thiết bị và kích thước màn hình.
+64
+Kết quả và kết thúc
+Tuy nhiên, khi đối chiếu 273 ca Excel, báo cáo này ghi 66 ca có bằng chứng một phần, 207 ca chưa có bằng chứng được đối chiếu và chưa có ca nào được chứng minh đủ mọi bước. 69 ca tích hợp trong tài liệu hiện đang ở trạng thái chưa thực thi. Nhóm trình bày riêng các số liệu này để thể hiện đúng mức độ bao phủ.
+Phần cần tiếp tục là chạy đủ luồng trên trình duyệt cho bốn vai trò, kiểm tra OTP và Firebase thật, thanh toán PayOS, upload Cloudinary và giao diện trên nhiều kích thước. Mỗi ca cần lưu điều kiện đầu, dữ liệu, kết quả thực tế và bằng chứng trước khi kết luận đạt.
+Qua PetNova, nhóm rèn luyện cách chuyển yêu cầu nghiệp vụ thành scenario và testcase, chọn dữ liệu hộp đen, kiểm tra giao diện và theo dõi dữ liệu xuyên suốt các tích hợp. Nhóm em xin cảm ơn thầy cô và các bạn đã lắng nghe, và xin nhận câu hỏi.

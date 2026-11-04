@@ -1,0 +1,8 @@
+B2=Test requirement
+B3=for PetNoVa
+B5=Document History – To maintain a list of changes being made
+B6=Version | C6=Date | D6=Author | E6=Description of Changes
+B7=1 | C7=46319 | D7=Nhóm 09 | E7=Thiết kế ca kiểm thử PetNoVa theo mẫu Lab3; chưa thực thi.
+B14=Reference Documents – Clearly mark the document used as an input to create the test case
+B15=Version | C15=Date | D15=Document Name
+B16=1.2

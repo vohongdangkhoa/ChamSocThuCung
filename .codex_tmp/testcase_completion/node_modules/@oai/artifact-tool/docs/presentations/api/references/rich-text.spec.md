@@ -40,6 +40,7 @@ type TextRunInput = {
     italic?: boolean;
     underline?: string;
     fontSize?: string;
+    characterSpacing?: number; // Integer centipoints: 125 = 1.25 pt.
     typeface?: string;
     color?: FillConfig;
   };
@@ -53,6 +54,10 @@ type TextRunInput = {
 Structured run `fontSize` accepts unit strings such as `"20pt"` and `"28px"`.
 Shape text style configs accept numeric pixels or unit strings, such as
 `shape.text.style = { fontSize: "20pt" }`. Direct `shape.text.fontSize` edits use pixels.
+
+Raw paragraph margins, indents, spacing, and character spacing require signed
+32-bit integer native units. Margins and indents use EMUs (12,700 per point);
+typed `paragraphStyle` point spacing and character spacing use centipoints (100 per point).
 
 ## Structured Paragraphs
 
