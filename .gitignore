@@ -40,3 +40,7 @@ migrate_working_dir/
 
 # Local SQL export contains customer/account data; never commit it.
 /backend/PetNoVaApi/Database/PetNoVaDB_khoi_phuc_du_lieu.sql
+
+# Temporary report and document authoring files
+/artifacts/
+/.codex_tmp/
